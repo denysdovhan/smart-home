@@ -2,6 +2,11 @@
 default_config:
 
 homeassistant:
+  name: Kyiv Home
+  latitude: !secret homeassistant_latitude
+  longitude: !secret homeassistant_longitude
+  elevation: !secret homeassistant_elevation
+  unit_system: metric
   customize: !include customize.yaml
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
