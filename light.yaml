@@ -1,0 +1,5 @@
+- platform: group
+  name: Table Lights
+  entities:
+    - light.lower_table_light_light
+    - light.upper_table_light_light

@@ -1,0 +1,31 @@
+# Generic ignores
+*.log
+*.db
+*.db-shm
+*.db-wal
+*.pyc
+._*
+__pycache__
+
+# Ignore folders
+.storage
+.cloud
+.google.token
+deps
+
+# Specific files
+/secrets.yaml
+/ip_bans.yaml
+/known_devices.yaml
+/.homekit.state
+/GA_SERVICE_ACCOUNT.json
+
+# Add-ons
+aircast.xml
+
+# IDE
+.vscode
+.Trash*
+
+# Specific keeps
+!.gitkeep
