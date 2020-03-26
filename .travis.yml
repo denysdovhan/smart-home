@@ -2,9 +2,10 @@ language: python
 python:
   - "3.7"
 before_install:
-  - cp -R .stubs/* .
-  - sudo apt-get install -y libudev-dev
+  - touch fake_key.pem
+  - touch fake_ga_service_account.json
+  - mv _secrets.yaml secrets.yaml
 install:
   - pip3 install homeassistant
 script:
-  - hass -c . --script check_config
+  - hass -c . --script check_config --info all
