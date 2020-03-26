@@ -3,7 +3,7 @@ python:
   - "3.7"
 before_install:
   - touch fake_key.pem
-  - touch FAKE_GA_SERVICE_ACCOUNT.json
+  - echo "{}" > FAKE_GA_SERVICE_ACCOUNT.json
   - mv _secrets.yaml secrets.yaml
 install:
   - pip3 install homeassistant
