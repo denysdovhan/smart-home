@@ -6,6 +6,7 @@ homeassistant:
   latitude: !secret homeassistant_latitude
   longitude: !secret homeassistant_longitude
   elevation: !secret homeassistant_elevation
+  time_zone: Europe/Kiev #KyivNotKiev
   unit_system: metric
   customize: !include customize.yaml
 
