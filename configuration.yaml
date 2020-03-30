@@ -57,6 +57,5 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
-input_boolean: !include input_boolean.yaml
 timer: !include timer.yaml
 sensor: !include sensor.yaml
