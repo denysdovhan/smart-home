@@ -57,9 +57,3 @@ sensor.upper_table_light_linkquality:
 media_player.google_home_mini:
   friendly_name: Google Home Mini
   icon: mdi:google-home
-
-# Zigbee Pairing Switch
-input_boolean.zigbee_permit_join:
-  name: Allow devices to join
-  initial: off
-  icon: mdi:cellphone-wireless
