@@ -43,19 +43,12 @@ mqtt:
   username: !secret mqtt_user
   password: !secret mqtt_password
 
-binary_sensor:
-  - platform: template
-    sensors:
-      anyone_home:
-        device_class: occupancy
-        friendly_name: "Anyone Home"
-        value_template: "{{ states.person | selectattr('state','eq','home') | list | count > 0 }}"
-
 group: !include groups.yaml
 light: !include light.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
+binary_sensor: !include binary_sensor.yaml
 timer: !include timer.yaml
 sensor: !include sensor.yaml
