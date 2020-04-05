@@ -11,12 +11,7 @@ exposed_domains:
   - switch
   - input_boolean
   - scene
-  - media_player
 entity_config:
   input_boolean.zigbee_permit_join:
     name: Zigbee Pairing
     room: Living Room
-  media_player.samsung_tv:
-    name: TV
-    aliases:
-      - Samsung TV
