@@ -1,0 +1,10 @@
+# ------
+# MQTT
+# https://www.home-assistant.io/integrations/mqtt/
+# ------
+
+broker: core-mosquitto
+discovery: true
+discovery_prefix: homeassistant
+username: !secret mqtt_user
+password: !secret mqtt_password
