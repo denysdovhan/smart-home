@@ -1,6 +1,9 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
+# Device Discovery
+discovery:
+
 # Home Assistant
 homeassistant:
   name: Kyiv Home
@@ -10,9 +13,6 @@ homeassistant:
   time_zone: Europe/Kiev #KyivNotKiev
   unit_system: metric
   customize: !include customize.yaml
-
-# Device Discovery
-discovery:
 
 # HTTP
 http:
