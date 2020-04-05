@@ -12,7 +12,6 @@ __pycache__
 .cloud
 .google.token
 deps
-custom_components/**
 
 # Specific files
 /secrets.yaml
@@ -20,7 +19,6 @@ custom_components/**
 /known_devices.yaml
 /.homekit.state
 /GA_SERVICE_ACCOUNT.json
-!/custom_components/README.md
 
 # Add-ons
 aircast.xml
