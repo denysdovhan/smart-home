@@ -2,6 +2,14 @@
 
 > 🏠 My smart home setup based on Home Assistant
 
+What is included:
+
+- Home Assistant
+  - HomeKit
+  - Google Assistant
+- HACS
+  - Samsung TV Tizen
+
 <!-- References -->
 
 [travis-ci]: https://travis-ci.org/denysdovhan/home-assistant-config

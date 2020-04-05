@@ -27,7 +27,7 @@ sensor.bedroom_movement_sensor_linkquality:
 binary_sensor.living_room_movement_sensor_occupancy:
   friendly_name: Living Room Movement Sensor Occupancy
 sensor.living_room_movement_sensor_illuminance:
-  friendly_name:  Living Room Movement Sensor Illuminance
+  friendly_name: Living Room Movement Sensor Illuminance
 sensor.living_room_movement_sensor_battery:
   friendly_name: Living Room Movement Sensor Battery
 sensor.living_room_movement_sensor_linkquality:
@@ -57,3 +57,8 @@ sensor.upper_table_light_linkquality:
 media_player.google_home_mini:
   friendly_name: Google Home Mini
   icon: mdi:google-home
+
+# Samsung TVs
+media_player.samsung_tv:
+  friendly_name: Samsung TV
+  icon: mdi:youtube-tv
