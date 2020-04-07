@@ -12,6 +12,7 @@ __pycache__
 .cloud
 .google.token
 deps
+tts
 
 # Specific files
 /secrets.yaml
