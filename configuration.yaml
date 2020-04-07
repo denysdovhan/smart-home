@@ -25,6 +25,7 @@ http:
 # Text to speech
 tts:
   - platform: google_translate
+    service_name: google_say
 
 homekit: !include homekit.yaml
 google_assistant: !include google_assistant.yaml
