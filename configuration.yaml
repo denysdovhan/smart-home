@@ -27,11 +27,14 @@ tts:
   - platform: google_translate
     service_name: google_say
 
+# External
 homekit: !include homekit.yaml
 google_assistant: !include google_assistant.yaml
 mqtt: !include mqtt.yaml
 
+# Internal
 group: !include groups.yaml
+history: !include history.yaml
 light: !include light.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
