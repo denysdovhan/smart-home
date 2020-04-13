@@ -41,6 +41,18 @@ sensor.front_door_sensor_battery:
 sensor.front_door_sensor_linkquality:
   friendly_name: Front Door Sensor Linkquality
 
+# Conditions Sensor
+sensor.conditions_sensor_temperature:
+  friendly_name: Living Room Temperature
+sensor.conditions_sensor_pressure:
+  friendly_name: Living Room Pressure
+sensor.conditions_sensor_humidity:
+  friendly_name: Living Room Humidity
+sensor.conditions_sensor_battery:
+  friendly_name: Conditions Sensor Battery
+sensor.conditions_sensor_linkquality:
+  friendly_name: Conditions Sensor Linkquality
+
 # Table Lights
 light.lower_table_light_light:
   friendly_name: Lower Table Light
