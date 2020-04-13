@@ -1,7 +1,7 @@
-# ------
+#
 # MQTT
 # https://www.home-assistant.io/integrations/mqtt/
-# ------
+#
 
 broker: core-mosquitto
 discovery: true

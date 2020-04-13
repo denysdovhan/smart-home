@@ -1,3 +1,8 @@
+#
+# Media Player
+# https://www.home-assistant.io/integrations/media_player/
+#
+
 # Samsung TV Tizen
 # https://github.com/jaruba/ha-samsungtv-tizen
 - platform: samsungtv_tizen
