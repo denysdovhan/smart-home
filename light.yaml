@@ -3,3 +3,9 @@
   entities:
     - light.lower_table_light_light
     - light.upper_table_light_light
+- platform: switch
+  name: Bed Lights
+  entity_id: switch.bed_lights
+- platform: switch
+  name: TV Lights
+  entity_id: switch.tv_lights

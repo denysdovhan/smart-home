@@ -15,3 +15,7 @@ entity_config:
   input_boolean.zigbee_permit_join:
     name: Zigbee Pairing
     room: Living Room
+  switch.bed_lights:
+    expose: false
+  switch.tv_lights:
+    expose: false

@@ -7,8 +7,8 @@ filter:
   include_entities:
     - light.ceiling_light_light
     - light.table_lights
-    - switch.bed_lights
-    - switch.tv_lights
+    - light.bed_lights
+    - light.tv_lights
     - binary_sensor.bedroom_movement_sensor_occupancy
     - binary_sensor.living_room_movement_sensor_occupancy
     - binary_sensor.front_door_sensor_contact
