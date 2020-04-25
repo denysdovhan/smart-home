@@ -5,10 +5,12 @@
 What is included:
 
 - Home Assistant
-  - HomeKit
-  - Google Assistant
+- HomeKit
+- Google Assistant
 - HACS
-  - Samsung TV Tizen
+- Samsung TV Tizen
+- Apple TV Beta
+- Travis CI
 
 <!-- References -->
 

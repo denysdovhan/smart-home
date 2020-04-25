@@ -2,3 +2,9 @@
   name: Bridge state
   state_topic: "zigbee2mqtt/bridge/state"
   icon: mdi:router-wireless
+- platform: travisci
+  api_key: !secret github_access_token
+  repository:
+    - home-assistant-config
+  monitored_conditions:
+    - state
