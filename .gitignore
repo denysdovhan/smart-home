@@ -21,6 +21,7 @@ tts
 /.homekit.state
 /.ps4-games.json
 /GA_SERVICE_ACCOUNT.json
+token-*.txt
 
 # Add-ons
 aircast.xml
