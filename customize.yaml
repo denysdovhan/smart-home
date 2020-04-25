@@ -55,7 +55,7 @@ sensor.conditions_sensor_linkquality:
 
 # Table Lights
 light.table_lights:
-  friendly_name: Table_Lights
+  friendly_name: Table Lights
   icon: mdi:ceiling-light
 light.lower_table_light_light:
   friendly_name: Lower Table Light
