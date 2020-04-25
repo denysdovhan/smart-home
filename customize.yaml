@@ -1,8 +1,8 @@
-switch.bed_lights:
+light.bed_lights:
   friendly_name: Bed Lights
   icon: mdi:string-lights
 
-switch.tv_lights:
+light.tv_lights:
   friendly_name: TV Lights
   icon: mdi:string-lights
 
