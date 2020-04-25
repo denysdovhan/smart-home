@@ -5,6 +5,7 @@
 
 filter:
   include_entities:
+    - light.main_light
     - light.ceiling_light_light
     - light.table_lights
     - light.bed_lights

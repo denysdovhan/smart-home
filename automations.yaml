@@ -41,27 +41,3 @@
   - service: input_boolean.turn_off
     data:
       entity_id: input_boolean.zigbee_permit_join
-- id: '1584890977443'
-  alias: Turn on lights when motion detected in Bedroom
-  description: ''
-  trigger:
-  - device_id: 06b0f7ea0c5e4d0ea7c9c7b999183a50
-    domain: binary_sensor
-    entity_id: binary_sensor.bedroom_movement_sensor_occupancy
-    platform: device
-    type: motion
-  condition:
-  - condition: state
-    entity_id: binary_sensor.anyone_home
-    state: 'on'
-  - after: sunset
-    before_offset: '30'
-    condition: sun
-  - after: '7:00'
-    before: 00:00
-    condition: time
-  action:
-  - device_id: 6b1d8dd46cfd4c2da92b88478142e5ee
-    domain: light
-    entity_id: light.ceiling_light_light
-    type: turn_on
