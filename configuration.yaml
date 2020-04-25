@@ -1,10 +1,7 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
-# Device Discovery
-discovery:
-
-# Home Assistant
+# Core
 homeassistant:
   name: Kyiv Home
   latitude: !secret homeassistant_latitude
