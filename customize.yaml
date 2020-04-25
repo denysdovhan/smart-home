@@ -56,14 +56,29 @@ sensor.conditions_sensor_linkquality:
 # Table Lights
 light.lower_table_light_light:
   friendly_name: Lower Table Light
-  icon: mdi:ceiling-light
-sensor.lower_table_light_linkquality:
-  friendly_name: Lower Table Light Linkquality
 light.upper_table_light_light:
   friendly_name: Upper Table Light
+
+# Main Light
+light.main_light:
+  friendly_name: Main Light
   icon: mdi:ceiling-light
-sensor.upper_table_light_linkquality:
-  friendly_name: Upper Table Light Linkquality
+light.main_light_bulb_1_light:
+  friendly_name: Main Light Bulb 1
+sensor.main_light_bulb_1_linkquality:
+  friendly_name: Main Light Bulb 1 Linkquality
+light.main_light_bulb_2_light:
+  friendly_name: Main Light Bulb 2
+sensor.main_light_bulb_2_linkquality:
+  friendly_name: Main Light Bulb 2 Linkquality
+light.main_light_bulb_3_light:
+  friendly_name: Main Light Bulb 3
+sensor.main_light_bulb_3_linkquality:
+  friendly_name: Main Light Bulb 3 Linkquality
+light.main_light_bulb_4_light:
+  friendly_name: Main Light Bulb 4
+sensor.main_light_bulb_4_linkquality:
+  friendly_name: Main Light Bulb 4 Linkquality
 
 # Google Home Mini
 media_player.google_home_mini:
