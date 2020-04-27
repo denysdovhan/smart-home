@@ -8,3 +8,5 @@
           is_state('person.denys', 'home') or
           is_state('person.marry', 'home')
         }}
+- platform: workday
+  country: UA
