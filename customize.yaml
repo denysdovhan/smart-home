@@ -99,7 +99,3 @@ media_player.apple_tv:
   icon: mdi:apple
 remote.apple_tv:
   friendly_name: Living Room Apple TV
-
-# Travis CI
-sensor.denysdovhan_home_assistant_config_state:
-  friendly_name: Travis CI
