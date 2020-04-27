@@ -26,6 +26,7 @@ tts:
 homekit: !include integrations/homekit.yaml
 google_assistant: !include integrations/google_assistant.yaml
 mqtt: !include integrations/mqtt.yaml
+speedtestdotnet: !include integrations/speedtestdotnet.yaml
 
 # Internal
 group: !include integrations/groups.yaml
