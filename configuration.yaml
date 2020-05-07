@@ -11,6 +11,10 @@ homeassistant:
   unit_system: metric
   customize: !include customize.yaml
 
+# Frontend
+frontend:
+  themes: !include_dir_merge_named themes
+
 # HTTP
 http:
   base_url: !secret base_url
