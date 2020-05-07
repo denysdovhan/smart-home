@@ -26,6 +26,12 @@ tts:
   - platform: google_translate
     service_name: google_say
 
+# Vacuum
+vacuum:
+  - platform: xiaomi_miio
+    host: !secret vacuum_host
+    token: !secret vacuum_token
+
 # External
 homekit: !include integrations/homekit.yaml
 google_assistant: !include integrations/google_assistant.yaml
