@@ -1,0 +1,9 @@
+- platform: ffmpeg
+  name: maidan
+  input: https://manifest.googlevideo.com/api/manifest/hls_playlist/expire/1588874724/ei/hPmzXsaUM4mt7ATqrL2oAg/ip/176.36.16.204/id/xUgOCb8ONFo.0/itag/95/source/yt_live_broadcast/requiressl/yes/ratebypass/yes/live/1/goi/160/sgoap/gir%3Dyes%3Bitag%3D140/sgovp/gir%3Dyes%3Bitag%3D136/hls_chunk_host/r6---sn-a5oxu-px8s.googlevideo.com/playlist_duration/30/manifest_duration/30/vprv/1/playlist_type/DVR/initcwndbps/9600/mh/89/mm/44/mn/sn-a5oxu-px8s/ms/lva/mv/m/mvi/5/pl/16/dover/11/keepalive/yes/mt/1588853060/disable_polymer/true/sparams/expire,ei,ip,id,itag,source,requiressl,ratebypass,live,goi,sgoap,sgovp,playlist_duration,manifest_duration,vprv,playlist_type/sig/AOq0QJ8wRQIgDiq8g4TUOJ-ZrbXQpTpNm4S2DZu_mkvWQbLVxGl33SECIQDiBpGeWsq8jKh3i7j3iWn02gwPJCzVIrTU15EuqNhSZg%3D%3D/lsparams/hls_chunk_host,initcwndbps,mh,mm,mn,ms,mv,mvi,pl/lsig/AG3C_xAwRQIgFG7teQuL9iioQOeyzcN9qAMsyx599A64CF2KXrkdtZYCIQCMXKS7k2duhMTG_G2MDTOnatnJFz81uJQQ_xRk9bKKQA%3D%3D/playlist/index.m3u8
+- platform: ffmpeg
+  name: sofiyska
+  input: https://vps.guru.ua/hls/sof.m3u8
+- platform: ffmpeg
+  name: chernivtsi
+  input: http://langate.tv/camera360/tracks-v1/mono.m3u8

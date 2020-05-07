@@ -29,6 +29,7 @@ mqtt: !include integrations/mqtt.yaml
 speedtestdotnet: !include integrations/speedtestdotnet.yaml
 
 # Internal
+camera: !include integrations/camera.yaml
 group: !include integrations/groups.yaml
 history: !include integrations/history.yaml
 light: !include integrations/light.yaml
