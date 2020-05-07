@@ -1,7 +1,13 @@
+# Persons
+person.denys:
+  entity_picture: /local/images/denys.jpeg
+person.marry:
+  entity_picture: /local/images/marry.jpeg
+
+# Switches
 light.bed_lights:
   friendly_name: Bed Lights
   icon: mdi:string-lights
-
 light.tv_lights:
   friendly_name: TV Lights
   icon: mdi:string-lights
