@@ -18,6 +18,7 @@ filter:
     - sensor.conditions_sensor_temperature
     - sensor.conditions_sensor_humidity
     - sensor.conditions_sensor_pressure
+    - vacuum.roborock
 entity_config:
   binary_sensor.bedroom_movement_sensor_occupancy:
     linked_battery_sensor: sensor.bedroom_movement_sensor_battery

@@ -11,6 +11,7 @@ exposed_domains:
   - switch
   - input_boolean
   - scene
+  - vacuum
 entity_config:
   input_boolean.zigbee_permit_join:
     name: Zigbee Pairing
