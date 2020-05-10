@@ -105,3 +105,7 @@ media_player.apple_tv:
   icon: mdi:apple
 remote.apple_tv:
   friendly_name: Living Room Apple TV
+
+# Vacuum
+vacuum.roborock:
+  friendly_name: Roborock S5 Max
