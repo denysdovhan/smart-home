@@ -1,1 +1,12 @@
-# To Be Added
+stream_camera_to_apple_tv:
+  alias: Stream camera to Apple TV
+  icon: mdi:airplay
+  fields:
+    camera:
+      description: A camera entity to stream to Apple TV.
+      example: camera.chernivtsi
+  sequence:
+    - service: camera.play_stream
+      data_template:
+        entity_id: "{{ camera }}"
+        media_player: media_player.apple_tv
