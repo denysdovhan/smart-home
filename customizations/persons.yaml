@@ -1,0 +1,5 @@
+# Persons
+person.denys:
+  entity_picture: /local/images/denys.jpg
+person.marry:
+  entity_picture: /local/images/marry.jpg

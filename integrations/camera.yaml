@@ -1,9 +1,16 @@
-- platform: ffmpeg
-  name: sofiyska
-  input: https://vps.guru.ua/hls/sof.m3u8
-- platform: ffmpeg
-  name: peremohy
-  input: https://vps.guru.ua/hls/pobedy.m3u8
-- platform: ffmpeg
-  name: chernivtsi
-  input: http://langate.tv/camera360/tracks-v1/mono.m3u8
+#
+# Camera
+#
+# https://www.home-assistant.io/integrations/camera/
+#
+
+camera:
+  - platform: ffmpeg
+    name: sofiyska
+    input: https://vps.guru.ua/hls/sof.m3u8
+  - platform: ffmpeg
+    name: peremohy
+    input: https://vps.guru.ua/hls/pobedy.m3u8
+  - platform: ffmpeg
+    name: chernivtsi
+    input: http://langate.tv/camera360/tracks-v1/mono.m3u8

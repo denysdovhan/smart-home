@@ -1,18 +1,25 @@
-- platform: group
-  name: Table Lights
-  entities:
-    - light.lower_table_light_light
-    - light.upper_table_light_light
-- platform: group
-  name: Main Light
-  entities:
-    - light.main_light_bulb_1_light
-    - light.main_light_bulb_2_light
-    - light.main_light_bulb_3_light
-    - light.main_light_bulb_4_light
-- platform: switch
-  name: Bed Lights
-  entity_id: switch.bed_lights
-- platform: switch
-  name: TV Lights
-  entity_id: switch.tv_lights
+#
+# Light
+#
+# https://www.home-assistant.io/integrations/light.group/
+#
+
+light:
+  - platform: group
+    name: Table Lights
+    entities:
+      - light.lower_table_light_light
+      - light.upper_table_light_light
+  - platform: group
+    name: Main Light
+    entities:
+      - light.main_light_bulb_1_light
+      - light.main_light_bulb_2_light
+      - light.main_light_bulb_3_light
+      - light.main_light_bulb_4_light
+  - platform: switch
+    name: Bed Lights
+    entity_id: switch.bed_lights
+  - platform: switch
+    name: TV Lights
+    entity_id: switch.tv_lights

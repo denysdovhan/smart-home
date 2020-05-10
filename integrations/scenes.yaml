@@ -1,13 +1,24 @@
-- id: "1585668587838"
-  name: Evening
-  entities:
-    switch.bed_lights:
-      friendly_name: Bed Lights
-      icon: mdi:string-lights
-      outlet_in_use: true
-      state: "on"
-    switch.tv_lights:
-      friendly_name: TV Lights
-      icon: mdi:string-lights
-      outlet_in_use: true
-      state: "on"
+#
+# Scene
+#
+# https://www.home-assistant.io/integrations/scene/
+#
+
+# This file exists for UI editor to work.
+scene: !include ../scenes.yaml
+
+# Scenes defined in YAML
+scene split:
+  - id: "1585668587838"
+    name: Evening
+    entities:
+      switch.bed_lights:
+        friendly_name: Bed Lights
+        icon: mdi:string-lights
+        outlet_in_use: true
+        state: "on"
+      switch.tv_lights:
+        friendly_name: TV Lights
+        icon: mdi:string-lights
+        outlet_in_use: true
+        state: "on"

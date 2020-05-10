@@ -1,25 +1,27 @@
 #
 # Media Player
+#
 # https://www.home-assistant.io/integrations/media_player/
 #
 
-# Samsung TV Tizen
-# https://github.com/jaruba/ha-samsungtv-tizen
-- platform: samsungtv_tizen
-  name: Samsung TV
-  host: !secret samsungtv_tizen_host
-  port: !secret samsungtv_tizen_port
-  mac: !secret samsungtv_tizen_mac
-  api_key: !secret samsungtv_tizen_api_key
-  device_id: !secret samsungtv_tizen_device_id
-  source_list: >-
-    {
-      "Apple TV": "ST_HDMI1",
-      "PlayStation 4": "ST_HDMI2"
-    }
-  app_list: >-
-    {
-      "Netflix": "11101200001",
-      "YouTube": "111299001912",
-      "Internet": "org.tizen.browser"
-    }
+media_player:
+  # Samsung TV Tizen
+  # https://github.com/jaruba/ha-samsungtv-tizen
+  - platform: samsungtv_tizen
+    name: Samsung TV
+    host: !secret samsungtv_tizen_host
+    port: !secret samsungtv_tizen_port
+    mac: !secret samsungtv_tizen_mac
+    api_key: !secret samsungtv_tizen_api_key
+    device_id: !secret samsungtv_tizen_device_id
+    source_list: >-
+      {
+        "Apple TV": "ST_HDMI1",
+        "PlayStation 4": "ST_HDMI2"
+      }
+    app_list: >-
+      {
+        "Netflix": "11101200001",
+        "YouTube": "111299001912",
+        "Internet": "org.tizen.browser"
+      }

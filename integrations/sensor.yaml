@@ -1,11 +1,18 @@
-- platform: mqtt
-  name: Bridge state
-  state_topic: "zigbee2mqtt/bridge/state"
-  icon: mdi:router-wireless
-- platform: systemmonitor
-  resources:
-    - type: disk_use_percent
-      arg: /
-    - type: swap_use_percent
-    - type: processor_use
-    - type: memory_use_percent
+#
+# Sensor
+#
+# https://www.home-assistant.io/integrations/sensor/
+#
+
+sensor:
+  - platform: mqtt
+    name: Bridge state
+    state_topic: "zigbee2mqtt/bridge/state"
+    icon: mdi:router-wireless
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /
+      - type: swap_use_percent
+      - type: processor_use
+      - type: memory_use_percent

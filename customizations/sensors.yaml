@@ -1,0 +1,39 @@
+# Bedroom Movement Sensor
+binary_sensor.bedroom_movement_sensor_occupancy:
+  friendly_name: Bedroom Movement Sensor Occupancy
+sensor.bedroom_movement_sensor_illuminance:
+  friendly_name: Bedroom Movement Sensor Illuminance
+sensor.bedroom_movement_sensor_battery:
+  friendly_name: Bedroom Movement Sensor Battery
+sensor.bedroom_movement_sensor_linkquality:
+  friendly_name: Bedroom Movement Sensor Linkquality
+
+#  Living Room Movement Sensor
+binary_sensor.living_room_movement_sensor_occupancy:
+  friendly_name: Living Room Movement Sensor Occupancy
+sensor.living_room_movement_sensor_illuminance:
+  friendly_name: Living Room Movement Sensor Illuminance
+sensor.living_room_movement_sensor_battery:
+  friendly_name: Living Room Movement Sensor Battery
+sensor.living_room_movement_sensor_linkquality:
+  friendly_name: Living Room Movement Sensor Linkquality
+
+# Front Door Sensor
+binary_sensor.front_door_sensor_contact:
+  friendly_name: Front Door Sensor Contact
+sensor.front_door_sensor_battery:
+  friendly_name: Front Door Sensor Battery
+sensor.front_door_sensor_linkquality:
+  friendly_name: Front Door Sensor Linkquality
+
+# Conditions Sensor
+sensor.conditions_sensor_temperature:
+  friendly_name: Living Room Temperature
+sensor.conditions_sensor_pressure:
+  friendly_name: Living Room Pressure
+sensor.conditions_sensor_humidity:
+  friendly_name: Living Room Humidity
+sensor.conditions_sensor_battery:
+  friendly_name: Conditions Sensor Battery
+sensor.conditions_sensor_linkquality:
+  friendly_name: Conditions Sensor Linkquality

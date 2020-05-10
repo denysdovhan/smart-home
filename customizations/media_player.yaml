@@ -1,0 +1,16 @@
+# Google Home Mini
+media_player.google_home_mini:
+  friendly_name: Google Home Mini
+  icon: mdi:google-home
+
+# Samsung TV
+media_player.samsung_tv:
+  friendly_name: Samsung TV
+  icon: mdi:youtube-tv
+
+# Apple TV
+media_player.apple_tv:
+  friendly_name: Living Room Apple TV
+  icon: mdi:apple
+remote.apple_tv:
+  friendly_name: Living Room Apple TV

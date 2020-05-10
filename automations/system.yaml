@@ -1,0 +1,16 @@
+- id: automatic_theme_change
+  alias: Automatic Theme Change
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: state
+      entity_id: sun.sun
+  action:
+    - service_template: frontend.set_theme
+      data_template:
+        name: >
+          {% if states.sun.sun.state == "above_horizon" %}
+            default
+          {% else %}
+            midnight
+          {% endif %}

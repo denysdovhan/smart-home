@@ -1,22 +1,24 @@
 #
 # Google Assistant
+#
 # https://www.home-assistant.io/integrations/google_assistant/
 #
 
-project_id: !secret google_project_id
-service_account: !secret google_service_account
-report_state: true
-exposed_domains:
-  - light
-  - switch
-  - input_boolean
-  - scene
-  - vacuum
-entity_config:
-  input_boolean.zigbee_permit_join:
-    name: Zigbee Pairing
-    room: Living Room
-  switch.bed_lights:
-    expose: false
-  switch.tv_lights:
-    expose: false
+google_assistant:
+  project_id: !secret google_project_id
+  service_account: !secret google_service_account
+  report_state: true
+  exposed_domains:
+    - light
+    - switch
+    - input_boolean
+    - scene
+    - vacuum
+  entity_config:
+    input_boolean.zigbee_permit_join:
+      name: Zigbee Pairing
+      room: Living Room
+    switch.bed_lights:
+      expose: false
+    switch.tv_lights:
+      expose: false

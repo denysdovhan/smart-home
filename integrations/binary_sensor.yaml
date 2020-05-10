@@ -1,12 +1,19 @@
-- platform: template
-  sensors:
-    anyone_home:
-      device_class: occupancy
-      friendly_name: "Anyone Home"
-      value_template: >-
-        {{
-          is_state('person.denys', 'home') or
-          is_state('person.marry', 'home')
-        }}
-- platform: workday
-  country: UA
+#
+# Binary Sensor
+#
+# https://www.home-assistant.io/integrations/binary_sensor/
+#
+
+binary_sensor:
+  - platform: template
+    sensors:
+      anyone_home:
+        device_class: occupancy
+        friendly_name: "Anyone Home"
+        value_template: >-
+          {{
+            is_state('person.denys', 'home') or
+            is_state('person.marry', 'home')
+          }}
+  - platform: workday
+    country: UA

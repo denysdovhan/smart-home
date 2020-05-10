@@ -11,6 +11,7 @@ What is included:
 - Samsung TV Tizen
 - Apple TV Beta
 - Travis CI
+- Day/Night theme
 
 ## Rooms
 

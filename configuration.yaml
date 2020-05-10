@@ -1,7 +1,6 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
-# Core
 homeassistant:
   name: Kyiv Home
   latitude: !secret homeassistant_latitude
@@ -9,40 +8,7 @@ homeassistant:
   elevation: !secret homeassistant_elevation
   time_zone: Europe/Kiev #KyivNotKiev
   unit_system: metric
-  customize: !include customize.yaml
-
-# Frontend
-frontend:
-  themes: !include_dir_merge_named themes
-
-# HTTP
-http:
-  base_url: !secret base_url
-  ssl_certificate: !secret ssl_certificate
-  ssl_key: !secret ssl_key
-
-# Text to speech
-tts:
-  - platform: google_translate
-    service_name: google_say
-
-# External
-homekit: !include integrations/homekit.yaml
-google_assistant: !include integrations/google_assistant.yaml
-mqtt: !include integrations/mqtt.yaml
-speedtestdotnet: !include integrations/speedtestdotnet.yaml
-
-# Internal
-vacuum: !include integrations/vacuum.yaml
-camera: !include integrations/camera.yaml
-group: !include integrations/groups.yaml
-history: !include integrations/history.yaml
-light: !include integrations/light.yaml
-automation: !include integrations/automations.yaml
-script: !include integrations/scripts.yaml
-scene: !include integrations/scenes.yaml
-media_player: !include integrations/media_player.yaml
-binary_sensor: !include integrations/binary_sensor.yaml
-input_boolean: !include integrations/input_boolean.yaml
-timer: !include integrations/timer.yaml
-sensor: !include integrations/sensor.yaml
+  # Load customizations 
+  customize: !include_dir_merge_named customizations
+  # Load packages
+  packages: !include_dir_named integrations

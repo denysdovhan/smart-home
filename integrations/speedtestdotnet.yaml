@@ -1,1 +1,8 @@
-scan_interval: 60
+#
+# speedtest.net
+#
+# https://www.home-assistant.io/integrations/speedtestdotnet/
+#
+
+speedtestdotnet:
+  scan_interval: 60

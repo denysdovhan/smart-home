@@ -1,0 +1,44 @@
+# Table Lights
+light.table_lights:
+  friendly_name: Table Lights
+  icon: mdi:ceiling-light
+light.lower_table_light_light:
+  friendly_name: Lower Table Light
+light.upper_table_light_light:
+  friendly_name: Upper Table Light
+
+# Main Light
+light.main_light:
+  friendly_name: Main Light
+  icon: mdi:ceiling-light
+light.main_light_bulb_1_light:
+  friendly_name: Main Light Bulb 1
+sensor.main_light_bulb_1_linkquality:
+  friendly_name: Main Light Bulb 1 Linkquality
+light.main_light_bulb_2_light:
+  friendly_name: Main Light Bulb 2
+sensor.main_light_bulb_2_linkquality:
+  friendly_name: Main Light Bulb 2 Linkquality
+light.main_light_bulb_3_light:
+  friendly_name: Main Light Bulb 3
+sensor.main_light_bulb_3_linkquality:
+  friendly_name: Main Light Bulb 3 Linkquality
+light.main_light_bulb_4_light:
+  friendly_name: Main Light Bulb 4
+sensor.main_light_bulb_4_linkquality:
+  friendly_name: Main Light Bulb 4 Linkquality
+
+# Ceiling Light
+light.bedroom_ceiling_light_light:
+  friendly_name: Bedroom Ceiling Light
+  icon: mdi:ceiling-light
+sensor.ceiling_light_linkquality:
+  friendly_name: Ceiling Light Linkquality
+
+# Switches
+light.bed_lights:
+  friendly_name: Bed Lights
+  icon: mdi:string-lights
+light.tv_lights:
+  friendly_name: TV Lights
+  icon: mdi:string-lights
