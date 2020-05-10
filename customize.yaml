@@ -1,8 +1,8 @@
 # Persons
 person.denys:
-  entity_picture: /local/images/denys.jpeg
+  entity_picture: /local/images/denys.jpg
 person.marry:
-  entity_picture: /local/images/marry.jpeg
+  entity_picture: /local/images/marry.jpg
 
 # Switches
 light.bed_lights:
