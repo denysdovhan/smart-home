@@ -1,0 +1,9 @@
+notify:
+  - name: denys
+    platform: group
+    services:
+      - service: mobile_app_denyss_iphone
+  - name: marry
+    platform: group
+    services:
+      - service: mobile_app_iphone_maria

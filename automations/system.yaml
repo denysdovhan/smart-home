@@ -14,3 +14,13 @@
           {% else %}
             midnight
           {% endif %}
+
+- alias: Home Assistant Release notification
+  trigger:
+    - platform: state
+      entity_id: updater.updater
+  action:
+    service: notify.denys
+    data_template:
+      title: '🎉 New Home Assistant Release'
+      message: "Home Assistant  {{ state_attr('binary_sensor.updater', 'newest_version') }}  is now available."
