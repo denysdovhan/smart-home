@@ -7,3 +7,8 @@ notify:
     platform: group
     services:
       - service: mobile_app_iphone_maria
+  - name: all
+    platform: group
+    services:
+      - service: denys
+      - service: marry
