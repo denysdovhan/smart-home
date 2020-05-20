@@ -7,11 +7,20 @@ What is included:
 - Home Assistant
 - HomeKit
 - Google Assistant
+- Yeelight
+- MQTT + zigbee2mqtt
+- Roborock Vacuum
 - HACS
-- Samsung TV Tizen
-- Apple TV Beta
+  - Samsung TV Tizen
+  - Apple TV Beta
+  - Custom Vacuum card
 - Travis CI
-- Day/Night theme
+- Automation
+  - Zibee pairing
+  - Day/Night theme auto switch
+  - Notification for new Home Assistant releases
+  - Notification when torrent finished
+- Local AdGuard DNS
 
 ## Rooms
 
