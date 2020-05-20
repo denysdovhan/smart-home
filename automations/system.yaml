@@ -15,10 +15,13 @@
             midnight
           {% endif %}
 
-- alias: Home Assistant Release notification
+- id: home_assistant_release_notification
+  alias: Home Assistant Release notification
   trigger:
     - platform: state
-      entity_id: updater.updater
+      entity_id: binary_sensor.updater
+      from: 'off'
+      to: 'on'
   action:
     service: notify.denys
     data_template:
