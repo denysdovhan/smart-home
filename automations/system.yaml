@@ -24,3 +24,27 @@
     data_template:
       title: '🎉 New Home Assistant Release'
       message: "Home Assistant  {{ state_attr('binary_sensor.updater', 'newest_version') }}  is now available."
+
+- id: torrent_completed_notification
+  alias: Notify about completed torrent
+  trigger:
+    platform: event
+    event_type: transmission_downloaded_torrent
+  action:
+    - service: notify.all
+      data_template:
+        title: "⬇️ Transmission"
+        message: "{{trigger.event.data.name}} завантажено!"
+    - service: tts.google_say
+      data_template:
+        entity_id: media_player.google_home_mini
+        language: uk
+        message: >
+          {{
+            [
+              "Торрент завантажено!",
+              "Ваш файл завантажено!",
+              "Файл готовий до перегляду!",
+              "Завантаження завершено!"
+            ] | random
+          }} 
