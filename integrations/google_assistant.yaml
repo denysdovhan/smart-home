@@ -10,15 +10,42 @@ google_assistant:
   report_state: true
   exposed_domains:
     - light
-    - switch
     - input_boolean
     - scene
     - vacuum
+    - media_player
   entity_config:
     input_boolean.zigbee_permit_join:
       name: Zigbee Pairing
-      room: Living Room
-    switch.bed_lights:
-      expose: false
-    switch.tv_lights:
-      expose: false
+      aliases:
+        - zigbee joining
+        - pairing mode
+    vacuum.roborock:
+      name: Robin
+      aliases:
+        - roborock
+        - robot
+        - vacuum cleaner
+    media_player.playstation_4:
+      aliases:
+        - ps4
+        - console
+    #
+    # Prevent exposing specific entities
+    #
+    media_player.samsung_tv:
+      expose: false # This works better via SmartThings
+    media_player.google_home_mini:
+      expose: false # This is already available in Google Home
+    light.living_room_lower_table_light:
+      expose: false # This is already exposed by Table Lights
+    light.living_room_upper_table_light:
+      expose: false # This is already exposed by Table Lights
+    light.living_room_main_light_bulb_1_light:
+      expose: false # This is already exposed by Main Lights
+    light.living_room_main_light_bulb_2_light:
+      expose: false # This is already exposed by Main Lights
+    light.living_room_main_light_bulb_3_light:
+      expose: false # This is already exposed by Main Lights
+    light.living_room_main_light_bulb_4_light:
+      expose: false # This is already exposed by Main Lights
