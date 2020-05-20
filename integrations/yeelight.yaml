@@ -1,0 +1,17 @@
+#
+# Vacuum
+#
+# https://www.home-assistant.io/integrations/yeelight
+#
+
+yeelight:
+  devices:
+    !secret yeelight_torchere:
+      name: bedroom_torchere
+      model: color1
+    !secret yeelight_upper_table_light:
+      name: living_room_upper_table_light
+      model: color2
+    !secret yeelight_lower_table_light:
+      name: living_room_lower_table_light
+      model: color2
