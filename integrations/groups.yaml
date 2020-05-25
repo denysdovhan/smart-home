@@ -5,4 +5,9 @@
 #
 
 group:
-  # To Be Added
+  family:
+    name: Family
+    icon: mdi:home-heart
+    entities:
+      - person.denys
+      - person.marry
