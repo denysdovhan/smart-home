@@ -35,9 +35,9 @@ light.bedroom_ceiling_light_light:
 sensor.bedroom_ceiling_light_linkquality:
   friendly_name: Ceiling Light Linkquality
 
-# Torchere
-light.bedroom_torchere:
-  friendly_name: Torchere
+# Floor Lamp
+light.bedroom_floor_lamp:
+  friendly_name: Floor Lamp
   icon: mdi:floor-lamp
 
 # Switch Lights
