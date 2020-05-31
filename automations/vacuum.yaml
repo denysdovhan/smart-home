@@ -3,7 +3,7 @@
   description: Regular vacuum cleaning every two days
   trigger:
     - platform: time
-      at: '12:00'
+      at: '15:00'
     - platform: state
       entity_id: group.family
       from: 'home'
@@ -13,13 +13,13 @@
     # There was no cleaning in past 36 hours
     - condition: template
       value_template: >
-        {% set last_cleaning = as_timestamp(state_attr('automation.vacuum_maintenance', 'last_triggered')) | int %}
+        {% set last_cleaning = as_timestamp(state_attr('vacuum.roborock', 'clean_start')) | int %}
         {% set current_time = as_timestamp(now()) | int %}
-        {{ current_time - last_last_cleaning > (60 * 60 * 36) }}
+        {{ current_time - last_cleaning > (60 * 60 * 36) }}
   action:
     - service: notify.all
       data:
-        title: '🧹 Пилосос'
+        title: 'Пилосос 🧹'
         message: 'Починаємо планове прибирання вдома.'
     - service: vacuum.set_fan_speed
       entity_id: vacuum.roborock
@@ -41,7 +41,7 @@
     - service: vacuum.return_to_base
       entity_id: vacuum.roborock
 
-- id: vacuum_maintenance
+- id: vacuum_ask_maintenance
   alias: Vacuum Maintenance
   description: Send vacuum near trash bin and ask for maintenance
   trigger:
@@ -62,7 +62,7 @@
   action:
     - service: notify.all
       data:
-        title: '🧹 Пилосос'
+        title: 'Пилосос 🧹'
         message: 'Час обслуговування пилососа. Викиньте сміття, наберіть води і почистіть ганчірку.'
     - service: vacuum.send_command
       entity_id: vacuum.roborock
