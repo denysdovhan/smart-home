@@ -19,8 +19,8 @@
   action:
     - service: notify.all
       data:
-        title: 'Пилосос 🧹'
-        message: 'Починаємо планове прибирання вдома.'
+        title: "Пилосос 🧹"
+        message: "Починаємо планове прибирання вдома."
     - service: vacuum.set_fan_speed
       entity_id: vacuum.roborock
       data:
@@ -40,6 +40,33 @@
   action:
     - service: vacuum.return_to_base
       entity_id: vacuum.roborock
+
+- id: vacuum_finish_notification
+  alias: Vacuum Finish Notification
+  description: Notify when vacuum finished cleaning
+  trigger:
+    platform: state
+    entity_id: vacuum.roborock
+    from: 'cleaning'
+    to: 'returning'
+  action:
+    - service: notify.all
+      data:
+        title: "Пилосос 🧹"
+        message: "Робот закінчив прибирання і повертається на базу."
+
+- id: vacuum_error_notification
+  alias: Vacuum Error Notification
+  description: Notify when error with vacuum occured
+  trigger:
+    platform: state
+    entity_id: vacuum.roborock
+    to: 'error'
+  action:
+    - service: notify.all
+      data_template:
+        title: "Пилосос 🧹"
+        message: "Ой! Сталась помилка: {{ state_attr('vacuum.roborock', 'error') }}"
 
 - id: vacuum_ask_maintenance
   alias: Vacuum Maintenance
@@ -62,8 +89,8 @@
   action:
     - service: notify.all
       data:
-        title: 'Пилосос 🧹'
-        message: 'Час обслуговування пилососа. Викиньте сміття, наберіть води і почистіть ганчірку.'
+        title: "Пилосос 🧹"
+        message: "Час обслуговування пилососа. Викиньте сміття, наберіть води і почистіть ганчірку."
     - service: vacuum.send_command
       entity_id: vacuum.roborock
       data:
