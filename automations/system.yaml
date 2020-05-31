@@ -5,11 +5,17 @@
       event: start
     - platform: state
       entity_id: sun.sun
+      from: 'above_horizon'
+      to: 'below_horizon'
+    - platform: state
+      entity_id: sun.sun
+      from: 'below_horizon'
+      to: 'above_horizon'
   action:
     - service_template: frontend.set_theme
       data_template:
         name: >
-          {% if states.sun.sun.state == "above_horizon" %}
+          {% if is_state('sun.sun', 'above_horizon') %}
             default
           {% else %}
             midnight
