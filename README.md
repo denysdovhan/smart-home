@@ -51,6 +51,18 @@ What is included:
 
 Bin location: `[24500, 24500]`.
 
+## Ad Blocking List
+
+* https://adaway.org/hosts.txt
+* https://www.malwaredomainlist.com/hostslist/hosts.txt
+* NoTracking List https://github.com/notracking/hosts-blocklists
+* YouTube Ads https://github.com/kboghdady/youTube_ads_4_pi-hole
+* AdGuard Base Filter https://filters.adtidy.org/extension/chromium/filters/2.txt
+* AdGuard Annoyances Filter https://filters.adtidy.org/extension/chromium/filters/14.txt
+* AdGuard Russian Ad Filter https://filters.adtidy.org/extension/chromium/filters/1.txt
+* AdGuard Mobile Ads Filter https://filters.adtidy.org/extension/chromium/filters/11.txt
+* AdGuard Safari Filter https://filters.adtidy.org/extension/chromium/filters/11.txt
+
 ## Guides
 
 * [How I set up room-cleaning automation with Google Home, Home-Assistant and Xiaomi vacuum cleaner](
