@@ -1,0 +1,20 @@
+announcement:
+  alias: Send a push-notification and make an announcement on smart speaker
+  fields:
+    title:
+      description: A title for a push-notification
+    messages:
+      description: One of these messages will be randomly picked for announcement
+  sequence:
+    - service: notify.denys
+      data_template:
+        title: "{{ title }}"
+        message: "{{ messages | random }}"
+    # Announce on speaker only when someone is home
+    - condition: state
+      entity_id: group.family
+      state: 'home'
+    - service: tts.google_say
+      data_template:
+        entity_id: media_player.google_home_mini
+        message: "{{ messages | random }}"
