@@ -10,16 +10,19 @@ light:
     entities:
       - light.living_room_lower_table_light
       - light.living_room_upper_table_light
-  - platform: group
-    name: living_room_main_lights
-    entities:
-      - light.living_room_main_light_bulb_1_light
-      - light.living_room_main_light_bulb_2_light
-      - light.living_room_main_light_bulb_3_light
-      - light.living_room_main_light_bulb_4_light
+  # Switch
   - platform: switch
     name: bedroom_bed_lights
     entity_id: switch.bedroom_bed_lights
   - platform: switch
     name: living_room_tv_lights
     entity_id: switch.living_room_tv_lights
+  # MQTT
+  - platform: mqtt
+    name: living_room_main_lights # Defined in: /share/zigbee2mqtt/groups.yaml
+    schema: json
+    command_topic: zigbee2mqtt/living_room_main_lights/set
+    state_topic: zigbee2mqtt/living_room_main_lights
+    optimistic: true
+    color_temp: true
+    brightness: true
