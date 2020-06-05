@@ -3,7 +3,7 @@
   description: Regular vacuum cleaning every two days
   trigger:
     - platform: time
-      at: '15:00'
+      at: '13:00'
     - platform: state
       entity_id: group.family
       from: 'home'
