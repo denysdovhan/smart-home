@@ -12,6 +12,7 @@ homekit:
       - scene
       - vacuum
       - media_player
+      - fan
     include_entities:
       #
       # Manually includes

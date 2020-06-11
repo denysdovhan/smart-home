@@ -14,6 +14,7 @@ google_assistant:
     - scene
     - vacuum
     - media_player
+    - fan
   entity_config:
     input_boolean.zigbee_permit_join:
       name: Zigbee Pairing
