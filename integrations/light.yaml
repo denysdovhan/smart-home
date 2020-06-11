@@ -19,10 +19,10 @@ light:
     entity_id: switch.living_room_tv_lights
   # MQTT
   - platform: mqtt
-    name: living_room_main_lights # Defined in: /share/zigbee2mqtt/groups.yaml
+    name: living_room_main_lights
     schema: json
-    command_topic: zigbee2mqtt/living_room_main_lights/set
-    state_topic: zigbee2mqtt/living_room_main_lights
-    optimistic: true
+    # Defined in: /share/zigbee2mqtt/groups.yaml
+    command_topic: "zigbee2mqtt/main_light/set"
+    state_topic: "zigbee2mqtt/main_light"
     color_temp: true
     brightness: true
