@@ -1,0 +1,5 @@
+fan:
+  - platform: xiaomi_miio_airpurifier
+    name: humidifier
+    host: !secret humidifier_host
+    token:  !secret humidifier_token
