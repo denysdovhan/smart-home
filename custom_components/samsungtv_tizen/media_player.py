@@ -194,6 +194,7 @@ class SamsungTVDevice(MediaPlayerEntity):
         self._source_list = json.loads(source_list)
         self._running_app = None
         if app_list is not None:
+           self._auto_gen_installed_app_list = False
            dlist = self._split_app_list(json.loads(app_list), "/")
            self._app_list = dlist["app"]
            self._app_list_ST = dlist["appST"]
