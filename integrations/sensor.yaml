@@ -5,10 +5,12 @@
 #
 
 sensor:
+  # MQTT Bridge
   - platform: mqtt
     name: Bridge state
     state_topic: "zigbee2mqtt/bridge/state"
     icon: mdi:router-wireless
+  # System Monitor
   - platform: systemmonitor
     resources:
       - type: disk_use_percent
@@ -16,3 +18,18 @@ sensor:
       - type: swap_use_percent
       - type: processor_use
       - type: memory_use_percent
+  # Humidifier
+  - platform: template
+    sensors:
+      humidifier_humidity:
+        friendly_name: "Humidifier Humidity"
+        unit_of_measurement: '%'
+        device_class: humidity
+        value_template: >-
+          {{ state_attr('fan.humidifier', 'humidity') }}
+      humidifier_temperature:
+        friendly_name: "Humidifier Temperature"
+        unit_of_measurement: '°C'
+        device_class: temperature
+        value_template: >-
+          {{ state_attr('fan.humidifier', 'temperature') }}
