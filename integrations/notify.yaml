@@ -1,4 +1,10 @@
 notify:
+  - platform: html5
+    name: web
+    vapid_pub_key: !secret html5_notify_pub_key
+    vapid_prv_key: !secret html5_notify_prv_key
+    vapid_email: !secret html5_notify_email
+  # Groups
   - name: denys
     platform: group
     services:
@@ -10,5 +16,6 @@ notify:
   - name: all
     platform: group
     services:
+      - service: web
       - service: denys
       - service: marry
