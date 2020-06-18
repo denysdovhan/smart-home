@@ -20,7 +20,7 @@ tts
 /ip_bans.yaml
 /known_devices.yaml
 /.homekit.state
-/.ps4-games.json
+/.ps4-games*.json
 /GA_SERVICE_ACCOUNT.json
 token-*.txt
 
