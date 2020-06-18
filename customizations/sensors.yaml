@@ -58,3 +58,12 @@ sensor.nyvky_aqi:
   icon: mdi:cloud
   unit_of_measurement: 'AQI'
 
+# Kyiv Smart Card
+sensor.kyivsmartcard_denys:
+  friendly_name: Denys Kyiv Smart Card
+  icon: mdi:subway
+  unit_of_measurement: 'поїздок'
+sensor.kyivsmartcard_marry:
+  friendly_name: Marry Kyiv Smart Card
+  icon: mdi:subway
+  unit_of_measurement: 'поїздок'
