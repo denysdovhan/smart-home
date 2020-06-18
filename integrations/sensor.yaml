@@ -22,17 +22,11 @@ sensor:
   - platform: template
     sensors:
       humidifier_humidity:
-        friendly_name: "Humidifier Humidity"
-        unit_of_measurement: '%'
-        device_class: humidity
         value_template: >-
           {{ state_attr('fan.humidifier', 'humidity') }}
       humidifier_temperature:
-        friendly_name: "Humidifier Temperature"
-        unit_of_measurement: '°C'
-        device_class: temperature
         value_template: >-
-          {{ state_attr('fan.humidifier', 'temperature') }}
+          {{ state_attr('fan.humidifier', 'temperature') | round(2) }}
   # Purifier
   - platform: template
     sensors:
