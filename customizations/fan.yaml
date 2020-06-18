@@ -2,3 +2,8 @@
 fan.humidifier:
   friendly_name: Humidifier
   icon: mdi:air-humidifier
+
+# Purifier
+fan.purifier:
+  friendly_name: Purifier
+  icon: mdi:air-purifier

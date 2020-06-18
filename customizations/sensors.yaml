@@ -37,3 +37,18 @@ sensor.living_room_conditions_sensor_battery:
   friendly_name: Conditions Sensor Battery
 sensor.living_room_conditions_sensor_linkquality:
   friendly_name: Conditions Sensor Linkquality
+
+# Purifier
+sensor.purifier_humidity:
+  friendly_name: "Purifier Humidity"
+  unit_of_measurement: '%'
+  device_class: humidity
+sensor.purifier_temperature:
+  friendly_name: "Purifier Temperature"
+  unit_of_measurement: '°C'
+  device_class: temperature
+sensor.purifier_aqi:
+  friendly_name: "Purifier AQI"
+  icon_template: mdi:cloud
+  unit_of_measurement: 'AQI'
+

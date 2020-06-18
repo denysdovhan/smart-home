@@ -33,3 +33,15 @@ sensor:
         device_class: temperature
         value_template: >-
           {{ state_attr('fan.humidifier', 'temperature') }}
+  # Purifier
+  - platform: template
+    sensors:
+      purifier_humidity:
+        value_template: >-
+          {{ state_attr('fan.purifier', 'humidity') }}
+      purifier_temperature:
+        value_template: >-
+          {{ state_attr('fan.purifier', 'temperature') | round(2) }}
+      purifier_aqi:
+        value_template: >-
+          {{ state_attr('fan.purifier', 'aqi') }}

@@ -1,5 +1,15 @@
+#
+# Fan
+#
+# https://www.home-assistant.io/integrations/fan/
+#
+
 fan:
   - platform: xiaomi_miio_airpurifier
     name: humidifier
     host: !secret humidifier_host
     token:  !secret humidifier_token
+  - platform: xiaomi_miio
+    name: purifier
+    host: !secret purifier_host
+    token: !secret purifier_token
