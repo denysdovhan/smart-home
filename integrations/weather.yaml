@@ -1,0 +1,10 @@
+#
+# Weather
+#
+# https://www.home-assistant.io/integrations/weather/
+#
+
+weather:
+  - platform: openweathermap
+    name: nyvky
+    api_key: !secret openweathermap_api_key
