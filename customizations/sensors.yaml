@@ -52,3 +52,9 @@ sensor.purifier_aqi:
   icon_template: mdi:cloud
   unit_of_measurement: 'AQI'
 
+# Eco City AQI
+sensor.nyvky_aqi:
+  friendly_name: Nyvky AQI
+  icon: mdi:cloud
+  unit_of_measurement: 'AQI'
+

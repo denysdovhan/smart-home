@@ -45,3 +45,18 @@ sensor:
       purifier_aqi:
         value_template: >-
           {{ state_attr('fan.purifier', 'aqi') }}
+  # Eco City AQI
+  - platform: rest
+    name: nyvky_aqi
+    resource: https://eco-city.org.ua/public.json?id=876&timeShift=0
+    value_template: >-
+      {{ value_json[0].index }}
+    json_attributes_path: "$.[0]"
+    json_attributes:
+      - name
+      - unit
+      - value
+      - localName
+      - localUnit
+      - time
+      - index
