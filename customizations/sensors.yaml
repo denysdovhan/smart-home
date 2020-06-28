@@ -59,7 +59,7 @@ sensor.purifier_temperature:
   device_class: temperature
 sensor.purifier_aqi:
   friendly_name: "Purifier AQI"
-  icon_template: mdi:cloud
+  icon: mdi:cloud
   unit_of_measurement: 'AQI'
 
 # Eco City AQI
@@ -67,13 +67,3 @@ sensor.nyvky_aqi:
   friendly_name: Nyvky AQI
   icon: mdi:cloud
   unit_of_measurement: 'AQI'
-
-# Kyiv Smart Card
-sensor.kyivsmartcard_denys:
-  friendly_name: Denys Kyiv Smart Card
-  icon: mdi:subway
-  unit_of_measurement: 'поїздок'
-sensor.kyivsmartcard_marry:
-  friendly_name: Marry Kyiv Smart Card
-  icon: mdi:subway
-  unit_of_measurement: 'поїздок'

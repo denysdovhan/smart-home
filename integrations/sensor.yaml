@@ -55,33 +55,20 @@ sensor:
       - time
       - index
   # Kyiv Smart Card
-  - platform: rest
-    name: kyivsmartcard_denys
-    resource: https://my.kyivcity.gov.ua/api/me/travel-cards
-    headers:
-      User-Agent: Home Assistant
-      Content-Type: application/json
-      Connection: keep-alive
-      Authorization: !secret kyivsmartcard_denys_token
-    value_template: >-
-      {{ value_json[0].assets.purchases[0].residualUnits }}
-    json_attributes_path: "$.[0]"
-    json_attributes:
-      - code
-      - name
-      - createdAt
-  - platform: rest
-    name: kyivsmartcard_marry
-    resource: https://my.kyivcity.gov.ua/api/me/travel-cards
-    headers:
-      User-Agent: Home Assistant
-      Content-Type: application/json
-      Connection: keep-alive
-      Authorization: !secret kyivsmartcard_marry_token
-    value_template: >-
-      {{ value_json[0].assets.purchases[0].residualUnits }}
-    json_attributes_path: "$.[0]"
-    json_attributes:
-      - code
-      - name
-      - createdAt
+  # FIXME: Token gets invalid every 24 hours. Needs renewal.
+  #
+  # - platform: rest
+  #   name: kyivsmartcard_denys
+  #   resource: https://my.kyivcity.gov.ua/api/me/travel-cards
+  #   headers:
+  #     User-Agent: Home Assistant
+  #     Content-Type: application/json
+  #     Connection: keep-alive
+  #     Authorization: !secret kyivsmartcard_denys_token
+  #   value_template: >-
+  #     {{ value_json[0].assets.purchases[0].residualUnits }}
+  #   json_attributes_path: "$.[0]"
+  #   json_attributes:
+  #     - code
+  #     - name
+  #     - createdAt
