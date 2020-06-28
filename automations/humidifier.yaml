@@ -36,6 +36,7 @@
     entity_id: group.family
     from: 'home'
     to: 'not_home'
+    for: '00:10:00'
   action:
     - service: fan.turn_off
       entity_id: fan.humidifier
