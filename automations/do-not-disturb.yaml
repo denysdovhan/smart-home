@@ -1,0 +1,37 @@
+- id: do_not_disturb
+  alias: Do Not Disturb
+  description: Do Not Disturb mode
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: state
+      entity_id: binary_sensor.do_not_disturb
+  action:
+    # Google Home
+    - service: media_player.volume_set
+      entity_id: media_player.google_home_mini
+      data_template:
+        volume_level: >
+          {% if is_state('binary_sensor.do_not_disturb', 'on') %}
+            0.5
+          {% else %}
+            0.8
+          {% endif %}
+    # Humidifier
+    - service_template: >
+        {% if is_state('binary_sensor.do_not_disturb', 'on') %}
+          fan.xiaomi_miio_set_led_off
+        {% else %}
+          fan.xiaomi_miio_set_led_on
+        {% endif %}
+      entity_id: fan.humidifier
+    # Purifier
+    - service: fan.set_speed
+      entity_id: fan.purifier
+      data_template:
+        speed: >
+          {% if is_state('binary_sensor.do_not_disturb', 'on') %}
+            Silent
+          {% else %}
+            Auto
+          {% endif %}

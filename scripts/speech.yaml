@@ -14,6 +14,9 @@ announcement:
     - condition: state
       entity_id: group.family
       state: 'home'
+    - condition: state
+      entity_id: binary_sensor.do_not_disturb
+      state: 'off'
     - service: tts.google_say
       data_template:
         entity_id: media_player.google_home_mini
