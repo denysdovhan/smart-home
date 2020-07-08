@@ -12,7 +12,7 @@
       from: 'below_horizon'
       to: 'above_horizon'
   action:
-    - service_template: frontend.set_theme
+    - service: frontend.set_theme
       data_template:
         name: >
           {% if is_state('sun.sun', 'above_horizon') %}
