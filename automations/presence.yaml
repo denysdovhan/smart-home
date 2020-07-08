@@ -1,0 +1,28 @@
+- id: everyones_arriving
+  alias: Everyone is Arriving
+  description: Turn on things when people arriving
+  trigger:
+    platform: state
+    entity_id: group.family
+    from: 'not_home'
+    to: 'home'
+  action:
+    - service: fan.turn_on
+      entity_id: all
+
+- id: everyones_leaving
+  alias: Everyone is Leaving
+  description: Turn off things when people arriving
+  trigger:
+    platform: state
+    entity_id: group.family
+    from: 'home'
+    to: 'not_home'
+    for: '00:10:00'
+  action:
+    - service: fan.turn_off
+      entity_id: all
+    - service: light.turn_off
+      entity_id: all
+    - service: media_player.turn_off
+      entity_id: all
