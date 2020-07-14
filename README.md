@@ -51,6 +51,23 @@ What is included:
 
 Bin location: `[24500, 24500]`.
 
+## IP Addresses
+
+| IP |  MAC | Device |
+|:--:| ------ | --- |
+| `192.168.0.9` | `A0:9D:C1:B5:13:0F` | Koogeek P1 |
+| `192.168.0.10` | `A0:9D:C1:B5:0D:FE` | Koogeek P1 |
+| `192.168.0.93` | `B8:BC:5B:B5:08:F2` | Samsung Tizen TV |
+| `192.168.0.113` | `DC:A6:32:30:37:AD` | Home Assistant |
+| `192.168.0.128` | `5C:E5:0C:2A:5B:EB` | Yeelight Color Bulb 1S |
+| `192.168.0.129` | `44:23:7C:DB:99:95` | Yeelight Color Bulb 1S |
+| `192.168.0.130` | `04:CF:8C:92:29:A4` | Yeelight Color Bulb 1 |
+| `192.168.0.220` | `38:8B:59:2F:B6:75` | Google Home Mini |
+| `192.168.0.185` | `2C:CC:44:92:CF:A4` | PlayStation 4 Pro |
+| `192.168.0.186` | `64:90:C1:18:8B:79` | Roborock S5 Max |
+| `192.168.0.187` | `44:23:7C:B0:AB:BB` | Deerma Humidifier |
+| `192.168.0.188` | `44:23:7C:D8:72:56` | Xiaomi Air Purifier 3H |
+
 ## Ad Blocking List
 
 * https://adaway.org/hosts.txt
