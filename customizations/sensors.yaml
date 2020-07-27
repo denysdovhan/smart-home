@@ -28,15 +28,43 @@ sensor.front_door_sensor_linkquality:
 
 # Conditions Sensor
 sensor.living_room_conditions_sensor_temperature:
-  friendly_name: Living Room Temperature
+  friendly_name: Conditions Sensor Temperature
 sensor.living_room_conditions_sensor_pressure:
-  friendly_name: Living Room Pressure
+  friendly_name: Conditions Sensor Pressure
 sensor.living_room_conditions_sensor_humidity:
-  friendly_name: Living Room Humidity
+  friendly_name: Conditions Sensor Humidity
 sensor.living_room_conditions_sensor_battery:
   friendly_name: Conditions Sensor Battery
 sensor.living_room_conditions_sensor_linkquality:
   friendly_name: Conditions Sensor Linkquality
+
+# Temperature
+sensor.home_temperature:
+  friendly_name: "Home Temperature"
+  unit_of_measurement: '°C'
+  device_class: temperature
+sensor.living_room_temperature:
+  friendly_name: "Living Room Temperature"
+  unit_of_measurement: '°C'
+  device_class: temperature
+sensor.bedroom_temperature:
+  friendly_name: "Bedroom Temperature"
+  unit_of_measurement: '°C'
+  device_class: temperature
+
+# Temperature
+sensor.home_humidity:
+  friendly_name: "Home Humidity"
+  unit_of_measurement: '%'
+  device_class: humidity
+sensor.living_room_humidity:
+  friendly_name: "Living Room Humidity"
+  unit_of_measurement: '%'
+  device_class: humidity
+sensor.bedroom_humidity:
+  friendly_name: "Bedroom Humidity"
+  unit_of_measurement: '%'
+  device_class: humidity
 
 # Humidifier
 sensor.humidifier_humidity:

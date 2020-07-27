@@ -10,6 +10,7 @@ sensor:
     name: Bridge state
     state_topic: "zigbee2mqtt/bridge/state"
     icon: mdi:router-wireless
+  
   # System Monitor
   - platform: systemmonitor
     resources:
@@ -18,6 +19,7 @@ sensor:
       - type: swap_use_percent
       - type: processor_use
       - type: memory_use_percent
+
   # Humidifier
   - platform: template
     sensors:
@@ -27,6 +29,7 @@ sensor:
       humidifier_temperature:
         value_template: >-
           {{ state_attr('fan.humidifier', 'temperature') | round(2) }}
+
   # Purifier
   - platform: template
     sensors:
@@ -39,6 +42,49 @@ sensor:
       purifier_aqi:
         value_template: >-
           {{ state_attr('fan.purifier', 'aqi') }}
+
+  # Temperature
+  - platform: min_max
+    name: Home Temperature
+    type: mean
+    entity_ids:
+      - sensor.living_room_conditions_sensor_temperature
+      - sensor.humidifier_temperature
+      - sensor.purifier_temperature
+  - platform: min_max
+    name: Living Room Temperature
+    type: mean
+    entity_ids:
+      - sensor.living_room_conditions_sensor_temperature
+      - sensor.purifier_temperature
+  - platform: min_max
+    name: Bedroom Temperature
+    type: mean
+    entity_ids:
+      - sensor.living_room_conditions_sensor_temperature
+      - sensor.humidifier_temperature
+
+  # Humidity
+  - platform: min_max
+    name: Home Humidity
+    type: mean
+    entity_ids:
+      - sensor.living_room_conditions_sensor_humidity
+      - sensor.humidifier_humidity
+      - sensor.purifier_humidity
+  - platform: min_max
+    name: Living Room Humidity
+    type: mean
+    entity_ids:
+      - sensor.living_room_conditions_sensor_humidity
+      - sensor.purifier_humidity
+  - platform: min_max
+    name: Bedroom Humidity
+    type: mean
+    entity_ids:
+      - sensor.living_room_conditions_sensor_humidity
+      - sensor.humidifier_humidity
+
   # Eco City AQI
   - platform: rest
     name: nyvky_aqi
@@ -83,7 +129,9 @@ sensor:
       - longitude
       - timezone
       - pollutants
+
   # Kyiv Smart Card
+  #
   # FIXME: Token gets invalid every 24 hours. Needs renewal.
   #
   # - platform: rest

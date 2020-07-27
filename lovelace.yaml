@@ -1,0 +1,192 @@
+# TODO: Move this to lovelace after merging of https://github.com/home-assistant/core/pull/37561
+
+title: Дім
+views:
+  - path: home
+    title: Дім
+    icon: mdi:home
+    panel: true
+    cards:
+      - type: custom:layout-card
+        layout: vertical
+        max_columns: 3
+        cards:
+          - type: markdown
+            content: >
+              {% set greeting = [
+                  'Вітаю вдома',
+                  'Привіт'
+                ] | random
+              %}
+
+              ## {{ greeting }}, {{ user }}!
+          - type: horizontal-stack
+            cards:
+              - type: picture-entity
+                name: Денис
+                entity: person.denys
+                image: /local/images/denys.jpg
+                state_filter:
+                  home: none
+                  wix: brightness(90%) sepia(100%) hue-rotate(15deg)
+                  citrusdev: brightness(90%) sepia(70%) hue-rotate(0deg) saturate(200%)
+                  away: grayscale(1)
+              - type: picture-entity
+                name: Маша
+                entity: person.marry
+                image: /local/images/marry.jpg
+                state_filter:
+                  home: none
+                  wix: brightness(90%) sepia(100%) hue-rotate(15deg)
+                  citrusdev: brightness(90%) sepia(70%) hue-rotate(0deg) saturate(200%)
+                  away: grayscale(1)
+          - type: map
+            dark_mode: false
+            hours_to_show: 12
+            default_zoom: 13
+            entities:
+              - entity: person.marry
+              - entity: person.denys
+
+          - break
+
+          - type: weather-forecast
+            entity: weather.nyvky
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                name: Температура вдома
+                entities:
+                  - sensor.home_temperature
+                line_color: '#E53935'
+                hours_to_show: 12
+                points_per_hour: 2
+                animate: true
+                hour24: true
+              - type: custom:mini-graph-card
+                name: Вологість вдома
+                entities:
+                  - sensor.home_humidity
+                line_color: '#2AD4FF'
+                hours_to_show: 12
+                points_per_hour: 2
+                animate: true
+                hour24: true
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                name: Тиск вдома
+                entities:
+                  - sensor.living_room_conditions_sensor_pressure
+                line_color: '#5167ed'
+                hours_to_show: 12
+                points_per_hour: 2
+                animate: true
+                hour24: true
+              - type: custom:mini-graph-card
+                name: UV-індекс
+                entities:
+                  - sensor.current_uv_index
+                # line_color: '#FFD700'
+                hours_to_show: 12
+                points_per_hour: 1
+                color_thresholds:
+                  - value: 0
+                    color: '#FFD700'
+                  - value: 6
+                    color: '#F9A825'
+                  - value: 8
+                    color: '#EF6C00'
+                  - value: 11
+                    color: '#B71C1C'
+                  - value: 20
+                    color: '#6A1B9A'
+                animate: true
+                hour24: true
+                show:
+                  graph: bar
+          - type: 'custom:mini-graph-card'
+            name: Якість повітря
+            entities:
+              - entity: sensor.purifier_aqi
+                show_state: true
+                state_adaptive_color: true
+              - entity: sensor.nyvky_aqi
+                show_state: true
+                state_adaptive_color: true
+                color: '#a8a8a8'
+            points_per_hour: 2
+            hours_to_show: 12
+            color_thresholds:
+              - value: 50
+                color: '#17a355'
+              - value: 100
+                color: '#e9d109'
+              - value: 200
+                color: '#ea270d'
+              - value: 300
+                color: '#7c2c85'
+              - value: 600
+                color: '#66001f'
+            animate: true
+            hour24: true
+  - path: living-room
+    title: Вітальня
+    icon: mdi:sofa
+    panel: true
+    cards:
+      - type: custom:layout-card
+        layout: auto
+        max_collumns: 3
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                name: Температура у вітальні
+                entities:
+                  - sensor.living_room_temperature
+                line_color: '#E53935'
+                hours_to_show: 12
+                points_per_hour: 2
+                animate: true
+                hour24: true
+                extrema: true
+              - type: custom:mini-graph-card
+                name: Вологість у вітальні
+                entities:
+                  - sensor.living_room_humidity
+                line_color: '#2AD4FF'
+                hours_to_show: 12
+                points_per_hour: 2
+                animate: true
+                hour24: true
+  - path: bedroom
+    title: Спальня
+    icon: mdi:bed-empty
+    panel: true
+    cards:
+      - type: custom:layout-card
+        layout: auto
+        max_collumns: 3
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                name: Температура у спальні
+                entities:
+                  - sensor.bedroom_temperature
+                line_color: '#E53935'
+                hours_to_show: 12
+                points_per_hour: 2
+                animate: true
+                hour24: true
+                extrema: true
+              - type: custom:mini-graph-card
+                name: Вологість у спальні
+                entities:
+                  - sensor.bedroom_humidity
+                line_color: '#2AD4FF'
+                hours_to_show: 12
+                points_per_hour: 2
+                animate: true
+                hour24: true

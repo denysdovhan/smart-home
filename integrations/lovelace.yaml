@@ -1,0 +1,15 @@
+#
+# Lovelace
+#
+# https://www.home-assistant.io/lovelace
+#
+
+lovelace:
+  mode: storage
+  dashboards:
+    lovelace-dashboard:
+      mode: yaml
+      title: Home
+      icon: mdi:home
+      show_in_sidebar: true
+      filename: lovelace.yaml
