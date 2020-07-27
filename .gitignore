@@ -9,6 +9,7 @@
 __pycache__
 
 # Ignore folders
+.ssh
 .storage
 .cloud
 .google.token
