@@ -26,12 +26,15 @@
         {% endif %}
       entity_id: fan.humidifier
     # Purifier
+    # Set Purifier speed only when it's running
     - service: fan.set_speed
       entity_id: fan.purifier
       data_template:
         speed: >
-          {% if is_state('binary_sensor.do_not_disturb', 'on') %}
-            Silent
-          {% else %}
-            Auto
+          {% if is_state('fan.purifier', 'on') %}
+            {% if is_state('binary_sensor.do_not_disturb', 'on') %}
+              Silent
+            {% else %}
+              Auto
+            {% endif %}
           {% endif %}
