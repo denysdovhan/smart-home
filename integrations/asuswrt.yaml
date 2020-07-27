@@ -1,0 +1,10 @@
+#
+# ASUSWRT
+#
+# https://www.home-assistant.io/docs/asuswrt/
+#
+
+asuswrt:
+  host: !secret asus_host
+  username: !secret asus_username
+  ssh_key: !secret asus_ssh_key
