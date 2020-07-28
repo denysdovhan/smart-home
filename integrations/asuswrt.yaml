@@ -8,3 +8,10 @@ asuswrt:
   host: !secret asus_host
   username: !secret asus_username
   ssh_key: !secret asus_ssh_key
+  interface: br0
+  sensors:
+    - devices
+    - download
+    - upload
+    - download_speed
+    - upload_speed
