@@ -222,53 +222,6 @@ views:
             title: AdGuard
             type: entities
         type: vertical-stack
-      - cards:
-          - detail: 2
-            entity: sensor.speedtest_download
-            graph: line
-            type: sensor
-          - detail: 2
-            entity: sensor.speedtest_upload
-            graph: line
-            hours_to_show: 12
-            type: sensor
-        type: horizontal-stack
-      - cards:
-          - cards:
-              - entity: sensor.disk_use_percent
-                max: 100
-                min: 0
-                type: gauge
-              - entity: sensor.swap_use_percent
-                max: 100
-                min: 0
-                type: gauge
-            type: horizontal-stack
-          - cards:
-              - entity: sensor.processor_use
-                max: 100
-                min: 0
-                type: gauge
-              - entity: sensor.memory_use_percent
-                max: 100
-                min: 0
-                type: gauge
-            type: horizontal-stack
-        type: vertical-stack
-      - entities:
-          - entity: input_boolean.zigbee_permit_join
-          - entity: timer.zigbee_permit_join
-          - entity: sensor.bridge_state
-        show_header_toggle: false
-        title: Zigbee
-        type: entities
     icon: 'mdi:chip'
     path: system
     title: System
-  - badges: []
-    cards:
-      - entity: fan.purifier
-        type: 'custom:purifier-card'
-    icon: 'mdi:play'
-    path: playground
-    title: Пісочниця
