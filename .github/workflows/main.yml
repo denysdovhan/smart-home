@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    # Copies all stub file to the root of the repo
+    - name: Prepare Stubs
+      run: cp -R .stubs/* .
+
+    # Checks 
+    - name: Check Home Assistant Configuration
+      uses: ludeeus/action-ha-config-check@master
