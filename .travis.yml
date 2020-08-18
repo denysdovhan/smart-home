@@ -1,9 +1,0 @@
-language: python
-python:
-  - "3.7"
-before_install:
-  - cp -R .stubs/* .
-install:
-  - pip3 install homeassistant
-script:
-  - hass -c . --script check_config --info all
