@@ -191,6 +191,52 @@ views:
                 animate: true
                 hour24: true
 
+  - path: cameras
+    title: Камери
+    icon: mdi:camcorder-box
+    panel: true
+    cards:
+      - type: custom:layout-card
+        layout: vertical
+        max_collumns: 2
+        cards:
+          - type: picture-glance
+            title: Софійська площа
+            camera_image: camera.sofiyska
+            camera_view: live
+            aspect_ratio: 50%
+            entities: []
+            hold_action:
+              action: call-service
+              service: script.stream_camera_to_apple_tv
+              service_data:
+                camera: camera.sofiyska
+          - type: picture-glance
+            title: Площа перемоги
+            camera_image: camera.peremohy
+            camera_view: live
+            aspect_ratio: 50%
+            entities: []
+            hold_action:
+              action: call-service
+              service: script.stream_camera_to_apple_tv
+              service_data:
+                camera: camera.sofiyska
+
+          - break
+
+          - type: picture-glance
+            title: Чернівці
+            camera_image: camera.chernivtsi
+            camera_view: live
+            aspect_ratio: 50%
+            entities: []
+            hold_action:
+              action: call-service
+              service: script.stream_camera_to_apple_tv
+              service_data:
+                camera: camera.sofiyska
+
   - path: system
     title: Система
     icon: 'mdi:chip'
