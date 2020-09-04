@@ -16,3 +16,21 @@ scene split:
   #       state: off
   #     switch.tv_lights:
   #       state: off
+  - id: evening_lights
+    name: Evening Lights
+    entities:
+      light.bedroom_bed_lights:
+        state: on
+      light.bedroom_floor_lamp:
+        state: on
+        brightness: 1
+        rgb_color: [255, 0, 255]
+        flowing: true
+      light.bedroom_ceiling_light_light:
+        state: off
+      light.living_room_tv_lights:
+        state: on
+      light.living_room_main_lights:
+        state: off
+      light.living_room_table_lights:
+        state: off
