@@ -41,7 +41,6 @@ views:
                   citrusdev: brightness(90%) sepia(70%) hue-rotate(0deg) saturate(200%)
                   away: grayscale(1)
           - type: map
-            dark_mode: false
             hours_to_show: 12
             default_zoom: 13
             entities:
@@ -282,7 +281,7 @@ views:
                 name: Пристроїв підключено
                 entities:
                   - sensor.asuswrt_devices_connected
-                line_color: '#BD71FF'
+                line_color: '#FFDE59'
                 hours_to_show: 24
                 aggregate_func: first
                 animate: true
@@ -299,7 +298,7 @@ views:
                   yellow: 50
                   red: 75
               - type: gauge
-                name: Операційна пам’ять
+                name: Оперативна пам’ять
                 entity: sensor.memory_use_percent
                 severity:
                   green: 0
