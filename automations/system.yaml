@@ -1,5 +1,6 @@
 - id: automatic_theme_change
   alias: Automatic Theme Change
+  initial_state: false
   trigger:
     - platform: homeassistant
       event: start
