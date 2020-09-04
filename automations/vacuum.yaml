@@ -1,21 +1,34 @@
-- id: vacuum_start_cleaning
-  alias: Vacuum Start Cleaning
+- id: vacuum_regular_cleaning
+  alias: Vacuum Regular Cleaning
   description: Regular vacuum cleaning every two days
   trigger:
-    - platform: time
-      at: '13:00'
+    - platform: time_pattern
+      hours: '/2'
+      minutes: 0
+      seconds: 0
     - platform: state
       entity_id: group.family
       from: 'home'
       to: 'not_home'
       for: '00:10:00'
   condition:
-    # There was no cleaning in past 24 hours
+      # Robot is docked
+    - condition: state
+      entity_id: vacuum.roborock
+      state: 'docked'
+      # Time is between 12 and 21
+    - condition: time
+      after: '12:00:00'
+      before: '21:00:00'
+      # Time for cleaning or last cleaning was short
     - condition: template
       value_template: >
-        {% set last_cleaning = as_timestamp(state_attr('vacuum.roborock', 'clean_start')) | int %}
+        {% set last_cleaning_start = as_timestamp(state_attr('vacuum.roborock', 'clean_start')) | int %}
+        {% set last_cleaning_stop = as_timestamp(state_attr('vacuum.roborock', 'clean_stop')) | int %}
         {% set current_time = as_timestamp(now()) | int %}
-        {{ current_time - last_cleaning > (60 * 60 * 24) }}
+        {% set time_for_cleaning = current_time - last_cleaning_start > (60 * 60 * 36) %}
+        {% set last_cleaning_was_short = last_cleaning_stop - last_cleaning_stop < (60 * 5) %}
+        {{ time_for_cleaning or last_cleaning_was_short }}
   action:
     - service: script.announcement
       data_template:
