@@ -27,7 +27,7 @@
         {% set last_cleaning_stop = as_timestamp(state_attr('vacuum.roborock', 'clean_stop')) | int %}
         {% set current_time = as_timestamp(now()) | int %}
         {% set time_for_cleaning = current_time - last_cleaning_start > (60 * 60 * 36) %}
-        {% set last_cleaning_was_short = last_cleaning_stop - last_cleaning_stop < (60 * 5) %}
+        {% set last_cleaning_was_short = last_cleaning_stop - last_cleaning_start < (60 * 5) %}
         {{ time_for_cleaning or last_cleaning_was_short }}
   action:
     - service: script.announcement

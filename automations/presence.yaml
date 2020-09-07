@@ -1,6 +1,6 @@
 - id: everyones_arriving
   alias: Everyone is Arriving
-  description: Turn on things when people arriving
+  description: Turn on things when people are arriving
   trigger:
     platform: state
     entity_id: group.family
@@ -12,7 +12,7 @@
 
 - id: everyones_leaving
   alias: Everyone is Leaving
-  description: Turn off things when people arriving
+  description: Turn off things when people are leaving
   trigger:
     platform: state
     entity_id: group.family
