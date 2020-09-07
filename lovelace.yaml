@@ -41,11 +41,11 @@ views:
                   citrusdev: brightness(90%) sepia(70%) hue-rotate(0deg) saturate(200%)
                   away: grayscale(1)
           - type: map
+            entities:
+              - person.marry
+              - person.denys
             hours_to_show: 12
             default_zoom: 13
-            entities:
-              - entity: person.marry
-              - entity: person.denys
 
           - break
 
@@ -190,9 +190,84 @@ views:
                 animate: true
                 hour24: true
 
+  - path: car
+    title: Автомобіль
+    icon: mdi:car
+    panel: true
+    cards:
+      - type: custom:layout-card
+        layout: vertical
+        max_collumns: 2
+        cards:
+          - type: entities
+            title: Сигналізація
+            state_color: true
+            show_header_toggle: false
+            entities:
+              - lock.toyota_security
+              - switch.toyota_horn
+              - switch.toyota_engine
+          - type: map
+            entities:
+              - device_tracker.toyota_location
+            hours_to_show: 24
+            default_zoom: 13
+            aspect_ratio: 16x13.3 # Maintain size of a row
+          
+          - break
+
+          - type: entities
+            title: Датчики
+            entities:
+              - sensor.toyota_balance
+              - binary_sensor.toyota_doors
+              - binary_sensor.toyota_hood
+              - binary_sensor.toyota_trunk
+              - binary_sensor.toyota_alarm
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                name: Температура салону
+                entities:
+                  - sensor.toyota_interior_temperature
+                line_color: '#E53935'
+                hours_to_show: 12
+                points_per_hour: 2
+                animate: true
+                hour24: true
+              - type: custom:mini-graph-card
+                name: Температура двигуна
+                entities:
+                  - sensor.toyota_engine_temperature
+                line_color: '#f9bb10'
+                hours_to_show: 12
+                points_per_hour: 2
+                animate: true
+                hour24: true
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                name: Акумулятор
+                entities:
+                  - sensor.toyota_battery
+                line_color: '#2AD4FF'
+                hours_to_show: 12
+                points_per_hour: 2
+                animate: true
+                hour24: true
+              - type: custom:mini-graph-card
+                name: Сигнал GSM
+                entities:
+                  - sensor.toyota_gsm_signal
+                line_color: '#08F900'
+                hours_to_show: 12
+                points_per_hour: 2
+                animate: true
+                hour24: true
+
   - path: cameras
     title: Камери
-    icon: mdi:camcorder-box
+    icon: mdi:video-box
     panel: true
     cards:
       - type: custom:layout-card
@@ -202,17 +277,6 @@ views:
           - type: picture-glance
             title: Софійська площа
             camera_image: camera.sofiyska
-            camera_view: live
-            aspect_ratio: 50%
-            entities: []
-            hold_action:
-              action: call-service
-              service: script.stream_camera_to_apple_tv
-              service_data:
-                camera: camera.sofiyska
-          - type: picture-glance
-            title: Площа перемоги
-            camera_image: camera.peremohy
             camera_view: live
             aspect_ratio: 50%
             entities: []
@@ -234,7 +298,7 @@ views:
               action: call-service
               service: script.stream_camera_to_apple_tv
               service_data:
-                camera: camera.sofiyska
+                camera: camera.chernivtsi
 
   - path: system
     title: Система

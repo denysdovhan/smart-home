@@ -95,3 +95,13 @@ sensor.nyvky_aqi:
   friendly_name: Nyvky AQI
   icon: mdi:cloud
   unit_of_measurement: 'AQI'
+
+# Car
+sensor.toyota_balance:
+  unit_of_measurement: '₴'
+sensor.toyota_battery:
+  icon: mdi:car-battery 
+device_tracker.toyota_location:
+  entity_picture: /local/images/toyota.png
+binary_sensor.toyota_doors:
+  icon: mdi:car-door
