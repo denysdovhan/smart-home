@@ -11,8 +11,8 @@ binary_sensor:
   # Times of the Day
   - platform: tod
     name: Do Not Disturb
-    after: 01:00
-    before: 08:00
+    after: '01:00'
+    before: '10:00'
   # Humidifier
   - platform: template
     sensors:
