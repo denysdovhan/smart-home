@@ -82,9 +82,9 @@ class smartthingstv:
             API_COMMAND_DATA = "{'commands':[{'component': 'main','capability': 'audioVolume','command': 'volumeDown'}]}"
             cmdurl = requests.post(API_COMMAND,data=API_COMMAND_DATA ,headers=REQUEST_HEADERS)
       elif cmdtype == "audiomute": # mutes audio
-         if self._cloud_muted == False:
+         if command == "on":
             cmdurl = requests.post(API_COMMAND,data=COMMAND_MUTE ,headers=REQUEST_HEADERS)
-         else:
+         elif command == "off":
             cmdurl = requests.post(API_COMMAND,data=COMMAND_UNMUTE ,headers=REQUEST_HEADERS)
       elif cmdtype == "turn_off": # turns off
          cmdurl = requests.post(API_COMMAND,data=COMMAND_POWER_OFF ,headers=REQUEST_HEADERS)

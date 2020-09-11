@@ -149,13 +149,24 @@ class SamsungTVWS:
             sslopt=sslopt
         )
 
-        response = self._process_api_response(self.connection.recv())
-        if response.get('data') and response.get('data').get('token'):
-            token = response.get('data').get('token')
-            _LOGGING.debug('Got token %s', token)
-            self._set_token(token)
+        completed = False
 
-        if response['event'] != 'ms.channel.connect':
+        try:
+            response = self._process_api_response(self.connection.recv())
+        except:
+            response = False
+
+        if response and response.get("event", "") == "ms.channel.connect":
+            conn_data = response.get("data")
+            completed = True
+            token = conn_data.get("token")
+            if token:
+                _LOGGING.debug("Got token %s", token)
+                self._set_token(token)
+
+        if not completed:
+            # For correct auth
+            self.timeout = 45
             self.close()
             raise exceptions.ConnectionFailure(response)
 
