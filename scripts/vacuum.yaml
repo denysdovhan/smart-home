@@ -15,6 +15,26 @@
 # 19 - Bathroom
 # 20 - Kitchen
 
+vacuum_maintenance:
+  alias: Vacuum Maintenance
+  icon: mdi:screwdriver
+  sequence:
+    - service: vacuum.send_command
+      entity_id: vacuum.roborock
+      data:
+        command: app_goto_target
+        params: [24500, 24500] # Coordinates near the trash bin
+
+vacuum_access:
+  alias: Vacuum Access
+  icon: mdi:map-marker-distance
+  sequence:
+    - service: vacuum.send_command
+      entity_id: vacuum.roborock
+      data:
+        command: app_goto_target
+        params: [26570, 28071] # Coordinates in front of the bed
+
 vacuum_clean_living_room:
   alias: Vacuum Clean Living Room
   icon: mdi:sofa

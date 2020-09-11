@@ -99,7 +99,7 @@
         message: "Ой! Сталась помилка: {{ state_attr('vacuum.roborock', 'error') }}"
 
 - id: vacuum_ask_maintenance
-  alias: Vacuum Maintenance
+  alias: Vacuum Ask Maintenance
   description: Send vacuum near trash bin and ask for maintenance
   trigger:
     platform: state
@@ -126,8 +126,4 @@
           - "Робот трудився для вас, а тепер потребує вашої уваги. Почистіть його та наберіть нової води у бак!"
           - "{{ state_attr('vacuum.roborock', 'friendly_name') }} потребує піклування про себе. Наберіть води та почистіть його!"
           - "{{ state_attr('vacuum.roborock', 'friendly_name') }} просить про обслуговування. Вкиньте сміття та наберіть нової води."
-    - service: vacuum.send_command
-      entity_id: vacuum.roborock
-      data:
-        command: app_goto_target
-        params: [24500, 24500] # Coordinates near the trash bin
+    - service: script.vacuum_maintenance
