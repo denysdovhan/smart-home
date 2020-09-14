@@ -7,8 +7,16 @@
     from: 'not_home'
     to: 'home'
   action:
+    - wait_template: "{{ is_state('binary_sensor.front_door_sensor_contact', 'on') }}"
+      timeout: '00:30:00'
+      continue_on_timeout: false
     - service: fan.turn_on
       entity_id: all
+    # TODO: TESTING THIS. Should turn on lights, tv, etc
+    - service: notify.denys
+      data_template:
+        title: 'Вітаю вдома 🎉'
+        message: "Вмикаю світло, телевізор, вентилятори та інші пристрої…"
 
 - id: everyones_leaving
   alias: Everyone is Leaving
