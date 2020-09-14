@@ -256,7 +256,7 @@ views:
           - type: 'custom:xiaomi-vacuum-map-card'
             entity: vacuum.roborock
             map_image: /local/images/floorplan.png
-            default_mode: zoned_cleanup
+            default_mode: go_to_target
             debug: false
             calibration_points:
               - map:
