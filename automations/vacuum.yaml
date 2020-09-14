@@ -104,7 +104,8 @@
   trigger:
     platform: state
     entity_id: vacuum.roborock
-    to: 'docked'
+    from: 'cleaning'
+    to: 'returning'
   condition:
     # Every 10th cleaning
     - condition: template
@@ -113,7 +114,7 @@
     # And there was at least one cleaning after previous maintenance
     - condition: template
       value_template: >
-        {% set last_maintenance = as_timestamp(state_attr('automation.vacuum_maintenance', 'last_triggered')) | int %}
+        {% set last_maintenance = as_timestamp(state_attr('script.vacuum_maintenance', 'last_triggered')) | int %}
         {% set last_cleaning = as_timestamp(state_attr('vacuum.roborock', 'clean_start')) | int %}
         {{ last_cleaning > last_maintenance }}
   action:
