@@ -1,0 +1,16 @@
+#
+# Switch
+#
+# https://www.home-assistant.io/integrations/switch/
+#
+
+switch:
+  - platform: flux
+    name: Flux
+    disable_brightness_adjust: true
+    start_colortemp: 10000
+    mode: mired
+    lights:
+      - light.living_room_table_lights
+      - light.living_room_main_lights
+      - light.bedroom_ceiling_light_light
