@@ -26,6 +26,10 @@ scene split:
         state: off
       light.living_room_table_lights:
         state: off
+      automation.turn_on_bedroom_lights_on_movement:
+        state: off
+      automation.turn_off_bedroom_lights_without_movement:
+        state: off
 
   - id: normal_lights
     name: Normal Lights
@@ -41,6 +45,10 @@ scene split:
       light.living_room_main_lights:
         state: off
       light.living_room_table_lights:
+        state: on
+      automation.turn_on_bedroom_lights_on_movement:
+        state: on
+      automation.turn_off_bedroom_lights_without_movement:
         state: on
 
   - id: normal_lights
@@ -59,3 +67,7 @@ scene split:
         state: on
       light.living_room_table_lights:
         state: on
+      automation.turn_on_bedroom_lights_on_movement:
+        state: off
+      automation.turn_off_bedroom_lights_without_movement:
+        state: off
