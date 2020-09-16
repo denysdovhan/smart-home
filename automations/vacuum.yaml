@@ -16,10 +16,10 @@
     - condition: state
       entity_id: vacuum.roborock
       state: 'docked'
-      # Time is between 12 and 21
-    - condition: time
-      after: '12:00:00'
-      before: '21:00:00'
+      # Only on activity time
+    - condition: state
+      entity_id: binary_sensor.activity_time
+      state: 'on'
       # Time for cleaning or last cleaning was short
     - condition: template
       value_template: >
