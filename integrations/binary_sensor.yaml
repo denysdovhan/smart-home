@@ -10,9 +10,21 @@ binary_sensor:
     country: UA
   # Times of the Day
   - platform: tod
+    name: Activity Time
+    after: '13:00'
+    before: '19:00'
+  - platform: tod
+    name: Evening Time
+    after: sunset
+    before: '23:00'
+  - platform: tod
+    name: Night Time
+    after: '23:00'
+    before: '1:00'
+  - platform: tod
     name: Do Not Disturb
     after: '01:00'
-    before: '10:00'
+    before: '9:00'
   # Humidifier
   - platform: template
     sensors:
