@@ -25,10 +25,3 @@ binary_sensor:
     name: Do Not Disturb
     after: '01:00'
     before: '9:00'
-  # Humidifier
-  - platform: template
-    sensors:
-      humidifier_no_watter:
-        friendly_name: "Humidifier No Watter"
-        value_template: >-
-          {{ state_attr('fan.humidifier', 'no_water') }}

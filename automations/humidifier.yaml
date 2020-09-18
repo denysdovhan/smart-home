@@ -3,10 +3,11 @@
   description: Notify when humidifier's water tank is empty
   trigger:
     platform: state
-    entity_id: binary_sensor.humidifier_no_watter
+    entity_id: fan.humidifier
+    attribute: no_water
   action:
     - service: script.announcement
-      data_template:
+      data:
         title: "Зволожувач 💦"
         messages:
           - "Зволожувач спорожнів — наповніть бак водою!"

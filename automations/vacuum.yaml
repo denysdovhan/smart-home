@@ -22,7 +22,7 @@
       state: 'on'
       # Time for cleaning or last cleaning was short
     - condition: template
-      value_template: >
+      value_template: >-
         {% set last_cleaning_start = as_timestamp(state_attr('vacuum.roborock', 'clean_start')) | int %}
         {% set last_cleaning_stop = as_timestamp(state_attr('vacuum.roborock', 'clean_stop')) | int %}
         {% set current_time = as_timestamp(now()) | int %}
@@ -31,7 +31,7 @@
         {{ time_for_cleaning or last_cleaning_was_short }}
   action:
     - service: script.announcement
-      data_template:
+      data:
         title: "Пилосос 🧹"
         messages:
           - "Починаємо планове прибирання вдома."
@@ -67,7 +67,7 @@
     to: 'returning'
   action:
     - service: script.announcement
-      data_template:
+      data:
         title: "Пилосос 🧹"
         messages:
           - "{{ state_attr('vacuum.roborock', 'friendly_name') }} закінчив прибирання і повертається на базу."
@@ -85,7 +85,7 @@
     to: 'error'
   action:
     - service: script.announcement
-      data_template:
+      data:
         title: "Пилосос 🧹"
         messages:
           - "{{ state_attr('vacuum.roborock', 'friendly_name') }} зіткнувся з помилкою: {{ state_attr('vacuum.roborock', 'error') }}"
@@ -94,7 +94,7 @@
           - "Ой! З роботом сталась пригода: {{ state_attr('vacuum.roborock', 'error') }}"
           - "Увага! Виникла непередбачувана ситуація з роботом: {{ state_attr('vacuum.roborock', 'error') }}"
     - service: notify.all
-      data_template:
+      data:
         title: "Пилосос 🧹"
         message: "Ой! Сталась помилка: {{ state_attr('vacuum.roborock', 'error') }}"
 
@@ -119,7 +119,7 @@
         {{ last_cleaning > last_maintenance }}
   action:
     - service: script.announcement
-      data_template:
+      data:
         title: "Пилосос 🧹"
         messages:
           - "Потрібно обслужити пилосос: почистисти та наберати свіжої води."

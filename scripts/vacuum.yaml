@@ -40,7 +40,7 @@ vacuum_clean_living_room:
   icon: mdi:sofa
   sequence:
     - service: script.announcement
-      data_template:
+      data:
         title: "Пилосос 🧹"
         messages:
           - "Починаю прибирання вітальні та кухні."
@@ -58,7 +58,7 @@ vacuum_clean_kitchen:
   icon: mdi:silverware-fork-knife
   sequence:
     - service: script.announcement
-      data_template:
+      data:
         title: "Пилосос 🧹"
         messages:
           - "Починаю прибирання на кухні."
@@ -80,7 +80,7 @@ vacuum_clean_bedroom:
   icon: mdi:bed-empty
   sequence:
     - service: script.announcement
-      data_template:
+      data:
         title: "Пилосос 🧹"
         messages:
           - "Починаю прибирання у спальні."
@@ -98,7 +98,7 @@ vacuum_clean_corridor:
   icon: mdi:hanger
   sequence:
     - service: script.announcement
-      data_template:
+      data:
         title: "Пилосос 🧹"
         messages:
           - "Починаю прибирання коридору."
@@ -116,7 +116,7 @@ vacuum_clean_bathroom:
   icon: mdi:shower
   sequence:
     - service: script.announcement
-      data_template:
+      data:
         title: "Пилосос 🧹"
         messages:
           - "Починаю прибирання ванни."

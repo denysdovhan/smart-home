@@ -6,6 +6,6 @@
     event_data:
       action: call_service
   action:
-  - service_template: '{{ trigger.event.data.service }}'
-    data_template:
+  - service: '{{ trigger.event.data.service }}'
+    data:
       entity_id: '{{ trigger.event.data.entity_id }}'

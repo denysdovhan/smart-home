@@ -10,7 +10,7 @@
     # Google Home
     - service: media_player.volume_set
       entity_id: media_player.google_home_mini
-      data_template:
+      data:
         volume_level: >
           {% if is_state('binary_sensor.do_not_disturb', 'on') %}
             0.5
@@ -18,7 +18,7 @@
             0.8
           {% endif %}
     # Humidifier
-    - service_template: >
+    - service: >
         {% if is_state('binary_sensor.do_not_disturb', 'on') %}
           fan.xiaomi_miio_set_led_off
         {% else %}
@@ -29,7 +29,7 @@
     # Set Purifier speed only when it's running
     - service: fan.set_speed
       entity_id: fan.purifier
-      data_template:
+      data:
         speed: >
           {% if is_state('fan.purifier', 'on') %}
             {% if is_state('binary_sensor.do_not_disturb', 'on') %}

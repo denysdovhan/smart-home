@@ -7,14 +7,17 @@
     from: 'not_home'
     to: 'home'
   action:
-    - wait_template: "{{ is_state('binary_sensor.front_door_sensor_contact', 'on') }}"
+    - wait_for_trigger:
+      - platform: state
+        entity_id: binary_sensor.front_door_sensor_contact
+        to: 'on'
       timeout: '00:30:00'
       continue_on_timeout: false
     - service: fan.turn_on
       entity_id: all
     # TODO: TESTING THIS. Should turn on lights, tv, etc
     - service: notify.denys
-      data_template:
+      data:
         title: 'Вітаю вдома 🎉'
         message: "Вмикаю світло, телевізор, вентилятори та інші пристрої…"
 
@@ -42,7 +45,6 @@
   trigger:
     platform: state
     entity_id: binary_sensor.bedroom_movement_sensor_occupancy
-    from: 'off'
     to: 'on'
   condition:
     - condition: state
@@ -59,7 +61,6 @@
   trigger:
     platform: state
     entity_id: binary_sensor.bedroom_movement_sensor_occupancy
-    from: 'on'
     to: 'off'
     for: '00:05:00'
   condition:

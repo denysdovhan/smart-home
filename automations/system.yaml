@@ -14,7 +14,7 @@
       to: 'above_horizon'
   action:
     - service: frontend.set_theme
-      data_template:
+      data:
         name: >
           {% if is_state('sun.sun', 'above_horizon') %}
             default
@@ -31,7 +31,7 @@
       to: 'on'
   action:
     service: notify.denys
-    data_template:
+    data:
       title: 'New Home Assistant Release 🎉'
       message: "Home Assistant  {{ state_attr('binary_sensor.updater', 'newest_version') }}  is now available."
 
@@ -41,7 +41,7 @@
   mode: single
   trigger:
     platform: time_pattern
-    minutes: '/60'
+    hours: /1
   condition:
     # Check only when sun is above horizon and not more than once per 59 minutes
     - condition: state
@@ -61,6 +61,6 @@
     event_type: transmission_downloaded_torrent
   action:
     - service: notify.all
-      data_template:
+      data:
         title: "Transmission ⬇️"
         message: "{{trigger.event.data.name}} завантажено!"

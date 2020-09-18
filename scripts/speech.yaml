@@ -5,11 +5,13 @@ announcement:
       description: A title for a push-notification
     messages:
       description: One of these messages will be randomly picked for announcement
+  variables:
+    message: "{{ messages | random }}"
   sequence:
     - service: notify.denys
-      data_template:
+      data:
         title: "{{ title }}"
-        message: "{{ messages | random }}"
+        message: "{{ message }}"
     # Announce on speaker only when someone is home
     - choose:
       - conditions:
@@ -21,6 +23,6 @@ announcement:
           state: 'off'
         sequence:
           - service: tts.google_say
-            data_template:
+            data:
               entity_id: media_player.google_home_mini
-              message: "{{ messages | random }}"
+              message: "{{ message }}"

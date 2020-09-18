@@ -7,13 +7,13 @@ stream_camera_to_apple_tv:
       example: camera.chernivtsi
   sequence:
     - service: script.announcement
-      data_template:
+      data:
         title: "Камера 🎥"
         messages:
           - "Погляньте на телевізор! Зараз там буде {{ state_attr(camera, 'friendly_name') }}"
           - "Камера {{ state_attr(camera, 'friendly_name') }} починає стрімити на телевізор."
           - "Виводжу зображення з камери {{ state_attr(camera, 'friendly_name') }} на телевізор."
     - service: camera.play_stream
-      data_template:
+      data:
         entity_id: "{{ camera }}"
         media_player: media_player.apple_tv
