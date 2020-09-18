@@ -7,19 +7,30 @@
     from: 'not_home'
     to: 'home'
   action:
+    # Wait for door to open
     - wait_for_trigger:
       - platform: state
         entity_id: binary_sensor.front_door_sensor_contact
         to: 'on'
       timeout: '00:30:00'
       continue_on_timeout: false
+    # Turn on fans
     - service: fan.turn_on
       entity_id: all
-    # TODO: TESTING THIS. Should turn on lights, tv, etc
-    - service: notify.denys
-      data:
-        title: 'Вітаю вдома 🎉'
-        message: "Вмикаю світло, телевізор, вентилятори та інші пристрої…"
+    # Turn on lights after sunset
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: sun.sun
+              state: 'below_horizon'
+          sequence:
+            - service: scene.turn_on
+              data:
+                entity_id: scene.evening_lights
+                transition: 5
+    - delay:
+        seconds: 5
+    - service: script.greeting
 
 - id: everyones_leaving
   alias: Everyone is Leaving
