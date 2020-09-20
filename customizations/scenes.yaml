@@ -1,0 +1,8 @@
+scene.bright_lights:
+  icon: 'mdi:lightbulb-group'
+scene.evening_lights:
+  icon: 'mdi:weather-sunset-down'
+scene.night_lights:
+  icon: 'mdi:weather-night'
+scene.lights_out:
+  icon: 'mdi:lightbulb-off-outline'
