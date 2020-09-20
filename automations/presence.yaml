@@ -21,12 +21,19 @@
     - choose:
         - conditions:
             - condition: state
-              entity_id: sun.sun
-              state: 'below_horizon'
+              entity_id: binary_sensor.evening_time
           sequence:
             - service: scene.turn_on
               data:
                 entity_id: scene.evening_lights
+                transition: 5
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.night_time
+          sequence:
+            - service: scene.turn_on
+              data:
+                entity_id: scene.night_lights
                 transition: 5
     - delay:
         seconds: 5

@@ -16,11 +16,11 @@ binary_sensor:
   - platform: tod
     name: Evening Time
     after: sunset
-    before: '23:00'
+    before: '00:00'
   - platform: tod
     name: Night Time
-    after: '23:00'
-    before: '1:00'
+    after: '00:00'
+    before: sunrise
   - platform: tod
     name: Do Not Disturb
     after: '01:00'
