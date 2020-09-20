@@ -60,7 +60,7 @@ scene split:
         state: on
       light.bedroom_ceiling_light_light:
         state: off
-        brightness: 100
+        brightness: 255
       light.living_room_tv_lights:
         state: on
       light.living_room_main_lights:
@@ -85,12 +85,12 @@ scene split:
         color_temp: 240
       light.bedroom_ceiling_light_light:
         state: on
-        brightness: 100
+        brightness: 255
       light.living_room_tv_lights:
         state: on
       light.living_room_main_lights:
         state: on
-        brightness: 100
+        brightness: 255
       light.living_room_table_lights:
         state: on
         brightness: 255
