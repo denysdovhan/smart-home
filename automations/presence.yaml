@@ -22,6 +22,7 @@
         - conditions:
             - condition: state
               entity_id: binary_sensor.evening_time
+              state: 'on'
           sequence:
             - service: scene.turn_on
               data:
@@ -30,6 +31,7 @@
         - conditions:
             - condition: state
               entity_id: binary_sensor.night_time
+              state: 'on'
           sequence:
             - service: scene.turn_on
               data:
@@ -80,7 +82,7 @@
     platform: state
     entity_id: binary_sensor.bedroom_movement_sensor_occupancy
     to: 'off'
-    for: '00:05:00'
+    for: '00:01:00'
   condition:
     - condition: state
       entity_id: sun.sun
