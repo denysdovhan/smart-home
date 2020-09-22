@@ -7,19 +7,8 @@ on:
     - cron: 0 12 * * *
 
 jobs:
-  yamllint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-      - name: Running YAMLlint
-        uses: "docker://pipelinecomponents/yamllint:latest"
-        with:
-          args: yamllint .
-
   home-assistant-stable:
     runs-on: ubuntu-latest
-    needs: [yamllint]
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
@@ -39,7 +28,6 @@ jobs:
 
   home-assistant-beta:
     runs-on: ubuntu-latest
-    needs: [yamllint]
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
