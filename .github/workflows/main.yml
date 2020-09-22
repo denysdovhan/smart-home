@@ -2,22 +2,54 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
   pull_request:
-    branches: [ master ]
+  schedule:
+    - cron: 0 12 * * *
 
 jobs:
-  check:
+  yamllint:
     runs-on: ubuntu-latest
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - name: Checkout Repo
-      uses: actions/checkout@v2
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Running YAMLlint
+        uses: "docker://pipelinecomponents/yamllint:latest"
+        with:
+          args: yamllint .
 
-    # Copies all stub file to the root of the repo
-    - name: Prepare Stubs
-      run: cp -R .stubs/* .
+  home-assistant-stable:
+    runs-on: ubuntu-latest
+    needs: [yamlling]
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
 
-    # Checks 
-    - name: Check Home Assistant Configuration
-      uses: ludeeus/action-ha-config-check@master
+      - name: Prepare Stubs
+        run: cp -R .stubs/* .
+
+      - name: Home Assistant Version
+        uses: "docker://homeassistant/home-assistant:stable"
+        with:
+          args: python -m homeassistant --version
+
+      - name: Home Assistant Check
+        uses: "docker://homeassistant/home-assistant:stable"
+        with:
+          args: python -m homeassistant --config . --script check_config --info all
+
+  home-assistant-beta:
+    runs-on: ubuntu-latest
+    needs: [yamlling]
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Prepare Stubs
+        run: cp -R .stubs/* .
+      - name: Home Assistant Version
+        uses: "docker://homeassistant/home-assistant:beta"
+        with:
+          args: python -m homeassistant --version
+      - name: Home Assistant Check
+        uses: "docker://homeassistant/home-assistant:beta"
+        with:
+          args: python -m homeassistant --config . --script check_config --info all
