@@ -19,7 +19,7 @@ jobs:
 
   home-assistant-stable:
     runs-on: ubuntu-latest
-    needs: [yamlling]
+    needs: [yamllint]
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
@@ -39,7 +39,7 @@ jobs:
 
   home-assistant-beta:
     runs-on: ubuntu-latest
-    needs: [yamlling]
+    needs: [yamllint]
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
