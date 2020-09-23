@@ -129,6 +129,97 @@ views:
                 color: '#66001f'
             animate: true
             hour24: true
+          
+          - break
+
+          - type: horizontal-stack
+            cards:
+              - type: entities
+                title: Вітальня
+                entities:
+                  - entity: light.living_room_table_lights
+                  - entity: light.living_room_tv_lights
+                  - entity: light.living_room_main_lights
+              - type: entities
+                title: Спальня
+                entities:
+                  - entity: light.bedroom_ceiling_light_light
+                  - entity: light.bedroom_bed_lights
+                  - entity: light.bedroom_floor_lamp
+          - type: horizontal-stack
+            cards:
+              - type: button
+                name: Без світла
+                entity: scene.lights_out
+                icon_height: 40px
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.lights_out
+                hold_action:
+                  action: more-info
+              - type: button
+                name: Нічне
+                entity: scene.night_lights
+                icon_height: 40px
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.night_lights
+                hold_action:
+                  action: more-info
+              - type: button
+                name: Вечірнє
+                entity: scene.evening_lights
+                icon_height: 40px
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.evening_lights
+                hold_action:
+                  action: more-info
+              - type: button
+                name: Яскраве
+                entity: scene.bright_lights
+                icon_height: 40px
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.bright_lights
+                hold_action:
+                  action: more-info
+          - type: horizontal-stack
+            cards:
+              - type: button
+                name: Адаптивне
+                entity: switch.flux
+                icon_height: 40px
+              - type: button
+                name: Активне
+                entity: scene.bright_lights
+                icon_height: 40px
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.bright_lights
+                hold_action:
+                  action: more-info
+              - type: button
+                name: Романтичне
+                entity: scene.romantic_lights
+                icon_height: 40px
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.romantic_lights
+                hold_action:
+                  action: more-info
 
   - path: living-room
     title: Вітальня
