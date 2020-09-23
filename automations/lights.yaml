@@ -1,0 +1,25 @@
+- id: turn_on_lights_on_sunset
+  alias: Turn on lights on Sunset
+  trigger:
+    - platform: state
+      entity_id: sun.sun
+      to: 'below_horizon'
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: 'home'
+  action:
+    - service: script.speak
+      data:
+        messages:
+          - "Гадаю доречно увімкнути вечірнє світло."
+          - "Вмикаю вечірнє світло."
+          - "Вечоріє. Час увімкнути світло."
+          - "Сонечко зайшло за обрій. Вмикаємо світло."
+          - "Скоро вдома стане темно — час увімкнути світло."
+          - "Сонце опустилось за обрій — вмикаю для вас світло."
+          - "Вже вечір вечоріє, повстанське серце б'є — розумна колонка вам світло подає!"
+    - service: scene.turn_on
+      data:
+        entity_id: scene.evening_lights
+        transition: 5

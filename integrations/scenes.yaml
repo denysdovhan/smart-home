@@ -60,6 +60,28 @@ scene split:
         state: on
       light.bedroom_ceiling_light_light:
         state: off
+      light.living_room_tv_lights:
+        state: on
+      light.living_room_main_lights:
+        state: off
+      light.living_room_table_lights:
+        state: on
+        brightness: 255
+        color_temp: 240
+      automation.turn_on_bedroom_lights_on_movement:
+        state: off
+      automation.turn_off_bedroom_lights_without_movement:
+        state: off
+
+  - id: active_lights
+    name: Active Lights
+    entities:
+      light.bedroom_bed_lights:
+        state: on
+      light.bedroom_floor_lamp:
+        state: on
+      light.bedroom_ceiling_light_light:
+        state: off
         brightness: 255
       light.living_room_tv_lights:
         state: on
@@ -95,6 +117,30 @@ scene split:
         state: on
         brightness: 255
         color_temp: 240
+      automation.turn_on_bedroom_lights_on_movement:
+        state: off
+      automation.turn_off_bedroom_lights_without_movement:
+        state: off
+
+  - id: romantic_lights
+    name: Romantic Lights
+    entities:
+      light.bedroom_bed_lights:
+        state: off
+      light.bedroom_floor_lamp:
+        state: on
+        brightness: 10
+        rgb_color: [255, 0, 0]
+      light.bedroom_ceiling_light_light:
+        state: off
+      light.living_room_tv_lights:
+        state: off
+      light.living_room_main_lights:
+        state: off
+      light.living_room_table_lights:
+        state: on
+        brightness: 10
+        rgb_color: [255, 0, 0]
       automation.turn_on_bedroom_lights_on_movement:
         state: off
       automation.turn_off_bedroom_lights_without_movement:

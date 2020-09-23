@@ -1,0 +1,9 @@
+- id: turn_off_tv_with_playstation
+  alias: Turn off Samsung TV when PlayStation turns off
+  trigger:
+    - platform: state
+      entity_id: media_player.playstation_4
+      to: 'standby'
+  action:
+    - service: media_player.turn_off
+      entity_id: media_player.samsung_tv
