@@ -104,13 +104,12 @@
   trigger:
     platform: state
     entity_id: vacuum.roborock
-    from: 'cleaning'
     to: 'returning'
   condition:
     # Every 10th cleaning
     - condition: template
       value_template: >
-        {{ state_attr('vacuum.roborock', 'cleaning_count') % 10 == 0 }}
+        {{ state_attr('vacuum.roborock', 'cleaning_count') % 5 == 0 }}
     # And there was at least one cleaning after previous maintenance
     - condition: template
       value_template: >
