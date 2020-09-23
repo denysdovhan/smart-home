@@ -258,6 +258,7 @@ views:
             map_image: /local/images/floorplan.png
             default_mode: go_to_target
             debug: false
+            language: uk
             calibration_points:
               - map:
                   x: 360
