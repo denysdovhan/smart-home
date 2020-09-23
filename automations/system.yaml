@@ -1,34 +1,8 @@
-- id: automatic_theme_change
-  alias: Automatic Theme Change
-  initial_state: false
-  trigger:
-    - platform: homeassistant
-      event: start
-    - platform: state
-      entity_id: sun.sun
-      from: 'above_horizon'
-      to: 'below_horizon'
-    - platform: state
-      entity_id: sun.sun
-      from: 'below_horizon'
-      to: 'above_horizon'
-  action:
-    - service: frontend.set_theme
-      data:
-        name: >
-          {% if is_state('sun.sun', 'above_horizon') %}
-            default
-          {% else %}
-            midnight
-          {% endif %}
-
 - id: home_assistant_release_notification
   alias: Home Assistant Release notification
   trigger:
     - platform: state
       entity_id: binary_sensor.updater
-      from: 'off'
-      to: 'on'
   action:
     service: notify.denys
     data:
