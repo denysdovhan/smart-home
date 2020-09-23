@@ -58,18 +58,24 @@
     - service: media_player.turn_off
       entity_id: all
 
-- id: turn_on_bedroom_light_on_movement
+- id: turn_on_bedroom_lights_on_movement
   alias: Turn on Bedroom Lights on movement
   description: Turn on Bedroom Ceiling Light on Movement
   initial_state: false
   trigger:
-    platform: state
-    entity_id: binary_sensor.bedroom_movement_sensor_occupancy
-    to: 'on'
+    - platform: state
+      entity_id: binary_sensor.bedroom_movement_sensor_occupancy
+      to: 'on'
+    - platform: state
+      entity_id: automation.turn_on_bedroom_lights_on_movement
+      to: 'on'
   condition:
     - condition: state
       entity_id: sun.sun
       state: 'below_horizon'
+    - condition: state
+      entity_id: binary_sensor.bedroom_movement_sensor_occupancy
+      state: 'on'
   action:
     - service: light.turn_on
       entity_id: light.bedroom_ceiling_light_light
@@ -79,10 +85,10 @@
   description: Turn off Bedroom Ceiling Light when no motion for 5 minutes
   initial_state: false
   trigger:
-    platform: state
-    entity_id: binary_sensor.bedroom_movement_sensor_occupancy
-    to: 'off'
-    for: '00:01:00'
+    - platform: state
+      entity_id: binary_sensor.bedroom_movement_sensor_occupancy
+      to: 'off'
+      for: '00:01:00'
   condition:
     - condition: state
       entity_id: sun.sun
