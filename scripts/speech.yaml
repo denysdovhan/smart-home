@@ -1,3 +1,28 @@
+speak:
+  alias: Make speach announcement on smart speaker
+  fields:
+    message:
+      description: This message will be spoken as announcement
+    messages:
+      description: One of these messages will be randomly picked for announcement
+  variables:
+    announcement: "{{ message or (messages | random) }}"
+  sequence:
+    # Announce on speaker only when someone is home
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: group.family
+          state: 'home'
+        - condition: state
+          entity_id: binary_sensor.do_not_disturb
+          state: 'off'
+        sequence:
+          - service: tts.google_say
+            data:
+              entity_id: media_player.google_home_mini
+              message: "{{ announcement }}"
+
 announcement:
   alias: Send a push-notification and make an announcement on smart speaker
   fields:
@@ -12,20 +37,9 @@ announcement:
       data:
         title: "{{ title }}"
         message: "{{ message }}"
-    # Announce on speaker only when someone is home
-    - choose:
-      - conditions:
-        - condition: state
-          entity_id: group.family
-          state: 'home'
-        - condition: state
-          entity_id: binary_sensor.do_not_disturb
-          state: 'off'
-        sequence:
-          - service: tts.google_say
-            data:
-              entity_id: media_player.google_home_mini
-              message: "{{ message }}"
+    - service: script.speak
+      data:
+        message: "{{ message }}"
 
 greeting:
   alias: Greet people upon their arrival
@@ -40,7 +54,6 @@ greeting:
         "Нарешті ви вдома!",
         "Ви вдома!",
         "Хелоу, котики!",
-        "Йой! Ви вдома!",
         "Моя сім’я вдома!",
         "Мої котики вдома!",
         "Кошенята вдома!"
@@ -93,7 +106,6 @@ greeting:
               entity_id: media_player.google_home_mini
               message: "{{ greeting + night_phrase }}"
       default:
-        - service: tts.google_say
+        - service: script.speak
           data:
-            entity_id: media_player.google_home_mini
             message: "{{ greeting }}"
