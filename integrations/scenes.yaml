@@ -28,6 +28,8 @@ scene split:
         state: off
       automation.turn_off_bedroom_lights_without_movement:
         state: off
+      switch.flux:
+        state: on
 
   - id: night_lights
     name: Night Lights
@@ -50,6 +52,8 @@ scene split:
         state: off
       automation.turn_off_bedroom_lights_without_movement:
         state: off
+      switch.flux:
+        state: on
 
   - id: evening_lights
     name: Evening Lights
@@ -74,6 +78,8 @@ scene split:
         state: off
       automation.turn_off_bedroom_lights_without_movement:
         state: off
+      switch.flux:
+        state: on
 
   - id: active_lights
     name: Active Lights
@@ -96,6 +102,8 @@ scene split:
       automation.turn_on_bedroom_lights_on_movement:
         state: on
       automation.turn_off_bedroom_lights_without_movement:
+        state: on
+      switch.flux:
         state: on
 
   - id: bright_lights
@@ -123,6 +131,8 @@ scene split:
         state: off
       automation.turn_off_bedroom_lights_without_movement:
         state: off
+      switch.flux:
+        state: on
 
   - id: romantic_lights
     name: Romantic Lights
@@ -146,4 +156,6 @@ scene split:
       automation.turn_on_bedroom_lights_on_movement:
         state: off
       automation.turn_off_bedroom_lights_without_movement:
+        state: off
+      switch.flux:
         state: off
