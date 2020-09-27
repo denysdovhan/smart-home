@@ -1,25 +1,25 @@
 - id: do_not_disturb
-  alias: Do Not Disturb
-  description: Do Not Disturb mode
+  alias: Do Not Disturb Flow
+  description: Adjust devices to Do Not Disturb mode
   trigger:
     - platform: homeassistant
       event: start
     - platform: state
-      entity_id: binary_sensor.do_not_disturb
+      entity_id: input_boolean.do_not_disturb
   action:
     # Google Home
     - service: media_player.volume_set
       entity_id: media_player.google_home_mini
       data:
         volume_level: >
-          {% if is_state('binary_sensor.do_not_disturb', 'on') %}
+          {% if is_state('input_boolean.do_not_disturb', 'on') %}
             0.5
           {% else %}
             0.8
           {% endif %}
     # Humidifier
     - service: >
-        {% if is_state('binary_sensor.do_not_disturb', 'on') %}
+        {% if is_state('input_boolean.do_not_disturb', 'on') %}
           fan.xiaomi_miio_set_led_off
         {% else %}
           fan.xiaomi_miio_set_led_on
@@ -32,9 +32,29 @@
       data:
         speed: >
           {% if is_state('fan.purifier', 'on') %}
-            {% if is_state('binary_sensor.do_not_disturb', 'on') %}
+            {% if is_state('input_boolean.do_not_disturb', 'on') %}
               Silent
             {% else %}
               Auto
             {% endif %}
           {% endif %}
+    # Buzzers
+    - service: >
+        {% if is_state('input_boolean.do_not_disturb', 'on') %}
+          fan.xiaomi_miio_set_buzzer_off
+        {% else %}
+          fan.xiaomi_miio_set_buzzer_on
+        {% endif %}
+      entity_id: all
+
+- id: do_not_disturb_while_sleeping_time
+  alias: Do Not Disturb while Sleeping Time
+  description: Switch Do Not Disturb along with Sleeping Time
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: state
+      entity_id: binary_sensor.sleeping_time
+  action:
+    - service: input_boolean.turn_{{ states('binary_sensor.sleeping_time') }}
+      entity_id: input_boolean.do_not_disturb

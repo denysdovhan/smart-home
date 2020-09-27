@@ -15,7 +15,7 @@ speak:
           entity_id: group.family
           state: 'home'
         - condition: state
-          entity_id: binary_sensor.do_not_disturb
+          entity_id: input_boolean.do_not_disturb
           state: 'off'
         sequence:
           - service: tts.google_say

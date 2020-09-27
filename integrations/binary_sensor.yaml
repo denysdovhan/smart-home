@@ -22,6 +22,6 @@ binary_sensor:
     after: '00:00'
     before: sunrise
   - platform: tod
-    name: Do Not Disturb
+    name: Sleeping Time
     after: '01:00'
-    before: '9:00'
+    before: '11:00'

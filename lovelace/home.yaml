@@ -191,6 +191,10 @@ cards:
       - type: horizontal-stack
         cards:
           - type: button
+            name: Не турбувати
+            entity: input_boolean.do_not_disturb
+            icon_height: 40px
+          - type: button
             name: Адаптивне
             entity: switch.flux
             icon_height: 40px

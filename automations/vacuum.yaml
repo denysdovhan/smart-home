@@ -19,6 +19,10 @@
     - condition: state
       entity_id: binary_sensor.activity_time
       state: 'on'
+      # Do Not Disturb mode is off
+    - condition: state
+      entity_id: input_boolean.do_not_disturb
+      state: 'off'
   action:
     - service: script.vacuum_regular_cleaning
 
