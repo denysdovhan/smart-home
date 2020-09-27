@@ -250,6 +250,18 @@ views:
                 points_per_hour: 2
                 animate: true
                 hour24: true
+          - type: horizontal-stack
+            cards:
+              - type: entity
+                name: Сенсор руху
+                entity: binary_sensor.living_room_movement_sensor_occupancy
+              - type: entity
+                name: Вхідні двері
+                entity: binary_sensor.front_door_sensor_contact
+          - type: entities
+            entities:
+              - entity: fan.purifier
+                name: Очищувач
 
   - path: bedroom
     title: Спальня
@@ -280,6 +292,15 @@ views:
                 points_per_hour: 2
                 animate: true
                 hour24: true
+          - type: horizontal-stack
+            cards:
+              - type: entity
+                name: Сенсор руху
+                entity: binary_sensor.bedroom_movement_sensor_occupancy
+          - type: entities
+            entities:
+              - entity: fan.humidifier
+                name: Зволожувач
 
   - path: vacuum
     title: Пилосос
