@@ -14,9 +14,11 @@
       # It's working day
     - condition: state
       entity_id: binary_sensor.workday_sensor
+      state: 'on'
       # Only on activity time
     - condition: state
       entity_id: binary_sensor.activity_time
+      state: 'on'
   action:
     - service: script.vacuum_regular_cleaning
 
