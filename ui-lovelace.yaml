@@ -1,0 +1,15 @@
+#
+# Lovelace
+#
+# https://www.home-assistant.io/lovelace/
+#
+
+title: Дім
+views:
+  - !include lovelace/home.yaml
+  - !include lovelace/living-room.yaml
+  - !include lovelace/bedroom.yaml
+  - !include lovelace/vacuum.yaml
+  - !include lovelace/car.yaml
+  - !include lovelace/cameras.yaml
+  - !include lovelace/system.yaml
