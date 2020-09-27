@@ -57,6 +57,7 @@
       entity_id: all
     - service: media_player.turn_off
       entity_id: all
+    - service: script.vacuum_regular_cleaning
 
 - id: turn_on_bedroom_lights_on_movement
   alias: Turn on Bedroom Lights on movement

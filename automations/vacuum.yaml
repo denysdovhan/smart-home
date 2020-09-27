@@ -6,44 +6,19 @@
       hours: '/2'
       minutes: 0
       seconds: 0
-    - platform: state
-      entity_id: group.family
-      from: 'home'
-      to: 'not_home'
-      for: '00:10:00'
   condition:
       # Robot is docked
     - condition: state
       entity_id: vacuum.roborock
       state: 'docked'
+      # It's working day
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
       # Only on activity time
     - condition: state
       entity_id: binary_sensor.activity_time
-      state: 'on'
-      # Time for cleaning or last cleaning was short
-    - condition: template
-      value_template: >-
-        {% set last_cleaning_start = as_timestamp(state_attr('vacuum.roborock', 'clean_start')) | int %}
-        {% set last_cleaning_stop = as_timestamp(state_attr('vacuum.roborock', 'clean_stop')) | int %}
-        {% set current_time = as_timestamp(now()) | int %}
-        {% set time_for_cleaning = current_time - last_cleaning_start > (60 * 60 * 36) %}
-        {% set last_cleaning_was_short = last_cleaning_stop - last_cleaning_start < (60 * 5) %}
-        {{ time_for_cleaning or last_cleaning_was_short }}
   action:
-    - service: script.announcement
-      data:
-        title: "Пилосос 🧹"
-        messages:
-          - "Починаємо планове прибирання вдома."
-          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирання."
-          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирати квартиру."
-    - service: vacuum.set_fan_speed
-      entity_id: vacuum.roborock
-      data:
-        fan_speed: Turbo
-    - delay: '00:00:05'
-    - service: vacuum.start
-      entity_id: vacuum.roborock
+    - service: script.vacuum_regular_cleaning
 
 - id: vacuum_finish_cleaning
   alias: Vacuum Stop Cleaning
@@ -74,6 +49,8 @@
           - "{{ state_attr('vacuum.roborock', 'friendly_name') }} закінчив з прибиранням."
           - "{{ state_attr('vacuum.roborock', 'friendly_name') }} виконав свою завдання."
           - "Прибирання закінчено! Робот повертається додому."
+          - "Робот прибрав квартиру! Намагайтесь підтримувати порядок!"
+          - "Робот все прибрав! Пам'ятайте, що чисто не там, де прибирають, а там де не смітять!"
           - "Тепер вдома чисто! Подякуйте роботу за прибирання — він старався для вас."
 
 - id: vacuum_error_notification
@@ -106,7 +83,7 @@
     entity_id: vacuum.roborock
     to: 'returning'
   condition:
-    # Every 10th cleaning
+    # Every 5th cleaning
     - condition: template
       value_template: >
         {{ state_attr('vacuum.roborock', 'cleaning_count') % 5 == 0 }}
