@@ -58,6 +58,8 @@ scene split:
         state: on
       light.bedroom_floor_lamp:
         state: on
+        effect: Slowdown
+        flowing: true
       light.bedroom_ceiling_light_light:
         state: off
       light.living_room_tv_lights:
