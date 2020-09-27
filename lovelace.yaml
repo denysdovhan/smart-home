@@ -200,13 +200,13 @@ views:
                 icon_height: 40px
               - type: button
                 name: Активне
-                entity: scene.bright_lights
+                entity: scene.active_lights
                 icon_height: 40px
                 tap_action:
                   action: call-service
                   service: scene.turn_on
                   service_data:
-                    entity_id: scene.bright_lights
+                    entity_id: scene.active_lights
                 hold_action:
                   action: more-info
               - type: button
