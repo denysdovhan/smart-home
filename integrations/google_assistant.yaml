@@ -15,38 +15,103 @@ google_assistant:
     - vacuum
     - media_player
     - fan
+    - switch
+    - script
   entity_config:
+    # Input Booleans
     input_boolean.zigbee_permit_join:
       name: Zigbee Pairing
       aliases:
         - zigbee joining
         - pairing mode
+    input_boolean.do_not_disturb:
+      aliases:
+        - silence
+        - do not disturb mode
+    # Vacuum
     vacuum.roborock:
       name: Robin
       aliases:
         - roborock
         - robot
         - vacuum cleaner
+    # Media Players
     media_player.playstation_4:
       aliases:
         - ps4
         - console
-    #
+    media_player.spotify_denys:
+      name: Denys Spotify
+      aliases:
+        - spotify
+    media_player.spotify_marry:
+      name: Marry Spotify
+      aliases:
+        - spotify
+    # Switch
+    switch.flux:
+      name: Flux
+      aliases:
+        - adaptive ligths
+        - adaptive lightning
+
+    # ----------------------------------
     # Prevent exposing specific entities
-    #
+    # ----------------------------------
+
+    # Works better via SmartThings
     media_player.samsung_tv:
-      expose: false # This works better via SmartThings
+      expose: false 
+    # Available in Google Home
     media_player.google_home_mini:
-      expose: false # This is already available in Google Home
+      expose: false
+    # Exposed by Table Lights
     light.living_room_lower_table_light:
-      expose: false # This is already exposed by Table Lights
+      expose: false 
     light.living_room_upper_table_light:
-      expose: false # This is already exposed by Table Lights
+      expose: false
+    # Exposed by Main Lights
     light.living_room_main_light_bulb_1_light:
-      expose: false # This is already exposed by Main Lights
+      expose: false
     light.living_room_main_light_bulb_2_light:
-      expose: false # This is already exposed by Main Lights
+      expose: false
     light.living_room_main_light_bulb_3_light:
-      expose: false # This is already exposed by Main Lights
+      expose: false
     light.living_room_main_light_bulb_4_light:
-      expose: false # This is already exposed by Main Lights
+      expose: false
+    # Duplication for lights
+    switch.bedroom_bed_lights:
+      expose: false
+    switch.living_room_tv_lights:
+      expose: false
+    # Only from Home Assistant
+    switch.adguard_filtering:
+      expose: false
+    switch.adguard_parental_control:
+      expose: false
+    switch.adguard_protection:
+      expose: false
+    switch.adguard_safe_browsing:
+      expose: false
+    switch.adguard_safe_search:
+      expose: false
+    # Toyota
+    switch.toyota_additional_channel:
+      expose: false
+    switch.toyota_engine:
+      expose: false
+    switch.toyota_horn:
+      expose: false
+    switch.toyota_webasto:
+      expose: false
+    # Scripts
+    script.greeting:
+      expose: false
+    script.speak:
+      expose: false
+    script.announcement:
+      expose: false
+    script.stream_camera_to_apple_tv:
+      expose: false
+    script.vacuum_regular_cleaning:
+      expose: false
