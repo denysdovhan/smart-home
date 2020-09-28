@@ -7,6 +7,7 @@ media_player.google_home_mini:
 media_player.samsung_tv:
   friendly_name: Samsung TV
   icon: mdi:youtube-tv
+  device_class: tv
 
 # Apple TV
 media_player.apple_tv:

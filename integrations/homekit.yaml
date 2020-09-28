@@ -11,7 +11,6 @@ homekit:
       - input_boolean
       - scene
       - vacuum
-      - media_player
       - fan
     include_entities:
       #
@@ -22,10 +21,17 @@ homekit:
       - binary_sensor.bedroom_movement_sensor_occupancy
       - binary_sensor.living_room_movement_sensor_occupancy
       - binary_sensor.front_door_sensor_contact
-      # Conditions Sensor
-      - sensor.living_room_conditions_sensor_temperature
-      - sensor.living_room_conditions_sensor_humidity
+      # Conditions Sensors
       - sensor.living_room_conditions_sensor_pressure
+      - sensor.living_room_temperature
+      - sensor.living_room_humidity
+      - sensor.bedroom_temperature
+      - sensor.bedroom_humidity
+      # Media Player
+      - media_player.playstation_4
+      - media_player.samsung_tv
+      # Switches
+      - switch.flux
     exclude_entities:
       #
       # Manual excludes
@@ -38,9 +44,6 @@ homekit:
       - light.living_room_main_light_bulb_2_light
       - light.living_room_main_light_bulb_3_light
       - light.living_room_main_light_bulb_4_light
-      # Apple TV
-      - media_player.apple_tv
-      - media_player.google_home_mini
   entity_config:
     binary_sensor.bedroom_movement_sensor_occupancy:
       linked_battery_sensor: sensor.bedroom_movement_sensor_battery
@@ -48,10 +51,6 @@ homekit:
       linked_battery_sensor: sensor.living_room_movement_sensor_battery
     binary_sensor.front_door_sensor_contact:
       linked_battery_sensor: sensor.front_door_sensor_battery
-    sensor.living_room_conditions_sensor_temperature:
-      linked_battery_sensor: sensor.living_room_conditions_sensor_battery
-    sensor.living_room_conditions_sensor_humidity:
-      linked_battery_sensor: sensor.living_room_conditions_sensor_battery
     sensor.living_room_conditions_sensor_pressure:
       linked_battery_sensor: sensor.living_room_conditions_sensor_battery
     input_boolean.zigbee_permit_join:
