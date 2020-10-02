@@ -19,3 +19,11 @@ lovelace:
       type: module
     - url: /hacsfiles/vacuum-card/vacuum-card.js
       type: module
+    #
+    # DEV
+    # Uncomment when needed
+    #
+    # - url: http://localhost:5000/vacuum-card.js
+    #   type: module
+    # - url: http://localhost:5000/purifier-card.js
+    #   type: module
