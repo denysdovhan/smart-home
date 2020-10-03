@@ -1,12 +1,19 @@
 speak:
   alias: Make speach announcement on smart speaker
   fields:
-    message:
-      description: This message will be spoken as announcement
+    greetings:
+      description: One of these greetings will be randomly picked for announcement
     messages:
       description: One of these messages will be randomly picked for announcement
   variables:
-    announcement: "{{ message or (messages | random) }}"
+    announcement: >-
+      {% if greetings and messages %}
+        {{ (greetings | random) + ' ' + (messages | random) }}
+      {% elif messages %}
+        {{ (messages | random) }}
+      {% else %}
+        Немає тексту для озвучення.
+      {% endif %}
   sequence:
     # Announce on speaker only when someone is home
     - choose:
@@ -28,10 +35,19 @@ announcement:
   fields:
     title:
       description: A title for a push-notification
+    greetings:
+      description: One of these greetings will be randomly picked for announcement
     messages:
       description: One of these messages will be randomly picked for announcement
   variables:
-    message: "{{ messages | random }}"
+    message: >-
+      {% if greetings and messages %}
+        {{ (greetings | random) ~ ' ' ~ (messages | random) }}
+      {% elif messages %}
+        {{ (messages | random) }}
+      {% else %}
+        Немає тексту для озвучення.
+      {% endif %}
   sequence:
     - service: notify.all
       data:
@@ -58,33 +74,6 @@ greeting:
         "Мої котики вдома!",
         "Кошенята вдома!"
       ] | random }}
-    day_phrase: >-
-      {{ [
-        "Як проходить ваш день?",
-        "Вдалого дня!",
-        "Ваш дім скучив за вами!",
-        "Немає місця, милішого за рідний дім.",
-        "Люблю вас! Ви теж любіть один одного!",
-        "Що нового?",
-        "Як справи?",
-      ] | random }}
-    night_phrase: >-
-      {{ [
-        "Як пройшов ваш день?",
-        "Що нового?",
-        "Люблю вас! Ви теж любіть один одного!",
-        "Приємного і затишного вечора!",
-        "Затишного вечора!",
-        "Теплого вечора!",
-        "Приємного вечора!",
-        "Класного вечора!",
-        "Насолоджуйтесь вечором!",
-        "Поцілуйте один одного!",
-        "Не забудьте обійняти один одного!",
-        "Поділіться один з одним теплом",
-        "Що цікавого сталось сьогодні?",
-        "Що хорошого сталось за сьогодні?"
-      ] | random }}
   sequence:
     - choose:
       - conditions:
@@ -92,20 +81,43 @@ greeting:
             entity_id: sun.sun
             state: 'above_horizon'
         sequence:
-          - service: tts.google_say
+          - service: script.speak
             data:
-              entity_id: media_player.google_home_mini
-              message: "{{ greeting + day_phrase }}"
+              greetings:
+                - "{{ greeting }}"
+              messages:
+                - "Як проходить ваш день?"
+                - "Вдалого дня!"
+                - "Ваш дім скучив за вами!"
+                - "Немає місця, милішого за рідний дім."
+                - "Люблю вас! Ви теж любіть один одного!"
+                - "Що нового?"
+                - "Як справи?"
       - conditions:
           - condition: state
             entity_id: sun.sun
             state: 'below_horizon'
         sequence:
-          - service: tts.google_say
+          - service: script.speak
             data:
-              entity_id: media_player.google_home_mini
-              message: "{{ greeting + night_phrase }}"
+              greetings:
+                - "{{ greeting }}"
+              messages:
+                - "Як пройшов ваш день?"
+                - "Що нового?"
+                - "Люблю вас! Ви теж любіть один одного!"
+                - "Приємного і затишного вечора!"
+                - "Затишного вечора!"
+                - "Теплого вечора!"
+                - "Приємного вечора!"
+                - "Класного вечора!"
+                - "Насолоджуйтесь вечором!"
+                - "Поцілуйте один одного!"
+                - "Не забудьте обійняти один одного!"
+                - "Поділіться один з одним теплом"
+                - "Що цікавого сталось сьогодні?"
+                - "Що хорошого сталось за сьогодні?"
       default:
         - service: script.speak
           data:
-            message: "{{ greeting }}"
+            messages: "{{ greeting }}"
