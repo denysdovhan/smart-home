@@ -13,11 +13,6 @@ cards:
         camera_view: live
         aspect_ratio: 50%
         entities: []
-        hold_action:
-          action: call-service
-          service: script.stream_camera_to_apple_tv
-          service_data:
-            camera: camera.sofiyska
 
       - break
 
@@ -27,8 +22,3 @@ cards:
         camera_view: live
         aspect_ratio: 50%
         entities: []
-        hold_action:
-          action: call-service
-          service: script.stream_camera_to_apple_tv
-          service_data:
-            camera: camera.chernivtsi
