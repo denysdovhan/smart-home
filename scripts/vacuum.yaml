@@ -35,6 +35,7 @@ vacuum_regular_cleaning:
               title: "Пилосос 🧹"
               messages:
                 - "Починаємо планове прибирання вдома."
+                - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає регулярне прибирання."
                 - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирання."
                 - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирати квартиру."
           - service: vacuum.set_fan_speed

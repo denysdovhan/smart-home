@@ -1,88 +1,82 @@
 path: vacuum
 title: Пилосос
 icon: mdi:robot-vacuum
-panel: true
 cards:
-  - type: custom:layout-card
-    layout: vertical
-    max_collumns: 2
-    cards:
-      - type: 'custom:vacuum-card'
-        entity: vacuum.roborock
-        compact_view: false
-        actions:
-          - icon: 'mdi:sofa'
-            name: Living Room
-            service: script.vacuum_clean_living_room
-          - icon: 'mdi:silverware-fork-knife'
-            name: Kitchen
-            service: script.vacuum_clean_kitchen
-          - icon: 'mdi:bed-empty'
-            name: Bedroom
-            service: script.vacuum_clean_bedroom
-          - icon: 'mdi:hanger'
-            name: Corridor
-            service: script.vacuum_clean_corridor
-          - icon: 'mdi:shower'
-            name: Bathroom
-            service: script.vacuum_clean_bathroom
-        stats:
-          cleaning:
-            - attribute: cleaned_area
-              subtitle: Площа прибирання
-              unit: м²
-            - attribute: cleaning_time
-              subtitle: Час прибирання
-              unit: хв
-          default:
-            - attribute: filter_left
-              subtitle: Фільтр
-              unit: год
-            - attribute: side_brush_left
-              subtitle: Бокова щітка
-              unit: год
-            - attribute: main_brush_left
-              subtitle: Головна щітка
-              unit: год
-            - attribute: sensor_dirty_left
-              subtitle: Сенсори
-              unit: год
+  - type: 'custom:vacuum-card'
+    entity: vacuum.roborock
+    compact_view: false
+    actions:
+      - icon: 'mdi:sofa'
+        name: Living Room
+        service: script.vacuum_clean_living_room
+      - icon: 'mdi:silverware-fork-knife'
+        name: Kitchen
+        service: script.vacuum_clean_kitchen
+      - icon: 'mdi:bed-empty'
+        name: Bedroom
+        service: script.vacuum_clean_bedroom
+      - icon: 'mdi:hanger'
+        name: Corridor
+        service: script.vacuum_clean_corridor
+      - icon: 'mdi:shower'
+        name: Bathroom
+        service: script.vacuum_clean_bathroom
+    stats:
+      cleaning:
+        - attribute: cleaned_area
+          subtitle: Площа прибирання
+          unit: м²
+        - attribute: cleaning_time
+          subtitle: Час прибирання
+          unit: хв
+      default:
+        - attribute: filter_left
+          subtitle: Фільтр
+          unit: год
+        - attribute: side_brush_left
+          subtitle: Бокова щітка
+          unit: год
+        - attribute: main_brush_left
+          subtitle: Головна щітка
+          unit: год
+        - attribute: sensor_dirty_left
+          subtitle: Сенсори
+          unit: год
 
-      - type: entities
-        entities:
-          - entity: script.vacuum_access
-            name: Виїхати з-під ліжка
-            action_name: Виїхати
-            secondary_info: last-triggered
-          - entity: script.vacuum_maintenance
-            name: Обслуговування пилососа
-            action_name: Обслужити
-            secondary_info: last-triggered
+  - type: entities
+    entities:
+      - entity: script.vacuum_access
+        name: Виїхати з-під ліжка
+        action_name: Виїхати
+        secondary_info: last-triggered
+      - entity: script.vacuum_maintenance
+        name: Обслуговування пилососа
+        action_name: Обслужити
+        secondary_info: last-triggered
 
-      - break
-
-      - type: 'custom:xiaomi-vacuum-map-card'
-        entity: vacuum.roborock
-        map_image: /local/images/floorplan.png
-        default_mode: go_to_target
-        debug: false
-        language: uk
-        calibration_points:
-          - map:
-              x: 360
-              y: 720
-            vacuum:
-              x: 24500
-              y: 24500
-          - map:
-              x: 740
-              y: 345
-            vacuum:
-              x: 28000
-              y: 28000
-          - map:
-              x: 340
-              y: 345
-            vacuum:
-              x: 24000
-              y: 28000
+  - type: 'custom:xiaomi-vacuum-map-card'
+    entity: vacuum.roborock
+    map_camera: camera.roborock_live_map
+    camera_refresh_interval: 2
+    default_mode: go_to_target
+    debug: false
+    language: uk
+    calibration_points:
+      - vacuum:
+          'x': 25500
+          'y': 25500
+        map:
+          'x': 196
+          'y': 250
+      - vacuum:
+          'x': 26500
+          'y': 25500
+        map:
+          'x': 236
+          'y': 250
+      - vacuum:
+          'x': 26500
+          'y': 26500
+        map:
+          'x': 236
+          'y': 210
