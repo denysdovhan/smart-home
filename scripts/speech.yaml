@@ -5,12 +5,16 @@ speak:
       description: One of these greetings will be randomly picked for announcement
     messages:
       description: One of these messages will be randomly picked for announcement
+    message:
+      description: A single message for an announcement
   variables:
     announcement: >-
       {% if greetings and messages %}
         {{ (greetings | random) + ' ' + (messages | random) }}
       {% elif messages %}
         {{ (messages | random) }}
+      {% elif message %}
+        {{ message }}
       {% else %}
         Немає тексту для озвучення.
       {% endif %}
