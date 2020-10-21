@@ -1,41 +1,36 @@
 path: living-room
 title: Вітальня
 icon: mdi:sofa
-panel: true
 cards:
-  - type: custom:layout-card
-    layout: vertical
-    max_collumns: 3
+  - type: horizontal-stack
     cards:
-      - type: horizontal-stack
-        cards:
-          - type: custom:mini-graph-card
-            name: Температура у вітальні
-            entities:
-              - sensor.living_room_temperature
-            line_color: '#E53935'
-            hours_to_show: 12
-            points_per_hour: 2
-            animate: true
-            hour24: true
-          - type: custom:mini-graph-card
-            name: Вологість у вітальні
-            entities:
-              - sensor.living_room_humidity
-            line_color: '#2AD4FF'
-            hours_to_show: 12
-            points_per_hour: 2
-            animate: true
-            hour24: true
-      - type: horizontal-stack
-        cards:
-          - type: entity
-            name: Сенсор руху
-            entity: binary_sensor.living_room_movement_sensor_occupancy
-          - type: entity
-            name: Вхідні двері
-            entity: binary_sensor.front_door_sensor_contact
-      - type: entities
+      - type: custom:mini-graph-card
+        name: Температура у вітальні
         entities:
-          - entity: fan.purifier
-            name: Очищувач
+          - sensor.living_room_temperature
+        line_color: '#E53935'
+        hours_to_show: 12
+        points_per_hour: 2
+        animate: true
+        hour24: true
+      - type: custom:mini-graph-card
+        name: Вологість у вітальні
+        entities:
+          - sensor.living_room_humidity
+        line_color: '#2AD4FF'
+        hours_to_show: 12
+        points_per_hour: 2
+        animate: true
+        hour24: true
+  - type: horizontal-stack
+    cards:
+      - type: entity
+        name: Сенсор руху
+        entity: binary_sensor.living_room_movement_sensor_occupancy
+      - type: entity
+        name: Вхідні двері
+        entity: binary_sensor.front_door_sensor_contact
+  - type: entities
+    entities:
+      - entity: fan.purifier
+        name: Очищувач

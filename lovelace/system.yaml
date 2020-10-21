@@ -1,11 +1,9 @@
 path: system
 title: Система
-icon: 'mdi:chip'
-panel: true
+icon: mdi:chip
 cards:
-  - type: custom:layout-card
-    layout: vertical
-    max_collumns: 3
+  - type: vertical-stack
+    title: Інтернет та Система
     cards:
       - type: horizontal-stack
         cards:
@@ -83,8 +81,9 @@ cards:
               yellow: 75
               red: 90
 
-      - break
-
+  - type: vertical-stack
+    title: AdGuard Home
+    cards:
       - type: horizontal-stack
         cards:
           - type: custom:mini-graph-card
@@ -132,8 +131,9 @@ cards:
           - switch.adguard_safe_browsing
           - switch.adguard_safe_search
 
-      - break
-
+  - type: vertical-stack
+    title: Інше
+    cards:
       - type: entities
         title: Zigbee Bridge
         entities:

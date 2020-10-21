@@ -1,11 +1,8 @@
 path: car
 title: Автомобіль
 icon: mdi:car
-panel: true
 cards:
-  - type: custom:layout-card
-    layout: vertical
-    max_collumns: 2
+  - type: vertical-stack
     cards:
       - type: entities
         title: Сигналізація
@@ -22,8 +19,8 @@ cards:
         default_zoom: 13
         aspect_ratio: 16x13.3 # Maintain size of a row
       
-      - break
-
+  - type: vertical-stack
+    cards:
       - type: entities
         title: Датчики
         entities:

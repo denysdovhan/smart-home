@@ -7,8 +7,6 @@
 lovelace:
   mode: yaml
   resources:
-    - url: /hacsfiles/lovelace-layout-card/layout-card.js
-      type: module
     - url: /hacsfiles/lovelace-state-switch/state-switch.js
       type: module
     - url: /hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js
@@ -18,6 +16,8 @@ lovelace:
     - url: /hacsfiles/mini-media-player/mini-media-player-bundle.js
       type: module
     - url: /hacsfiles/vacuum-card/vacuum-card.js
+      type: module
+    - url: /hacsfiles/purifier-card/purifier-card.js
       type: module
     #
     # DEV

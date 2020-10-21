@@ -1,11 +1,8 @@
 path: home
 title: Дім
 icon: mdi:home
-panel: true
 cards:
-  - type: custom:layout-card
-    layout: vertical
-    max_columns: 3
+  - type: vertical-stack
     cards:
       - type: markdown
         content: >
@@ -42,9 +39,9 @@ cards:
           - person.denys
         hours_to_show: 12
         default_zoom: 13
-
-      - break
-
+  
+  - type: vertical-stack
+    cards:
       - type: weather-forecast
         entity: weather.nyvky
       - type: horizontal-stack
@@ -125,9 +122,9 @@ cards:
             color: '#66001f'
         animate: true
         hour24: true
-      
-      - break
 
+  - type: vertical-stack
+    cards:
       - type: horizontal-stack
         cards:
           - type: entities

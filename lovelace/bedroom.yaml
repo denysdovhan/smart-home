@@ -1,38 +1,33 @@
 path: bedroom
 title: Спальня
 icon: mdi:bed-empty
-panel: true
 cards:
-  - type: custom:layout-card
-    layout: vertical
-    max_collumns: 3
+  - type: horizontal-stack
     cards:
-      - type: horizontal-stack
-        cards:
-          - type: custom:mini-graph-card
-            name: Температура у спальні
-            entities:
-              - sensor.bedroom_temperature
-            line_color: '#E53935'
-            hours_to_show: 12
-            points_per_hour: 2
-            animate: true
-            hour24: true
-          - type: custom:mini-graph-card
-            name: Вологість у спальні
-            entities:
-              - sensor.bedroom_humidity
-            line_color: '#2AD4FF'
-            hours_to_show: 12
-            points_per_hour: 2
-            animate: true
-            hour24: true
-      - type: horizontal-stack
-        cards:
-          - type: entity
-            name: Сенсор руху
-            entity: binary_sensor.bedroom_movement_sensor_occupancy
-      - type: entities
+      - type: custom:mini-graph-card
+        name: Температура у спальні
         entities:
-          - entity: fan.humidifier
-            name: Зволожувач
+          - sensor.bedroom_temperature
+        line_color: '#E53935'
+        hours_to_show: 12
+        points_per_hour: 2
+        animate: true
+        hour24: true
+      - type: custom:mini-graph-card
+        name: Вологість у спальні
+        entities:
+          - sensor.bedroom_humidity
+        line_color: '#2AD4FF'
+        hours_to_show: 12
+        points_per_hour: 2
+        animate: true
+        hour24: true
+  - type: horizontal-stack
+    cards:
+      - type: entity
+        name: Сенсор руху
+        entity: binary_sensor.bedroom_movement_sensor_occupancy
+  - type: entities
+    entities:
+      - entity: fan.humidifier
+        name: Зволожувач
