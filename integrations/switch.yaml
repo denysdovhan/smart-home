@@ -9,6 +9,7 @@ switch:
     name: Flux
     disable_brightness_adjust: true
     start_colortemp: 10000
+    sunset_colortemp: 4000
     mode: mired
     lights:
       - light.living_room_table_lights
