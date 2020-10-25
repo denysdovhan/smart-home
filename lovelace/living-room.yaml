@@ -2,14 +2,6 @@ path: living-room
 title: Вітальня
 icon: mdi:sofa
 cards:
-  - type: horizontal-stack
-    cards:
-      - type: light
-        entity: light.living_room_table_lights
-      - type: button
-        entity: light.living_room_tv_lights
-      - type: light
-        entity: light.living_room_main_lights
   - type: custom:purifier-card
     entity: fan.purifier
     show_name: false

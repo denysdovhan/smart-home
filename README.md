@@ -63,6 +63,7 @@ Bin location: `[24500, 24500]`.
 | `192.168.50.128` | `5C:E5:0C:2A:5B:EB` | Yeelight Color Bulb 1S |
 | `192.168.50.129` | `44:23:7C:DB:99:95` | Yeelight Color Bulb 1S |
 | `192.168.50.130` | `04:CF:8C:92:29:A4` | Yeelight Color Bulb 1 |
+| `192.168.50.131` | `64:90:C1:A0:C1:05` | Xiaomi Desk Lamp Pro |
 | `192.168.50.220` | `38:8B:59:2F:B6:75` | Google Home Mini |
 | `192.168.50.185` | `2C:CC:44:92:CF:A4` | PlayStation 4 Pro |
 | `192.168.50.186` | `64:90:C1:18:8B:79` | Roborock S5 Max |
