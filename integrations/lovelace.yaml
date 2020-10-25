@@ -15,6 +15,8 @@ lovelace:
       type: module
     - url: /hacsfiles/mini-media-player/mini-media-player-bundle.js
       type: module
+    - url: /hacsfiles/mini-humidifier/mini-humidifier-bundle.js
+      type: module
     - url: /hacsfiles/vacuum-card/vacuum-card.js
       type: module
     - url: /hacsfiles/purifier-card/purifier-card.js
