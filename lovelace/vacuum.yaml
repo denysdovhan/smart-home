@@ -57,26 +57,8 @@ cards:
   - type: 'custom:xiaomi-vacuum-map-card'
     entity: vacuum.roborock
     map_camera: camera.roborock_live_map
+    camera_calibration: true
     camera_refresh_interval: 2
     default_mode: go_to_target
     debug: false
     language: uk
-    calibration_points:
-      - vacuum:
-          'x': 25500
-          'y': 25500
-        map:
-          'x': 196
-          'y': 250
-      - vacuum:
-          'x': 26500
-          'y': 25500
-        map:
-          'x': 236
-          'y': 250
-      - vacuum:
-          'x': 26500
-          'y': 26500
-        map:
-          'x': 236
-          'y': 210
