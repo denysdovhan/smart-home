@@ -28,7 +28,7 @@ scene split:
         state: off
       automation.turn_off_bedroom_lights_without_movement:
         state: off
-      switch.flux:
+      switch.circadian_lighting_flux:
         state: on
 
   - id: night_lights
@@ -52,7 +52,7 @@ scene split:
         state: off
       automation.turn_off_bedroom_lights_without_movement:
         state: off
-      switch.flux:
+      switch.circadian_lighting_flux:
         state: on
 
   - id: evening_lights
@@ -78,7 +78,7 @@ scene split:
         state: off
       automation.turn_off_bedroom_lights_without_movement:
         state: off
-      switch.flux:
+      switch.circadian_lighting_flux:
         state: on
 
   - id: active_lights
@@ -103,7 +103,7 @@ scene split:
         state: on
       automation.turn_off_bedroom_lights_without_movement:
         state: on
-      switch.flux:
+      switch.circadian_lighting_flux:
         state: on
 
   - id: bright_lights
@@ -131,7 +131,7 @@ scene split:
         state: off
       automation.turn_off_bedroom_lights_without_movement:
         state: off
-      switch.flux:
+      switch.circadian_lighting_flux:
         state: on
 
   - id: romantic_lights
@@ -157,5 +157,5 @@ scene split:
         state: off
       automation.turn_off_bedroom_lights_without_movement:
         state: off
-      switch.flux:
+      switch.circadian_lighting_flux:
         state: off

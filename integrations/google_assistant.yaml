@@ -49,9 +49,14 @@ google_assistant:
       aliases:
         - spotify
     # Switch
-    switch.flux:
+    switch.circadian_lighting_flux:
       name: Flux
       aliases:
+        - circadian lighting
+        - circadian flux
+        - circadian lights
+        - flux
+        - flux lights
         - adaptive ligths
         - adaptive lightning
 

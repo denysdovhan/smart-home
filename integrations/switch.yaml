@@ -5,13 +5,24 @@
 #
 
 switch:
-  - platform: flux
+  # - platform: flux
+  #   name: Flux
+  #   disable_brightness_adjust: true
+  #   start_colortemp: 10000
+  #   mode: mired
+  #   lights:
+  #     - light.living_room_table_lights
+  #     - light.living_room_main_lights
+  #     - light.bedroom_ceiling_light_light
+  
+  - platform: circadian_lighting
     name: Flux
     disable_brightness_adjust: true
-    start_colortemp: 10000
-    sunset_colortemp: 4000
-    mode: mired
-    lights:
-      - light.living_room_table_lights
+    lights_ct:
       - light.living_room_main_lights
       - light.bedroom_ceiling_light_light
+      - light.desk_lamp
+    lights_rgb:
+      - light.living_room_table_lights
+    
+

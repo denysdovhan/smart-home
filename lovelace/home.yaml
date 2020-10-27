@@ -193,7 +193,7 @@ cards:
             icon_height: 40px
           - type: button
             name: Адаптивне
-            entity: switch.flux
+            entity: switch.circadian_lighting_flux
             icon_height: 40px
           - type: button
             name: Активне
