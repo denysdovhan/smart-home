@@ -18,7 +18,6 @@ camera:
     token: !secret vacuum_token
     username: !secret vacuum_username
     password: !secret vacuum_password
-    country: "de"
     name: roborock_live_map
     colors:
       color_map_inside: [32, 115, 185]
