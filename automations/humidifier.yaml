@@ -5,6 +5,7 @@
     platform: state
     entity_id: fan.humidifier
     attribute: no_water
+    for: '00:05:00'
   action:
     - service: script.announcement
       data:
