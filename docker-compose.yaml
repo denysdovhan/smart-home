@@ -1,0 +1,26 @@
+version: "3.6"
+services:
+  portainer-ce:
+    container_name: portainer-ce
+    image: portainer/portainer-ce
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${VOLUMES}/portainer-ce/data:/data
+  plex:
+    image: linuxserver/plex
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+      #- UMASK_SET=022 #optional
+    volumes:
+      - ${VOLUMES}/plex/config:/config
+      #- ~/mnt/HDD/tvseries:/tv
+      - /mnt/sdcard/movies:/movies
+    restart: unless-stopped

@@ -1,0 +1,19 @@
+# Generic ignores
+*.log
+*.conf
+*.db
+*.db-shm
+*.db-wal
+*.pyc
+._*
+__pycache__
+
+# Docker Volumes
+/volumes
+
+# IDE
+.vscode
+.Trash*
+
+# Specific keeps
+!.gitkeep
