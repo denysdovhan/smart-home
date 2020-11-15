@@ -12,19 +12,16 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
-
       - name: Prepare Stubs
-        run: cp -R homeassistant/.stubs/* homeassistant/
-
+        run: cp -R homeassistant/.stubs/* ./homeassistant
       - name: Home Assistant Version
         uses: "docker://homeassistant/home-assistant:stable"
         with:
           args: python -m homeassistant --version
-
       - name: Home Assistant Check
         uses: "docker://homeassistant/home-assistant:stable"
         with:
-          args: python -m homeassistant --config homeassistant --script check_config --info all
+          args: python -m homeassistant --config ./homeassistant/ --script check_config --info all
 
   home-assistant-beta:
     runs-on: ubuntu-latest
@@ -32,7 +29,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
       - name: Prepare Stubs
-        run: cp -R homeassistant/.stubs/* homeassistant/
+        run: cp -R homeassistant/.stubs/* ./homeassistant
       - name: Home Assistant Version
         uses: "docker://homeassistant/home-assistant:beta"
         with:
@@ -40,4 +37,4 @@ jobs:
       - name: Home Assistant Check
         uses: "docker://homeassistant/home-assistant:beta"
         with:
-          args: python -m homeassistant --config homeassistant --script check_config --info all
+          args: python -m homeassistant --config ./homeassistant/ --script check_config --info all
