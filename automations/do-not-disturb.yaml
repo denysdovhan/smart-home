@@ -17,14 +17,6 @@
           {% else %}
             0.8
           {% endif %}
-    # Humidifier
-    - service: >
-        {% if is_state('input_boolean.do_not_disturb', 'on') %}
-          fan.xiaomi_miio_set_led_off
-        {% else %}
-          fan.xiaomi_miio_set_led_on
-        {% endif %}
-      entity_id: fan.humidifier
     # Purifier
     # Set Purifier speed only when it's running
     - service: fan.set_speed
@@ -38,14 +30,14 @@
               Auto
             {% endif %}
           {% endif %}
-    # Buzzers
+    # Humidifier
     - service: >
         {% if is_state('input_boolean.do_not_disturb', 'on') %}
-          fan.xiaomi_miio_set_buzzer_off
+          xiaomi_miio_airpurifier.fan_set_led_off
         {% else %}
-          fan.xiaomi_miio_set_buzzer_on
+          xiaomi_miio_airpurifier.fan_set_led_on
         {% endif %}
-      entity_id: all
+      entity_id: fan.humidifier
 
 - id: do_not_disturb_while_sleeping_time
   alias: Do Not Disturb while Sleeping Time
