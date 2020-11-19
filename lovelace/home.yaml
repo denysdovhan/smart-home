@@ -1,0 +1,257 @@
+path: home
+title: Дім
+icon: mdi:home
+cards:
+  - type: vertical-stack
+    cards:
+      - type: markdown
+        content: >
+          {% set greeting = [
+              'Вітаю вдома',
+              'Привіт'
+            ] | random
+          %}
+
+          ## {{ greeting }}, {{ user }}!
+      - type: horizontal-stack
+        cards:
+          - type: picture-entity
+            name: Денис
+            entity: person.denys
+            image: /local/images/denys.jpg
+            state_filter:
+              home: none
+              wix: brightness(90%) sepia(100%) hue-rotate(15deg)
+              citrusdev: brightness(90%) sepia(70%) hue-rotate(0deg) saturate(200%)
+              away: grayscale(1)
+          - type: picture-entity
+            name: Маша
+            entity: person.marry
+            image: /local/images/marry.jpg
+            state_filter:
+              home: none
+              wix: brightness(90%) sepia(100%) hue-rotate(15deg)
+              citrusdev: brightness(90%) sepia(70%) hue-rotate(0deg) saturate(200%)
+              away: grayscale(1)
+      - type: map
+        entities:
+          - person.marry
+          - person.denys
+        hours_to_show: 12
+        default_zoom: 13
+  
+  - type: vertical-stack
+    cards:
+      - type: weather-forecast
+        entity: weather.nyvky
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            name: Температура вдома
+            entities:
+              - sensor.home_temperature
+            line_color: '#E53935'
+            hours_to_show: 12
+            points_per_hour: 2
+            animate: true
+            hour24: true
+          - type: custom:mini-graph-card
+            name: Вологість вдома
+            entities:
+              - sensor.home_humidity
+            line_color: '#2AD4FF'
+            hours_to_show: 12
+            points_per_hour: 2
+            animate: true
+            hour24: true
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            name: Тиск вдома
+            entities:
+              - sensor.living_room_conditions_sensor_pressure
+            line_color: '#5167ed'
+            hours_to_show: 12
+            points_per_hour: 2
+            animate: true
+            hour24: true
+          - type: custom:mini-graph-card
+            name: UV-індекс
+            entities:
+              - sensor.current_uv_index
+            # line_color: '#FFD700'
+            hours_to_show: 12
+            points_per_hour: 1
+            color_thresholds:
+              - value: 0
+                color: '#FFD700'
+              - value: 6
+                color: '#F9A825'
+              - value: 8
+                color: '#EF6C00'
+              - value: 11
+                color: '#B71C1C'
+              - value: 20
+                color: '#6A1B9A'
+            animate: true
+            hour24: true
+            show:
+              graph: bar
+      - type: 'custom:mini-graph-card'
+        name: Якість повітря
+        entities:
+          - entity: sensor.purifier_aqi
+            show_state: true
+            state_adaptive_color: true
+          - entity: sensor.nyvky_aqi
+            show_state: true
+            state_adaptive_color: true
+            color: '#a8a8a8'
+        points_per_hour: 2
+        hours_to_show: 12
+        color_thresholds:
+          - value: 50
+            color: '#17a355'
+          - value: 100
+            color: '#e9d109'
+          - value: 200
+            color: '#ea270d'
+          - value: 300
+            color: '#7c2c85'
+          - value: 600
+            color: '#66001f'
+        animate: true
+        hour24: true
+
+  - type: vertical-stack
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: entities
+            title: Вітальня
+            entities:
+              - entity: light.living_room_table_lights
+              - entity: light.living_room_tv_lights
+              - entity: light.living_room_main_lights
+          - type: entities
+            title: Спальня
+            entities:
+              - entity: light.bedroom_ceiling_light_light
+              - entity: light.bedroom_bed_lights
+              - entity: light.bedroom_floor_lamp
+      - type: horizontal-stack
+        cards:
+          - type: button
+            name: Без світла
+            entity: scene.lights_out
+            icon_height: 40px
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data:
+                entity_id: scene.lights_out
+            hold_action:
+              action: more-info
+          - type: button
+            name: Нічне
+            entity: scene.night_lights
+            icon_height: 40px
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data:
+                entity_id: scene.night_lights
+            hold_action:
+              action: more-info
+          - type: button
+            name: Вечірнє
+            entity: scene.evening_lights
+            icon_height: 40px
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data:
+                entity_id: scene.evening_lights
+            hold_action:
+              action: more-info
+          - type: button
+            name: Яскраве
+            entity: scene.bright_lights
+            icon_height: 40px
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data:
+                entity_id: scene.bright_lights
+            hold_action:
+              action: more-info
+      - type: horizontal-stack
+        cards:
+          - type: button
+            name: Не турбувати
+            entity: input_boolean.do_not_disturb
+            icon_height: 40px
+          - type: button
+            name: Адаптивне
+            entity: switch.circadian_lighting_flux
+            icon_height: 40px
+          - type: button
+            name: Активне
+            entity: scene.active_lights
+            icon_height: 40px
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data:
+                entity_id: scene.active_lights
+            hold_action:
+              action: more-info
+          - type: button
+            name: Романтичне
+            entity: scene.romantic_lights
+            icon_height: 40px
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data:
+                entity_id: scene.romantic_lights
+            hold_action:
+              action: more-info
+      
+      - type: vertical-stack
+        cards:
+          - type: 'custom:mini-media-player'
+            entity: media_player.google_home_mini
+            tts:
+              language: uk
+              platform: google
+            hide:
+              controls: true
+          - type: 'custom:state-switch'
+            entity: user
+            states:
+              Denys:
+                type: 'custom:mini-media-player'
+                entity: media_player.spotify_denys
+                artwork: material
+                name: Spotify
+                hide:
+                  power: true
+              Marry:
+                type: 'custom:mini-media-player'
+                entity: media_player.spotify_marry
+                artwork: material
+                name: Spotify
+                hide:
+                  power: true
+          - type: 'custom:mini-media-player'
+            entity: media_player.playstation_4
+            artwork: material
+            hide:
+              controls: true
+              volume: true
+          - type: 'custom:mini-media-player'
+            entity: media_player.apple_tv
+            artwork: material
+            hide:
+              volume: true

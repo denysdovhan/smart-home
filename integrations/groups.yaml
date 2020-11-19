@@ -1,0 +1,24 @@
+#
+# Group
+#
+# https://www.home-assistant.io/integrations/group/
+#
+
+group:
+  family:
+    name: Family
+    icon: mdi:home-heart
+    entities:
+      - person.denys
+      - person.marry
+
+  lights:
+    name: Lights
+    icon: mdi:lightbulb-group
+    entities:
+      - light.bedroom_bed_lights
+      - light.bedroom_ceiling_light_light
+      - light.bedroom_floor_lamp
+      - light.living_room_tv_lights
+      - light.living_room_main_lights
+      - light.living_room_table_lights

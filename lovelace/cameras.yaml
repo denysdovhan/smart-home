@@ -1,0 +1,16 @@
+path: cameras
+title: Камери
+icon: mdi:video-box
+cards:
+  - type: picture-glance
+    title: Софійська площа
+    camera_image: camera.sofiyska
+    camera_view: live
+    aspect_ratio: 50%
+    entities: []
+  - type: picture-glance
+    title: Чернівці
+    camera_image: camera.chernivtsi
+    camera_view: live
+    aspect_ratio: 50%
+    entities: []

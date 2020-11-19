@@ -1,0 +1,40 @@
+- id: home_assistant_release_notification
+  alias: Home Assistant Release notification
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.updater
+  action:
+    service: notify.denys
+    data:
+      title: 'New Home Assistant Release 🎉'
+      message: "Home Assistant  {{ state_attr('binary_sensor.updater', 'newest_version') }}  is now available."
+
+- id: open_uv_index_update
+  alias: Update OpenUV
+  description: Update OpenUV every hour only when sun is above horizon
+  mode: single
+  trigger:
+    platform: time_pattern
+    hours: /1
+  condition:
+    # Check only when sun is above horizon and not more than once per 59 minutes
+    - condition: state
+      entity_id: sun.sun
+      state: 'above_horizon'
+  action:
+    - service: openuv.update_uv_index_data
+    - delay:
+        minutes: 50
+
+# Disabled because there's no transmission integration enabled right now.
+- id: torrent_completed_notification
+  alias: Notify about completed torrent
+  initial_state: false
+  trigger:
+    platform: event
+    event_type: transmission_downloaded_torrent
+  action:
+    - service: notify.all
+      data:
+        title: "Transmission ⬇️"
+        message: "{{trigger.event.data.name}} завантажено!"

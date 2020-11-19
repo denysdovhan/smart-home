@@ -1,0 +1,9 @@
+#
+# HTTP
+#
+# https://www.home-assistant.io/integrations/http/
+#
+
+http:
+  ssl_certificate: !secret ssl_certificate
+  ssl_key: !secret ssl_key

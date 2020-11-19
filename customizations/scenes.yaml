@@ -1,0 +1,12 @@
+scene.bright_lights:
+  icon: 'mdi:lightbulb-group'
+scene.evening_lights:
+  icon: 'mdi:weather-sunset-down'
+scene.active_lights:
+  icon: 'mdi:brightness-auto'
+scene.night_lights:
+  icon: 'mdi:weather-night'
+scene.lights_out:
+  icon: 'mdi:lightbulb-off-outline'
+scene.romantic_lights:
+  icon: 'mdi:heart-multiple-outline'

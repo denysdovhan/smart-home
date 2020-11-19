@@ -1,0 +1,31 @@
+#
+# Lovelace
+#
+# https://www.home-assistant.io/lovelace
+#
+
+lovelace:
+  mode: yaml
+  resources:
+    - url: /hacsfiles/lovelace-state-switch/state-switch.js
+      type: module
+    - url: /hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js
+      type: module
+    - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
+      type: module
+    - url: /hacsfiles/mini-media-player/mini-media-player-bundle.js
+      type: module
+    - url: /hacsfiles/mini-humidifier/mini-humidifier-bundle.js
+      type: module
+    - url: /hacsfiles/vacuum-card/vacuum-card.js
+      type: module
+    - url: /hacsfiles/purifier-card/purifier-card.js
+      type: module
+    #
+    # DEV
+    # Uncomment when needed
+    #
+    # - url: http://localhost:5000/vacuum-card.js
+    #   type: module
+    # - url: http://localhost:5000/purifier-card.js
+    #   type: module

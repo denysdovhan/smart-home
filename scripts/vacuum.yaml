@@ -1,0 +1,162 @@
+# This can be replaced with a single script
+#
+# However, app_segment_clean required array of integers
+# and we are able to pass only string via templating.
+#
+# Read more here:
+#   * https://community.home-assistant.io/t/howto-xiaomi-vacuum-zoned-cleaning/51293
+#   * https://community.home-assistant.io/t/data-template-in-automations-to-output-number-array/199567
+
+# Map of rooms:
+#
+# 16 - Living Room
+# 17 - Bedroom
+# 18 - Corridor
+# 19 - Bathroom
+# 20 - Kitchen
+
+vacuum_regular_cleaning:
+  alias: Vacuum Regular Cleaning
+  sequence:
+    - choose:
+      - conditions:
+          # Time for cleaning or last cleaning was short
+          - condition: template
+            value_template: >-
+              {% set last_cleaning_start = as_timestamp(state_attr('vacuum.roborock', 'clean_start')) | int %}
+              {% set last_cleaning_stop = as_timestamp(state_attr('vacuum.roborock', 'clean_stop')) | int %}
+              {% set current_time = as_timestamp(now()) | int %}
+              {% set time_for_cleaning = current_time - last_cleaning_start > (60 * 60 * 36) %}
+              {% set last_cleaning_was_short = last_cleaning_stop - last_cleaning_start < (60 * 5) %}
+              {{ time_for_cleaning or last_cleaning_was_short }}
+        sequence:
+          - service: script.announcement
+            data:
+              title: "Пилосос 🧹"
+              messages:
+                - "Починаємо планове прибирання вдома."
+                - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає регулярне прибирання."
+                - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирання."
+                - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирати квартиру."
+          - service: vacuum.set_fan_speed
+            entity_id: vacuum.roborock
+            data:
+              fan_speed: Turbo
+          - delay: '00:00:05'
+          - service: vacuum.start
+            entity_id: vacuum.roborock
+
+vacuum_maintenance:
+  alias: Vacuum Maintenance
+  icon: mdi:screwdriver
+  sequence:
+    - service: vacuum.send_command
+      entity_id: vacuum.roborock
+      data:
+        command: app_goto_target
+        params: [24500, 24500] # Coordinates near the trash bin
+
+vacuum_access:
+  alias: Vacuum Access
+  icon: mdi:map-marker-distance
+  sequence:
+    - service: vacuum.send_command
+      entity_id: vacuum.roborock
+      data:
+        command: app_goto_target
+        params: [26570, 28071] # Coordinates in front of the bed
+
+vacuum_clean_living_room:
+  alias: Vacuum Clean Living Room
+  icon: mdi:sofa
+  sequence:
+    - service: script.announcement
+      data:
+        title: "Пилосос 🧹"
+        messages:
+          - "Починаю прибирання вітальні та кухні."
+          - "Прибирання у вітальні та кухні розпочато!"
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирати вітальню та кухню."
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирання. Вітальня та кухня скоро будуть чисті!"
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.roborock
+        command: app_segment_clean
+        params: [16, 20]
+
+vacuum_clean_kitchen:
+  alias: Vacuum Clean Kitchen
+  icon: mdi:silverware-fork-knife
+  sequence:
+    - service: script.announcement
+      data:
+        title: "Пилосос 🧹"
+        messages:
+          - "Починаю прибирання на кухні."
+          - "Прибирання на кухні розпочато!"
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирати кухню."
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирання. Кухня скоро буде чиста!"
+    - service: notify.all
+      data:
+        title: "Пилосос 🧹"
+        message: "Починаю прибирання кухні."
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.roborock
+        command: app_segment_clean
+        params: [20]
+
+vacuum_clean_bedroom:
+  alias: Vacuum Clean Bedroom
+  icon: mdi:bed-empty
+  sequence:
+    - service: script.announcement
+      data:
+        title: "Пилосос 🧹"
+        messages:
+          - "Починаю прибирання у спальні."
+          - "Прибирання у спальні розпочато!"
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирати спальню."
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирання. Спальня скоро буде чиста!"
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.roborock
+        command: app_segment_clean
+        params: [17]
+
+vacuum_clean_corridor:
+  alias: Vacuum Clean Corridor
+  icon: mdi:hanger
+  sequence:
+    - service: script.announcement
+      data:
+        title: "Пилосос 🧹"
+        messages:
+          - "Починаю прибирання коридору."
+          - "Прибирання у коридорі розпочато!"
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирати коридор."
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирання. Коридор скоро буде чиста!"
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.roborock
+        command: app_segment_clean
+        params: [18]
+
+vacuum_clean_bathroom:
+  alias: Vacuum Clean Bathroom
+  icon: mdi:shower
+  sequence:
+    - service: script.announcement
+      data:
+        title: "Пилосос 🧹"
+        messages:
+          - "Починаю прибирання ванни."
+          - "Прибирання у ванні розпочато!"
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирати ванну."
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирання. Ванна скоро буде чиста!"
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.roborock
+        command: app_segment_clean
+        params: [19]
+

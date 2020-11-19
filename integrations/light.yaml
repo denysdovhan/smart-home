@@ -1,0 +1,28 @@
+#
+# Light
+#
+# https://www.home-assistant.io/integrations/light.group/
+#
+
+light:
+  - platform: group
+    name: living_room_table_lights
+    entities:
+      - light.living_room_lower_table_light
+      - light.living_room_upper_table_light
+  # Switch
+  - platform: switch
+    name: bedroom_bed_lights
+    entity_id: switch.bedroom_bed_lights
+  - platform: switch
+    name: living_room_tv_lights
+    entity_id: switch.living_room_tv_lights
+  # MQTT
+  - platform: mqtt
+    name: living_room_main_lights
+    schema: json
+    # Defined in: /share/zigbee2mqtt/groups.yaml
+    command_topic: "zigbee2mqtt/main_light/set"
+    state_topic: "zigbee2mqtt/main_light"
+    color_temp: true
+    brightness: true

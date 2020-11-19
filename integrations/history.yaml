@@ -1,0 +1,32 @@
+#
+# History
+#
+# https://www.home-assistant.io/integrations/history/
+#
+
+history:
+  exclude:
+    domains:
+      - automation
+      - timer
+      - http
+    entities:
+      - sensor.hacs
+      # Denys iPhone
+      - sensor.denys_iphone_last_update_trigger
+      - sensor.denys_iphone_average_active_pace
+      - sensor.denys_iphone_geocoded_location
+      - sensor.denys_iphone_bssid
+      - sensor.denys_iphone_sim_1
+      - sensor.denys_iphone_sim_2
+      - sensor.denys_iphone_floors_descended
+      - sensor.denys_iphone_floors_ascended
+      # Marry iPhone
+      - sensor.maria_iphone_last_update_trigger
+      - sensor.maria_iphone_average_active_pace
+      - sensor.maria_iphone_geocoded_location
+      - sensor.maria_iphone_bssid
+      - sensor.maria_iphone_sim_1
+      - sensor.maria_iphone_sim_2
+      - sensor.maria_iphone_floors_descended
+      - sensor.maria_iphone_floors_ascended

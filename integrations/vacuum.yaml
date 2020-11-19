@@ -1,0 +1,13 @@
+#
+# Vacuum
+#
+# https://www.home-assistant.io/integrations/vacuum/
+#
+
+vacuum:
+  # Roborock Vacuum
+  # https://www.home-assistant.io/integrations/vacuum.xiaomi_miio/
+  - platform: xiaomi_miio
+    name: roborock
+    host: !secret vacuum_host
+    token: !secret vacuum_token

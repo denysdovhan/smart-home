@@ -1,0 +1,27 @@
+#
+# Binary Sensor
+#
+# https://www.home-assistant.io/integrations/binary_sensor/
+#
+
+binary_sensor:
+  # Workday
+  - platform: workday
+    country: UA
+  # Times of the Day
+  - platform: tod
+    name: Activity Time
+    after: '13:00'
+    before: '19:00'
+  - platform: tod
+    name: Evening Time
+    after: sunset
+    before: '00:00'
+  - platform: tod
+    name: Night Time
+    after: '00:00'
+    before: sunrise
+  - platform: tod
+    name: Sleeping Time
+    after: '01:00'
+    before: '11:00'

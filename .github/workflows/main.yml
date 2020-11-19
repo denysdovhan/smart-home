@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: 0 12 * * *
+
+jobs:
+  home-assistant-stable:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Prepare Stubs
+        run: cp -R .stubs/* .
+
+      - name: Home Assistant Version
+        uses: "docker://homeassistant/home-assistant:stable"
+        with:
+          args: python -m homeassistant --version
+
+      - name: Home Assistant Check
+        uses: "docker://homeassistant/home-assistant:stable"
+        with:
+          args: python -m homeassistant --config . --script check_config --info all
+
+  home-assistant-beta:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Prepare Stubs
+        run: cp -R .stubs/* .
+      - name: Home Assistant Version
+        uses: "docker://homeassistant/home-assistant:beta"
+        with:
+          args: python -m homeassistant --version
+      - name: Home Assistant Check
+        uses: "docker://homeassistant/home-assistant:beta"
+        with:
+          args: python -m homeassistant --config . --script check_config --info all

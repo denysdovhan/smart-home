@@ -1,0 +1,71 @@
+path: car
+title: Автомобіль
+icon: mdi:car
+cards:
+  - type: vertical-stack
+    cards:
+      - type: entities
+        title: Сигналізація
+        state_color: true
+        show_header_toggle: false
+        entities:
+          - lock.toyota_security
+          - switch.toyota_horn
+          - switch.toyota_engine
+      - type: map
+        entities:
+          - device_tracker.toyota_location
+        hours_to_show: 24
+        default_zoom: 13
+        aspect_ratio: 16x13.3 # Maintain size of a row
+      
+  - type: vertical-stack
+    cards:
+      - type: entities
+        title: Датчики
+        entities:
+          - sensor.toyota_balance
+          - binary_sensor.toyota_doors
+          - binary_sensor.toyota_hood
+          - binary_sensor.toyota_trunk
+          - binary_sensor.toyota_alarm
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            name: Температура салону
+            entities:
+              - sensor.toyota_interior_temperature
+            line_color: '#E53935'
+            hours_to_show: 12
+            points_per_hour: 2
+            animate: true
+            hour24: true
+          - type: custom:mini-graph-card
+            name: Температура двигуна
+            entities:
+              - sensor.toyota_engine_temperature
+            line_color: '#f9bb10'
+            hours_to_show: 12
+            points_per_hour: 2
+            animate: true
+            hour24: true
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            name: Акумулятор
+            entities:
+              - sensor.toyota_battery
+            line_color: '#2AD4FF'
+            hours_to_show: 12
+            points_per_hour: 2
+            animate: true
+            hour24: true
+          - type: custom:mini-graph-card
+            name: Сигнал GSM
+            entities:
+              - sensor.toyota_gsm_signal
+            line_color: '#08F900'
+            hours_to_show: 12
+            points_per_hour: 2
+            animate: true
+            hour24: true
