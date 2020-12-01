@@ -17,12 +17,12 @@ jobs:
         run: cp -R .stubs/* .
 
       - name: Home Assistant Version
-        uses: "docker://homeassistant/home-assistant:stable"
+        uses: "docker://homeassistant/home-assistant"
         with:
           args: python -m homeassistant --version
 
       - name: Home Assistant Check
-        uses: "docker://homeassistant/home-assistant:stable"
+        uses: "docker://homeassistant/home-assistant"
         with:
           args: python -m homeassistant --config . --script check_config --info all
 
