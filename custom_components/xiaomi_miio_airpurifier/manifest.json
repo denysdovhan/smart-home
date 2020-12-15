@@ -6,11 +6,7 @@
   "issue_tracker": "https://github.com/syssi/xiaomi_airpurifier/issues",
   "requirements": [
     "construct==2.10.56",
-<<<<<<< HEAD
-    "python-miio>=0.5.3"
-=======
     "python-miio>=0.5.4"
->>>>>>> origin/master
   ],
   "dependencies": [],
   "codeowners": [
