@@ -34,6 +34,11 @@
     entity_id: group.family
     from: not_home
     to: home
+  condition:
+    # Send vacuum home only when it's cleaning
+    - condition: state
+      entity_id: vacuum.roborock
+      state: 'cleaning'
   action:
     - service: vacuum.return_to_base
       entity_id: vacuum.roborock
