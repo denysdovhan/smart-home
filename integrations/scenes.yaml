@@ -24,6 +24,10 @@ scene split:
         state: off
       light.living_room_table_lights:
         state: off
+      light.desk_lamp:
+        state: off
+      light.christmas_tree:
+        state: off
       automation.turn_on_bedroom_lights_on_movement:
         state: off
       automation.turn_off_bedroom_lights_without_movement:
@@ -48,6 +52,8 @@ scene split:
         state: off
       light.living_room_table_lights:
         state: off
+      light.christmas_tree:
+        state: on
       automation.turn_on_bedroom_lights_on_movement:
         state: off
       automation.turn_off_bedroom_lights_without_movement:
@@ -74,6 +80,8 @@ scene split:
         state: on
         brightness: 255
         color_temp: 240
+      light.christmas_tree:
+        state: on
       automation.turn_on_bedroom_lights_on_movement:
         state: off
       automation.turn_off_bedroom_lights_without_movement:
@@ -99,6 +107,8 @@ scene split:
         state: on
         brightness: 255
         color_temp: 240
+      light.christmas_tree:
+        state: on
       automation.turn_on_bedroom_lights_on_movement:
         state: on
       automation.turn_off_bedroom_lights_without_movement:
@@ -127,6 +137,8 @@ scene split:
         state: on
         brightness: 255
         color_temp: 240
+      light.christmas_tree:
+        state: on
       automation.turn_on_bedroom_lights_on_movement:
         state: off
       automation.turn_off_bedroom_lights_without_movement:

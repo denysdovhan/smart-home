@@ -47,3 +47,6 @@ light.bedroom_bed_lights:
 light.living_room_tv_lights:
   friendly_name: TV Lights
   icon: mdi:string-lights
+light.christmas_tree:
+  friendly_name: Christmas Tree
+  icon: mdi:pine-tree

@@ -17,6 +17,9 @@ light:
   - platform: switch
     name: living_room_tv_lights
     entity_id: switch.living_room_tv_lights
+  - platform: switch
+    name: christmas_tree
+    entity_id: switch.christmas_tree
   # MQTT
   - platform: mqtt
     name: living_room_main_lights

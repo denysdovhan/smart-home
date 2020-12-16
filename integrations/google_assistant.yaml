@@ -34,20 +34,13 @@ google_assistant:
       aliases:
         - roborock
         - robot
+        - vacuum
         - vacuum cleaner
     # Media Players
     media_player.playstation_4:
       aliases:
         - ps4
         - console
-    media_player.spotify_denys:
-      name: Denys Spotify
-      aliases:
-        - spotify
-    media_player.spotify_marry:
-      name: Marry Spotify
-      aliases:
-        - spotify
     # Switch
     switch.circadian_lighting_flux:
       name: Flux
@@ -67,6 +60,11 @@ google_assistant:
     # Works better via SmartThings
     media_player.samsung_tv:
       expose: false 
+    # Spotify
+    media_player.spotify_denys:
+      expose: false
+    media_player.spotify_marry:
+      expose: false
     # Available in Google Home
     media_player.all_speakers:
       expose: false
@@ -92,6 +90,8 @@ google_assistant:
     switch.bedroom_bed_lights:
       expose: false
     switch.living_room_tv_lights:
+      expose: false
+    switch.christmas_tree:
       expose: false
     # Only from Home Assistant
     switch.adguard_filtering:
