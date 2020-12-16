@@ -29,7 +29,9 @@ cards:
           - binary_sensor.toyota_hood
           - binary_sensor.toyota_trunk
           - binary_sensor.toyota_alarm
-      - type: horizontal-stack
+      - type: grid
+        columns: 2
+        square: false
         cards:
           - type: custom:mini-graph-card
             name: Температура салону
@@ -49,8 +51,6 @@ cards:
             points_per_hour: 2
             animate: true
             hour24: true
-      - type: horizontal-stack
-        cards:
           - type: custom:mini-graph-card
             name: Акумулятор
             entities:

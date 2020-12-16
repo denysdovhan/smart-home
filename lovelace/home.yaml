@@ -44,7 +44,9 @@ cards:
     cards:
       - type: weather-forecast
         entity: weather.nyvky
-      - type: horizontal-stack
+      - type: grid
+        columns: 2
+        square: false
         cards:
           - type: custom:mini-graph-card
             name: Температура вдома
@@ -64,8 +66,6 @@ cards:
             points_per_hour: 2
             animate: true
             hour24: true
-      - type: horizontal-stack
-        cards:
           - type: custom:mini-graph-card
             name: Тиск вдома
             entities:
@@ -139,12 +139,13 @@ cards:
               - entity: light.bedroom_ceiling_light_light
               - entity: light.bedroom_bed_lights
               - entity: light.bedroom_floor_lamp
-      - type: horizontal-stack
+      - type: grid
+        columns: 4
+        square: false
         cards:
           - type: button
             name: Без світла
             entity: scene.lights_out
-            icon_height: 40px
             tap_action:
               action: call-service
               service: scene.turn_on
@@ -155,7 +156,6 @@ cards:
           - type: button
             name: Нічне
             entity: scene.night_lights
-            icon_height: 40px
             tap_action:
               action: call-service
               service: scene.turn_on
@@ -166,7 +166,6 @@ cards:
           - type: button
             name: Вечірнє
             entity: scene.evening_lights
-            icon_height: 40px
             tap_action:
               action: call-service
               service: scene.turn_on
@@ -177,7 +176,6 @@ cards:
           - type: button
             name: Яскраве
             entity: scene.bright_lights
-            icon_height: 40px
             tap_action:
               action: call-service
               service: scene.turn_on
@@ -185,20 +183,15 @@ cards:
                 entity_id: scene.bright_lights
             hold_action:
               action: more-info
-      - type: horizontal-stack
-        cards:
           - type: button
             name: Не турбувати
             entity: input_boolean.do_not_disturb
-            icon_height: 40px
           - type: button
             name: Адаптивне
             entity: switch.circadian_lighting_flux
-            icon_height: 40px
           - type: button
             name: Активне
             entity: scene.active_lights
-            icon_height: 40px
             tap_action:
               action: call-service
               service: scene.turn_on
@@ -209,7 +202,6 @@ cards:
           - type: button
             name: Романтичне
             entity: scene.romantic_lights
-            icon_height: 40px
             tap_action:
               action: call-service
               service: scene.turn_on
