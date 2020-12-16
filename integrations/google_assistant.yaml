@@ -68,7 +68,11 @@ google_assistant:
     media_player.samsung_tv:
       expose: false 
     # Available in Google Home
-    media_player.google_home_mini:
+    media_player.all_speakers:
+      expose: false
+    media_player.living_room_speaker:
+      expose: false
+    media_player.bedroom_speaker:
       expose: false
     # Exposed by Table Lights
     light.living_room_lower_table_light:

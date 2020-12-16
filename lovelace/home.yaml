@@ -221,7 +221,7 @@ cards:
       - type: vertical-stack
         cards:
           - type: 'custom:mini-media-player'
-            entity: media_player.google_home_mini
+            entity: media_player.all_speakers
             tts:
               language: uk
               platform: google

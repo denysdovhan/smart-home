@@ -7,15 +7,15 @@
     - platform: state
       entity_id: input_boolean.do_not_disturb
   action:
-    # Google Home
+    # Speakers
     - service: media_player.volume_set
-      entity_id: media_player.google_home_mini
       data:
+        entity_id: media_player.all_speakers
         volume_level: >
           {% if is_state('input_boolean.do_not_disturb', 'on') %}
-            0.5
+            0.50
           {% else %}
-            0.8
+            0.75
           {% endif %}
     # Purifier
     # Set Purifier speed only when it's running

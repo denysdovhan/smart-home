@@ -31,7 +31,7 @@ speak:
         sequence:
           - service: tts.google_say
             data:
-              entity_id: media_player.google_home_mini
+              entity_id: media_player.all_speakers
               message: "{{ announcement }}"
 
 announcement:
@@ -114,7 +114,7 @@ greeting:
         sequence:
           - service: tts.google_say
             data:
-              entity_id: media_player.google_home_mini
+              entity_id: media_player.all_speakers
               message: "{{ greeting + ' ' + day_phrases }}"
       - conditions:
           - condition: state
@@ -123,10 +123,10 @@ greeting:
         sequence:
           - service: tts.google_say
             data:
-              entity_id: media_player.google_home_mini
+              entity_id: media_player.all_speakers
               message: "{{ greeting + ' ' + night_phrases }}"
       default:
         - service: tts.google_say
           data:
-            entity_id: media_player.google_home_mini
+            entity_id: media_player.all_speakers
             message: "{{ greeting }}"
