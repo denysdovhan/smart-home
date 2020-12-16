@@ -7,32 +7,28 @@ cards:
       - type: markdown
         content: >
           {% set greeting = [
+              'Вітаю',
               'Вітаю вдома',
+              'Ласкаво прошу додому',
               'Привіт'
             ] | random
           %}
 
           ## {{ greeting }}, {{ user }}!
+
+          Температура {{ states('sensor.home_temperature') | round }}°С,
+          вологість {{ states('sensor.home_humidity') | round }}%,
+          якість повітря {{ states('sensor.purifier_aqi') }} AQI.
       - type: horizontal-stack
         cards:
           - type: picture-entity
             name: Денис
             entity: person.denys
             image: /local/images/denys.jpg
-            state_filter:
-              home: none
-              wix: brightness(90%) sepia(100%) hue-rotate(15deg)
-              citrusdev: brightness(90%) sepia(70%) hue-rotate(0deg) saturate(200%)
-              away: grayscale(1)
           - type: picture-entity
             name: Маша
             entity: person.marry
             image: /local/images/marry.jpg
-            state_filter:
-              home: none
-              wix: brightness(90%) sepia(100%) hue-rotate(15deg)
-              citrusdev: brightness(90%) sepia(70%) hue-rotate(0deg) saturate(200%)
-              away: grayscale(1)
       - type: map
         entities:
           - person.marry
