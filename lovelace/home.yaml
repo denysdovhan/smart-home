@@ -121,7 +121,8 @@ cards:
 
   - type: vertical-stack
     cards:
-      - type: horizontal-stack
+      - type: grid
+        columns: 2
         cards:
           - type: entities
             title: Вітальня

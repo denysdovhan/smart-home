@@ -14,12 +14,6 @@ cards:
       status:
         empty: порожній
         filled: повний
-  
-  # - type: entities
-  #   entities:
-  #     - entity: fan.humidifier
-  #       name: Зволожувач
-
   - type: vertical-stack
     cards:
       - type: horizontal-stack
