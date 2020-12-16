@@ -47,6 +47,9 @@
     - condition: state
       entity_id: group.lights
       state: 'off'
+    - condition: state
+      entity_id: binary_sensor.activity_time
+      state: 'on'
   action:
     - service: script.speak
       data:
