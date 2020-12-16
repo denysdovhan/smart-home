@@ -15,6 +15,7 @@ __pycache__
 .google.token
 deps
 tts
+image
 
 # Specific files
 /secrets.yaml
