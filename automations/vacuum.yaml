@@ -1,31 +1,3 @@
-- id: vacuum_regular_cleaning
-  alias: Vacuum Regular Cleaning
-  description: Regular vacuum cleaning every two days
-  trigger:
-    - platform: time_pattern
-      hours: '/2'
-      minutes: 0
-      seconds: 0
-  condition:
-      # Robot is docked
-    - condition: state
-      entity_id: vacuum.roborock
-      state: 'docked'
-      # It's working day
-    - condition: state
-      entity_id: binary_sensor.workday_sensor
-      state: 'on'
-      # Only on activity time
-    - condition: state
-      entity_id: binary_sensor.activity_time
-      state: 'on'
-      # Do Not Disturb mode is off
-    - condition: state
-      entity_id: input_boolean.do_not_disturb
-      state: 'off'
-  action:
-    - service: script.vacuum_regular_cleaning
-
 - id: vacuum_finish_cleaning
   alias: Vacuum Stop Cleaning
   description: Send vacuum home when somebody comes home
@@ -51,8 +23,13 @@
     entity_id: vacuum.roborock
     from: 'cleaning'
     to: 'returning'
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: not_home
   action:
     - service: script.announcement
+      speak: false
       data:
         title: "Пилосос 🧹"
         greetings:
@@ -77,6 +54,7 @@
     to: 'error'
   action:
     - service: script.announcement
+      speak: false
       data:
         title: "Пилосос 🧹"
         greetings:
