@@ -77,14 +77,14 @@ google_assistant:
       expose: false 
     light.living_room_upper_table_light:
       expose: false
-    # Exposed by Main Lights
-    light.living_room_main_light_bulb_1_light:
+    # Exposed by Main Light
+    light.living_room_main_light_bulb_1:
       expose: false
-    light.living_room_main_light_bulb_2_light:
+    light.living_room_main_light_bulb_2:
       expose: false
-    light.living_room_main_light_bulb_3_light:
+    light.living_room_main_light_bulb_3:
       expose: false
-    light.living_room_main_light_bulb_4_light:
+    light.living_room_main_light_bulb_4:
       expose: false
     # Duplication for lights
     switch.bedroom_bed_lights:

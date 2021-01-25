@@ -40,10 +40,10 @@ homekit:
       - light.living_room_lower_table_light
       - light.living_room_upper_table_light
       # Main Lights
-      - light.living_room_main_light_bulb_1_light
-      - light.living_room_main_light_bulb_2_light
-      - light.living_room_main_light_bulb_3_light
-      - light.living_room_main_light_bulb_4_light
+      - light.living_room_main_light_bulb_1
+      - light.living_room_main_light_bulb_2
+      - light.living_room_main_light_bulb_3
+      - light.living_room_main_light_bulb_4
   entity_config:
     binary_sensor.bedroom_movement_sensor_occupancy:
       linked_battery_sensor: sensor.bedroom_movement_sensor_battery

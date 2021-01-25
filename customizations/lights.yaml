@@ -8,22 +8,22 @@ light.living_room_upper_table_light:
   friendly_name: Upper Table Light
 
 # Main Light
-light.living_room_main_lights:
+light.living_room_main_light:
   friendly_name: Main Light
   icon: mdi:vanity-light
-light.living_room_main_light_bulb_1_light:
+light.living_room_main_light_bulb_1:
   friendly_name: Main Light Bulb 1
 sensor.living_room_main_light_bulb_1_linkquality:
   friendly_name: Main Light Bulb 1 Linkquality
-light.living_room_main_light_bulb_2_light:
+light.living_room_main_light_bulb_2:
   friendly_name: Main Light Bulb 2
 sensor.living_room_main_light_bulb_2_linkquality:
   friendly_name: Main Light Bulb 2 Linkquality
-light.living_room_main_light_bulb_3_light:
+light.living_room_main_light_bulb_3:
   friendly_name: Main Light Bulb 3
 sensor.living_room_main_light_bulb_3_linkquality:
   friendly_name: Main Light Bulb 3 Linkquality
-light.living_room_main_light_bulb_4_light:
+light.living_room_main_light_bulb_4:
   friendly_name: Main Light Bulb 4
 sensor.living_room_main_light_bulb_4_linkquality:
   friendly_name: Main Light Bulb 4 Linkquality

@@ -129,7 +129,7 @@ cards:
             entities:
               - entity: light.living_room_table_lights
               - entity: light.living_room_tv_lights
-              - entity: light.living_room_main_lights
+              - entity: light.living_room_main_light
           - type: entities
             title: Спальня
             entities:
