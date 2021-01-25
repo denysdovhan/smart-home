@@ -7,7 +7,7 @@
     from: 'not_home'
     to: 'home'
   action:
-    # Wait for door to open
+    # Wait for someone to come
     - wait_for_trigger:
         - platform: state
           entity_id: binary_sensor.front_door_sensor_contact
@@ -18,7 +18,7 @@
         - platform: state
           entity_id: binary_sensor.bedroom_movement_sensor_occupancy
           to: 'on'
-      timeout: '00:30:00'
+      timeout: '01:00:00'
       continue_on_timeout: false
     # Turn on fans
     - service: fan.turn_on
