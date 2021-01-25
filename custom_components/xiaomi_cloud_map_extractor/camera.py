@@ -6,8 +6,9 @@ import voluptuous as vol
 from datetime import timedelta
 
 from homeassistant.helpers import config_validation as cv
-from homeassistant.components.camera import PLATFORM_SCHEMA, Camera
+from homeassistant.components.camera import PLATFORM_SCHEMA, ENTITY_ID_FORMAT, Camera
 from homeassistant.const import CONF_HOST, CONF_NAME, CONF_TOKEN, CONF_USERNAME, CONF_PASSWORD
+from homeassistant.helpers.entity import generate_entity_id
 
 from .const import *
 from .xiaomi_cloud_connector import XiaomiCloudConnector
@@ -95,18 +96,19 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     drawables = config[CONF_DRAW]
     sizes = config[CONF_SIZES]
     texts = config[CONF_TEXTS]
-    if "all" in drawables:
+    if DRAWABLE_ALL in drawables:
         drawables = CONF_AVAILABLE_DRAWABLES[1:]
     attributes = config[CONF_ATTRIBUTES]
-    async_add_entities([VacuumCamera(hass, host, token, username, password, country, name, should_poll, image_config,
-                                     colors, drawables, sizes, texts, attributes)])
+    entity_id = generate_entity_id(ENTITY_ID_FORMAT, name, hass=hass)
+    async_add_entities([VacuumCamera(entity_id, host, token, username, password, country, name, should_poll,
+                                     image_config, colors, drawables, sizes, texts, attributes)])
 
 
 class VacuumCamera(Camera):
-    def __init__(self, hass, host, token, username, password, country, name, should_poll, image_config, colors,
+    def __init__(self, entity_id, host, token, username, password, country, name, should_poll, image_config, colors,
                  drawables, sizes, texts, attributes):
         super().__init__()
-        self.hass = hass
+        self.entity_id = entity_id
         self.content_type = CONTENT_TYPE
         self._vacuum = miio.Vacuum(host, token)
         self._connector = XiaomiCloudConnector(username, password)
@@ -120,7 +122,9 @@ class VacuumCamera(Camera):
         self._attributes = attributes
         self._image = None
         self._map_data = None
-        self._logged = False
+        self._logged_in = False
+        self._logged_in_previously = True
+        self._received_map_name_previously = True
         self._country = country
 
     async def async_added_to_hass(self) -> None:
@@ -144,6 +148,7 @@ class VacuumCamera(Camera):
             for name, value in {
                 ATTRIBUTE_CALIBRATION: self._map_data.calibration(),
                 ATTRIBUTE_CHARGER: self._map_data.charger,
+                ATTRIBUTE_COUNTRY: self._country,
                 ATTRIBUTE_GOTO: self._map_data.goto,
                 ATTRIBUTE_GOTO_PATH: self._map_data.goto_path,
                 ATTRIBUTE_GOTO_PREDICTED_PATH: self._map_data.predicted_path,
@@ -171,9 +176,11 @@ class VacuumCamera(Camera):
 
     def update(self):
         counter = 10
-        if not self._logged:
-            self._logged = self._connector.login()
-        if self._country is None:
+        if not self._logged_in:
+            self._logged_in = self._connector.login()
+            if not self._logged_in and self._logged_in_previously:
+                _LOGGER.error("Unable to log in, check credentials")
+        if self._country is None and self._logged_in:
             self._country = self._connector.get_country_for_device(self._vacuum.ip, self._vacuum.token)
         map_name = "retry"
         while map_name == "retry" and counter > 0:
@@ -183,10 +190,13 @@ class VacuumCamera(Camera):
             except OSError as exc:
                 _LOGGER.error("Got OSError while fetching the state: %s", exc)
             except miio.DeviceException as exc:
-                _LOGGER.warning("Got exception while fetching the state: %s", exc)
+                if self._received_map_name_previously:
+                    _LOGGER.warning("Got exception while fetching the state: %s", exc)
+                self._received_map_name_previously = False
             finally:
                 counter = counter - 1
-        if self._logged and map_name != "retry":
+        self._received_map_name_previously = map_name != "retry"
+        if self._logged_in and map_name != "retry" and self._country is not None:
             map_data = self._connector.get_map(self._country, map_name, self._colors, self._drawables, self._texts,
                                                self._sizes, self._image_config)
             if map_data is not None:
@@ -198,6 +208,7 @@ class VacuumCamera(Camera):
                     self._map_data = map_data
                 except:
                     _LOGGER.warning("Unable to retrieve map data")
-                finally:
-                    return
-        _LOGGER.warning("Unable to retrieve map data")
+            else:
+                self._logged_in = False
+                _LOGGER.warning("Unable to retrieve map data")
+        self._logged_in_previously = self._logged_in
