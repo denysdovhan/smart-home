@@ -13,9 +13,9 @@
         entity_id: media_player.all_speakers
         volume_level: >
           {% if is_state('input_boolean.do_not_disturb', 'on') %}
-            0.50
+            0.5
           {% else %}
-            0.75
+            0.8
           {% endif %}
     # Purifier
     # Set Purifier speed only when it's running

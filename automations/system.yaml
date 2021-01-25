@@ -6,8 +6,8 @@
   action:
     service: notify.denys
     data:
-      title: 'New Home Assistant Release 🎉'
-      message: "Home Assistant  {{ state_attr('binary_sensor.updater', 'newest_version') }}  is now available."
+      title: 'Оновлення Home Assistant 🎉'
+      message: "Доступна нова версія Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }}."
 
 - id: open_uv_index_update
   alias: Update OpenUV
