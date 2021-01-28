@@ -3,9 +3,9 @@ title: Автомобіль
 icon: mdi:car
 cards:
   - type: vertical-stack
+    title: Сигналізація
     cards:
       - type: entities
-        title: Сигналізація
         state_color: true
         show_header_toggle: false
         entities:
@@ -18,11 +18,11 @@ cards:
         hours_to_show: 24
         default_zoom: 13
         aspect_ratio: 16x13.3 # Maintain size of a row
-      
+
   - type: vertical-stack
+    title: Датчики
     cards:
       - type: entities
-        title: Датчики
         entities:
           - sensor.toyota_balance
           - binary_sensor.toyota_doors

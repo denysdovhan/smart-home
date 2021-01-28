@@ -35,14 +35,16 @@ cards:
           - person.denys
         hours_to_show: 12
         default_zoom: 13
-  
+        aspect_ratio: 16x9
+
   - type: vertical-stack
     cards:
       - type: weather-forecast
         entity: weather.nyvky
+        show_forecast: false
       - type: grid
-        columns: 2
         square: false
+        columns: 2
         cards:
           - type: custom:mini-graph-card
             name: Температура вдома
@@ -138,7 +140,6 @@ cards:
               - entity: light.bedroom_floor_lamp
       - type: grid
         columns: 4
-        square: false
         cards:
           - type: button
             name: Без світла
@@ -181,22 +182,6 @@ cards:
             hold_action:
               action: more-info
           - type: button
-            name: Не турбувати
-            entity: input_boolean.do_not_disturb
-          - type: button
-            name: Адаптивне
-            entity: switch.circadian_lighting_flux
-          - type: button
-            name: Активне
-            entity: scene.active_lights
-            tap_action:
-              action: call-service
-              service: scene.turn_on
-              service_data:
-                entity_id: scene.active_lights
-            hold_action:
-              action: more-info
-          - type: button
             name: Романтичне
             entity: scene.romantic_lights
             tap_action:
@@ -206,7 +191,13 @@ cards:
                 entity_id: scene.romantic_lights
             hold_action:
               action: more-info
-      
+          - type: button
+            name: Не турбувати
+            entity: input_boolean.do_not_disturb
+          - type: button
+            name: Адаптивне
+            entity: switch.circadian_lighting_flux
+
       - type: vertical-stack
         cards:
           - type: 'custom:mini-media-player'
