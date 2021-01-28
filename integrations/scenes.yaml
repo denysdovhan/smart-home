@@ -89,33 +89,6 @@ scene split:
       switch.circadian_lighting_flux:
         state: on
 
-  - id: active_lights
-    name: Active Lights
-    entities:
-      light.bedroom_bed_lights:
-        state: on
-      light.bedroom_floor_lamp:
-        state: on
-      light.bedroom_ceiling_light_light:
-        state: off
-        brightness: 255
-      light.living_room_tv_lights:
-        state: on
-      light.living_room_main_light:
-        state: off
-      light.living_room_table_lights:
-        state: on
-        brightness: 255
-        color_temp: 240
-      light.christmas_tree:
-        state: on
-      automation.turn_on_bedroom_lights_on_movement:
-        state: on
-      automation.turn_off_bedroom_lights_without_movement:
-        state: on
-      switch.circadian_lighting_flux:
-        state: on
-
   - id: bright_lights
     name: Bright Lights
     entities:
