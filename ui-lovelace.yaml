@@ -9,6 +9,7 @@ views:
   - !include lovelace/home.yaml
   - !include lovelace/living-room.yaml
   - !include lovelace/bedroom.yaml
+  - !include lovelace/balcony.yaml
   - !include lovelace/vacuum.yaml
   - !include lovelace/car.yaml
   - !include lovelace/cameras.yaml

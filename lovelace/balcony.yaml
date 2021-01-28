@@ -1,0 +1,31 @@
+path: balcony
+title: Балкон
+icon: mdi:desk-lamp
+cards:
+  - type: grid
+    title: Світло
+    columns: 3
+    cards:
+      - type: button
+        entity: light.desk_lamp
+
+  - type: vertical-stack
+    title: Медіа
+    cards:
+      - type: custom:state-switch
+        entity: user
+        states:
+          Denys:
+            type: 'custom:mini-media-player'
+            entity: media_player.spotify_denys
+            artwork: material
+            name: Spotify
+            hide:
+              power: true
+          Marry:
+            type: 'custom:mini-media-player'
+            entity: media_player.spotify_marry
+            artwork: material
+            name: Spotify
+            hide:
+              power: true
