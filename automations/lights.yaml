@@ -13,8 +13,8 @@
       state: 'off'
   action:
     - service: script.announcement
-      notify: false
       data:
+        notify: false
         greetings:
           - "Вечоріє."
           - "Скоро стемніє."
@@ -54,8 +54,8 @@
       state: 'on'
   action:
     - service: script.announcement
-      notify: false
       data:
+        notify: false
         greetings:
           - "Здається вдома надто темно."
           - "Вдома занадто темно."

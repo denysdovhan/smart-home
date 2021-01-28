@@ -29,8 +29,8 @@
       state: not_home
   action:
     - service: script.announcement
-      speak: false
       data:
+        speak: false
         title: "Пилосос 🧹"
         greetings:
           - "Прибирання закінчено!"
@@ -54,8 +54,8 @@
     to: 'error'
   action:
     - service: script.announcement
-      speak: false
       data:
+        speak: false
         title: "Пилосос 🧹"
         greetings:
           - "Ой!"
