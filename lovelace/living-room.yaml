@@ -2,42 +2,81 @@ path: living-room
 title: Вітальня
 icon: mdi:sofa
 cards:
-  - type: custom:purifier-card
-    entity: fan.purifier
-    show_name: false
-    show_state: false
-    actions:
-      - name: Silent
-        icon: 'mdi:weather-night'
-        speed: Silent
-      - name: 25%
-        icon: 'mdi:circle-slice-2'
-        speed: Favorite
-        xiaomi_miio_favorite_level: 3
-      - name: 50%
-        icon: 'mdi:circle-slice-4'
-        speed: Favorite
-        xiaomi_miio_favorite_level: 7
-      - name: 75%
-        icon: 'mdi:circle-slice-6'
-        speed: Favorite
-        xiaomi_miio_favorite_level: 10
-      - name: 100%
-        icon: 'mdi:circle-slice-8'
-        speed: Favorite
-        xiaomi_miio_favorite_level: 14
-      - name: Auto
-        icon: 'mdi:brightness-auto'
-        speed: Auto
-    stats:
-      - attribute: filter_life_remaining
-        unit: '%'
-        subtitle: Залишок фільтру
-      - attribute: motor_speed
-        unit: Об/с
-        subtitle: Швидкість мотору
-  - type: vertical-stack
+  - type: grid
+    title: Світло
+    columns: 3
     cards:
+      - type: button
+        entity: light.living_room_table_lights
+      - type: button
+        entity: light.living_room_tv_lights
+      - type: button
+        entity: light.living_room_main_light
+      - type: button
+        entity: light.christmas_tree
+
+  - type: vertical-stack
+    title: Медіа
+    cards:
+      - type: 'custom:mini-media-player'
+        entity: media_player.living_room_speaker
+        tts:
+          language: uk
+          platform: google
+        hide:
+          controls: true
+      - type: 'custom:mini-media-player'
+        entity: media_player.playstation_4
+        artwork: material
+        hide:
+          controls: true
+          volume: true
+      - type: 'custom:mini-media-player'
+        entity: media_player.apple_tv
+        artwork: cover
+        hide:
+          volume: true
+      - type: 'custom:mini-media-player'
+        entity: media_player.samsung_tv
+        artwork: cover
+
+  - type: vertical-stack
+    title: Умови
+    cards:
+      - type: custom:purifier-card
+        entity: fan.purifier
+        show_name: false
+        show_state: false
+        actions:
+          - name: Silent
+            icon: 'mdi:weather-night'
+            speed: Silent
+          - name: 25%
+            icon: 'mdi:circle-slice-2'
+            speed: Favorite
+            xiaomi_miio_favorite_level: 3
+          - name: 50%
+            icon: 'mdi:circle-slice-4'
+            speed: Favorite
+            xiaomi_miio_favorite_level: 7
+          - name: 75%
+            icon: 'mdi:circle-slice-6'
+            speed: Favorite
+            xiaomi_miio_favorite_level: 10
+          - name: 100%
+            icon: 'mdi:circle-slice-8'
+            speed: Favorite
+            xiaomi_miio_favorite_level: 14
+          - name: Auto
+            icon: 'mdi:brightness-auto'
+            speed: Auto
+        stats:
+          - attribute: filter_life_remaining
+            unit: '%'
+            subtitle: Залишок фільтру
+          - attribute: motor_speed
+            unit: Об/с
+            subtitle: Швидкість мотору
       - type: horizontal-stack
         cards:
           - type: custom:mini-graph-card
