@@ -27,6 +27,9 @@ google_assistant:
     input_boolean.do_not_disturb:
       aliases:
         - silence
+        - silence mode
+        - silent mode
+        - quite mode
         - do not disturb mode
     # Vacuum
     vacuum.roborock:
@@ -57,9 +60,12 @@ google_assistant:
     # Prevent exposing specific entities
     # ----------------------------------
 
+    # Apple TV
+    media_player.apple_tv:
+      expose: false
     # Works better via SmartThings
     media_player.samsung_tv:
-      expose: false 
+      expose: false
     # Spotify
     media_player.spotify_denys:
       expose: false
@@ -74,7 +80,7 @@ google_assistant:
       expose: false
     # Exposed by Table Lights
     light.living_room_lower_table_light:
-      expose: false 
+      expose: false
     light.living_room_upper_table_light:
       expose: false
     # Exposed by Main Light
