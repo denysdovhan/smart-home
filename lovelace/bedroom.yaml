@@ -2,20 +2,43 @@ path: bedroom
 title: Спальня
 icon: mdi:bed-empty
 cards:
-  - type: custom:mini-humidifier
-    entity: fan.humidifier
-    model: 'deerma.humidifier.mjjsq'
-    name: Зволожувач
-    secondary_info:
-      hide: true
-    target_humidity:
-      hide_indicator: false
-    indicators:
-      status:
-        empty: порожній
-        filled: повний
-  - type: vertical-stack
+  - type: grid
+    title: Світло
+    columns: 3
     cards:
+      - type: button
+        entity: light.bedroom_ceiling_light_light
+      - type: button
+        entity: light.bedroom_bed_lights
+      - type: button
+        entity: light.bedroom_floor_lamp
+
+  - type: vertical-stack
+    title: Медіа
+    cards:
+      - type: 'custom:mini-media-player'
+        entity: media_player.bedroom_speaker
+        tts:
+          language: uk
+          platform: google
+        hide:
+          controls: true
+
+  - type: vertical-stack
+    title: Умови
+    cards:
+      - type: custom:mini-humidifier
+        entity: fan.humidifier
+        model: 'deerma.humidifier.mjjsq'
+        name: Зволожувач
+        secondary_info:
+          hide: true
+        target_humidity:
+          hide_indicator: false
+        indicators:
+          status:
+            empty: порожній
+            filled: повний
       - type: horizontal-stack
         cards:
           - type: custom:mini-graph-card
