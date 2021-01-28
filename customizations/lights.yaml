@@ -50,3 +50,8 @@ light.living_room_tv_lights:
 light.christmas_tree:
   friendly_name: Christmas Tree
   icon: mdi:pine-tree
+
+# Desk Lamp
+light.desk_lamp:
+  friendly_name: Desk Lamp
+  icon: mdi:desk-lamp
