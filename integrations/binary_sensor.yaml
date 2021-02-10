@@ -23,5 +23,5 @@ binary_sensor:
     before: sunrise
   - platform: tod
     name: Sleeping Time
-    after: '01:00'
-    before: '11:00'
+    after: '00:00'
+    before: '10:00'
