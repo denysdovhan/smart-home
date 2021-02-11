@@ -1,7 +1,7 @@
 scene.bright_lights:
   icon: 'mdi:lightbulb-group'
 scene.evening_lights:
-  icon: 'mdi:weather-sunset-down'
+  icon: 'mdi:lightbulb-multiple'
 scene.active_lights:
   icon: 'mdi:brightness-auto'
 scene.night_lights:

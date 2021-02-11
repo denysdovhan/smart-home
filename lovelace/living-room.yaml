@@ -33,12 +33,12 @@ cards:
           volume: true
       - type: 'custom:mini-media-player'
         entity: media_player.apple_tv
-        artwork: cover
+        artwork: material
         hide:
           volume: true
       - type: 'custom:mini-media-player'
         entity: media_player.samsung_tv
-        artwork: cover
+        artwork: material
 
   - type: vertical-stack
     title: Умови
