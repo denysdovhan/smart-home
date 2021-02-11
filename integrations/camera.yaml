@@ -6,10 +6,6 @@
 
 camera:
   - platform: ffmpeg
-    name: sofiyska
-    input: https://vps.guru.ua/hls/sof.m3u8
-
-  - platform: ffmpeg
     name: chernivtsi
     input: http://langate.tv/camera360/tracks-v1/mono.m3u8
 
@@ -40,12 +36,12 @@ camera:
       color_unknown: [0, 0, 0]
       color_scan: [0xDF, 0xDF, 0xDF]
     room_colors:
-      16: [252, 212, 81]  # Living Room
+      16: [252, 212, 81] # Living Room
       17: [112, 203, 222] # Bedroom
       18: [245, 142, 111] # Corridor
       19: [145, 200, 255] # Bathroom
       20: [112, 203, 222] # Kitchen
-    draw: 
+    draw:
       - 'all'
     map_transformation:
       scale: 2

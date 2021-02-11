@@ -2,15 +2,23 @@ path: cameras
 title: Камери
 icon: mdi:video-box
 cards:
-  - type: picture-glance
-    title: Софійська площа
-    camera_image: camera.sofiyska
-    camera_view: live
-    aspect_ratio: 50%
-    entities: []
-  - type: picture-glance
+  - type: vertical-stack
+    title: Київ
+    cards:
+      # Європейська площа
+      - type: iframe
+        url: https://www.youtube.com/embed/Gaxxp2lttXg?autoplay=1
+
+      # Подільсько-воскресенський міст
+      - type: iframe
+        url: https://www.youtube.com/embed/9aBqDJO98VE?autoplay=1
+
+  - type: vertical-stack
     title: Чернівці
-    camera_image: camera.chernivtsi
-    camera_view: live
-    aspect_ratio: 50%
-    entities: []
+    cards:
+      # Чернівці
+      - type: picture-glance
+        camera_image: camera.chernivtsi
+        camera_view: live
+        aspect_ratio: 50%
+        entities: []
