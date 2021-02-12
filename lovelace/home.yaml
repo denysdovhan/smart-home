@@ -68,6 +68,7 @@ cards:
       - type: grid
         title: Кімнати
         columns: 3
+        square: false
         cards:
           - type: button
             icon: mdi:sofa
@@ -212,13 +213,6 @@ cards:
   - type: vertical-stack
     title: Статус
     cards:
-      - type: map
-        entities:
-          - person.marry
-          - person.denys
-        hours_to_show: 12
-        default_zoom: 13
-        aspect_ratio: 16x9
       - type: horizontal-stack
         cards:
           - type: entities
@@ -237,3 +231,10 @@ cards:
                 name: Батарея
               - entity: sensor.iphone_maria_ssid
                 name: WiFi
+      - type: map
+        entities:
+          - person.marry
+          - person.denys
+        hours_to_show: 12
+        default_zoom: 13
+        aspect_ratio: 16x9
