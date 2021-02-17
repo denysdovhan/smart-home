@@ -219,18 +219,14 @@ cards:
             entities:
               - entity: person.denys
                 name: Денис
-              - entity: sensor.denys_iphone_battery_level
+              - entity: sensor.denys_iphone_icloud_battery_state
                 name: Батарея
-              - entity: sensor.denys_iphone_ssid
-                name: WiFi
           - type: entities
             entities:
               - entity: person.marry
                 name: Маша
-              - entity: sensor.iphone_maria_battery_level
+              - entity: sensor.iphone_maria_icloud_battery_state
                 name: Батарея
-              - entity: sensor.iphone_maria_ssid
-                name: WiFi
       - type: map
         entities:
           - person.marry
