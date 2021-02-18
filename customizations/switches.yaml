@@ -5,6 +5,3 @@ switch.bedroom_bed_lights:
 switch.living_room_tv_lights:
   friendly_name: TV Lights Switch
   icon: mdi:power-socket-de
-switch.christmas_tree:
-  friendly_name: Christmas Tree Switch
-  icon: mdi:power-socket-de

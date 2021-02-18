@@ -97,8 +97,6 @@ google_assistant:
       expose: false
     switch.living_room_tv_lights:
       expose: false
-    switch.christmas_tree:
-      expose: false
     # Only from Home Assistant
     switch.adguard_filtering:
       expose: false

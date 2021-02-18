@@ -12,8 +12,6 @@ cards:
         entity: light.living_room_tv_lights
       - type: button
         entity: light.living_room_main_light
-      - type: button
-        entity: light.christmas_tree
 
   - type: vertical-stack
     title: Медіа

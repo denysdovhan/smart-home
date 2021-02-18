@@ -23,7 +23,6 @@ group:
       - light.living_room_tv_lights
       - light.living_room_main_light
       - light.living_room_table_lights
-      - light.christmas_tree
 
   living_room_lights:
     name: Living Room Lights
@@ -31,7 +30,6 @@ group:
       - light.living_room_tv_lights
       - light.living_room_main_light
       - light.living_room_table_lights
-      - light.christmas_tree
 
   bedroom_lights:
     name: Bedroom Lights

@@ -17,17 +17,14 @@ light:
   - platform: switch
     name: living_room_tv_lights
     entity_id: switch.living_room_tv_lights
-  - platform: switch
-    name: christmas_tree
-    entity_id: switch.christmas_tree
   # MQTT
   - platform: mqtt
     # Defined in: /share/zigbee2mqtt/groups.yaml
     name: living_room_main_light
     schema: json
-    availability_topic: "zigbee2mqtt/bridge/state"
-    command_topic: "zigbee2mqtt/living_room_main_light/set"
-    state_topic: "zigbee2mqtt/living_room_main_light"
+    availability_topic: 'zigbee2mqtt/bridge/state'
+    command_topic: 'zigbee2mqtt/living_room_main_light/set'
+    state_topic: 'zigbee2mqtt/living_room_main_light'
     color_temp: true
     brightness: true
     xy: false
