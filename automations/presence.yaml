@@ -63,4 +63,22 @@
       entity_id: all
     - service: media_player.turn_off
       entity_id: all
-    - service: script.vacuum_regular_cleaning
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.time_to_clean
+              state: 'on'
+          sequence:
+            - service: script.announcement
+              data:
+                speak: false
+                title: 'Пилосос 🧹'
+                messages:
+                  - 'Робот почав прибирання.'
+                  - 'Прибирання розпочато.'
+                  - "{{ state_attr('vacuum.roborock', 'friendly_name') }} почав прибирати."
+                  - "{{ state_attr('vacuum.roborock', 'friendly_name') }} прибирає квартиру."
+                notify_data:
+                  push:
+                    category: VACUUM_REGULAR_CLEANING
+            - service: script.vacuum_regular_cleaning

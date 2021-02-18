@@ -18,33 +18,14 @@
 vacuum_regular_cleaning:
   alias: Vacuum Regular Cleaning
   sequence:
-    - choose:
-      - conditions:
-          # Time for cleaning or last cleaning was short
-          - condition: template
-            value_template: >-
-              {% set last_cleaning_start = as_timestamp(state_attr('vacuum.roborock', 'clean_start')) | int %}
-              {% set last_cleaning_stop = as_timestamp(state_attr('vacuum.roborock', 'clean_stop')) | int %}
-              {% set current_time = as_timestamp(now()) | int %}
-              {% set time_for_cleaning = current_time - last_cleaning_start > (60 * 60 * 36) %}
-              {% set last_cleaning_was_short = last_cleaning_stop - last_cleaning_start < (60 * 5) %}
-              {{ time_for_cleaning or last_cleaning_was_short }}
-        sequence:
-          - service: script.announcement
-            data:
-              title: "Пилосос 🧹"
-              messages:
-                - "Починаємо планове прибирання вдома."
-                - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає регулярне прибирання."
-                - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирання."
-                - "{{ state_attr('vacuum.roborock', 'friendly_name') }} починає прибирати квартиру."
-          - service: vacuum.set_fan_speed
-            entity_id: vacuum.roborock
-            data:
-              fan_speed: Turbo
-          - delay: '00:00:05'
-          - service: vacuum.start
-            entity_id: vacuum.roborock
+    - service: vacuum.set_fan_speed
+      entity_id: vacuum.roborock
+      data:
+        fan_speed: Turbo
+    - delay:
+        seconds: 5
+    - service: vacuum.start
+      entity_id: vacuum.roborock
 
 vacuum_maintenance:
   alias: Vacuum Maintenance
@@ -115,4 +96,3 @@ vacuum_clean_bathroom:
         entity_id: vacuum.roborock
         command: app_segment_clean
         params: [19]
-
