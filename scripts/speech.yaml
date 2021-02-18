@@ -67,7 +67,7 @@ greeting:
         "Моя сім’я вдома!",
         "Мої котики вдома!",
         "Кошенята вдома!"
-      ] | random }}
+      ] }}
     day_phrases: >-
       {{ [
         "Як проходить ваш день?",
@@ -77,7 +77,7 @@ greeting:
         "Люблю вас! Ви теж любіть один одного!",
         "Що нового?",
         "Як справи?"
-      ] | random }}
+      ] }}
     night_phrases: >-
       {{ [
         "Як пройшов ваш день?",
@@ -94,29 +94,31 @@ greeting:
         "Поділіться один з одним теплом",
         "Що цікавого сталось сьогодні?",
         "Що хорошого сталось за сьогодні?"
-      ] | random }}
+      ] }}
   sequence:
     - choose:
-      - conditions:
-          - condition: state
-            entity_id: sun.sun
-            state: 'above_horizon'
-        sequence:
-          - service: tts.google_say
-            data:
-              entity_id: media_player.all_speakers
-              message: "{{ greeting + ' ' + day_phrases }}"
-      - conditions:
-          - condition: state
-            entity_id: sun.sun
-            state: 'below_horizon'
-        sequence:
-          - service: tts.google_say
-            data:
-              entity_id: media_player.all_speakers
-              message: "{{ greeting + ' ' + night_phrases }}"
+        - conditions:
+            - condition: state
+              entity_id: sun.sun
+              state: 'above_horizon'
+          sequence:
+            - service: script.announcement
+              data:
+                notify: false
+                greetings: '{{ greeting }}'
+                messages: '{{ day_phrases }}'
+        - conditions:
+            - condition: state
+              entity_id: sun.sun
+              state: 'below_horizon'
+          sequence:
+            - service: script.announcement
+              data:
+                notify: false
+                greetings: '{{ greeting }}'
+                messages: '{{ night_phrases }}'
       default:
-        - service: tts.google_say
+        - service: script.announcement
           data:
-            entity_id: media_player.all_speakers
-            message: "{{ greeting }}"
+            notify: false
+            messages: '{{ greeting }}'
