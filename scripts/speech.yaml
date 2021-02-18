@@ -11,6 +11,8 @@ announcement:
       description: Optionally specify to make the announcement silently
     notify:
       description: Optionally specify to make voice-only announcement
+    notify_data:
+      description: Optionally pass additional data for a notification
   variables:
     speak: true
     notify: true
@@ -24,29 +26,30 @@ announcement:
       {% endif %}
   sequence:
     - choose:
-      - conditions:
-        - condition: template
-          value_template: "{{ speak is true }}"
-        - condition: state
-          entity_id: group.family
-          state: 'home'
-        - condition: state
-          entity_id: input_boolean.do_not_disturb
-          state: 'off'
-        sequence:
-          - service: tts.google_say
-            data:
-              entity_id: media_player.all_speakers
-              message: "{{ message }}"
+        - conditions:
+            - condition: template
+              value_template: '{{ speak is true }}'
+            - condition: state
+              entity_id: group.family
+              state: 'home'
+            - condition: state
+              entity_id: input_boolean.do_not_disturb
+              state: 'off'
+          sequence:
+            - service: tts.google_say
+              data:
+                entity_id: media_player.all_speakers
+                message: '{{ message }}'
     - choose:
-      - conditions:
-        - condition: template
-          value_template: "{{ notify is true }}"
-        sequence:
-          - service: notify.all
-            data:
-              title: "{{ title }}"
-              message: "{{ message }}"
+        - conditions:
+            - condition: template
+              value_template: '{{ notify is true }}'
+          sequence:
+            - service: notify.all
+              data:
+                title: '{{ title }}'
+                message: '{{ message }}'
+                data: '{{ notify_data }}'
 
 greeting:
   alias: Greet people upon their arrival
