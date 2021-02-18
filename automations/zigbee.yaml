@@ -3,12 +3,12 @@
   trigger:
     platform: state
     entity_id: input_boolean.zigbee_permit_join
-    to: "on"
+    to: 'on'
   action:
     - service: mqtt.publish
       data:
         topic: zigbee2mqtt/bridge/config/permit_join
-        payload: "true"
+        payload: 'true'
     - service: timer.start
       data:
         entity_id: timer.zigbee_permit_join
@@ -18,10 +18,10 @@
   trigger:
     - entity_id: input_boolean.zigbee_permit_join
       platform: state
-      to: "off"
+      to: 'off'
   action:
     - data:
-        payload: "false"
+        payload: 'false'
         topic: zigbee2mqtt/bridge/config/permit_join
       service: mqtt.publish
     - data:
@@ -39,7 +39,7 @@
     - service: mqtt.publish
       data:
         topic: zigbee2mqtt/bridge/config/permit_join
-        payload: "false"
+        payload: 'false'
     - service: input_boolean.turn_off
       data:
         entity_id: input_boolean.zigbee_permit_join
