@@ -102,6 +102,7 @@ cards:
         title: Медіа
         cards:
           - type: custom:mini-media-player
+            icon:
             entity: media_player.all_speakers
             tts:
               language: uk
@@ -113,6 +114,7 @@ cards:
             states:
               Denys:
                 type: custom:mini-media-player
+                icon: mdi:spotify
                 entity: media_player.spotify_denys
                 artwork: material
                 name: Spotify
@@ -120,6 +122,7 @@ cards:
                   power: true
               Marry:
                 type: custom:mini-media-player
+                icon: mdi:spotify
                 entity: media_player.spotify_marry
                 artwork: material
                 name: Spotify
