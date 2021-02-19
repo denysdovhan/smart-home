@@ -28,6 +28,79 @@
     - delay:
         minutes: 50
 
+- id: aqi_warning
+  alias: AQI Warning Notification
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.nyvky_aqi
+      above: 150
+      below: 200
+    - platform: numeric_state
+      entity_id: sensor.nyvky_aqi
+      above: 201
+      below: 300
+    - platform: numeric_state
+      entity_id: sensor.nyvky_aqi
+      above: 301
+  action:
+    - choose:
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.nyvky_aqi
+              above: 150
+              below: 200
+          sequence:
+            - service: script.announcement
+              data:
+                speak: false
+                title: 'Шкідливе повітря 🥴'
+                messages:
+                  - "Шкідливий рівень якості повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                  - "Обережно! Надворі шкідливе повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                  - "Шкідливе повітря надворі: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                notify_data:
+                  url: /lovelace/home
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.nyvky_aqi
+              above: 201
+              below: 300
+          sequence:
+            - service: script.announcement
+              data:
+                speak: false
+                title: 'Дуже шкідливе повітря 😷'
+                messages:
+                  - "Дуже шкідливий рівень якості повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                  - "Обережно! Надворі дуже шкідливе повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                  - "Дуже шкідливе повітря надворі: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                notify_data:
+                  url: /lovelace/home
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.nyvky_aqi
+              above: 301
+          sequence:
+            - service: script.announcement
+              data:
+                speak: false
+                title: 'Небезпечне повітря ☠️'
+                messages:
+                  - "Небезпечний рівень якості повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                  - "Обережно! Надворі небезпечне повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                  - "Небезпечне повітря надворі: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                notify_data:
+                  url: /lovelace/home
+      default:
+        - service: script.announcement
+          data:
+            speak: false
+            title: 'Повітря 🌫'
+            messages:
+              - "Погіршується якість повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+            notify_data:
+              url: /lovelace/home
+
 # Disabled because there's no transmission integration enabled right now.
 - id: torrent_completed_notification
   alias: Notify about completed torrent

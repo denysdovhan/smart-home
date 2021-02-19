@@ -8,9 +8,9 @@ sensor:
   # MQTT Bridge
   - platform: mqtt
     name: Bridge state
-    state_topic: "zigbee2mqtt/bridge/state"
+    state_topic: 'zigbee2mqtt/bridge/state'
     icon: mdi:router-wireless
-  
+
   # System Monitor
   - platform: systemmonitor
     resources:
