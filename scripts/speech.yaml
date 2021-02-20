@@ -16,6 +16,8 @@ announcement:
   variables:
     speak: true
     notify: true
+    notify_data:
+      url: /lovelace/home
     message: >-
       {% if greetings and messages %}
         {{ (greetings | random) ~ ' ' ~ (messages | random) }}
