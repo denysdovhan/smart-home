@@ -1,9 +1,9 @@
 - id: turn_on_lights_on_sunset
   alias: Turn on lights on Sunset
   trigger:
-    - platform: state
-      entity_id: sun.sun
-      to: 'below_horizon'
+    platform: state
+    entity_id: sun.sun
+    to: 'below_horizon'
   condition:
     - condition: state
       entity_id: group.family
@@ -16,18 +16,18 @@
       data:
         notify: false
         greetings:
-          - "Вечоріє."
-          - "Скоро стемніє."
-          - "Сонечко зайшло за обрій."
-          - "Скоро вдома стане темно."
-          - "Сонце опустилось за обрій."
+          - 'Вечоріє.'
+          - 'Скоро стемніє.'
+          - 'Сонечко зайшло за обрій.'
+          - 'Скоро вдома стане темно.'
+          - 'Сонце опустилось за обрій.'
         messages:
-          - "Доречно увімкнути світло."
-          - "Вмикаємо світло."
-          - "Вмикаю світло."
-          - "Час увімкнути світло."
-          - "Вмикаю для вас світло."
-          - "Вмикаю вечірнє світло."
+          - 'Доречно увімкнути світло.'
+          - 'Вмикаємо світло.'
+          - 'Вмикаю світло.'
+          - 'Час увімкнути світло.'
+          - 'Вмикаю для вас світло.'
+          - 'Вмикаю вечірнє світло.'
     - service: scene.turn_on
       data:
         entity_id: scene.evening_lights
@@ -36,9 +36,9 @@
 - id: turn_on_lights_on_low_illuminance
   alias: Turn on lights on low illuminance
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.living_room_movement_sensor_illuminance
-      below: 15
+    platform: numeric_state
+    entity_id: sensor.living_room_movement_sensor_illuminance
+    below: 15
   condition:
     - condition: state
       entity_id: group.family
@@ -57,19 +57,19 @@
       data:
         notify: false
         greetings:
-          - "Здається вдома надто темно."
-          - "Вдома занадто темно."
-          - "Стемніло."
-          - "Сонце сховалось за хмарами."
+          - 'Здається вдома надто темно.'
+          - 'Вдома занадто темно.'
+          - 'Стемніло.'
+          - 'Сонце сховалось за хмарами.'
         messages:
-          - "Доречно увімкнути світло."
-          - "Увімкну для вас світло."
-          - "Краще увімкнути світло."
-          - "Не будемо псувати очі."
-          - "Вмикаю для вас світло."
-          - "Вмикаємо світло."
-          - "Вмикаю світло."
-          - "Час увімкнути світло."
+          - 'Доречно увімкнути світло.'
+          - 'Увімкну для вас світло.'
+          - 'Краще увімкнути світло.'
+          - 'Не будемо псувати очі.'
+          - 'Вмикаю для вас світло.'
+          - 'Вмикаємо світло.'
+          - 'Вмикаю світло.'
+          - 'Час увімкнути світло.'
     - service: scene.turn_on
       data:
         entity_id: scene.evening_lights

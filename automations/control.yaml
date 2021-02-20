@@ -1,8 +1,8 @@
 - id: magic_cube_actions
   alias: Magic Cube Actions
   trigger:
-    - platform: mqtt
-      topic: zigbee2mqtt/magic_cube/action
+    platform: mqtt
+    topic: zigbee2mqtt/magic_cube/action
   action:
     - choose:
         - conditions:
