@@ -16,14 +16,16 @@ cards:
         entity: user
         states:
           Denys:
-            type: 'custom:mini-media-player'
+            type: custom:mini-media-player
+            icon: mdi:spotify
             entity: media_player.spotify_denys
             artwork: material
             name: Spotify
             hide:
               power: true
           Marry:
-            type: 'custom:mini-media-player'
+            type: custom:mini-media-player
+            icon: mdi:spotify
             entity: media_player.spotify_marry
             artwork: material
             name: Spotify
