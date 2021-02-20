@@ -1,0 +1,109 @@
+- id: home_assistant_release_alert
+  alias: Home Assistant Release Alert
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.updater
+  action:
+    service: notify.denys
+    data:
+      title: 'Оновлення Home Assistant 🎉'
+      message: "Доступна нова версія Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }}."
+      data:
+        url: /hassio/dashboard
+
+- id: aqi_alert
+  alias: AQI Alert
+  mode: single
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.nyvky_aqi
+      above: 150
+      below: 200
+      for:
+        minutes: 30
+    - platform: numeric_state
+      entity_id: sensor.nyvky_aqi
+      above: 201
+      below: 300
+      for:
+        minutes: 30
+    - platform: numeric_state
+      entity_id: sensor.nyvky_aqi
+      above: 301
+      for:
+        minutes: 30
+  action:
+    - choose:
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.nyvky_aqi
+              above: 150
+              below: 200
+          sequence:
+            - service: script.announcement
+              data:
+                speak: false
+                title: 'Шкідливе повітря 🥴'
+                messages:
+                  - "Шкідливий рівень якості повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                  - "Обережно! Надворі шкідливе повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                  - "Шкідливе повітря надворі: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                notify_data:
+                  url: /lovelace/home
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.nyvky_aqi
+              above: 201
+              below: 300
+          sequence:
+            - service: script.announcement
+              data:
+                speak: false
+                title: 'Дуже шкідливе повітря 😷'
+                messages:
+                  - "Дуже шкідливий рівень якості повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                  - "Обережно! Надворі дуже шкідливе повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                  - "Дуже шкідливе повітря надворі: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                notify_data:
+                  url: /lovelace/home
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.nyvky_aqi
+              above: 301
+          sequence:
+            - service: script.announcement
+              data:
+                speak: false
+                title: 'Небезпечне повітря ☠️'
+                messages:
+                  - "Небезпечний рівень якості повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                  - "Обережно! Надворі небезпечне повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                  - "Небезпечне повітря надворі: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                  - "Не виходьте на вулицю! Індекс якості повітря: {{ states('sensor.nyvky_aqi') | int }}."
+                  - "Зачиніть вікна! Індекс якості повітря: {{ states('sensor.nyvky_aqi') | int }}."
+                notify_data:
+                  url: /lovelace/home
+      default:
+        - service: script.announcement
+          data:
+            speak: false
+            title: 'Повітря 🌫'
+            messages:
+              - "Погіршується якість повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+            notify_data:
+              url: /lovelace/home
+    - delay:
+        hours: 2
+
+# Disabled because there's no transmission integration enabled right now.
+- id: torrent_completed_notification
+  alias: Notify about completed torrent
+  initial_state: false
+  trigger:
+    platform: event
+    event_type: transmission_downloaded_torrent
+  action:
+    - service: notify.all
+      data:
+        title: 'Transmission ⬇️'
+        message: '{{trigger.event.data.name}} завантажено!'

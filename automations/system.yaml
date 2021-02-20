@@ -1,16 +1,3 @@
-- id: home_assistant_release_notification
-  alias: Home Assistant Release notification
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.updater
-  action:
-    service: notify.denys
-    data:
-      title: 'Оновлення Home Assistant 🎉'
-      message: "Доступна нова версія Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }}."
-      data:
-        url: /hassio/dashboard
-
 - id: open_uv_index_update
   alias: Update OpenUV
   description: Update OpenUV every hour only when sun is above horizon
@@ -28,88 +15,58 @@
     - delay:
         minutes: 50
 
-- id: aqi_warning
-  alias: AQI Warning Notification
+- id: magic_cube_actions
+  alias: Magic Cube Actions
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.nyvky_aqi
-      above: 150
-      below: 200
-    - platform: numeric_state
-      entity_id: sensor.nyvky_aqi
-      above: 201
-      below: 300
-    - platform: numeric_state
-      entity_id: sensor.nyvky_aqi
-      above: 301
+    platform: mqtt
+    topic: zigbee2mqtt/magic_cube/action
   action:
     - choose:
         - conditions:
-            - condition: numeric_state
-              entity_id: sensor.nyvky_aqi
-              above: 150
-              below: 200
+            - condition: template
+              value_template: "{{ trigger.payload == 'flip90' }}"
           sequence:
-            - service: script.announcement
+            - service: scene.turn_on
               data:
-                speak: false
-                title: 'Шкідливе повітря 🥴'
-                messages:
-                  - "Шкідливий рівень якості повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
-                  - "Обережно! Надворі шкідливе повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
-                  - "Шкідливе повітря надворі: {{ states('sensor.nyvky_aqi') | int }} AQI"
-                notify_data:
-                  url: /lovelace/home
+                entity_id: scene.evening_lights
+                transition: 2
         - conditions:
-            - condition: numeric_state
-              entity_id: sensor.nyvky_aqi
-              above: 201
-              below: 300
+            - condition: template
+              value_template: "{{ trigger.payload == 'flip180' }}"
           sequence:
-            - service: script.announcement
+            - service: scene.turn_on
               data:
-                speak: false
-                title: 'Дуже шкідливе повітря 😷'
-                messages:
-                  - "Дуже шкідливий рівень якості повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
-                  - "Обережно! Надворі дуже шкідливе повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
-                  - "Дуже шкідливе повітря надворі: {{ states('sensor.nyvky_aqi') | int }} AQI"
-                notify_data:
-                  url: /lovelace/home
+                entity_id: scene.bright_lights
+                transition: 2
         - conditions:
-            - condition: numeric_state
-              entity_id: sensor.nyvky_aqi
-              above: 301
+            - condition: template
+              value_template: "{{ trigger.payload == 'slide' }}"
           sequence:
+            - service: scene.turn_on
+              data:
+                entity_id: scene.night_lights
+                transition: 2
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.payload == 'shake' }}"
+          sequence:
+            - service: scene.turn_on
+              data:
+                entity_id: scene.lights_out
+                transition: 2
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.payload == 'tap' }}"
+          sequence:
+            - service: input_boolean.toggle
+              entity_id: input_boolean.do_not_disturb
             - service: script.announcement
               data:
                 speak: false
-                title: 'Небезпечне повітря ☠️'
+                title: Не турбувати 💤
                 messages:
-                  - "Небезпечний рівень якості повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
-                  - "Обережно! Надворі небезпечне повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
-                  - "Небезпечне повітря надворі: {{ states('sensor.nyvky_aqi') | int }} AQI"
-                notify_data:
-                  url: /lovelace/home
-      default:
-        - service: script.announcement
-          data:
-            speak: false
-            title: 'Повітря 🌫'
-            messages:
-              - "Погіршується якість повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
-            notify_data:
-              url: /lovelace/home
-
-# Disabled because there's no transmission integration enabled right now.
-- id: torrent_completed_notification
-  alias: Notify about completed torrent
-  initial_state: false
-  trigger:
-    platform: event
-    event_type: transmission_downloaded_torrent
-  action:
-    - service: notify.all
-      data:
-        title: 'Transmission ⬇️'
-        message: '{{trigger.event.data.name}} завантажено!'
+                  - "Режим «Не турбувати» {% if is_state('input_boolean.do_not_disturb', 'on') %} увімкнено {% else %} вимкнено {% endif%}."
+                  - "Режим тиші {% if is_state('input_boolean.do_not_disturb', 'on') %} увімкнено {% else %} вимкнено {% endif%}."
+                  - "{% if is_state('input_boolean.do_not_disturb', 'on') %} Увімкнено {% else %} Вимкнено {% endif%} режим тиші."
+      # default:
+      # - service: script.announcement
