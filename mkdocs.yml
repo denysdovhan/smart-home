@@ -1,0 +1,39 @@
+site_name: Denys Dovhan Smart Home
+site_author: Denys Dovhan
+site_url: https://denysdovhan.com/smart-home
+site_description: 🏡 My smart home setup built on top of Home Assistant
+
+copyright: 'Copyright &copy; 2021 Denys Dovhan'
+
+repo_url: https://github.com/denysdovhan/smart-home
+repo_name: denysdovhan/smart-home
+
+theme:
+  name: material
+  icon:
+    logo: material/home-assistant
+    repo: fontawesome/brands/github
+  palette:
+    scheme: preference
+    primary: cyan
+    accent: cyan
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+
+nav:
+  - Home: index.md
+  - Hardware: hardware.md
+
+markdown_extensions:
+  - toc:
+      permalink: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/denysdovhan/smart-home
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/denysdovhan
+    - icon: fontawesome/solid/globe
+      link: https://denysdovhan.com
