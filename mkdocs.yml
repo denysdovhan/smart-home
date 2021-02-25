@@ -28,6 +28,11 @@ nav:
 markdown_extensions:
   - toc:
       permalink: true
+  - attr_list
+  - admonition
+  - pymdownx.tabbed
+  - pymdownx.details
+  - pymdownx.superfences
 
 extra:
   social:
