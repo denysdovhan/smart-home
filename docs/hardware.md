@@ -78,7 +78,7 @@ Below you will find a list of my devices connected to the local network. Most of
 | [Google Home Mini][google-home-mini]         | `192.168.50.220`   | [Google Cast][cast]           |
 | [Google Nest Mini][google-nest-mini]         | `192.168.50.221`   | [Google Cast][cast]           |
 
-\* — means the device is connected via Ethernet instead of WiFi to ensure more reliable connection.
+\* — means the device is connected via Ethernet instead of WiFi to ensure a more reliable connection.
 
 \*\* — means the device is integrated via custom integration.
 
@@ -115,10 +115,10 @@ My Zigbee devices are connected to Home Assistant via [CC2531 Sniffer Board](htt
 
 <!-- prettier-ignore -->
 !!! tip
-    I connected my coordinator to the Raspberry Pi through an USB extension cable to avoid interference and improve the connection.
+    I connected my coordinator to the Raspberry Pi through a USB extension cable to avoid interference and improve the connection.
     This approach is suggested by [zigbee2mqtt documentation](https://www.zigbee2mqtt.io/information/FAQ.html#interview-fails).
 
-I used to use Aqara Hub, but it switched to current approach because of its compatibility. Current approach allows to bind together [nearly every possible Zigbee devices](https://www.zigbee2mqtt.io/information/supported_devices.html).
+I used to use Aqara Hub, but it switched to the current approach because of its compatibility. The current approach allows binding together [nearly every possible Zigbee device](https://www.zigbee2mqtt.io/information/supported_devices.html).
 
 ### Devices
 
@@ -140,6 +140,6 @@ I used to use Aqara Hub, but it switched to current approach because of its comp
 
 ## Other Devices
 
-Another important devices is a smart car alarm. I used [StarLine AS96 BT GSM GPS](https://starline-sales.eu/Car-Alarms/starline-as96-bt-gsm-gps) which is easily integrated with Home Assistant via built-in [StarLine integration](https://www.home-assistant.io/integrations/starline/).
+Another important device is a smart car alarm. I used [StarLine AS96 BT GSM GPS](https://starline-sales.eu/Car-Alarms/starline-as96-bt-gsm-gps) which is easily integrated with Home Assistant via built-in [StarLine integration](https://www.home-assistant.io/integrations/starline/).
 
-This alarm allows to start/stop engine, arm/disarm alarm, trigger horn remotely via Home Assistant. Primarily, I use this for tracking down my car and checking interior temperature right from Home Assistant.
+This alarm allows to start/stop the engine, arm/disarm the alarm, trigger horn remotely via Home Assistant. Primarily, I use this for tracking down my car and checking interior temperature right from Home Assistant.
