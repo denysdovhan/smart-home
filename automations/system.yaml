@@ -1,3 +1,13 @@
+- id: healthcheck
+  alias: Healthcheck Connection
+  description: Send a ping to Healthcheck every minute
+  mode: single
+  trigger:
+    platform: time_pattern
+    minutes: /1
+  action:
+    - service: rest_command.healthcheck
+
 - id: open_uv_index_update
   alias: Update OpenUV
   description: Update OpenUV every hour only when sun is above horizon

@@ -8,7 +8,7 @@ homeassistant:
   elevation: !secret homeassistant_elevation
   time_zone: Europe/Kiev #KyivNotKiev
   unit_system: metric
-  # Load customizations 
+  # Load customizations
   customize: !include_dir_merge_named customizations
   # Load packages
   packages: !include_dir_named integrations
