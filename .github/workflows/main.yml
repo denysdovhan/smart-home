@@ -8,6 +8,7 @@ on:
 
 jobs:
   home-assistant-stable:
+    name: Home Assistant Stable
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -17,16 +18,17 @@ jobs:
         run: cp -R .stubs/* .
 
       - name: Home Assistant Version
-        uses: "docker://homeassistant/home-assistant"
+        uses: docker://homeassistant/home-assistant
         with:
           args: python -m homeassistant --version
 
       - name: Home Assistant Check
-        uses: "docker://homeassistant/home-assistant"
+        uses: docker://homeassistant/home-assistant
         with:
           args: python -m homeassistant --config . --script check_config --info all
 
   home-assistant-beta:
+    name: Home Assistant Beta
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -34,10 +36,10 @@ jobs:
       - name: Prepare Stubs
         run: cp -R .stubs/* .
       - name: Home Assistant Version
-        uses: "docker://homeassistant/home-assistant:beta"
+        uses: docker://homeassistant/home-assistant:beta
         with:
           args: python -m homeassistant --version
       - name: Home Assistant Check
-        uses: "docker://homeassistant/home-assistant:beta"
+        uses: docker://homeassistant/home-assistant:beta
         with:
           args: python -m homeassistant --config . --script check_config --info all
