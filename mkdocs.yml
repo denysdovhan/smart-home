@@ -24,6 +24,8 @@ theme:
 nav:
   - Home: index.md
   - Hardware: hardware.md
+  - Home Assistant:
+      - Dashboards: home-assistant/dashboards.md
 
 markdown_extensions:
   - toc:
