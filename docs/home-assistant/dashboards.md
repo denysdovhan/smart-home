@@ -62,15 +62,15 @@ This dashboard is for controlling a vacuum cleaner robot.
 
 ## Car
 
-This dashboard let me control my Toyota vehicle.
+This dashboard lets me control my Toyota vehicle.
 
-- **Alarm controls** let me arm/disarm my smart alarm, start/stop the engine, trigger horn.
+- **Alarm controls** let my arm/disarm my smart alarm, start/stop the engine, trigger horn.
 - **History map** display the 24-hour path history of the vehicle.
 - **States** are displaying the sensor states of the hood, doors, trunk, engine and interior temperature, connection quality.
 
 <!-- prettier-ignore -->
 !!! info
-    You may see that most of the controls and sensors are unavailable on the screenshots. That's because I keep my car in the underground parking, where GSP connection is poor.
+    You may see that most of the controls and sensors are unavailable on the screenshots. That's because I keep my car in the underground parking, where the GSM connection is poor.
 
     Though, there's no need to worry, since the parking is secured with many security systems.
 
@@ -78,16 +78,16 @@ This dashboard let me control my Toyota vehicle.
 
 ## Cameras
 
-This dashboard let me watch the live streams from Kyiv (where I live) and from Chernivtsi (where I've grown up). Unfortunately, there are very small number publicly accessible live cameras in Kyiv. Most of them are unstable and with very poor quality.
+This dashboard lets me watch the live streams from Kyiv (where I live) and from Chernivtsi (where I've grown up). Unfortunately, there is a very small number of publicly accessible live cameras in Kyiv. Most of them are unstable and have very poor quality.
 
 ![Cameras](https://user-images.githubusercontent.com/3459374/109427043-3b154780-79f9-11eb-9cc8-43f0647c753c.png)
 
 ## System
 
-This dashboard let me overview the state of my smart home SystemHealthRegistration
+This dashboard lets me overview the state of my smart home SystemHealthRegistration
 
-- **Internet and System** section displays the Internet speed, ping and connected devices. Below there are a group of sensor for CPU, RAM, Swap and Disk usage of my Raspberry Pi.
-- **Adguard Home** let me monitor and control the DNS ad blocking rates.
-- **Zigbee Bridge** allows to toggle pairing mode.
+- **Internet and System** section displays the Internet speed, ping, and connected devices. Below there are a group of sensor for CPU, RAM, Swap and Disk usage of my Raspberry Pi.
+- **Adguard Home** let me monitor and control the DNS ad-blocking rates.
+- **Zigbee Bridge** allows toggling pairing mode.
 
 ![System](https://user-images.githubusercontent.com/3459374/109427040-381a5700-79f9-11eb-9dfa-f7e2d24f7981.png)
