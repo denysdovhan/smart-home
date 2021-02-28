@@ -39,7 +39,7 @@
             - service: scene.turn_on
               data:
                 entity_id: scene.evening_lights
-                transition: 2
+                transition: 1
         - conditions:
             - condition: template
               value_template: "{{ trigger.payload == 'flip180' }}"
@@ -47,7 +47,7 @@
             - service: scene.turn_on
               data:
                 entity_id: scene.bright_lights
-                transition: 2
+                transition: 1
         - conditions:
             - condition: template
               value_template: "{{ trigger.payload == 'slide' }}"
@@ -55,7 +55,7 @@
             - service: scene.turn_on
               data:
                 entity_id: scene.night_lights
-                transition: 2
+                transition: 1
         - conditions:
             - condition: template
               value_template: "{{ trigger.payload == 'shake' }}"
@@ -63,7 +63,7 @@
             - service: scene.turn_on
               data:
                 entity_id: scene.lights_out
-                transition: 2
+                transition: 1
         - conditions:
             - condition: template
               value_template: "{{ trigger.payload == 'tap' }}"
