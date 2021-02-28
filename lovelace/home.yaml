@@ -222,13 +222,13 @@ cards:
             entities:
               - entity: person.denys
                 name: Денис
-              - entity: sensor.denys_iphone_icloud_battery_state
+              - entity: sensor.denys_iphone_battery_level
                 name: Батарея
           - type: entities
             entities:
               - entity: person.marry
                 name: Маша
-              - entity: sensor.iphone_maria_icloud_battery_state
+              - entity: sensor.iphone_maria_battery_level
                 name: Батарея
       - type: map
         entities:
@@ -236,4 +236,3 @@ cards:
           - person.denys
         hours_to_show: 12
         default_zoom: 13
-        aspect_ratio: 16x9
