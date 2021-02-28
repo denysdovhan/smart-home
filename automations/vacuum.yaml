@@ -182,11 +182,3 @@
           sequence:
             - service: vacuum.return_to_base
               entity_id: vacuum.roborock
-      default:
-        - service: script.announcement
-          data:
-            speak: false
-            title: 'Пилосос 🧹'
-            messages:
-              - 'Спроба виконати невідому команду.'
-              - 'Проблема з виконанням команди.'

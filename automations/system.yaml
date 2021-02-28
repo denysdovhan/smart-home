@@ -78,5 +78,3 @@
                   - "Режим «Не турбувати» {% if is_state('input_boolean.do_not_disturb', 'on') %} увімкнено {% else %} вимкнено {% endif%}."
                   - "Режим тиші {% if is_state('input_boolean.do_not_disturb', 'on') %} увімкнено {% else %} вимкнено {% endif%}."
                   - "{% if is_state('input_boolean.do_not_disturb', 'on') %} Увімкнено {% else %} Вимкнено {% endif%} режим тиші."
-      # default:
-      # - service: script.announcement
