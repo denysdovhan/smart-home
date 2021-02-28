@@ -1,0 +1,2 @@
+- https://macbury.github.io/SmartHouse
+- [How I set up room-cleaning automation with Google Home, Home-Assistant and Xiaomi vacuum cleaner](https://hackernoon.com/how-i-set-up-room-cleaning-automation-with-google-home-home-assistant-and-xiaomi-vacuum-cleaner-9149e0267e6d)

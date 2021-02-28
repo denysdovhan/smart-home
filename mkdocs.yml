@@ -26,6 +26,7 @@ nav:
   - Hardware: hardware.md
   - Home Assistant:
       - Dashboards: home-assistant/dashboards.md
+  - References: references.md
 
 markdown_extensions:
   - toc:
