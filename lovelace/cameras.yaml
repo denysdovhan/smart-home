@@ -5,10 +5,6 @@ cards:
   - type: vertical-stack
     title: Київ
     cards:
-      # Європейська площа
-      - type: iframe
-        url: https://www.youtube.com/embed/Gaxxp2lttXg?autoplay=1
-
       # Подільсько-воскресенський міст
       - type: iframe
         url: https://www.youtube.com/embed/9aBqDJO98VE?autoplay=1
