@@ -8,6 +8,8 @@ cards:
     cards:
       - type: button
         entity: light.desk_lamp
+      - type: button
+        entity: switch.circadian_lighting_desk_flux
 
   - type: vertical-stack
     title: Медіа
