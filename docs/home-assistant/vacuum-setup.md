@@ -8,6 +8,11 @@ In order to get this device working with Home Assistant, you must obtain an acce
 
 I used a [`vacuum-card`](https://github.com/denysdovhan/purifier-card) I built myself for controlling my vacuum and [`lovelace-xiaomi-vacuum-map-card`](https://github.com/PiotrMachowski/lovelace-xiaomi-vacuum-map-card) for displaying a live map.
 
+You can find the latest state of my vacuum setup here:
+
+[Automations](https://github.com/denysdovhan/smart-home/blob/master/automations/vacuum.yaml){: .md-button }
+[Scripts](https://github.com/denysdovhan/smart-home/blob/master/scripts/vacuum.yaml){: .md-button }
+
 ## Asking to start cleaning
 
 I have a relatively complex set of automation for my vacuum.
