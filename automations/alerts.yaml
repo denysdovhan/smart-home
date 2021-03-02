@@ -119,6 +119,55 @@
         title: 'Transmission ⬇️'
         message: '{{trigger.event.data.name}} завантажено!'
 
+- id: unavailable_devices_notifications
+  alias: Unavailable Devices Alert
+  trigger:
+    - platform: time_pattern
+      minutes: /1
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: home
+    - condition: state
+      entity_id:
+        # Lights
+        - light.desk_lamp
+        - light.bedroom_bed_lights
+        - light.bedroom_ceiling_light_light
+        - light.bedroom_floor_lamp
+        - light.living_room_tv_lights
+        - light.living_room_main_light
+        - light.living_room_lower_table_light
+        - light.living_room_upper_table_light
+        # Media Players
+        - media_player.playstation_4
+        - media_player.samsung_tv
+        - media_player.living_room_speaker
+        - media_player.bedroom_speaker
+        - media_player.spotify_denys
+        - media_player.spotify_marry
+        # Fans
+        - fan.purifier
+        - fan.humidifier
+      state: unavailable
+      for:
+        minutes: 2
+  action:
+    - service: script.announcement
+      data:
+        speak: false
+        title: 'Недоступний пристрій 🔌'
+        greetings:
+          - 'Пристрій {{ trigger.to_state.name }} втратив з’язок з розумним домом!'
+          - '{{ trigger.to_state.name }} недоступний!'
+          - 'Зник зв’язок з {{ trigger.to_state.name }}!'
+          - 'Втрата підключення до пристрою {{ trigger.to_state.name }}!'
+        messages:
+          - 'Спробуйте перезапустити його.'
+          - 'Перевірте підключення або перезапустіть його.'
+          - 'Перепідключіть або перезапустіть його.'
+          - 'Спробуйте перевірити з’єднання та перезапустити.'
+
 - id: car_washing_alert
   alias: Car Washing Alert
   trigger:
