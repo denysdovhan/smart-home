@@ -28,7 +28,7 @@ cards:
           - binary_sensor.toyota_doors
           - binary_sensor.toyota_hood
           - binary_sensor.toyota_trunk
-          - binary_sensor.toyota_alarm
+          - binary_sensor.car_wash
       - type: grid
         columns: 2
         square: false

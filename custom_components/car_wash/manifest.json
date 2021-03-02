@@ -1,0 +1,10 @@
+{
+    "codeowners": [
+        "@limych"
+    ],
+    "dependencies": [],
+    "documentation": "https://github.com/Limych/ha-car_wash/",
+    "domain": "car_wash",
+    "name": "Car Wash",
+    "requirements": []
+}

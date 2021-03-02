@@ -37,3 +37,6 @@ binary_sensor:
           {% set time_for_cleaning = current_time - last_cleaning_start > (60 * 60 * 36) %}
           {% set last_cleaning_was_short = last_cleaning_stop - last_cleaning_start < (60 * 5) %}
           {{ time_for_cleaning or last_cleaning_was_short }}
+  # Car Wash
+  - platform: car_wash
+    weather: weather.nyvky

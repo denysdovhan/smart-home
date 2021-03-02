@@ -118,3 +118,52 @@
       data:
         title: 'Transmission ⬇️'
         message: '{{trigger.event.data.name}} завантажено!'
+
+- id: car_washing_alert
+  alias: Car Washing Alert
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.car_wash
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.car_wash
+              state: 'on'
+          sequence:
+            - service: script.announcement
+              data:
+                speak: false
+                title: 'Миття авто 🚘☀️'
+                greetings:
+                  - 'Найближчими днями очікується хороша погода.'
+                  - 'Хороша погода найближчі 7 днів.'
+                  - 'Прогнозується хороша погода!'
+                  - 'Попереду гарна погода!'
+                messages:
+                  - 'Доречно помити машину.'
+                  - 'Можна помити авто.'
+                  - 'Варто поїхати на автомийку.'
+                  - 'Вдалий час, щоб помити авто.'
+                notify_data:
+                  url: /lovelace/car
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.car_wash
+              state: 'off'
+          sequence:
+            - service: script.announcement
+              data:
+                speak: false
+                title: 'Миття авто 🚘🌧'
+                greetings:
+                  - 'Найближчими днями очікується погана погода.'
+                  - 'Погана погода найближчі 7 днів.'
+                  - 'Прогнозується погана погода!'
+                  - 'Попереду дощова погода!'
+                messages:
+                  - 'Утримайтесь від миття авто.'
+                  - 'Не варто мити авто цими днями.'
+                  - 'Краще залишити авто брудним.'
+                notify_data:
+                  url: /lovelace/car
