@@ -27,6 +27,7 @@ nav:
   - Home Assistant:
       - Dashboards: home-assistant/dashboards.md
       - Custom Extensions: home-assistant/custom-extensions.md
+      - Vacuum Setup: home-assistant/vacuum-setup.md
   - References: references.md
 
 markdown_extensions:

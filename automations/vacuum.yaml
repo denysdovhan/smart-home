@@ -3,7 +3,7 @@
   description: Regular vacuum cleaning every two days
   trigger:
     - platform: time_pattern
-      hours: '/3'
+      hours: '/2'
       minutes: 0
       seconds: 0
   condition:
