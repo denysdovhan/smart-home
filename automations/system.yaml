@@ -23,7 +23,7 @@
   action:
     - service: openuv.update_uv_index_data
     - delay:
-        minutes: 50
+        minutes: 30
 
 - id: magic_cube_actions
   alias: Magic Cube Actions

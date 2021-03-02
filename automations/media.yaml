@@ -4,6 +4,8 @@
     - platform: state
       entity_id: media_player.playstation_4
       to: 'standby'
+      for:
+        seconds: 30
   action:
     - service: media_player.turn_off
       entity_id: media_player.samsung_tv
