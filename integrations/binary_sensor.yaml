@@ -11,7 +11,7 @@ binary_sensor:
   # Times of the Day
   - platform: tod
     name: Activity Time
-    after: '13:00'
+    after: '12:00'
     before: '21:00'
   - platform: tod
     name: Evening Time
