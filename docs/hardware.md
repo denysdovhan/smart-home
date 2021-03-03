@@ -18,7 +18,7 @@ I use official [Raspberry Pi 15.3W USB-C Power Supply](https://www.raspberrypi.o
 
     Here's a photo of my home server hardware, right after I received it:
 
-    ![My home server hardware](https://user-images.githubusercontent.com/3459374/108915547-b3fd5380-7635-11eb-8b3f-2826d6d2bc54.jpeg){: loading=lazy }
+    ![My home server hardware](https://user-images.githubusercontent.com/3459374/108915547-b3fd5380-7635-11eb-8b3f-2826d6d2bc54.jpeg)
 
 === "Alluminium Case Assembling"
 
