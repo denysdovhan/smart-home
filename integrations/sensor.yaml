@@ -175,3 +175,22 @@ sensor:
     destination: zone.citrusdev
     region: EU
     realtime: true
+
+  # Availability Monitor
+  - platform: template
+    sensors:
+      unavailable_devices:
+        friendly_name: Unavailable Devices
+        value_template: >-
+          {% set domains = [states.light, states.media_player, states.fan] %}
+          {% set states = ['unavailable', 'unknown', 'none'] %}
+          {{ expand(domains) | selectattr('state', 'in', states) | list | length }}
+        attribute_templates:
+          entities: >-
+            {% set domains = [states.light, states.media_player, states.fan] %}
+            {% set states = ['unavailable', 'unknown', 'none'] %}
+            {{ expand(domains) | selectattr('state', 'in', states) | map(attribute='entity_id') | list }}
+          entities_names: >-
+            {% set domains = [states.light, states.media_player, states.fan] %}
+            {% set states = ['unavailable', 'unknown', 'none'] %}
+            {{ expand(domains) | selectattr('state', 'in', states) | map(attribute='name') | list }}
