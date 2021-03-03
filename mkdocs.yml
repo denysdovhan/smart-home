@@ -30,6 +30,7 @@ nav:
       - Custom Extensions: home-assistant/custom-extensions.md
       - Vacuum Setup: home-assistant/vacuum-setup.md
       - Speech: home-assistant/speech.md
+      - Ad-Blocking: home-assistant/ad-blocking.md
   - References: references.md
 
 markdown_extensions:
