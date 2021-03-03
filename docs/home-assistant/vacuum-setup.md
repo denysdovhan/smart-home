@@ -61,7 +61,9 @@ vacuum_maintenance:
 
 ## Cleaning the specific room
 
-I also managed to get my rooms IDs:
+I made shortcuts for cleaning rooms separately. Here's a guide how to retrieve valid room number: [Retrieving room numbers](https://www.home-assistant.io/integrations/xiaomi_miio/#retrieving-room-numbers).
+
+Here are mine:
 
 ```js
 [

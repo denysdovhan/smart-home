@@ -19,35 +19,6 @@ What is included:
   - Notification for new Home Assistant releases
 - Local AdGuard DNS
 
-## Rooms
-
-```json
-[
-  [
-    16, // Living Room
-    "350001002902"
-  ],
-  [
-    17, // Bedroom
-    "350001004993"
-  ],
-  [
-    18, // Corridor
-    "350001010484"
-  ],
-  [
-    19, // Bathroom
-    "350001010483"
-  ],
-  [
-    20, // Kitchen
-    "350001010672"
-  ]
-]
-```
-
-Bin location: `[24500, 24500]`.
-
 ## Tracking
 
 - Home Assistant app for following the location
