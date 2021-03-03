@@ -32,7 +32,7 @@ nav:
       - Speech: home-assistant/speech.md
       - Ad-Blocking: home-assistant/ad-blocking.md
       - Health Checks: home-assistant/health-checks.md
-  - References: references.md
+  - Resources: resources.md
 
 markdown_extensions:
   - toc:
