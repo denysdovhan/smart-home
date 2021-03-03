@@ -1,0 +1,15 @@
+{
+    "domain": "snowtire",
+    "name": "Snowtire Sensor",
+    "version": "0.1.0",
+    "documentation": "https://github.com/Limych/ha-snowtire",
+    "issue_tracker": "https://github.com/Limych/ha-snowtire/issues",
+    "dependencies": [
+        "weather"
+    ],
+    "config_flow": false,
+    "codeowners": [
+        "@limych"
+    ],
+    "requirements": []
+}

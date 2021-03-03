@@ -40,3 +40,6 @@ binary_sensor:
   # Car Wash
   - platform: car_wash
     weather: weather.nyvky
+  # Winter Tires
+  - platform: snowtire
+    weather: weather.nyvky
