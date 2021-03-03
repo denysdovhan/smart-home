@@ -31,6 +31,7 @@ nav:
       - Vacuum Setup: home-assistant/vacuum-setup.md
       - Speech: home-assistant/speech.md
       - Ad-Blocking: home-assistant/ad-blocking.md
+      - Health Checks: home-assistant/health-checks.md
   - References: references.md
 
 markdown_extensions:
