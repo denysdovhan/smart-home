@@ -1,6 +1,7 @@
 - id: do_not_disturb
   alias: Do Not Disturb Flow
   description: Adjust devices to Do Not Disturb mode
+  mode: queued
   trigger:
     - platform: homeassistant
       event: start
