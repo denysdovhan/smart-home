@@ -62,7 +62,7 @@ Below you will find a list of my devices connected to the local network. Most of
 
 | Device                                       | IP                 | HA Integration                |
 | -------------------------------------------- | :----------------- | ----------------------------- |
-| [Apple TV 4K][apple-tv]                      | `192.168.50.x`\*   | [hass-atv-beta]\*\*           |
+| [Apple TV 4K][apple-tv]                      | `192.168.50.x`\*   | [Apple TV][ha-apple-tv]       |
 | [Koogeek P1EU Smart Plug][koogeek-p1]        | `192.168.50.9`     | [HomeKit Controller][homekit] |
 | [Koogeek P1EU Smart Plug][koogeek-p1]        | `192.168.50.10`    | [HomeKit Controller][homekit] |
 | [Samsung 55" Q67R 4K Smart QLED TV][tv]      | `192.168.50.93`    | [ha-samsungtv-tizen]\*\*      |
@@ -106,7 +106,7 @@ Below you will find a list of my devices connected to the local network. Most of
 [cast]: https://www.home-assistant.io/integrations/cast/
 [xiaomi-miio]: https://www.home-assistant.io/integrations/xiaomi_miio/
 [xiaomi_airpurifier]: https://github.com/syssi/xiaomi_airpurifier
-[hass-atv-beta]: https://github.com/postlund/hass-atv-beta
+[ha-apple-tv]: https://www.home-assistant.io/integrations/apple_tv/
 [ha-samsungtv-tizen]: https://github.com/jaruba/ha-samsungtv-tizen
 
 ## Zigbee Network
