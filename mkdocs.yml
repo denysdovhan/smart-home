@@ -51,3 +51,6 @@ extra:
       link: https://twitter.com/denysdovhan
     - icon: fontawesome/solid/globe
       link: https://denysdovhan.com
+
+extra_javascript:
+  - https://cdn.splitbee.io/sb.js
