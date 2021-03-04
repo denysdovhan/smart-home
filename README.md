@@ -1,26 +1,32 @@
-# Home Assistant Config [![Build Status][travis-img]][travis-ci]
+# Denys Dovhan Smart Home
 
-> 🏠 My smart home setup based on Home Assistant
+![Home](https://user-images.githubusercontent.com/3459374/109431538-d0233b00-7a0f-11eb-952e-957d60b806bb.png)
 
-What is included:
+[![GitHub Workflow Status][github-img]][github-url]
+[![Last Commit][last-commit-img]][github-url]
+[![Commit Activity][commit-activity-img]][github-url]
+[![License][license-img]][license-url]
+[![GitHub Stars][stars-img]][github-url]
+[![Twitter Followers][twitter-img]][denysdovhan]
 
-- Home Assistant
-- HomeKit
-- Google Assistant
-- Yeelight
-- MQTT + zigbee2mqtt
-- Roborock Vacuum
-- HACS
-  - Samsung TV Tizen
-  - Apple TV Beta
-  - Custom Vacuum card
-- Automation
-  - Zigbee pairing
-  - Notification for new Home Assistant releases
-- Local AdGuard DNS
+This is my personal Home Assistant configuration, awakening my home with automations. I hope this will help you inspire on the way to built your own smart home.
 
-## Tracking
+[**Read the documentation**](https://denysdovhan.com/smart-home)
 
-- Home Assistant app for following the location
-- iCloud for a more precise following (updates more often)
-- ASUS Router for detecting when people arrive or leave home immediately
+I also have a [public Notion board](https://www.notion.so/denysdovhan/f09ea06da5db4cfa84d3ca50417b93b2?v=5fccab53c2fd4ac188ee0b92c2ca1cb9) with ideas and tasks for my smart home. You can follow and comment my plans there.
+
+## License
+
+[MIT][license-url] © [Denys Dovhan][denysdovhan]
+
+<!-- References -->
+
+[github-url]: https://github.com/denysdovhan/smart-home
+[github-img]: https://img.shields.io/github/workflow/status/denysdovhan/smart-home/CI/master?style=flat-square
+[last-commit-img]: https://img.shields.io/github/last-commit/denysdovhan/smart-home?style=flat-square
+[commit-activity-img]: https://img.shields.io/github/commit-activity/m/denysdovhan/smart-home?style=flat-square
+[license-url]: https://github.com/denysdovhan/smart-home/blob/master/LICENSE
+[license-img]: https://img.shields.io/github/license/denysdovhan/smart-home?style=flat-square
+[twitter-img]: https://img.shields.io/twitter/follow/denysdovhan?label=Follow
+[stars-img]: https://img.shields.io/github/stars/denysdovhan/smart-home?style=social
+[denysdovhan]: https://denysdovhan.com

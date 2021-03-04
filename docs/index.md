@@ -43,7 +43,7 @@ I have a [public Notion board](https://www.notion.so/denysdovhan/f09ea06da5db4cf
 
 [MIT][license-url] © [Denys Dovhan][denysdovhan]
 
-<!-- Badges -->
+<!-- References -->
 
 [github-url]: https://github.com/denysdovhan/smart-home
 [github-img]: https://img.shields.io/github/workflow/status/denysdovhan/smart-home/CI/master?style=flat-square
@@ -53,7 +53,4 @@ I have a [public Notion board](https://www.notion.so/denysdovhan/f09ea06da5db4cf
 [license-img]: https://img.shields.io/github/license/denysdovhan/smart-home?style=flat-square
 [twitter-img]: https://img.shields.io/twitter/follow/denysdovhan?label=Follow
 [stars-img]: https://img.shields.io/github/stars/denysdovhan/smart-home?style=social
-
-<!-- Reference -->
-
 [denysdovhan]: https://denysdovhan.com
