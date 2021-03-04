@@ -6,12 +6,6 @@ This is a very powerful tool, allowing to built complex and smart automation bas
 
 So far, I'm happy with [Home Assistant][ha] and strongly recommend trying it if you are a smart home enthusiast.
 
-## Limitations
-
-I'm renting my apartment. My landlord handles fixing stuff in my home, covering all the expenses. The only downside is that I can't change anything in my home.
-
-I can't disassemble anything and use custom switches or sockets. It means I can't change only easily accessible parts, like bulbs.
-
 ## Prior Art
 
 I began my smart home journey with an [Aqara Hub](https://www.aliexpress.com/item/32910909157.html) and a few bulbs.

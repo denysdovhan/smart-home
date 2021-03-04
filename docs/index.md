@@ -30,6 +30,12 @@ I write this documentation for two main reasons:
 1. **To keep track of growing my smart home.** To maintain an understanding of how things are working.
 2. **To help other enthusiasts inspire.** People often ask about my smart home setup. Now I can give them a link to this documentation, instead of explaining everything once again.
 
+## Limitations
+
+I'm renting my apartment. My landlord handles fixing stuff in my home, covering all the expenses. The only downside is that I can't change anything in my home.
+
+I can't disassemble anything and use custom switches or sockets. It means I can't change only easily accessible parts, like bulbs.
+
 ## Future Plans
 
 In the nearest future, my main focuses are:
