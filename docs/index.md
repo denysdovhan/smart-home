@@ -19,9 +19,9 @@ This is my personal Home Assistant configuration, awakening my home with automat
 
 The best way to discover new ideas and inspire is by [reading the code][github-url], copying-pasting parts of my configuration and adjusting it to your needs. Read this documentation to see the bigger picture:
 
-- [Hardware](/hardware) that powers my home.
-- [Home Assistant](/home-assistant/introduction) configuration.
-- [Resources](/resources) for inspiration.
+- [Hardware](./hardware) that powers my home.
+- [Home Assistant](./home-assistant/introduction) configuration.
+- [Resources](./resources) for inspiration.
 
 ## Motivation
 

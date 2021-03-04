@@ -37,7 +37,7 @@ That's what I keep in mind. This helps a lot.
 
 Presence detection is done by combination of two components: [ASUSWRT][asuswrt] and [Mobile App][mobile_app].
 
-- [ASUSWRT][asuswrt] connects to my [ASUS router](/hardware/#wireless-router) and checks, if any of family members phones is connected to WiFi.
+- [ASUSWRT][asuswrt] connects to my [ASUS router](../hardware/#wireless-router) and checks, if any of family members phones is connected to WiFi.
 - [Mobile App][mobile_app] tracks our phone locations when we are not home. This integration also provides muscles info, like battery levels.
 
 <!-- References -->
