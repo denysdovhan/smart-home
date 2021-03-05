@@ -6,7 +6,7 @@ You just must be prepared.
 
 ## Home Assistant Instance
 
-I use [HealtChecks.io](http://healtchecks.io) service no notify me when my Home Assistant instance is down (critical crash, an Internet connection is lost, etc).
+I use [HealthChecks.io](https://healthchecks.io) service no notify me when my Home Assistant instance is down (critical crash, an Internet connection is lost, etc).
 
 ![HealthChecks Panel](https://user-images.githubusercontent.com/3459374/109878460-00234600-7c7d-11eb-9ea6-eda004d8ede1.png)
 
