@@ -10,6 +10,7 @@ repo_name: denysdovhan/smart-home
 
 theme:
   name: material
+  custom_dir: docs/overrides
   icon:
     logo: material/home-assistant
     repo: fontawesome/brands/github
