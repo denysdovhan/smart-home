@@ -180,10 +180,12 @@
       entity_id: binary_sensor.car_wash
       to: 'on'
       for:
-        hours: 6
+        hours: 3
     - platform: state
       entity_id: binary_sensor.car_wash
       to: 'off'
+      for:
+        hours: 3
   action:
     - choose:
         - conditions:
