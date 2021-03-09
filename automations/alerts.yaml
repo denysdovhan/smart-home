@@ -178,6 +178,12 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.car_wash
+      to: 'on'
+      for:
+        hours: 6
+    - platform: state
+      entity_id: binary_sensor.car_wash
+      to: 'off'
   action:
     - choose:
         - conditions:
