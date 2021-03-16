@@ -7,8 +7,10 @@
 *.pyc
 ._*
 __pycache__
+.env
 
 # Ignore folders
+.docker
 .ssh
 .storage
 .cloud
@@ -18,16 +20,14 @@ tts
 image
 
 # Specific files
-/secrets.yaml
-/ip_bans.yaml
-/known_devices.yaml
-/.homekit.state
-/.ps4-games*.json
-/GA_SERVICE_ACCOUNT.json
+/zigbee2mqtt/secrets.yaml
+/home-assistant/secrets.yaml
+/home-assistant/ip_bans.yaml
+/home-assistant/known_devices.yaml
+/home-assistant/.homekit.state
+/home-assistant/.ps4-games*.json
+/home-assistant/GA_SERVICE_ACCOUNT.json
 token-*.txt
-
-# Add-ons
-aircast.xml
 
 # IDE
 .vscode
