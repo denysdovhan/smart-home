@@ -1,0 +1,157 @@
+version: '3.6'
+services:
+  # Portainer CE
+  # Managing containers via nice web UI
+  portainer-ce:
+    container_name: portainer
+    image: portainer/portainer-ce
+    restart: unless-stopped
+    ports:
+      - '8000:8000'
+      - '9000:9000'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${VOLUMES}/portainer-ce/data:/data
+
+  # Home Assistant
+  # The core of my smart-home automations
+  home-assistant:
+    container_name: home-assistant
+    image: homeassistant/${HOME_ASSISTANT_IMAGE}:stable
+    volumes:
+      - ./home-assistant:/config
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    restart: unless-stopped
+    network_mode: host
+
+  # MQTT
+  # A Mosquitto broker for my devices communicating via MQTT
+  mqtt:
+    container_name: mqtt
+    image: eclipse-mosquitto:latest
+    restart: unless-stopped
+    ports:
+      - '1883:1883'
+    volumes:
+      - ${VOLUMES}/mosquitto/data:/mosquitto/data
+      - ${VOLUMES}/mosquitto/log:/mosquitto/log
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  # Zigbee2MQTT
+  # A bridge for zigbee devices to be able to communicate via MQTT
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    image: koenkk/zigbee2mqtt
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ${VOLUMES}/zigbee2mqtt/log:/app/data/log
+      - /run/udev:/run/udev:ro
+      - ./zigbee2mqtt/configuration.yaml:/app/data/configuration.yaml
+      - ./zigbee2mqtt/secrets.yaml:/app/data/secrets.yaml
+    ports:
+      - '8099:8099'
+    # devices:
+    # - /dev/ttyAMA0:/dev/ttyACM0
+    #- /dev/ttyACM0
+    privileged: true
+    network_mode: host
+
+  # MariaDB
+  # A database for Home Assistant, Nginx Proxy Manager and Umami
+  db:
+    container_name: db
+    image: mariadb
+    restart: unless-stopped
+    volumes:
+      - ${VOLUMES}/mariadb/db:/var/lib/mysql
+      - /etc/localtime:/etc/localtime:ro
+      - ./db:/docker-entrypoint-initdb.d
+    env_file:
+      - .env
+
+  # Adminer
+  # A dead-simple database manager
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
+  # Nginx Proxy Manager
+  # Nice and simple Nginx UI for managing reverce proxy
+  nginx:
+    container_name: nginx
+    image: jc21/nginx-proxy-manager:latest
+    restart: unless-stopped
+    ports:
+      - '80:80' # HTTP port
+      - '443:443' # HTTPS port
+      - '8081:81' # Admin Paner port
+    environment:
+      DB_MYSQL_HOST: 'db'
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: ${MYSQL_USER}
+      DB_MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      DB_MYSQL_NAME: 'nginx-proxy-manager'
+    volumes:
+      - ${VOLUMES}/nginx-proxy-manager/data:/data
+      - ${VOLUMES}/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - db
+
+  # samba:
+  #   container_name: samba
+  #   image: dperson/samba
+  #   volumes:
+  #     - .:/mnt
+  #   ports:
+  #     - '139:139'
+  #     - '445:445'
+  #     - '137:137/udp'
+  #     - '138:138/udp'
+  #   command: samba.sh -s "smart-home;/mnt;yes;no;no;all" -u ${SAMBA_USER};${SAMBA_PASSWORD}
+  #   restart: unless-stopped
+
+  # AdGuard Home
+  # Ad-blocking DNS server
+  adguard:
+    container_name: adguard
+    image: adguard/adguardhome
+    restart: unless-stopped
+    ports:
+      - '53:53/tcp'
+      - '53:53/udp'
+      - '67:67/udp'
+      - '68:68/tcp'
+      - '68:68/udp'
+      - '5300:80/tcp'
+      - '853:853/tcp'
+      - '3000:3000/tcp'
+      # - '443:443/tcp'
+    volumes:
+      - ${VOLUMES}/adguard/work:/opt/adguardhome/work
+      - ${VOLUMES}/adguard/conf:/opt/adguardhome/conf
+
+  plex:
+    image: linuxserver/plex
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - VERSION=docker
+    volumes:
+      - ${VOLUMES}/plex/config:/config
+      - ./media:/media
+    restart: unless-stopped
+# plex
+# aircast
+# umami
+# transmission
