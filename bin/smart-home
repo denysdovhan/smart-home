@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+
+COMMAND="$1"
+shift 1
+COMMAND_ARGS=("${@}")
+
+#
+# UTILS
+#
+
+function smart-home:utils:validate() {
+  if [ "$(type -t smart-home:command:"$COMMAND")" = function ]; then
+    return 0
+  elif [ -z "$COMMAND" ]; then
+    smart-home:command:help
+    return 1
+  else
+    echo "Unknown command: $COMMAND";
+    return 1
+  fi
+}
+
+function smart-home:exists() {
+  command -v "$1" > /dev/null 2>&1
+}
+
+function smart-home::load_vars() {
+  # shellcheck disable=SC2046
+  export $(grep -v '^#' "$1" | xargs);
+}
+
+#
+# COMMANDS
+#
+
+function smart-home:command:help() {
+  echo "
+  🏡 Denys Dovhan Smart Home
+
+  smart-home help          print this help message
+  smart-home init          install dependencies
+  smart-home start         start all services
+  smart-home stop          stop all services
+  smart-home down          stop and remove all containers
+  smart-home restart       restart all services
+  smart-home update        stop, update and restart all services
+  smart-home prune         delete obsolete containers
+"
+}
+
+function smart-home:command:init() {
+  # Install docker
+  if smart-home:exists docker; then
+    echo "docker is already installed."
+  else
+    echo "Installing docker..."
+    curl -fsSL https://get.docker.com | sh
+    sudo usermod -G docker -a "$USER"
+  fi
+
+  if smart-home:exists docker-compose; then
+    echo "docker-compose is already installed."
+  else
+    echo "Installing docker-compose..."
+    sudo apt install -y docker-compose
+  fi
+
+  echo "Done!"
+  echo "Please, reboot!"
+}
+
+function smart-home:command:start() {
+  echo "Starting containers..."
+  docker-compose up -d
+}
+
+function smart-home:command:stop() {
+  echo "Stopping containers..."
+  docker-compose stop
+}
+
+function smart-home:command:down() {
+  echo "Stopping and removing containers..."
+  docker-compose down --remove-orphans
+}
+
+function smart-home:command:restart() {
+  echo "Restarting containers..."
+  docker-compose restart
+}
+
+function smart-home:command:update() {
+  echo "Stopping containers..."
+  docker-compose down --remove-orphans
+  echo "Pulling latest images..."
+  docker-compose pull
+  echo "Building images..."
+  docker-compose build
+  echo "Starting containers..."
+  docker-compose up -d
+  echo "Consider running prune-images to free up space..."
+}
+
+function smart-home:command:prune() {
+  echo "Deletting all images not associated with a container..."
+  docker image prune -a
+}
+
+#
+# MAIN
+#
+
+function main() {
+  if [ -z "$SMART_HOME_DIR" ]; then
+    echo "\$SMART_HOME_DIR is unset";
+    return 1;
+  fi;
+
+  cd "$SMART_HOME_DIR" || exit 1
+
+  if ! smart-home:utils:validate; then
+    return 1
+  fi
+
+  smart-home:command:"$COMMAND" "${COMMAND_ARGS[*]}"
+
+  return $?
+}
+
+main
