@@ -155,7 +155,31 @@ services:
       - ${VOLUMES}/plex/config:/config
       - ./media:/media
     restart: unless-stopped
-# plex
-# aircast
-# umami
-# transmission
+
+  # Transmission
+  # A torrent client for downloading media
+  transmission:
+    container_name: transmission
+    image: linuxserver/transmission
+    env_file:
+      - .env
+    environment:
+      - USER=${TRANSMISSION_USER}
+      - PASS=${TRANSMISSION_PASSWORD}
+    volumes:
+      - ${VOLUMES}/transmission/config:/config
+      - ${VOLUMES}/transmission/downloads:/downloads # change this to match media folder
+      - ${VOLUMES}/transmission/watch:/watch # change this to match media folder
+    ports:
+      - '9091:9091'
+      - '51413:51413'
+      - '51413:51413/udp'
+    restart: unless-stopped
+
+  # AirConnect
+  # Make AirPlay available for Chromecast devices
+  airconnect:
+    container_name: airconnect
+    image: 1activegeek/airconnect
+    restart: unless-stopped
+    network_mode: host
