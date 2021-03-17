@@ -37,32 +37,33 @@ function smart-home:command:help() {
   echo "
   🏡 Denys Dovhan Smart Home
 
-  smart-home help          print this help message
-  smart-home init          install dependencies
-  smart-home start         start all services
-  smart-home stop          stop all services
-  smart-home down          stop and remove all containers
-  smart-home restart       restart all services
-  smart-home update        stop, update and restart all services
-  smart-home prune         delete obsolete containers
+  smart-home help                       print this help message
+  smart-home init                       install dependencies
+  smart-home start                      start all services
+  smart-home stop                       stop all services
+  smart-home down                       stop and remove all containers
+  smart-home restart                    restart all services
+  smart-home update                     stop, update and restart all services
+  smart-home prune                      delete obsolete containers
+  smart-home add-mosquitto-user         add mosquitto user
 "
 }
 
 function smart-home:command:init() {
   # Install docker
-  if smart-home:exists docker; then
-    echo "docker is already installed."
-  else
+  if ! smart-home:exists docker; then
     echo "Installing docker..."
     curl -fsSL https://get.docker.com | sh
     sudo usermod -G docker -a "$USER"
   fi
 
-  if smart-home:exists docker-compose; then
-    echo "docker-compose is already installed."
-  else
+  if ! smart-home:exists docker-compose; then
     echo "Installing docker-compose..."
     sudo apt install -y docker-compose
+  fi
+
+  if smart-home:exists mosquitto_passwd; then
+    sudo apt-get install -y mosquitto
   fi
 
   echo "Done!"
@@ -106,6 +107,27 @@ function smart-home:command:prune() {
   docker image prune -a
 }
 
+function smart-home:command:add-mosquitto-user() {
+  local user password userdb
+
+  user="${COMMAND_ARGS[0]}"
+  password="$(openssl rand -base64 32 | rev | cut -b 2- | rev)";
+  userdb="$SMART_HOME_DIR/$VOLUMES/mosquitto/data/users.db"
+
+  if [ -z "$user" ]; then
+    echo "Please provide a username."
+    return 1;
+  fi
+
+  touch "$userdb"
+  mosquitto_passwd -b "$userdb" "$user" "$password";
+
+  if [ $? -eq 0 ]; then
+    echo "Username: $user";
+    echo "Password: $password";
+  fi
+}
+
 #
 # MAIN
 #
@@ -121,6 +143,8 @@ function main() {
   if ! smart-home:utils:validate; then
     return 1
   fi
+
+  smart-home::load_vars "$SMART_HOME_DIR/.env"
 
   smart-home:command:"$COMMAND" "${COMMAND_ARGS[*]}"
 
