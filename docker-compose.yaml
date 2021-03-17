@@ -183,3 +183,17 @@ services:
     image: 1activegeek/airconnect
     restart: unless-stopped
     network_mode: host
+
+  # Umami.is
+  # A self-hosted analytics for my websites
+  umami:
+    container_name: umami
+    image: ghcr.io/mikecao/umami:mysql-latest
+    ports:
+      - '8300:3000'
+    environment:
+      DATABASE_URL: mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:3306/umami
+      DATABASE_TYPE: mysql
+      HASH_SALT: ${UMAMI_HASH_SALT}
+    depends_on:
+      - db
