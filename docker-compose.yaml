@@ -95,11 +95,11 @@ services:
       - '443:443' # HTTPS port
       - '8081:81' # Admin Paner port
     environment:
-      DB_MYSQL_HOST: 'db'
+      DB_MYSQL_HOST: ${MYSQL_HOST}
       DB_MYSQL_PORT: 3306
       DB_MYSQL_USER: ${MYSQL_USER}
       DB_MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      DB_MYSQL_NAME: 'nginx-proxy-manager'
+      DB_MYSQL_NAME: 'nginxproxymanager'
     volumes:
       - ${VOLUMES}/nginx-proxy-manager/data:/data
       - ${VOLUMES}/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
@@ -126,27 +126,31 @@ services:
     image: adguard/adguardhome
     restart: unless-stopped
     ports:
-      - '53:53/tcp'
-      - '53:53/udp'
+      # uncomment on real machine
+      # - '53:53/tcp'
+      # - '53:53/udp'
       - '67:67/udp'
       - '68:68/tcp'
-      - '68:68/udp'
+      # - '68:68/udp'
       - '5300:80/tcp'
       - '853:853/tcp'
-      - '3000:3000/tcp'
+      - '8030:3000/tcp'
       # - '443:443/tcp'
     volumes:
       - ${VOLUMES}/adguard/work:/opt/adguardhome/work
       - ${VOLUMES}/adguard/conf:/opt/adguardhome/conf
 
+  # Plex
+  # Personal media server with movies and tv-series
   plex:
     image: linuxserver/plex
     container_name: plex
     network_mode: host
+    env_file:
+      - .env
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
       - VERSION=docker
+      # TODO: plex claim
     volumes:
       - ${VOLUMES}/plex/config:/config
       - ./media:/media
