@@ -11,7 +11,7 @@ services:
       - '9000:9000'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${VOLUMES}/portainer-ce/data:/data
+      - .docker/portainer-ce/data:/data
 
   # Home Assistant
   # The core of my smart-home automations
@@ -35,8 +35,8 @@ services:
     ports:
       - '1883:1883'
     volumes:
-      - ${VOLUMES}/mosquitto/data:/mosquitto/data
-      - ${VOLUMES}/mosquitto/log:/mosquitto/log
+      - .docker/mosquitto/data:/mosquitto/data
+      - .docker/mosquitto/log:/mosquitto/log
       - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
 
   # Zigbee2MQTT
@@ -48,7 +48,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ${VOLUMES}/zigbee2mqtt/log:/app/data/log
+      - .docker/zigbee2mqtt/log:/app/data/log
       - /run/udev:/run/udev:ro
       - ./zigbee2mqtt/configuration.yaml:/app/data/configuration.yaml
       - ./zigbee2mqtt/secrets.yaml:/app/data/secrets.yaml
@@ -67,7 +67,7 @@ services:
     image: mariadb
     restart: unless-stopped
     volumes:
-      - ${VOLUMES}/mariadb/db:/var/lib/mysql
+      - .docker/mariadb/db:/var/lib/mysql
       - /etc/localtime:/etc/localtime:ro
       - ./db:/docker-entrypoint-initdb.d
     env_file:
@@ -101,8 +101,8 @@ services:
       DB_MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       DB_MYSQL_NAME: 'nginxproxymanager'
     volumes:
-      - ${VOLUMES}/nginx-proxy-manager/data:/data
-      - ${VOLUMES}/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+      - .docker/nginx-proxy-manager/data:/data
+      - .docker/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
     depends_on:
       - db
 
@@ -137,8 +137,8 @@ services:
       - '8030:3000/tcp'
       # - '443:443/tcp'
     volumes:
-      - ${VOLUMES}/adguard/work:/opt/adguardhome/work
-      - ${VOLUMES}/adguard/conf:/opt/adguardhome/conf
+      - .docker/adguard/work:/opt/adguardhome/work
+      - .docker/adguard/conf:/opt/adguardhome/conf
 
   # Plex
   # Personal media server with movies and tv-series
@@ -152,7 +152,7 @@ services:
       - VERSION=docker
       # TODO: plex claim
     volumes:
-      - ${VOLUMES}/plex/config:/config
+      - .docker/plex/config:/config
       - ./media:/media
     restart: unless-stopped
 
@@ -167,9 +167,9 @@ services:
       - USER=${TRANSMISSION_USER}
       - PASS=${TRANSMISSION_PASSWORD}
     volumes:
-      - ${VOLUMES}/transmission/config:/config
-      - ${VOLUMES}/transmission/downloads:/downloads # change this to match media folder
-      - ${VOLUMES}/transmission/watch:/watch # change this to match media folder
+      - .docker/transmission/config:/config
+      - .docker/transmission/downloads:/downloads # change this to match media folder
+      - .docker/transmission/watch:/watch # change this to match media folder
     ports:
       - '9091:9091'
       - '51413:51413'

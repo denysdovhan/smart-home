@@ -118,7 +118,7 @@ function smart-home:command:add-mosquitto-user() {
 
   user="${COMMAND_ARGS[0]}"
   password="$(openssl rand -base64 32 | rev | cut -b 2- | rev)";
-  userdb="$SMART_HOME_DIR/$VOLUMES/mosquitto/data/users.db"
+  userdb="$SMART_HOME_DIR/.docker/mosquitto/data/users.db"
 
   if [ -z "$user" ]; then
     echo "Please provide a username."
