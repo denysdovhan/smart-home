@@ -62,8 +62,14 @@ function smart-home:command:init() {
     sudo apt install -y docker-compose
   fi
 
-  if smart-home:exists mosquitto_passwd; then
+  if ! smart-home:exists mosquitto_passwd; then
+    echo "Installing mosquitto..."
     sudo apt-get install -y mosquitto
+  fi
+
+  if ! smart-home:exists rclone; then
+    echo "Installing rclone..."
+    curl https://rclone.org/install.sh | sudo bash
   fi
 
   echo "Done!"
@@ -125,7 +131,40 @@ function smart-home:command:add-mosquitto-user() {
   if [ $? -eq 0 ]; then
     echo "Username: $user";
     echo "Password: $password";
+    return 0
   fi
+
+  return 1
+}
+
+function smart-home:command:backup() {
+  local timestamp backup_file backup_dir plex_dir
+
+  timestamp=$(date +"%Y-%m-%d_%H%M%S");
+  backup_dir="$SMART_HOME_DIR/.backups";
+  backup_file="$backup_dir/backup_$timestamp.tar.gz";
+  plex_dir='.docker/plex/config/Library/Application Support/Plex Media Server'
+
+  mkdir -p "$backup_dir"
+
+  echo "Compressing everything into $backup_file..."
+
+  tar \
+    --exclude="./.backups" \
+    --exclude="./media" \
+    --exclude="*.log" \
+    --exclude="$plex_dir/Metadata" \
+    --exclude="$plex_dir/Cache" \
+    --exclude="$plex_dir/Media" \
+    -czvf "$backup_file" .
+
+  echo "Compressed! File size: $(du -h $backup_file)"
+
+  echo "Removing old backups..."
+  find "$backup_dir" -mtime +14 -type f -delete;
+
+  echo "Syncing to Google Drive..."
+  rclone sync --progress --exclude ".DS_Store" "$backup_dir" googledrive:"Smart Home"
 }
 
 #
