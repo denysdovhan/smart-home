@@ -1,4 +1,4 @@
-name: CI
+name: Home Assistant
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Prepare Stubs
-        run: cp -R .stubs/* .
+        run: cp -R ./home-assistant/stubs/* ./home-assistant
 
       - name: Home Assistant Version
         uses: docker://homeassistant/home-assistant
@@ -25,7 +25,7 @@ jobs:
       - name: Home Assistant Check
         uses: docker://homeassistant/home-assistant
         with:
-          args: python -m homeassistant --config . --script check_config --info all
+          args: python -m homeassistant --config ./home-assistant --script check_config --info all
 
   home-assistant-beta:
     name: Home Assistant Beta
@@ -33,13 +33,16 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
+
       - name: Prepare Stubs
-        run: cp -R .stubs/* .
+        run: cp -R ./home-assistant/stubs/* ./home-assistant
+
       - name: Home Assistant Version
         uses: docker://homeassistant/home-assistant:beta
         with:
           args: python -m homeassistant --version
+
       - name: Home Assistant Check
         uses: docker://homeassistant/home-assistant:beta
         with:
-          args: python -m homeassistant --config . --script check_config --info all
+          args: python -m homeassistant --config ./home-assistant --script check_config --info all
