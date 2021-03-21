@@ -17,7 +17,7 @@ services:
   # The core of my smart-home automations
   home-assistant:
     container_name: home-assistant
-    image: homeassistant/${HOME_ASSISTANT_IMAGE}:stable
+    image: homeassistant/${HOME_ASSISTANT_IMAGE}
     volumes:
       - ./home-assistant:/config
       - /etc/localtime:/etc/localtime:ro
