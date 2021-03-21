@@ -67,6 +67,11 @@ function smart-home:command:init() {
     sudo apt-get install -y mosquitto
   fi
 
+  if ! smart-home:exists git; then
+    echo "Installing git..."
+    sudo apt-get install -y git
+  fi
+
   if ! smart-home:exists rclone; then
     echo "Installing rclone..."
     curl https://rclone.org/install.sh | sudo bash
