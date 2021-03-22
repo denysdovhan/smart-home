@@ -7,8 +7,7 @@ services:
     image: portainer/portainer-ce
     restart: unless-stopped
     ports:
-      - '8000:8000'
-      - '9000:9000'
+      - 9000:9000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - .docker/portainer-ce/data:/data
@@ -53,7 +52,7 @@ services:
       - ./zigbee2mqtt/configuration.yaml:/app/data/configuration.yaml
       - ./zigbee2mqtt/secrets.yaml:/app/data/secrets.yaml
     ports:
-      - '8099:8099'
+      - 8099:8099
     # devices:
     # - /dev/ttyAMA0:/dev/ttyACM0
     #- /dev/ttyACM0
