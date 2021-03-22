@@ -32,7 +32,7 @@ services:
     image: eclipse-mosquitto:latest
     restart: unless-stopped
     ports:
-      - '1883:1883'
+      - 1888:1883
     volumes:
       - .docker/mosquitto/data:/mosquitto/data
       - .docker/mosquitto/log:/mosquitto/log

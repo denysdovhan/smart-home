@@ -5,7 +5,8 @@
 #
 
 mqtt:
-  broker: core-mosquitto
+  broker: localhost
+  port: 1888
   discovery: true
   discovery_prefix: homeassistant
   username: !secret mqtt_username
