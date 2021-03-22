@@ -140,6 +140,7 @@ function smart-home:command:add-mosquitto-user() {
     return 1;
   fi
 
+  mkdir -p "$(dirname $userdb)"
   touch "$userdb"
   mosquitto_passwd -b "$userdb" "$user" "$password";
 
