@@ -5,9 +5,9 @@ homeassistant: true
 permit_join: false
 mqtt:
   base_topic: zigbee2mqtt
-  server: 'mqtt://localhost:1883'
-  user: !secret mqtt_user
-  password: !secret mqtt_password
+  server: 'mqtt://localhost:1888'
+  user: '!secret mqtt_user'
+  password: '!secret mqtt_password'
 serial:
   port: /dev/ttyACM0
 frontend:

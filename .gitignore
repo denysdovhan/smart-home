@@ -21,7 +21,7 @@ tts
 image
 
 # Specific files
-/zigbee2mqtt/secrets.yaml
+/zigbee2mqtt/secret.yaml
 /home-assistant/secrets.yaml
 /home-assistant/ip_bans.yaml
 /home-assistant/known_devices.yaml

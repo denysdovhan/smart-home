@@ -50,14 +50,13 @@ services:
       - .docker/zigbee2mqtt/log:/app/data/log
       - /run/udev:/run/udev:ro
       - ./zigbee2mqtt/configuration.yaml:/app/data/configuration.yaml
-      - ./zigbee2mqtt/secrets.yaml:/app/data/secrets.yaml
+      - ./zigbee2mqtt/secret.yaml:/app/data/secret.yaml
     ports:
       - 8099:8099
     # devices:
     # - /dev/ttyAMA0:/dev/ttyACM0
     #- /dev/ttyACM0
     privileged: true
-    network_mode: host
 
   # MariaDB
   # A database for Home Assistant, Nginx Proxy Manager and Umami
