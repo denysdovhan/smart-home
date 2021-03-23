@@ -7,7 +7,8 @@ services:
     image: portainer/portainer-ce
     restart: unless-stopped
     ports:
-      - 9000:9000
+      - 8000:8000 # Agent
+      - 9000:9000 # Web UI
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - .docker/portainer-ce/data:/data
