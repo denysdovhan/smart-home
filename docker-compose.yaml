@@ -58,6 +58,21 @@ services:
     #- /dev/ttyACM0
     privileged: true
 
+  # Duplicati
+  # Simple and flexible UI for backing up stuff
+  duplicati:
+    container_name: duplicati
+    image: linuxserver/duplicati
+    env_file:
+      - .env
+    volumes:
+      - .docker/duplicati/config:/config #Config Files
+      - .backups:/backups
+      - .:/source
+    ports:
+      - 8200:8200
+    restart: unless-stopped
+
   # MariaDB
   # A database for Home Assistant, Nginx Proxy Manager and Umami
   db:

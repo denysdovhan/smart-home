@@ -47,7 +47,6 @@ function smart-home:command:help() {
   smart-home prune                      delete obsolete containers
   smart-home password                   generate a password
   smart-home add-mosquitto-user         add mosquitto user
-  smart-home backup                     backup smart-home and sync to google drive
 "
 }
 
@@ -151,38 +150,6 @@ function smart-home:command:add-mosquitto-user() {
   fi
 
   return 1
-}
-
-function smart-home:command:backup() {
-  local timestamp backup_file backup_dir plex_dir
-
-  timestamp=$(date +"%Y-%m-%d_%H%M%S");
-  backup_dir="$SMART_HOME_DIR/.backups";
-  backup_file="$backup_dir/backup_$timestamp.tar.gz";
-  plex_dir='.docker/plex/config/Library/Application Support/Plex Media Server'
-
-  mkdir -p "$backup_dir"
-
-  echo "Compressing everything into $backup_file..."
-
-  tar \
-    --exclude="./.backups" \
-    --exclude="./media" \
-    --exclude="*.log" \
-    --exclude="$plex_dir/Metadata" \
-    --exclude="$plex_dir/Cache" \
-    --exclude="$plex_dir/Media" \
-    -czvf "$backup_file" .
-
-  echo "Compressed! File size: $(du -h $backup_file)"
-
-  echo "Removing old backups..."
-  find "$backup_dir" -mtime +14 -type f -delete;
-
-  if smart-home:exists rclone; then
-    echo "Syncing to Google Drive..."
-    rclone sync --progress --exclude ".DS_Store" "$backup_dir" googledrive:"Smart Home"
-  fi
 }
 
 #
