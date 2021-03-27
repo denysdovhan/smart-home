@@ -47,10 +47,16 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+    environment:
+      ZIGBEE2MQTT_CONFIG_MQTT_SERVER: ${MQTT_SERVER}
+      ZIGBEE2MQTT_CONFIG_MQTT_USER: ${MQTT_USER}
+      ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD: ${MQTT_PASSWORD}
     volumes:
       - .docker/zigbee2mqtt/log:/app/data/log
       - /run/udev:/run/udev:ro
       - ./zigbee2mqtt/configuration.yaml:/app/data/configuration.yaml
+      - ./zigbee2mqtt/devices.yaml:/app/data/devices.yaml
+      - ./zigbee2mqtt/groups.yaml:/app/data/groups.yaml
       - ./zigbee2mqtt/secret.yaml:/app/data/secret.yaml
     ports:
       - 8099:8099
