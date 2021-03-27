@@ -57,13 +57,11 @@ services:
       - ./zigbee2mqtt/configuration.yaml:/app/data/configuration.yaml
       - ./zigbee2mqtt/devices.yaml:/app/data/devices.yaml
       - ./zigbee2mqtt/groups.yaml:/app/data/groups.yaml
-      - ./zigbee2mqtt/secret.yaml:/app/data/secret.yaml
-    ports:
-      - 8099:8099
     # devices:
     # - /dev/ttyAMA0:/dev/ttyACM0
     #- /dev/ttyACM0
     privileged: true
+    network_mode: host
 
   # Duplicati
   # Simple and flexible UI for backing up stuff
