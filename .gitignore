@@ -12,6 +12,7 @@ __pycache__
 # Ignore folders
 .docker
 .backups
+.deleted
 .ssh
 .storage
 .cloud
