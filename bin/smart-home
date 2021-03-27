@@ -69,7 +69,7 @@ function smart-home:command:init() {
   fi
 
   echo "Installing additional packages..."
-  sudo apt-get install git cockpit
+  sudo apt-get install git cockpit avahi-daemon
 
   echo "Done!"
   echo "Please, reboot!"
