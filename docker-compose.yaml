@@ -132,18 +132,23 @@ services:
     restart: unless-stopped
     network_mode: host
 
-  # samba:
-  #   container_name: samba
-  #   image: dperson/samba
-  #   volumes:
-  #     - .:/mnt
-  #   ports:
-  #     - '139:139'
-  #     - '445:445'
-  #     - '137:137/udp'
-  #     - '138:138/udp'
-  #   command: samba.sh -s "smart-home;/mnt;yes;no;no;all" -u ${SAMBA_USER};${SAMBA_PASSWORD}
-  #   restart: unless-stopped
+  # Samba
+  # Remote access to the file system
+  samba:
+    container_name: samba
+    image: dperson/samba
+    volumes:
+      - .:/mnt
+    environment:
+      USERID: ${PUID}
+      GROUPID: ${PGID}
+    ports:
+      - '139:139'
+      - '445:445'
+      - '137:137/udp'
+      - '138:138/udp'
+    command: samba.sh -s "smart-home;/mnt;yes;no;no;all" -u ${SAMBA_USER};${SAMBA_PASSWORD}
+    restart: unless-stopped
 
   # AdGuard Home
   # Ad-blocking DNS server
