@@ -58,7 +58,6 @@ services:
       - ./zigbee2mqtt/devices.yaml:/app/data/devices.yaml
       - ./zigbee2mqtt/groups.yaml:/app/data/groups.yaml
     # devices:
-    # - /dev/ttyAMA0:/dev/ttyACM0
     #- /dev/ttyACM0
     privileged: true
     network_mode: host
@@ -152,24 +151,20 @@ services:
 
   # AdGuard Home
   # Ad-blocking DNS server
-  # adguard:
-  #   container_name: adguard
-  #   image: adguard/adguardhome
-  #   restart: unless-stopped
-  #   # networks:
-  #   # - adguard
-  #   ports:
-  #     # uncomment on real machine
-  #     # - '53:53/tcp'
-  #     # - '53:53/udp'
-  #     - '67:67/udp'
-  #     - '68:68/tcp'
-  #     - '68:68/udp'
-  #     - '853:853/tcp'
-  #     - '8300:3000/tcp'
-  #   volumes:
-  #     - .docker/adguard/work:/opt/adguardhome/work
-  #     - .docker/adguard/conf:/opt/adguardhome/conf
+  adguard:
+    container_name: adguard
+    image: adguard/adguardhome
+    restart: unless-stopped
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+      - 67:67/udp
+      - 853:853/tcp
+      - 8380:80/tcp
+      - 8300:3000/tcp
+    volumes:
+      - .docker/adguard/work:/opt/adguardhome/work
+      - .docker/adguard/conf:/opt/adguardhome/conf
 
   # Plex
   # Personal media server with movies and tv-series
