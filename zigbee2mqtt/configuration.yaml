@@ -1,7 +1,6 @@
 homeassistant: true
-# TODO: Add these files
-# devices: devices.yaml
-# groups: groups.yaml
+devices: devices.yaml
+groups: groups.yaml
 permit_join: false
 mqtt:
   base_topic: zigbee2mqtt
