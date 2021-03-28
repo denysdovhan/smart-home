@@ -197,8 +197,16 @@ function smart-home:command:use-network-manager() {
 # This file describes the network interfaces available on your system
 # For more information, see netplan(5).
 network:
-  version: 2
   renderer: NetworkManager
+  ethernets:
+    eno1:
+      dhcp4: false
+      addresses:
+        - 192.168.50.113/24
+      gateway4: 192.168.50.1
+      nameservers:
+        addresses: [8.8.8.8, 1.1.1.1]
+  version: 2
 EOF
 
   # setup netplan for network manager
