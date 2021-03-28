@@ -75,7 +75,7 @@ function smart-home:command:init() {
   fi
 
   echo "Installing additional packages..."
-  sudo apt-get install -y git cockpit avahi-daemon
+  sudo apt-get install -y git cockpit avahi-daemon network-manager
 
   if [ ! -f "$SMART_HOME_DIR/.env" ]; then
     echo "Creating .env file..."
