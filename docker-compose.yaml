@@ -57,8 +57,8 @@ services:
       - ./zigbee2mqtt/configuration.yaml:/app/data/configuration.yaml
       - ./zigbee2mqtt/devices.yaml:/app/data/devices.yaml
       - ./zigbee2mqtt/groups.yaml:/app/data/groups.yaml
-    # devices:
-    #- /dev/ttyACM0
+    devices:
+      - /dev/ttyACM0
     privileged: true
     network_mode: host
 
