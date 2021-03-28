@@ -199,7 +199,7 @@ function smart-home:command:use-network-manager() {
 network:
   renderer: NetworkManager
   ethernets:
-    eno1:
+    eth0:
       dhcp4: false
       addresses:
         - 192.168.50.113/24
