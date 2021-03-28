@@ -14,14 +14,7 @@ from datetime import datetime
 from typing import Optional
 
 import voluptuous as vol
-
-try:
-    from homeassistant.components.binary_sensor import BinarySensorEntity
-except ImportError:  # pragma: no cover
-    from homeassistant.components.binary_sensor import (
-        BinarySensorDevice as BinarySensorEntity,
-    )
-
+from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.components.weather import (
     ATTR_FORECAST,
     ATTR_FORECAST_TEMP,
@@ -39,11 +32,11 @@ from homeassistant.util import dt as dt_util
 from homeassistant.util.temperature import convert as convert_temperature
 
 from .const import (
-    ATTR_TYRE_TYPE,
     CONF_DAYS,
     CONF_WEATHER,
     DEFAULT_DAYS,
     DEFAULT_NAME,
+    DOMAIN,
     ICON,
     STARTUP_MESSAGE,
 )
@@ -111,9 +104,24 @@ class SnowtireBinarySensor(BinarySensorEntity):
         return False
 
     @property
+    def unique_id(self):
+        """Return a unique ID."""
+        return "%s-%d" % (self._weather_entity, self._days)
+
+    @property
+    def device_class(self):
+        """Return the class of this device, from component DEVICE_CLASSES."""
+        return f"{DOMAIN}__type"
+
+    @property
     def name(self):
         """Return the name of the sensor."""
         return self._name
+
+    @property
+    def available(self) -> bool:
+        """Return True if entity is available."""
+        return self._state is not None
 
     @property
     def is_on(self):
@@ -124,13 +132,6 @@ class SnowtireBinarySensor(BinarySensorEntity):
     def icon(self):
         """Return the icon to use in the frontend, if any."""
         return ICON
-
-    @property
-    def device_state_attributes(self):
-        """Return the state attributes."""
-        return {
-            ATTR_TYRE_TYPE: "Winter" if self.is_on else "Summer",
-        }
 
     @staticmethod
     def _temp2c(
@@ -164,12 +165,12 @@ class SnowtireBinarySensor(BinarySensorEntity):
 
         _LOGGER.debug("Current temperature %.1f°C", temp)
 
-        cur_date = datetime.now().strftime("%F")
+        cur_date = dt_util.start_of_local_day().strftime("%F")
         stop_date = datetime.fromtimestamp(
-            datetime.now().timestamp() + 86400 * (self._days + 1)
+            dt_util.start_of_local_day().timestamp() + 86400 * (self._days + 1)
         ).strftime("%F")
 
-        _LOGGER.debug("Inspect weather forecast from now till %s", stop_date)
+        _LOGGER.debug("Inspect weather forecast from %s till %s", cur_date, stop_date)
         temp = [self._temp2c(temp, tmpu)]
         for fcast in forecast:
             fc_date = fcast.get(ATTR_FORECAST_TIME)
@@ -194,6 +195,12 @@ class SnowtireBinarySensor(BinarySensorEntity):
                 temp.append(self._temp2c(tmax, tmpu))
 
         _LOGGER.debug("Temperature vector: %s", temp)
+        for i in temp:
+            if i <= 0.5:
+                _LOGGER.debug("Too cold temperature detected!")
+                self._state = True
+                return
+
         temp = sum(temp) / len(temp)
         _LOGGER.debug("Average temperature: %.1f°C", temp)
         self._state = temp < 7
