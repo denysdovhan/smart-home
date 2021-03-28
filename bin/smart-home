@@ -173,9 +173,11 @@ function smart-home:command:adguard-resolved() {
 
   sudo touch "$config"
 
-  echo '[Resolve]'          | sudo tee -a $config > /dev/null
-  echo 'DNS=127.0.0.1'      | sudo tee -a $config > /dev/null
-  echo 'DNSStubListener=no' | sudo tee -a $config > /dev/null
+  sudo tee "$config" > /dev/null << EOF
+[Resolve]
+DNS=127.0.0.1
+DNSStubListener=no
+EOF
 
   sudo mv /etc/resolv.conf /etc/resolv.conf.backup
   sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
@@ -193,7 +195,7 @@ function smart-home:command:setup-network() {
   cd /etc/netplan || exit
   sudo cp 50-cloud-init.yaml 50-cloud-init.yaml.bak
 
-  sudo tee -a /etc/netplan/50-cloud-init.yaml > /dev/null << EOF
+  sudo tee /etc/netplan/50-cloud-init.yaml > /dev/null << EOF
 # This file describes the network interfaces available on your system
 # For more information, see netplan(5).
 network:
