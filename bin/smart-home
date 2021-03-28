@@ -193,7 +193,7 @@ function smart-home:command:use-network-manager() {
   cd /etc/netplan || exit
   sudo cp 50-cloud-init.yaml 50-cloud-init.yaml.bak
 
-  sudo tee -a /etc/netplan/50-cloud-init.yaml > /dev/nul << EOF
+  sudo tee -a /etc/netplan/50-cloud-init.yaml > /dev/null << EOF
 # This file describes the network interfaces available on your system
 # For more information, see netplan(5).
 network:
