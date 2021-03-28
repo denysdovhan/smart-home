@@ -48,6 +48,7 @@ function smart-home:command:help() {
   smart-home password                   generate a password
   smart-home add-mosquitto-user         add mosquitto user
   smart-home adguard-resolved           fix AdGuard and systemd-resolved conflict
+  smart-home use-network-manager        change netplan to network manager
 "
 }
 
@@ -180,6 +181,35 @@ function smart-home:command:adguard-resolved() {
   sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
 
   systemctl reload-or-restart systemd-resolved
+}
+
+function smart-home:command:use-network-manager() {
+  # Based on:
+  # https://gist.github.com/dbkinghorn/ed923bbcb7ec3f53bd2da5fe5e9b49b2
+  
+  echo "Changing netplan to network manager on all interfaces"
+  
+  # backup existing yaml file
+  cd /etc/netplan || exit
+  cp 50-cloud-init.yaml 50-cloud-init.yaml.bak
+
+  cat << EOF > /etc/netplan/50-cloud-init.yaml
+# This file describes the network interfaces available on your system
+# For more information, see netplan(5).
+network:
+  version: 2
+  renderer: NetworkManager
+EOF
+
+  # setup netplan for network manager
+  netplan generate
+  netplan apply
+  
+  # make sure network manager is running
+  systemctl enable NetworkManager.service
+  systemctl restart NetworkManager.service
+
+  echo "Done!"
 }
 
 #
