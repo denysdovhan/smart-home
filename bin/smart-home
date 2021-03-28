@@ -191,9 +191,9 @@ function smart-home:command:use-network-manager() {
   
   # backup existing yaml file
   cd /etc/netplan || exit
-  cp 50-cloud-init.yaml 50-cloud-init.yaml.bak
+  sudo cp 50-cloud-init.yaml 50-cloud-init.yaml.bak
 
-  cat << EOF > /etc/netplan/50-cloud-init.yaml
+  sudo tee -a /etc/netplan/50-cloud-init.yaml > /dev/nul << EOF
 # This file describes the network interfaces available on your system
 # For more information, see netplan(5).
 network:
@@ -202,8 +202,8 @@ network:
 EOF
 
   # setup netplan for network manager
-  netplan generate
-  netplan apply
+  sudo netplan generate
+  sudo netplan apply
   
   # make sure network manager is running
   systemctl enable NetworkManager.service
