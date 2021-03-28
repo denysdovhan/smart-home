@@ -48,7 +48,7 @@ function smart-home:command:help() {
   smart-home password                   generate a password
   smart-home add-mosquitto-user         add mosquitto user
   smart-home adguard-resolved           fix AdGuard and systemd-resolved conflict
-  smart-home use-network-manager        change netplan to network manager
+  smart-home setup-network              setup network settings
 "
 }
 
@@ -183,7 +183,7 @@ function smart-home:command:adguard-resolved() {
   systemctl reload-or-restart systemd-resolved
 }
 
-function smart-home:command:use-network-manager() {
+function smart-home:command:setup-network() {
   # Based on:
   # https://gist.github.com/dbkinghorn/ed923bbcb7ec3f53bd2da5fe5e9b49b2
   
