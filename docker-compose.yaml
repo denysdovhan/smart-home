@@ -168,19 +168,18 @@ services:
 
   # Plex
   # Personal media server with movies and tv-series
-  # plex:
-  #   image: linuxserver/plex
-  #   container_name: plex
-  #   network_mode: host
-  #   env_file:
-  #     - .env
-  #   environment:
-  #     - VERSION=docker
-  #     # TODO: plex claim
-  #   volumes:
-  #     - .docker/plex/config:/config
-  #     - ./media:/media
-  #   restart: unless-stopped
+  plex:
+    image: linuxserver/plex
+    container_name: plex
+    network_mode: host
+    env_file:
+      - .env
+    environment:
+      - VERSION=docker
+    volumes:
+      - .docker/plex/config:/config
+      - ${MEDIA_VOLUME}:/media
+    restart: unless-stopped
 
   # Transmission
   # A torrent client for downloading media
