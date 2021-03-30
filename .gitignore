@@ -13,7 +13,7 @@ __pycache__
 .docker
 .backups
 .deleted
-.ssh
+.router-ssh
 .storage
 .cloud
 .google.token
