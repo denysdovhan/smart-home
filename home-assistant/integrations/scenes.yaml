@@ -26,10 +26,6 @@ scene split:
         state: off
       light.desk_lamp:
         state: off
-      automation.turn_on_bedroom_lights_on_movement:
-        state: off
-      automation.turn_off_bedroom_lights_without_movement:
-        state: off
       switch.circadian_lighting_flux:
         state: on
 
@@ -49,10 +45,6 @@ scene split:
       light.living_room_main_light:
         state: off
       light.living_room_table_lights:
-        state: off
-      automation.turn_on_bedroom_lights_on_movement:
-        state: off
-      automation.turn_off_bedroom_lights_without_movement:
         state: off
       switch.circadian_lighting_flux:
         state: on
@@ -76,10 +68,6 @@ scene split:
         state: on
         brightness: 255
         color_temp: 240
-      automation.turn_on_bedroom_lights_on_movement:
-        state: off
-      automation.turn_off_bedroom_lights_without_movement:
-        state: off
       switch.circadian_lighting_flux:
         state: on
 
@@ -104,10 +92,6 @@ scene split:
         state: on
         brightness: 255
         color_temp: 240
-      automation.turn_on_bedroom_lights_on_movement:
-        state: off
-      automation.turn_off_bedroom_lights_without_movement:
-        state: off
       switch.circadian_lighting_flux:
         state: on
 
@@ -130,9 +114,5 @@ scene split:
         state: on
         brightness: 10
         rgb_color: [255, 0, 0]
-      automation.turn_on_bedroom_lights_on_movement:
-        state: off
-      automation.turn_off_bedroom_lights_without_movement:
-        state: off
       switch.circadian_lighting_flux:
         state: off
