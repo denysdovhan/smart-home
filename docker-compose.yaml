@@ -20,6 +20,7 @@ services:
     image: homeassistant/${HOME_ASSISTANT_IMAGE}
     volumes:
       - ./home-assistant:/config
+      - ${MEDIA_VOLUME}:/media
       - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env
