@@ -98,7 +98,7 @@ greeting:
         "Що хорошого сталось за сьогодні?"
       ] }}
   sequence:
-    - service: media_player.value_set
+    - service: media_player.volume_set
       data:
         entity_id: media_player.all_speakers
         volume_level: 0.75
