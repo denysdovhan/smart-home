@@ -139,7 +139,8 @@ services:
     container_name: samba
     image: dperson/samba
     volumes:
-      - .:/mnt
+      - .:/mnt/smart-home
+      - ${MEDIA_VOLUME}:/mnt/media
     environment:
       USERID: ${PUID}
       GROUPID: ${PGID}
@@ -148,7 +149,11 @@ services:
       - '445:445'
       - '137:137/udp'
       - '138:138/udp'
-    command: samba.sh -s "smart-home;/mnt;yes;no;no;all" -u ${SAMBA_USER};${SAMBA_PASSWORD}
+    command: >
+      samba.sh
+        -s "smart-home;/mnt/smart-home;yes;no;no;all"
+        -s "media;/mnt/media;yes;no;no;all"
+        -u ${SAMBA_USER};${SAMBA_PASSWORD}
     restart: unless-stopped
 
   # AdGuard Home
@@ -185,23 +190,22 @@ services:
 
   # Transmission
   # A torrent client for downloading media
-  # transmission:
-  #   container_name: transmission
-  #   image: linuxserver/transmission
-  #   env_file:
-  #     - .env
-  #   environment:
-  #     - USER=${TRANSMISSION_USER}
-  #     - PASS=${TRANSMISSION_PASSWORD}
-  #   volumes:
-  #     - .docker/transmission/config:/config
-  #     - .docker/transmission/downloads:/downloads # change this to match media folder
-  #     - .docker/transmission/watch:/watch # change this to match media folder
-  #   ports:
-  #     - '9091:9091'
-  #     - '51413:51413'
-  #     - '51413:51413/udp'
-  #   restart: unless-stopped
+  transmission:
+    container_name: transmission
+    image: linuxserver/transmission
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - USER=${TRANSMISSION_USER}
+      - PASS=${TRANSMISSION_PASSWORD}
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    volumes:
+      - .docker/transmission/config:/config
+      - ${MEDIA_VOLUME}:/downloads
 
   # Umami.is
   # A self-hosted analytics for my websites
