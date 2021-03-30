@@ -8,7 +8,7 @@ https://github.com/Limych/ha-snowtire/
 # Base component constants
 NAME = "Snowtire Sensor"
 DOMAIN = "snowtire"
-VERSION = "0.1.0"
+VERSION = "1.1.0"
 ISSUE_URL = "https://github.com/Limych/ha-snowtire/issues"
 
 STARTUP_MESSAGE = f"""
@@ -31,6 +31,3 @@ CONF_DAYS = "days"
 # Defaults
 DEFAULT_NAME = "Snowtire"
 DEFAULT_DAYS = 7
-
-# Attributes
-ATTR_TYRE_TYPE = "Tyre type"

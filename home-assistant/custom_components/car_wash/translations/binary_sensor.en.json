@@ -1,0 +1,8 @@
+{
+  "state": {
+    "car_wash__": {
+      "off": "Should not wash",
+      "on": "Worth wash"
+    }
+  }
+}
