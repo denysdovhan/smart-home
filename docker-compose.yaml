@@ -110,12 +110,12 @@ services:
     image: jc21/nginx-proxy-manager:latest
     restart: unless-stopped
     ports:
-      - '80:80' # HTTP port
-      - '443:443' # HTTPS port
-      - '8081:81' # Admin Paner port
+      - 80:80 # HTTP port
+      - 443:443 # HTTPS port
+      - 8081:81 # Admin Paner port
     environment:
       DB_MYSQL_HOST: ${MYSQL_HOST}
-      DB_MYSQL_PORT: 3306
+      DB_MYSQL_PORT: ${MYSQL_PORT}
       DB_MYSQL_USER: ${MYSQL_USER}
       DB_MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       DB_MYSQL_NAME: 'nginxproxymanager'
@@ -145,10 +145,10 @@ services:
       USERID: ${PUID}
       GROUPID: ${PGID}
     ports:
-      - '139:139'
-      - '445:445'
-      - '137:137/udp'
-      - '138:138/udp'
+      - 139:139
+      - 445:445
+      - 137:137/udp
+      - 138:138/udp
     command: >
       samba.sh
         -s "smart-home;/mnt/smart-home;yes;no;no;all"
@@ -215,7 +215,7 @@ services:
   #   ports:
   #     - '8300:3000'
   #   environment:
-  #     DATABASE_URL: mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:3306/umami
+  #     DATABASE_URL: mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/umami
   #     DATABASE_TYPE: mysql
   #     HASH_SALT: ${UMAMI_HASH_SALT}
   #   depenversion: '3.6'
