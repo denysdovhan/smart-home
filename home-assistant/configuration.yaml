@@ -12,4 +12,5 @@ homeassistant:
   customize: !include_dir_merge_named customizations
   # Load packages
   packages: !include_dir_named integrations
-  # external_url: !secret external_url
+  external_url: !secret external_url
+  internal_url: !secret internal_url
