@@ -222,7 +222,7 @@ cards:
             entities:
               - entity: person.denys
                 name: Денис
-              - entity: sensor.denys_iphone_battery_level
+              - entity: sensor.denyss_iphone_battery_level
                 name: Батарея
               - type: conditional
                 conditions:
