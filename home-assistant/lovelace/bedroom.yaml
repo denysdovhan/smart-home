@@ -7,7 +7,7 @@ cards:
     columns: 3
     cards:
       - type: button
-        entity: light.bedroom_ceiling_light_light
+        entity: light.bedroom_ceiling_light
       - type: button
         entity: light.bedroom_bed_lights
       - type: button

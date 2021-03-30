@@ -29,7 +29,7 @@ sensor.living_room_main_light_bulb_4_linkquality:
   friendly_name: Main Light Bulb 4 Linkquality
 
 # Ceiling Light
-light.bedroom_ceiling_light_light:
+light.bedroom_ceiling_light:
   friendly_name: Ceiling Light
   icon: mdi:ceiling-light
 sensor.bedroom_ceiling_light_linkquality:

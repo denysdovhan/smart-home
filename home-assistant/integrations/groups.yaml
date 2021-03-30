@@ -18,7 +18,7 @@ group:
     entities:
       - light.desk_lamp
       - light.bedroom_bed_lights
-      - light.bedroom_ceiling_light_light
+      - light.bedroom_ceiling_light
       - light.bedroom_floor_lamp
       - light.living_room_tv_lights
       - light.living_room_main_light
@@ -35,7 +35,7 @@ group:
     name: Bedroom Lights
     entities:
       - light.bedroom_bed_lights
-      - light.bedroom_ceiling_light_light
+      - light.bedroom_ceiling_light
       - light.bedroom_floor_lamp
 
   balcony_lights:

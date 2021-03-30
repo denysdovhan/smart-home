@@ -16,7 +16,7 @@ scene split:
         state: off
       light.bedroom_floor_lamp:
         state: off
-      light.bedroom_ceiling_light_light:
+      light.bedroom_ceiling_light:
         state: off
       light.living_room_tv_lights:
         state: off
@@ -42,7 +42,7 @@ scene split:
         state: on
         brightness: 1
         rgb_color: [255, 0, 255]
-      light.bedroom_ceiling_light_light:
+      light.bedroom_ceiling_light:
         state: off
       light.living_room_tv_lights:
         state: on
@@ -66,7 +66,7 @@ scene split:
         state: on
         effect: Slowdown
         flowing: true
-      light.bedroom_ceiling_light_light:
+      light.bedroom_ceiling_light:
         state: off
       light.living_room_tv_lights:
         state: on
@@ -92,7 +92,7 @@ scene split:
         state: on
         brightness: 255
         color_temp: 240
-      light.bedroom_ceiling_light_light:
+      light.bedroom_ceiling_light:
         state: on
         brightness: 255
       light.living_room_tv_lights:
@@ -120,7 +120,7 @@ scene split:
         state: on
         brightness: 10
         rgb_color: [255, 0, 0]
-      light.bedroom_ceiling_light_light:
+      light.bedroom_ceiling_light:
         state: off
       light.living_room_tv_lights:
         state: off
