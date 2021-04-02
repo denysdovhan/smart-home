@@ -165,9 +165,10 @@ class SnowtireBinarySensor(BinarySensorEntity):
 
         _LOGGER.debug("Current temperature %.1f°C", temp)
 
-        cur_date = dt_util.start_of_local_day().strftime("%F")
+        today = dt_util.start_of_local_day()
+        cur_date = today.strftime("%F")
         stop_date = datetime.fromtimestamp(
-            dt_util.start_of_local_day().timestamp() + 86400 * (self._days + 1)
+            today.timestamp() + 86400 * (self._days + 1)
         ).strftime("%F")
 
         _LOGGER.debug("Inspect weather forecast from %s till %s", cur_date, stop_date)
