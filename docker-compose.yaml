@@ -98,6 +98,8 @@ services:
     container_name: adminer
     image: adminer
     restart: unless-stopped
+    environment:
+      ADMINER_PLUGINS: frames
     ports:
       - 8080:8080
     depends_on:
@@ -182,7 +184,7 @@ services:
     env_file:
       - .env
     environment:
-      - VERSION=docker
+      VERSION: docker
     volumes:
       - .docker/plex/config:/config
       - ${MEDIA_VOLUME}:/media
@@ -197,8 +199,8 @@ services:
     env_file:
       - .env
     environment:
-      - USER=${TRANSMISSION_USER}
-      - PASS=${TRANSMISSION_PASSWORD}
+      USER: ${TRANSMISSION_USER}
+      PASS: ${TRANSMISSION_PASSWORD}
     ports:
       - 9091:9091
       - 51413:51413
