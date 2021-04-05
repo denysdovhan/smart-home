@@ -16,8 +16,8 @@ Here are ad-blocking lists I use:
 
 - AdAway `https://adaway.org/hosts.txt`
 - Malware Domain List `https://www.malwaredomainlist.com/hostslist/hosts.txt`
-- NoTracking List `https://github.com/notracking/hosts-blocklists`
-- YouTube Ads `https://github.com/kboghdady/youTube_ads_4_pi-hole`
+- NoTracking List `https://raw.githubusercontent.com/notracking/hosts-blocklists/master/adblock/adblock.txt`
+- YouTube Ads DNS `https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/youtubelist.txt`
 - AdGuard Base Filter `https://filters.adtidy.org/extension/chromium/filters/2.txt`
 - AdGuard Annoyances Filter `https://filters.adtidy.org/extension/chromium/filters/14.txt`
 - AdGuard Russian Ad Filter `https://filters.adtidy.org/extension/chromium/filters/1.txt`
