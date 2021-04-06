@@ -3,7 +3,7 @@
   description: Regular vacuum cleaning every two days
   trigger:
     - platform: time_pattern
-      hours: '/2'
+      hours: /2
       minutes: 0
       seconds: 0
   condition:
@@ -27,6 +27,10 @@
     - condition: state
       entity_id: binary_sensor.time_to_clean
       state: 'on'
+    # We are not out of the city
+    - condition: state
+      entity_id: binary_sensor.far_from_home
+      state: 'off'
   action:
     - service: script.announcement
       data:

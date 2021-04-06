@@ -1,0 +1,11 @@
+#
+# Proximity
+#
+# https://www.home-assistant.io/integrations/proximity/
+#
+
+proximity:
+  home:
+    devices:
+      - person.denys
+      - person.marry
