@@ -1,0 +1,33 @@
+panel_iframe:
+  database:
+    title: База даних
+    icon: mdi:database
+    url: !secret service_database
+  adguard:
+    title: AdGuard Home
+    icon: mdi:shield-check
+    url: !secret service_adguard
+  backups:
+    title: Бекапи
+    icon: mdi:cloud-upload
+    url: !secret service_backups
+  nginx:
+    title: Nginx Proxy Manager
+    icon: mdi:arrow-decision
+    url: !secret service_nginx
+  portainer:
+    title: Portainer
+    icon: mdi:docker
+    url: !secret service_portainer
+  system:
+    title: Система
+    icon: mdi:ubuntu
+    url: !secret service_system
+  zigbee:
+    title: Zigbee
+    icon: mdi:zigbee
+    url: !secret service_zigbee
+  torrents:
+    title: Торенти
+    icon: mdi:download-circle
+    url: !secret service_torrents
