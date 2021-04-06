@@ -37,5 +37,4 @@ token-*.txt
 
 # Specific keeps
 !.gitkeep
-
 !mosquitto/mosquitto.conf
