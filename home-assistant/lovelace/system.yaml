@@ -140,6 +140,7 @@ cards:
   - type: grid
     title: Сервіси
     square: false
+    columns: 4
     cards:
       - type: button
         icon: mdi:database
@@ -149,7 +150,7 @@ cards:
           url_path: !secret service_database
       - type: button
         icon: mdi:shield-check
-        name: AdGuard Home
+        name: AdGuard
         tap_action:
           action: url
           url_path: !secret service_adguard
@@ -185,7 +186,7 @@ cards:
           url_path: !secret service_zigbee
       - type: button
         icon: mdi:download-circle
-        name: Transmission
+        name: Торенти
         tap_action:
           action: url
           url_path: !secret service_torrents
