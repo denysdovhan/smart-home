@@ -180,12 +180,12 @@
       entity_id: binary_sensor.car_wash
       to: 'on'
       for:
-        hours: 3
+        hours: 6
     - platform: state
       entity_id: binary_sensor.car_wash
       to: 'off'
       for:
-        hours: 3
+        hours: 6
   action:
     - choose:
         - conditions:
@@ -235,11 +235,19 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.snowtire
+      to: 'on'
+      for:
+        hours: 48
+    - platform: state
+      entity_id: binary_sensor.snowtire
+      to: 'off'
+      for:
+        hours: 48
   action:
     - choose:
         - conditions:
             - condition: state
-              entity_id: binary_sensor.snow_tire
+              entity_id: binary_sensor.snowtire
               state: 'on'
           sequence:
             - service: script.announcement
@@ -259,7 +267,7 @@
                   url: /lovelace/car
         - conditions:
             - condition: state
-              entity_id: binary_sensor.snow_tire
+              entity_id: binary_sensor.snowtire
               state: 'off'
           sequence:
             - service: script.announcement
