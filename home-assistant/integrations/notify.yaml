@@ -9,6 +9,7 @@ notify:
     platform: group
     services:
       - service: mobile_app_denyss_iphone
+      - service: mobile_app_wix_macbook_pro
   - name: marry
     platform: group
     services:
