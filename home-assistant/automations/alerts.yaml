@@ -4,12 +4,28 @@
     - platform: state
       entity_id: binary_sensor.updater
   action:
-    service: notify.denys
-    data:
-      title: 'Оновлення Home Assistant 🎉'
-      message: "Доступна нова версія Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }}."
+    - service: script.announcement
       data:
-        url: /hassio/dashboard
+        service: notify.denys
+        title: 'Оновлення Home Assistant 🎉'
+        message:
+          - "Доступна нова версія Home Assistant: {{ state_attr('binary_sensor.updater', 'newest_version') }}."
+          - "Реліз нової версії Home Assistant: {{ state_attr('binary_sensor.updater', 'newest_version') }}."
+          - "Версія Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} вже доступна!"
+
+- id: home_assistant_start
+  alias: Home Assistant Start
+  trigger:
+    - platform: homeassistant
+      event: start
+  action:
+    - service: script.announcement
+      data:
+        service: notify.denys
+        title: 'Запуск Home Assistant 🏡'
+        message:
+          - "Home Assistant запущено!."
+          - "Home Assistant стартував!"
 
 - id: aqi_alert
   alias: AQI Alert
