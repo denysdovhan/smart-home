@@ -10,8 +10,3 @@ fan:
     model: deerma.humidifier.mjjsq
     host: !secret humidifier_host
     token:  !secret humidifier_token
-  - platform: xiaomi_miio
-    name: purifier
-    model: zhimi.airpurifier.mb3
-    host: !secret purifier_host
-    token: !secret purifier_token
