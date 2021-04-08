@@ -8,7 +8,7 @@
       data:
         service: notify.denys
         title: 'Оновлення Home Assistant 🎉'
-        message:
+        messages:
           - "Доступна нова версія Home Assistant: {{ state_attr('binary_sensor.updater', 'newest_version') }}."
           - "Реліз нової версії Home Assistant: {{ state_attr('binary_sensor.updater', 'newest_version') }}."
           - "Версія Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} вже доступна!"
@@ -23,9 +23,10 @@
       data:
         service: notify.denys
         title: 'Запуск Home Assistant 🏡'
-        message:
-          - "Home Assistant запущено!."
+        messages:
+          - "Home Assistant повністю запущено!"
           - "Home Assistant стартував!"
+          - "Home Assistant готовий до роботи!"
 
 - id: aqi_alert
   alias: AQI Alert
@@ -107,7 +108,7 @@
                   - 'Не виходьте на вулицю!'
                   - 'Зачиніть вікна!'
                   - 'Серйозний вплив навіть на здорових людей!'
-                  - "Може спричинити серйозні наслідки для здоров'я!"
+                  - 'Може спричинити серйозні наслідки для здоров’я!'
                   - 'Людям із захворюваннями категорично заборонено перебувати на вулиці.'
                   - 'Існує ризик інсульту та інфаркту!'
                   - 'Негативні наслідки навіть під час легкої активності!'
@@ -122,18 +123,22 @@
     - delay:
         hours: 2
 
-# Disabled because there's no transmission integration enabled right now.
 - id: torrent_completed_notification
   alias: Notify about completed torrent
-  initial_state: false
   trigger:
     platform: event
     event_type: transmission_downloaded_torrent
   action:
-    - service: notify.all
+    - service: script.announcement
       data:
         title: 'Transmission ⬇️'
-        message: '{{trigger.event.data.name}} завантажено!'
+        messages:
+          - '{{ trigger.event.data.name }} завантажено!'
+          - '{{ trigger.event.data.name }} завантаження завершено!'
+          - '{{ trigger.event.data.name }} викачаний!'
+          - '{{ trigger.event.data.name }} готовий!'
+        notify_data:
+          url: /torrents
 
 - id: unavailable_devices_notifications
   alias: Unavailable Devices Alert
