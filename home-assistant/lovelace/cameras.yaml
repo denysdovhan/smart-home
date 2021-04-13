@@ -5,16 +5,31 @@ cards:
   - type: vertical-stack
     title: Київ
     cards:
-      # Подільсько-воскресенський міст
-      - type: iframe
-        url: https://www.youtube.com/embed/9aBqDJO98VE?autoplay=1
+      - type: picture-glance
+        title: Михайлівська площа
+        camera_image: camera.kyiv_sofiyska
+        camera_view: live
+        aspect_ratio: 50%
+        entities: []
+      - type: picture-glance
+        title: Михайлівська площа
+        camera_image: camera.kyiv_mykhailivska
+        camera_view: live
+        aspect_ratio: 50%
+        entities: []
 
   - type: vertical-stack
     title: Чернівці
     cards:
-      # Чернівці
       - type: picture-glance
-        camera_image: camera.chernivtsi
+        title: Панорама
+        camera_image: camera.chernivtsi_landscape
+        camera_view: live
+        aspect_ratio: 50%
+        entities: []
+      - type: picture-glance
+        title: Площа філармонії
+        camera_image: camera.chernivtsi_filarmonia
         camera_view: live
         aspect_ratio: 50%
         entities: []
