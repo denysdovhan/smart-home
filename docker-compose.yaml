@@ -54,11 +54,7 @@ services:
       ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD: ${MQTT_PASSWORD}
     volumes:
       - /run/udev:/run/udev:ro
-      - .docker/zigbee2mqtt/log:/app/data/log
-      - .docker/zigbee2mqtt/database.db:/app/data/database.db
-      - ./zigbee2mqtt/configuration.yaml:/app/data/configuration.yaml
-      - ./zigbee2mqtt/devices.yaml:/app/data/devices.yaml
-      - ./zigbee2mqtt/groups.yaml:/app/data/groups.yaml
+      - ./zigbee2mqtt:/app/data
     devices:
       - /dev/ttyACM0
     privileged: true

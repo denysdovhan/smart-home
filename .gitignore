@@ -21,8 +21,7 @@ deps
 tts
 image
 
-# Specific files
-/zigbee2mqtt/secret.yaml
+# Home Assistant
 /home-assistant/secrets.yaml
 /home-assistant/ip_bans.yaml
 /home-assistant/known_devices.yaml
@@ -30,6 +29,11 @@ image
 /home-assistant/.ps4-games*.json
 /home-assistant/GA_SERVICE_ACCOUNT.json
 token-*.txt
+
+# Zigbee2MQTT
+/zigbee2mqtt/secret.yaml
+/zigbee2mqtt/state.json
+/zigbee2mqtt/log
 
 # IDE
 .vscode
