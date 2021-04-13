@@ -1,0 +1,12 @@
+homeassistant: true
+devices: devices.yaml
+groups: groups.yaml
+permit_join: false
+mqtt:
+  base_topic: zigbee2mqtt
+serial:
+  port: /dev/ttyACM0
+frontend:
+  port: 8099
+advanced:
+  log_level: info

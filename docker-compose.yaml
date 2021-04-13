@@ -1,0 +1,222 @@
+version: '3.6'
+services:
+  # Portainer CE
+  # Managing containers via nice web UI
+  portainer-ce:
+    container_name: portainer
+    image: portainer/portainer-ce
+    restart: unless-stopped
+    ports:
+      - 8000:8000 # Agent
+      - 9000:9000 # Web UI
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .docker/portainer-ce/data:/data
+
+  # Home Assistant
+  # The core of my smart-home automations
+  home-assistant:
+    container_name: home-assistant
+    image: homeassistant/${HOME_ASSISTANT_IMAGE}
+    volumes:
+      - ./home-assistant:/config
+      - ${MEDIA_VOLUME}:/media
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    restart: unless-stopped
+    network_mode: host
+
+  # MQTT
+  # A Mosquitto broker for my devices communicating via MQTT
+  mqtt:
+    container_name: mqtt
+    image: eclipse-mosquitto:latest
+    restart: unless-stopped
+    ports:
+      - 1888:1883
+    volumes:
+      - .docker/mosquitto/data:/mosquitto/data
+      - .docker/mosquitto/log:/mosquitto/log
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  # Zigbee2MQTT
+  # A bridge for zigbee devices to be able to communicate via MQTT
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    image: koenkk/zigbee2mqtt
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      ZIGBEE2MQTT_CONFIG_MQTT_SERVER: ${MQTT_SERVER}
+      ZIGBEE2MQTT_CONFIG_MQTT_USER: ${MQTT_USER}
+      ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD: ${MQTT_PASSWORD}
+    volumes:
+      - /run/udev:/run/udev:ro
+      - ./zigbee2mqtt:/app/data
+    devices:
+      - /dev/ttyACM0
+    privileged: true
+    network_mode: host
+
+  # Duplicati
+  # Simple and flexible UI for backing up stuff
+  duplicati:
+    container_name: duplicati
+    image: linuxserver/duplicati
+    env_file:
+      - .env
+    volumes:
+      - .docker/duplicati/config:/config #Config Files
+      - .backups:/backups
+      - .:/source
+    ports:
+      - 8200:8200
+    restart: unless-stopped
+
+  # MariaDB
+  # A database for Home Assistant, Nginx Proxy Manager and Umami
+  db:
+    container_name: db
+    image: mariadb
+    restart: unless-stopped
+    volumes:
+      - .docker/mariadb/db:/var/lib/mysql
+      - /etc/localtime:/etc/localtime:ro
+      - ./db:/docker-entrypoint-initdb.d
+    env_file:
+      - .env
+
+  # Adminer
+  # A dead-simple database manager
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: unless-stopped
+    environment:
+      ADMINER_PLUGINS: frames
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
+  # Nginx Proxy Manager
+  # Nice and simple Nginx UI for managing reverce proxy
+  nginx:
+    container_name: nginx
+    image: jc21/nginx-proxy-manager:latest
+    restart: unless-stopped
+    ports:
+      - 80:80 # HTTP port
+      - 443:443 # HTTPS port
+      - 8081:81 # Admin Paner port
+    environment:
+      DB_MYSQL_HOST: ${MYSQL_HOST}
+      DB_MYSQL_PORT: ${MYSQL_PORT}
+      DB_MYSQL_USER: ${MYSQL_USER}
+      DB_MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      DB_MYSQL_NAME: 'nginxproxymanager'
+    volumes:
+      - .docker/nginx-proxy-manager/data:/data
+      - .docker/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - db
+
+  # AirConnect
+  # Make AirPlay available for Chromecast devices
+  airconnect:
+    container_name: airconnect
+    image: 1activegeek/airconnect
+    restart: unless-stopped
+    network_mode: host
+
+  # Samba
+  # Remote access to the file system
+  samba:
+    container_name: samba
+    image: dperson/samba
+    volumes:
+      - .:/mnt/smart-home
+      - ${MEDIA_VOLUME}:/mnt/media
+    environment:
+      USERID: ${PUID}
+      GROUPID: ${PGID}
+    ports:
+      - 139:139
+      - 445:445
+      - 137:137/udp
+      - 138:138/udp
+    command: >
+      samba.sh
+        -s "smart-home;/mnt/smart-home;yes;no;no;all"
+        -s "media;/mnt/media;yes;no;no;all"
+        -u ${SAMBA_USER};${SAMBA_PASSWORD}
+    restart: unless-stopped
+
+  # AdGuard Home
+  # Ad-blocking DNS server
+  adguard:
+    container_name: adguard
+    image: adguard/adguardhome
+    restart: unless-stopped
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+      - 67:67/udp
+      - 853:853/tcp
+      - 8380:80/tcp
+      - 8300:3000/tcp
+    volumes:
+      - .docker/adguard/work:/opt/adguardhome/work
+      - .docker/adguard/conf:/opt/adguardhome/conf
+
+  # Plex
+  # Personal media server with movies and tv-series
+  plex:
+    image: linuxserver/plex
+    container_name: plex
+    network_mode: host
+    env_file:
+      - .env
+    environment:
+      VERSION: docker
+    volumes:
+      - .docker/plex/config:/config
+      - ${MEDIA_VOLUME}:/media
+    restart: unless-stopped
+
+  # Transmission
+  # A torrent client for downloading media
+  transmission:
+    container_name: transmission
+    image: linuxserver/transmission
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      USER: ${TRANSMISSION_USER}
+      PASS: ${TRANSMISSION_PASSWORD}
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    volumes:
+      - .docker/transmission/config:/config
+      - ${MEDIA_VOLUME}:/downloads
+
+  # Umami.is
+  # A self-hosted analytics for my websites
+  umami:
+    container_name: umami
+    # Original image does not support ARM
+    # image: ghcr.io/mikecao/umami:mysql-latest
+    build: ./umami
+    ports:
+      - 8333:3000
+    environment:
+      DATABASE_URL: mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/umami
+      DATABASE_TYPE: mysql
+      HASH_SALT: ${UMAMI_HASH_SALT}
+    depends_on:
+      - db

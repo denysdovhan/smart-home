@@ -1,0 +1,310 @@
+- id: home_assistant_release_alert
+  alias: Home Assistant Release Alert
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.updater
+  action:
+    - service: script.announcement
+      data:
+        service: notify.denys
+        title: 'Оновлення Home Assistant 🎉'
+        speak: false
+        messages:
+          - "Доступна нова версія Home Assistant: {{ state_attr('binary_sensor.updater', 'newest_version') }}."
+          - "Реліз нової версії Home Assistant: {{ state_attr('binary_sensor.updater', 'newest_version') }}."
+          - "Версія Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} вже доступна!"
+
+- id: home_assistant_start
+  alias: Home Assistant Start
+  trigger:
+    - platform: homeassistant
+      event: start
+  action:
+    - service: script.announcement
+      data:
+        service: notify.denys
+        title: 'Запуск Home Assistant 🏡'
+        speak: false
+        messages:
+          - "Home Assistant повністю запущено!"
+          - "Home Assistant стартував!"
+          - "Home Assistant готовий до роботи!"
+
+- id: aqi_alert
+  alias: AQI Alert
+  mode: single
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.nyvky_aqi
+      above: 150
+      below: 200
+      for:
+        minutes: 30
+    - platform: numeric_state
+      entity_id: sensor.nyvky_aqi
+      above: 201
+      below: 300
+      for:
+        minutes: 30
+    - platform: numeric_state
+      entity_id: sensor.nyvky_aqi
+      above: 301
+      for:
+        minutes: 30
+  action:
+    - choose:
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.nyvky_aqi
+              above: 150
+              below: 200
+          sequence:
+            - service: script.announcement
+              data:
+                title: 'Шкідливе повітря 🥴'
+                greetings:
+                  - 'Рівень якості повітря: {{ trigger.to_state.state | int }} AQI'
+                  - 'Шкідливе повітря надворі: {{ trigger.to_state.state | int }} AQI'
+                  - 'Шкідливе повітря: {{ trigger.to_state.state | int }} AQI'
+                  - '{{ trigger.to_state.state | int }} AQI.'
+                messages:
+                  - 'Може викликати дискомфорт при диханні.'
+                  - 'Спричиняє дискомфорт при диханні у здорових людей.'
+                  - 'Людям із захворюваннями категорично заборонено перебувати на вулиці.'
+                  - 'Заняття спортом на вулиці заборонені.'
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.nyvky_aqi
+              above: 201
+              below: 300
+          sequence:
+            - service: script.announcement
+              data:
+                title: 'Дуже шкідливе повітря 😷'
+                greetings:
+                  - 'Рівень якості повітря: {{ trigger.to_state.state | int }} AQI'
+                  - 'Надворі дуже шкідливе повітря: {{ trigger.to_state.state | int }} AQI'
+                  - "Дуже шкідливе повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                  - '{{ trigger.to_state.state | int }} AQI.'
+                messages:
+                  - 'Може викликати захворювання у здорових людей при тривалому впливі.'
+                  - 'Людям із захворюваннями категорично заборонено перебувати на вулиці.'
+                  - 'Ризик інсульту та інфаркту у людей похилого віку.'
+                  - 'Заняття спортом на вулиці заборонені.'
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.nyvky_aqi
+              above: 301
+          sequence:
+            - service: script.announcement
+              data:
+                title: 'Небезпечне повітря ☠️'
+                greetings:
+                  - 'Рівень якості повітря: {{ trigger.to_state.state | int }} AQI'
+                  - 'Надворі небезпечне повітря: {{ trigger.to_state.state | int }} AQI'
+                  - 'Небезпечне повітря: {{ trigger.to_state.state | int }} AQI'
+                  - '{{ trigger.to_state.state | int }} AQI.'
+                messages:
+                  - 'Це небезпечно для здоров’я!'
+                  - 'Залишайтесь вдома!'
+                  - 'Не виходьте на вулицю!'
+                  - 'Зачиніть вікна!'
+                  - 'Серйозний вплив навіть на здорових людей!'
+                  - 'Може спричинити серйозні наслідки для здоров’я!'
+                  - 'Людям із захворюваннями категорично заборонено перебувати на вулиці.'
+                  - 'Існує ризик інсульту та інфаркту!'
+                  - 'Негативні наслідки навіть під час легкої активності!'
+      default:
+        - service: script.announcement
+          data:
+            title: 'Повітря 🌫'
+            messages:
+              - "Погіршується якість повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+            notify_data:
+              url: /lovelace/home
+    - delay:
+        hours: 2
+
+- id: torrent_completed_notification
+  alias: Notify about completed torrent
+  trigger:
+    platform: event
+    event_type: transmission_downloaded_torrent
+  action:
+    - service: script.announcement
+      data:
+        title: 'Transmission ⬇️'
+        messages:
+          - '{{ trigger.event.data.name }} завантажено!'
+          - '{{ trigger.event.data.name }} завантаження завершено!'
+          - '{{ trigger.event.data.name }} викачаний!'
+          - '{{ trigger.event.data.name }} готовий!'
+        notify_data:
+          url: /torrents
+
+- id: unavailable_devices_notifications
+  alias: Unavailable Devices Alert
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.unavailable_devices
+    above: 0
+    for:
+      minutes: 1
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: home
+  action:
+    - service: script.announcement
+      data:
+        speak: false
+        title: 'Недоступні пристрої 🔌'
+        greetings:
+          - 'У {{ trigger.to_state.attributes.entities_names | join(", ") }} немає з’язку з розумним домом!'
+          - 'Немає зв’язку з {{ trigger.to_state.attributes.entities_names | join(", ") }}!'
+          - 'Зник зв’язок з {{ trigger.to_state.attributes.entities_names | join(", ") }}!'
+          - 'Втрата підключення до {{ trigger.to_state.attributes.entities_names | join(", ") }}!'
+        messages:
+          - 'Перезапуск може допомогти.'
+          - 'Спробуйте перезапустити.'
+          - 'Перевірте підключення або перезапустіть.'
+          - 'Перепідключіть або перезапустіть.'
+          - 'Спробуйте перевірити з’єднання та перезапустити.'
+
+- id: humidifier_no_water
+  alias: Humidifier No Water
+  description: Notify when humidifier's water tank is empty
+  trigger:
+    platform: state
+    entity_id: fan.humidifier
+    attribute: no_water
+    from: false
+    to: true
+    for: '00:1:00'
+  action:
+    - service: script.announcement
+      data:
+        title: 'Зволожувач 💦'
+        messages:
+          - 'Наповніть бак зволожувача водою!'
+          - 'У зволожувачі закінчилась вода — наберіть нову!'
+          - 'Наберіть нової води у зволожувач!'
+          - 'Потрібно набрати воду у зволожувач!'
+          - 'Зволожувач порожній. Наберіть нової води.'
+          - 'Потрібно наповнити бак зволожувача.'
+          - 'Бак зволожувача спорожнів.'
+        notify_data:
+          url: /lovelace/bedroom
+
+- id: car_washing_alert
+  alias: Car Washing Alert
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.car_wash
+      to: 'on'
+      for:
+        hours: 6
+    - platform: state
+      entity_id: binary_sensor.car_wash
+      to: 'off'
+      for:
+        hours: 6
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.car_wash
+              state: 'on'
+          sequence:
+            - service: script.announcement
+              data:
+                speak: false
+                title: 'Миття авто 🚘☀️'
+                greetings:
+                  - 'Найближчими днями очікується хороша погода.'
+                  - 'Хороша погода найближчі 7 днів.'
+                  - 'Прогнозується хороша погода!'
+                  - 'Попереду гарна погода!'
+                messages:
+                  - 'Доречно помити машину.'
+                  - 'Можна помити авто.'
+                  - 'Варто поїхати на автомийку.'
+                  - 'Вдалий час, щоб помити авто.'
+                notify_data:
+                  url: /lovelace/car
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.car_wash
+              state: 'off'
+          sequence:
+            - service: script.announcement
+              data:
+                speak: false
+                title: 'Миття авто 🚘🌧'
+                greetings:
+                  - 'Найближчими днями очікується погана погода.'
+                  - 'Погана погода найближчі 7 днів.'
+                  - 'Прогнозується погана погода!'
+                  - 'Попереду дощова погода!'
+                messages:
+                  - 'Утримайтесь від миття авто.'
+                  - 'Не варто мити авто цими днями.'
+                  - 'Краще залишити авто брудним.'
+                notify_data:
+                  url: /lovelace/car
+
+- id: snow_tire_alert
+  alias: Snow Tire Alert
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.snowtire
+      to: 'on'
+      for:
+        hours: 48
+    - platform: state
+      entity_id: binary_sensor.snowtire
+      to: 'off'
+      for:
+        hours: 48
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.snowtire
+              state: 'on'
+          sequence:
+            - service: script.announcement
+              data:
+                speak: false
+                title: 'Зимові шини 🚘❄️'
+                greetings:
+                  - 'Найближчими днями погіршення погоди.'
+                  - 'Скоро настане зима.'
+                  - 'Зима близько!'
+                  - 'Попереду погіршення погоди!'
+                messages:
+                  - 'Час перевзути машину на зимові шини.'
+                  - 'Доречно змінити шини на зимові.'
+                  - 'Варто поїхати на шиномонтаж для заміни шин.'
+                notify_data:
+                  url: /lovelace/car
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.snowtire
+              state: 'off'
+          sequence:
+            - service: script.announcement
+              data:
+                speak: false
+                title: 'Літні шини 🚘🌤'
+                greetings:
+                  - 'Найближчими днями стрімке покращення погоди.'
+                  - 'Літо на носі!'
+                  - 'Нарешті весна!'
+                  - 'Попереду покращення погоди!'
+                messages:
+                  - 'Час перевзути машину на літні шини.'
+                  - 'Доречно змінити шини на літні.'
+                  - 'Варто поїхати на шиномонтаж для заміни шин.'
+                notify_data:
+                  url: /lovelace/car

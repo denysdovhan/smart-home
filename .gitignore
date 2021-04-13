@@ -7,9 +7,13 @@
 *.pyc
 ._*
 __pycache__
+.env
 
 # Ignore folders
-.ssh
+.docker
+.backups
+.deleted
+.router-ssh
 .storage
 .cloud
 .google.token
@@ -17,17 +21,19 @@ deps
 tts
 image
 
-# Specific files
-/secrets.yaml
-/ip_bans.yaml
-/known_devices.yaml
-/.homekit.state
-/.ps4-games*.json
-/GA_SERVICE_ACCOUNT.json
+# Home Assistant
+/home-assistant/secrets.yaml
+/home-assistant/ip_bans.yaml
+/home-assistant/known_devices.yaml
+/home-assistant/.homekit.state
+/home-assistant/.ps4-games*.json
+/home-assistant/GA_SERVICE_ACCOUNT.json
 token-*.txt
 
-# Add-ons
-aircast.xml
+# Zigbee2MQTT
+/zigbee2mqtt/secret.yaml
+/zigbee2mqtt/state.json
+/zigbee2mqtt/log
 
 # IDE
 .vscode
@@ -35,3 +41,4 @@ aircast.xml
 
 # Specific keeps
 !.gitkeep
+!mosquitto/mosquitto.conf

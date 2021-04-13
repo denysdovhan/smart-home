@@ -1,0 +1,35 @@
+path: cameras
+title: Камери
+icon: mdi:video-box
+cards:
+  - type: vertical-stack
+    title: Київ
+    cards:
+      - type: picture-glance
+        title: Михайлівська площа
+        camera_image: camera.kyiv_sofiyska
+        camera_view: live
+        aspect_ratio: 50%
+        entities: []
+      - type: picture-glance
+        title: Михайлівська площа
+        camera_image: camera.kyiv_mykhailivska
+        camera_view: live
+        aspect_ratio: 50%
+        entities: []
+
+  - type: vertical-stack
+    title: Чернівці
+    cards:
+      - type: picture-glance
+        title: Панорама
+        camera_image: camera.chernivtsi_landscape
+        camera_view: live
+        aspect_ratio: 50%
+        entities: []
+      - type: picture-glance
+        title: Площа філармонії
+        camera_image: camera.chernivtsi_filarmonia
+        camera_view: live
+        aspect_ratio: 50%
+        entities: []

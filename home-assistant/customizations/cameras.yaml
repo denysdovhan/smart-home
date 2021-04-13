@@ -1,0 +1,7 @@
+# Cameras
+camera.chernivtsi:
+  friendly_name: Chernivtsi
+camera.kyiv_mykhailivska:
+  friendly_name: Mykhailivska Square
+camera.kyiv_sofiyska:
+  friendly_name: Sofiyska square

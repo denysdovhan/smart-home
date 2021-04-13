@@ -1,0 +1,188 @@
+- id: vacuum_regular_cleaning
+  alias: Vacuum Ask Regular Cleaning
+  description: Regular vacuum cleaning every two days
+  trigger:
+    - platform: time_pattern
+      hours: /2
+      minutes: 0
+      seconds: 0
+  condition:
+    # Robot is docked
+    - condition: state
+      entity_id: vacuum.roborock
+      state: 'docked'
+    # It's working day
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    # Only on activity time
+    - condition: state
+      entity_id: binary_sensor.activity_time
+      state: 'on'
+    # Do Not Disturb mode is off
+    - condition: state
+      entity_id: input_boolean.do_not_disturb
+      state: 'off'
+    # Time for cleaning or last cleaning was short
+    - condition: state
+      entity_id: binary_sensor.time_to_clean
+      state: 'on'
+    # We are not out of the city
+    - condition: state
+      entity_id: binary_sensor.far_from_home
+      state: 'off'
+  action:
+    - service: script.announcement
+      data:
+        speak: false
+        title: 'Пилосос 🧹'
+        messages:
+          - 'Пора почати регулярне прибирання.'
+          - 'Час прибирати вдома.'
+          - 'Бажаєте прибрати вдома?'
+          - 'Вдома давно не прибирали. Почати прибирання?'
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} пропонує домашнє прибирання."
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} хоче прибирати квартиру."
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} давно не прибирав. Почати?"
+        notify_data:
+          push:
+            category: VACUUM_ASK_CLEANING
+
+- id: vacuum_finish_cleaning
+  alias: Vacuum Stop Cleaning
+  description: Send vacuum home when somebody comes home
+  trigger:
+    platform: state
+    entity_id: group.family
+    from: not_home
+    to: home
+  condition:
+    # Send vacuum home only when it's cleaning
+    - condition: state
+      entity_id: vacuum.roborock
+      state: 'cleaning'
+  action:
+    - service: vacuum.return_to_base
+      entity_id: vacuum.roborock
+
+- id: vacuum_finish_notification
+  alias: Vacuum Finish Notification
+  description: Notify when vacuum finished cleaning
+  trigger:
+    platform: state
+    entity_id: vacuum.roborock
+    from: 'cleaning'
+    to: 'returning'
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: not_home
+  action:
+    - service: script.announcement
+      data:
+        speak: false
+        title: 'Пилосос 🧹'
+        greetings:
+          - 'Прибирання закінчено!'
+          - 'Робот прибрав квартиру!'
+          - 'Робот все прибрав!'
+          - 'Тепер вдома чисто!'
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} виконав своє завдання."
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} закінчив з прибиранням."
+        messages:
+          - 'Повертаємось на базу!'
+          - 'Намагайтесь підтримувати порядок!'
+          - "Пам'ятайте, що чисто не там, де прибирають, а там де не смітять!"
+          - 'Подякуйте роботу за прибирання — він старався для вас.'
+        notify_data:
+          url: /lovelace/vacuum
+
+- id: vacuum_error_notification
+  alias: Vacuum Error Notification
+  description: Notify when error with vacuum occured
+  trigger:
+    platform: state
+    entity_id: vacuum.roborock
+    to: 'error'
+  action:
+    - service: script.announcement
+      data:
+        speak: false
+        title: 'Пилосос 🧹'
+        greetings:
+          - 'Ой!'
+          - 'Увага!'
+          - 'Халепа!'
+        messages:
+          - 'Проблема з пилососом!'
+          - "Виникла непередбачувана ситуація з роботом: {{ state_attr('vacuum.roborock', 'error') }}"
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} зіткнувся з помилкою."
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} просить про допомогу!"
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} потребує вашої допомоги!"
+        notify_data:
+          url: /lovelace/vacuum
+
+- id: vacuum_ask_maintenance
+  alias: Vacuum Ask Maintenance
+  description: Send vacuum near trash bin and ask for maintenance
+  trigger:
+    platform: state
+    entity_id: vacuum.roborock
+    to: 'docked'
+  condition:
+    # Every 5th cleaning
+    - condition: template
+      value_template: >
+        {{ state_attr('vacuum.roborock', 'cleaning_count') % 5 == 0 }}
+    # And there was at least one cleaning after previous maintenance
+    - condition: template
+      value_template: >
+        {% set last_maintenance = as_timestamp(state_attr('automation.vacuum_maintenance', 'last_triggered')) | int %}
+        {% set last_cleaning = as_timestamp(state_attr('vacuum.roborock', 'clean_start')) | int %}
+        {{ last_cleaning > last_maintenance }}
+  action:
+    - service: script.announcement
+      data:
+        title: 'Пилосос 🧹'
+        greetings:
+          - 'Потрібно обслужити пилосос.'
+          - 'Час обслуговування пилососа.'
+          - 'Робот трудився для вас, а тепер потребує вашої уваги.'
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} потребує піклування про себе."
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} просить про обслуговування."
+        messages:
+          - 'Почистіть ганчірку та наберати свіжої води.'
+          - 'Викиньте сміття та наберіть нової води.'
+          - 'Викиньте сміття, наберіть води і почистіть ганчірку.'
+          - 'Почистіть його та наберіть нової води у бак!'
+          - 'Наберіть води та почистіть його!'
+        notify_data:
+          push:
+            category: VACUUM_ASK_MAINTENANCE
+          url: /lovelace/vacuum
+    - service: script.vacuum_maintenance
+
+- id: vacuum_ios_actions_handling
+  alias: Vacuum iOS Actions Handling
+  trigger:
+    platform: event
+    event_type: ios.notification_action_fired
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.event.data.actionName == 'VACUUM_START' }}"
+          sequence:
+            - service: script.vacuum_regular_cleaning
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.event.data.actionName == 'VACUUM_PAUSE' }}"
+          sequence:
+            - service: vacuum.pause
+              entity_id: vacuum.roborock
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.event.data.actionName == 'VACUUM_RETURN_TO_BASE' }}"
+          sequence:
+            - service: vacuum.return_to_base
+              entity_id: vacuum.roborock

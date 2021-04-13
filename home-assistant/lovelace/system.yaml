@@ -1,0 +1,192 @@
+path: system
+title: Система
+icon: mdi:chip
+cards:
+  - type: vertical-stack
+    title: Інтернет та Система
+    cards:
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - sensor.speedtest_download
+            line_color: '#76FF8D'
+            hours_to_show: 24
+            points_per_hour: 2
+            animate: true
+            hour24: true
+            extrema: true
+          - type: custom:mini-graph-card
+            entities:
+              - sensor.speedtest_upload
+            line_color: '#FF71B2'
+            hours_to_show: 24
+            points_per_hour: 2
+            animate: true
+            hour24: true
+          - type: custom:mini-graph-card
+            name: Пінг
+            entities:
+              - sensor.speedtest_ping
+            line_color: '#2de5d1'
+            hours_to_show: 24
+            points_per_hour: 2
+            animate: true
+            hour24: true
+            show:
+              graph: bar
+          - type: custom:mini-graph-card
+            name: Пристроїв підключено
+            entities:
+              - sensor.asuswrt_devices_connected
+            line_color: '#FFDE59'
+            hours_to_show: 24
+            aggregate_func: first
+            animate: true
+            hour24: true
+            show:
+              graph: bar
+          - type: gauge
+            name: Процесор
+            entity: sensor.processor_use
+            severity:
+              green: 0
+              yellow: 75
+              red: 90
+          - type: gauge
+            name: Оперативна пам’ять
+            entity: sensor.memory_use_percent
+            severity:
+              green: 0
+              yellow: 75
+              red: 90
+          - type: gauge
+            name: Диск системи
+            entity: sensor.disk_use_percent
+            severity:
+              green: 0
+              yellow: 75
+              red: 90
+          - type: gauge
+            name: Диск медіа
+            entity: sensor.disk_use_percent_media
+            severity:
+              green: 0
+              yellow: 75
+              red: 90
+
+  - type: vertical-stack
+    title: AdGuard Home
+    cards:
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - sensor.adguard_dns_queries
+            line_color: '#33DBFF'
+            hours_to_show: 24
+            animate: true
+            hour24: true
+            group_by: hour
+            aggregate_func: delta
+          - type: custom:mini-graph-card
+            entities:
+              - sensor.adguard_dns_queries_blocked
+            line_color: '#FF5733'
+            hours_to_show: 24
+            points_per_hour: 2
+            animate: true
+            hour24: true
+            group_by: hour
+            aggregate_func: delta
+          - type: custom:mini-graph-card
+            entities:
+              - sensor.adguard_average_processing_speed
+            line_color: '#75FF33'
+            hours_to_show: 24
+            animate: true
+            hour24: true
+          - type: custom:mini-graph-card
+            entities:
+              - sensor.adguard_dns_queries_blocked_ratio
+            line_color: '#BD33FF'
+            hours_to_show: 24
+            points_per_hour: 2
+            animate: true
+            hour24: true
+      - type: entities
+        title: AdGuard DNS
+        entities:
+          - switch.adguard_protection
+          - switch.adguard_filtering
+          - switch.adguard_parental_control
+          - switch.adguard_safe_browsing
+          - switch.adguard_safe_search
+
+  - type: vertical-stack
+    title: Інше
+    cards:
+      - type: entities
+        title: Zigbee Bridge
+        entities:
+          - input_boolean.zigbee_permit_join
+          - timer.zigbee_permit_join
+          - sensor.bridge_state
+
+  - type: grid
+    title: Сервіси
+    square: false
+    columns: 4
+    cards:
+      - type: button
+        icon: mdi:database
+        name: База даних
+        tap_action:
+          action: url
+          url_path: !secret service_database
+      - type: button
+        icon: mdi:shield-check
+        name: AdGuard
+        tap_action:
+          action: url
+          url_path: !secret service_adguard
+      - type: button
+        icon: mdi:cloud-upload
+        name: Бекапи
+        tap_action:
+          action: url
+          url_path: !secret service_backups
+      - type: button
+        icon: mdi:arrow-decision
+        name: Nginx
+        tap_action:
+          action: url
+          url_path: !secret service_nginx
+      - type: button
+        icon: mdi:docker
+        name: Portainer
+        tap_action:
+          action: url
+          url_path: !secret service_portainer
+      - type: button
+        icon: mdi:ubuntu
+        name: Система
+        tap_action:
+          action: url
+          url_path: !secret service_system
+      - type: button
+        icon: mdi:zigbee
+        name: Zigbee
+        tap_action:
+          action: url
+          url_path: !secret service_zigbee
+      - type: button
+        icon: mdi:download-circle
+        name: Торенти
+        tap_action:
+          action: url
+          url_path: !secret service_torrents

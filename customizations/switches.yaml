@@ -1,7 +1,0 @@
-# Switches
-switch.bedroom_bed_lights:
-  friendly_name: Bed Lights Switch
-  icon: mdi:power-socket-de
-switch.living_room_tv_lights:
-  friendly_name: TV Lights Switch
-  icon: mdi:power-socket-de
