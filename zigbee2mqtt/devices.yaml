@@ -26,3 +26,5 @@
   retain: true
 '0x00158d0003972938':
   friendly_name: front_door_sensor
+'0x00158d0005343e97':
+  friendly_name: balcony_conditions_sensor

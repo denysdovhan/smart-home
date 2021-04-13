@@ -8,3 +8,5 @@ serial:
   port: /dev/ttyACM0
 frontend:
   port: 8099
+advanced:
+  log_level: info
