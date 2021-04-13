@@ -8,6 +8,14 @@ camera:
   - platform: ffmpeg
     name: chernivtsi
     input: http://langate.tv/camera360/tracks-v1/mono.m3u8
+  
+  - platform: ffmpeg
+    name: kyiv_sofiyska
+    input: http://vps.guru.ua/hls/sofi8212.m3u8
+  
+  - platform: ffmpeg
+    name: kyiv_mykhailivska
+    input: http://vps.guru.ua/hls/mihaylovskaya2812.m3u8
 
   - platform: xiaomi_cloud_map_extractor
     host: !secret vacuum_host
