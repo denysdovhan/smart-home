@@ -16,7 +16,8 @@ sensor:
     resources:
       - type: disk_use_percent
         arg: /
-      - type: swap_use_percent
+      - type: disk_use_percent
+        arg: /media
       - type: processor_use
       - type: memory_use_percent
 
