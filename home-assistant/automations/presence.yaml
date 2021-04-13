@@ -61,6 +61,8 @@
       entity_id: all
     - service: light.turn_off
       entity_id: all
+    - service: climate.turn_off
+      entity_id: all
     - service: media_player.turn_off
       entity_id: all
     - choose:

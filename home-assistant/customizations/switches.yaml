@@ -5,3 +5,6 @@ switch.bedroom_bed_lights:
 switch.living_room_tv_lights:
   friendly_name: TV Lights Switch
   icon: mdi:power-socket-de
+switch.balcony_heater:
+  friendly_name: Balcony Heater
+  icon: mdi:radiator

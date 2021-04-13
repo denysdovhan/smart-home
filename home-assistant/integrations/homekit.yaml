@@ -12,6 +12,7 @@ homekit:
       - scene
       - vacuum
       - fan
+      - climate
     include_entities:
       #
       # Manually includes
@@ -27,6 +28,8 @@ homekit:
       - sensor.living_room_humidity
       - sensor.bedroom_temperature
       - sensor.bedroom_humidity
+      - sensor.balcony_conditions_sensor_temperature
+      - sensor.balcony_conditions_sensor_humidity
       # Media Player
       - media_player.playstation_4
       - media_player.samsung_tv
@@ -53,6 +56,10 @@ homekit:
       linked_battery_sensor: sensor.front_door_sensor_battery
     sensor.living_room_conditions_sensor_pressure:
       linked_battery_sensor: sensor.living_room_conditions_sensor_battery
+    sensor.balcony_conditions_sensor_temperature:
+      linked_battery_sensor: sensor.balcony_conditions_sensor_battery
+    sensor.balcony_conditions_sensor_humidity:
+      linked_battery_sensor: sensor.balcony_conditions_sensor_battery
     input_boolean.zigbee_permit_join:
       name: Zigbee Pairing
     media_player.playstation_4:
