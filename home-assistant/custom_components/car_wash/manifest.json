@@ -1,7 +1,7 @@
 {
     "domain": "car_wash",
     "name": "Car Wash",
-    "version": "1.3.1",
+    "version": "1.4.0",
     "documentation": "https://github.com/Limych/ha-car_wash",
     "issue_tracker": "https://github.com/Limych/ha-car_wash/issues",
     "dependencies": [
