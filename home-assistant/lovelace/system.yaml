@@ -53,25 +53,25 @@ cards:
             entity: sensor.processor_use
             severity:
               green: 0
-              yellow: 50
-              red: 75
+              yellow: 75
+              red: 90
           - type: gauge
             name: Оперативна пам’ять
             entity: sensor.memory_use_percent
             severity:
               green: 0
-              yellow: 50
-              red: 75
+              yellow: 75
+              red: 90
           - type: gauge
-            name: Диск
+            name: Диск системи
             entity: sensor.disk_use_percent
             severity:
               green: 0
               yellow: 75
               red: 90
           - type: gauge
-            name: Swap
-            entity: sensor.swap_use_percent
+            name: Диск медіа
+            entity: sensor.disk_use_percent_media
             severity:
               green: 0
               yellow: 75
