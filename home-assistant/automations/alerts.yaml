@@ -8,6 +8,7 @@
       data:
         service: notify.denys
         title: 'Оновлення Home Assistant 🎉'
+        speak: false
         messages:
           - "Доступна нова версія Home Assistant: {{ state_attr('binary_sensor.updater', 'newest_version') }}."
           - "Реліз нової версії Home Assistant: {{ state_attr('binary_sensor.updater', 'newest_version') }}."
@@ -23,6 +24,7 @@
       data:
         service: notify.denys
         title: 'Запуск Home Assistant 🏡'
+        speak: false
         messages:
           - "Home Assistant повністю запущено!"
           - "Home Assistant стартував!"
