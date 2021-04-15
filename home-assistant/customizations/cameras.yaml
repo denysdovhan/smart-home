@@ -1,6 +1,8 @@
 # Cameras
-camera.chernivtsi:
-  friendly_name: Chernivtsi
+camera.chernivtsi_landscape:
+  friendly_name: Chernivtsi Landscape
+camera.chernivtsi_filarmonia:
+  friendly_name: Chernivtsi Philharmonia
 camera.kyiv_mykhailivska:
   friendly_name: Mykhailivska Square
 camera.kyiv_sofiyska:
