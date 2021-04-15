@@ -4,6 +4,8 @@
   friendly_name: living_room_conditions_sensor
 '0x00158d0002d6f60b':
   friendly_name: bedroom_ceiling_light
+  optimistic: false
+  retain: true
 '0x00158d0002e9f771':
   friendly_name: living_room_movement_sensor
 '0x00158d000421472b':
