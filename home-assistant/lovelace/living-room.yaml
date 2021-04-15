@@ -24,20 +24,17 @@ cards:
         hide:
           controls: true
       - type: 'custom:mini-media-player'
-        icon: mdi:playstation
         entity: media_player.playstation_4
         artwork: material
         hide:
           controls: true
           volume: true
       - type: 'custom:mini-media-player'
-        icon: mdi:apple
         entity: media_player.apple_tv
         artwork: material
         hide:
           volume: true
       - type: 'custom:mini-media-player'
-        icon: mdi:television
         entity: media_player.samsung_tv
         artwork: material
 

@@ -19,7 +19,6 @@ cards:
         states:
           Denys:
             type: custom:mini-media-player
-            icon: mdi:spotify
             entity: media_player.spotify_denys
             artwork: material
             name: Spotify
@@ -27,7 +26,6 @@ cards:
               power: true
           Marry:
             type: custom:mini-media-player
-            icon: mdi:spotify
             entity: media_player.spotify_marry
             artwork: material
             name: Spotify
@@ -38,7 +36,7 @@ cards:
     title: Умови
     cards:
       - type: thermostat
-        entity: climate.balcony
+        entity: climate.balcony_heater
         name: Обігрів балкону
       - type: horizontal-stack
         cards:
