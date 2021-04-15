@@ -6,10 +6,10 @@
 
 climate:
   - platform: generic_thermostat
-    name: Balcony
+    name: Balcony Heater
     heater: switch.balcony_heater
     target_sensor: sensor.balcony_conditions_sensor_temperature
     precision: 0.5
-    target_temp: 23
+    target_temp: 22
     min_temp: 15
     max_temp: 30
