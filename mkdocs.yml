@@ -15,9 +15,25 @@ theme:
     logo: material/home-assistant
     repo: fontawesome/brands/github
   palette:
-    scheme: preference
-    primary: cyan
-    accent: cyan
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: cyan
+      accent: cyan
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: cyan
+      accent: cyan
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+    # scheme: preference
+    # primary: cyan
+    # accent: cyan
   features:
     - navigation.tabs
     - navigation.tabs.sticky
