@@ -65,6 +65,7 @@ Below you will find a list of my devices connected to the local network. Most of
 | [Apple TV 4K][apple-tv]                      | `192.168.50.x`\*   | [Apple TV][ha-apple-tv]       |
 | [Koogeek P1EU Smart Plug][koogeek-p1]        | `192.168.50.9`     | [HomeKit Controller][homekit] |
 | [Koogeek P1EU Smart Plug][koogeek-p1]        | `192.168.50.10`    | [HomeKit Controller][homekit] |
+| [Koogeek P1EU Smart Plug][koogeek-p1]        | `192.168.50.11`    | [HomeKit Controller][homekit] |
 | [Samsung 55" Q67R 4K Smart QLED TV][tv]      | `192.168.50.93`    | [ha-samsungtv-tizen]\*\*      |
 | [Raspberry Pi][pi]                           | `192.168.50.113`\* | –                             |
 | [Yeelight LED Bulb 1S (Color)][yeelight-1s]  | `192.168.50.128`   | [Yeelight][yeelight]          |
@@ -129,6 +130,7 @@ I used to use Aqara Hub, but it switched to the current approach because of its 
 | [Aqara Magic Cube Controller][aqara-cube]   |    1     | Controlling lights, scenes and modes             |
 | [Aqara Conditions Sensor][aqara-conditions] |    1     | Internal temperature, humidity and pressure data |
 | [Aqara Contact Sensor][aqara-contact]       |    1     | Detection front door opening                     |
+| [MiJia Conditions Sensor][mija-conditions]  |    1     | Internal temperature and humidity data           |
 
 <!-- Devices -->
 
@@ -137,6 +139,7 @@ I used to use Aqara Hub, but it switched to the current approach because of its 
 [aqara-cube]: https://www.aliexpress.com/item/32986728343.html
 [aqara-conditions]: https://www.aliexpress.com/item/32990414707.html
 [aqara-contact]: https://www.aliexpress.com/item/32991903307.html
+[mija-conditions]: https://www.aliexpress.com/item/32870614227.html
 
 ## Other Devices
 
