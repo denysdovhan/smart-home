@@ -75,7 +75,10 @@ function smart-home:command:init() {
   fi
 
   echo "Installing additional packages..."
-  sudo apt-get install -y git cockpit avahi-daemon network-manager
+  sudo apt-get install -y git cockpit avahi-daemon network-manager python3-pip
+
+  echo "Installing python dependencies..."
+  pip3 install -r "$SMART_HOME_DIR/requirements.txt"
 
   if [ ! -f "$SMART_HOME_DIR/.env" ]; then
     echo "Creating .env file..."
@@ -120,7 +123,7 @@ function smart-home:command:update() {
   docker-compose build
   echo "Starting containers..."
   docker-compose up -d
-  echo "Consider running prune-images to free up space..."
+  echo "Consider running `smart-home prune` to free up space..."
 }
 
 function smart-home:command:prune() {
@@ -134,6 +137,10 @@ function smart-home:command:password() {
   password="$(openssl rand -base64 $length | rev | cut -b 2- | rev)";
 
   echo "$password"
+}
+
+function  smart-home:command:docs() {
+  mkdocs serve --livereload --dev-addr localhost:7000
 }
 
 function smart-home:command:add-mosquitto-user() {

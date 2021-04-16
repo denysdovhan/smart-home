@@ -20,8 +20,8 @@ jobs:
         with:
           python-version: 3.x
 
-      - name: Install Python Dependencies
-        run: pip install mkdocs-material
+      - name: Install Python dependencies
+        uses: py-actions/py-dependency-install@v2
 
       - name: Deploy Documentation
         run: |
