@@ -36,6 +36,7 @@ nav:
   - Resources: resources.md
 
 markdown_extensions:
+  - meta
   - toc:
       permalink: true
   - attr_list
