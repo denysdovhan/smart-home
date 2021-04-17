@@ -1,6 +1,6 @@
 # Welcome to my Smart Home!
 
-![Home](https://user-images.githubusercontent.com/3459374/109431538-d0233b00-7a0f-11eb-952e-957d60b806bb.png)
+![Home](https://user-images.githubusercontent.com/3459374/115125884-d37c8100-9fd3-11eb-92c9-74253af26bc6.png)
 
 [![GitHub Workflow Status][github-img]][github-url]
 [![Last Commit][last-commit-img]][github-url]

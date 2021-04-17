@@ -20,7 +20,7 @@ This dashboard displays the information about my home in general.
 - **Conditions** contain information about the weather, indoor temperature, humidity, and pressure, UV-index outdoors, and AQI indoor as well as outdoor (from the nearby AQI station).
 - **Status** display the information about our location, phone battery, and travel history for the last hours.
 
-![Home](https://user-images.githubusercontent.com/3459374/109431538-d0233b00-7a0f-11eb-952e-957d60b806bb.png){: loading=lazy }
+![Home](https://user-images.githubusercontent.com/3459374/115125884-d37c8100-9fd3-11eb-92c9-74253af26bc6.png){: loading=lazy }
 
 ## Living Room
 
@@ -30,7 +30,7 @@ This dashboard controls the living room.
 - **Media** displays the information about my media players (Apple TV, Samsung TV, PS4, Google Nest Mini).
 - **Condition** shows the current conditions in this room (temperature, humidity, motion) and controls the air purifier via [`purifier-card`](https://github.com/denysdovhan/purifier-card).
 
-![Living Room](https://user-images.githubusercontent.com/3459374/109431589-0fea2280-7a10-11eb-877d-70e1d2a4a9a0.png){: loading=lazy }
+![Living Room](https://user-images.githubusercontent.com/3459374/115125905-f60e9a00-9fd3-11eb-8797-4b0302c12aae.png){: loading=lazy }
 
 ## Bedroom
 
@@ -40,7 +40,7 @@ This dashboard is for Bedroom related devices.
 - **Media** controls Google Home Mini smart speaker.
 - **Condition** shows the current conditions in this room (temperature, humidity, motion) and controls the air humidifier via [mini-humidifier](https://github.com/artem-sedykh/mini-humidifier).
 
-![Bedroom](https://user-images.githubusercontent.com/3459374/109431649-458f0b80-7a10-11eb-94b7-85647766bd70.png){: loading=lazy }
+![Bedroom](https://user-images.githubusercontent.com/3459374/115125917-19394980-9fd4-11eb-8e64-799900c4faef.png){: loading=lazy }
 
 ## Balcony
 
@@ -49,7 +49,7 @@ This dashboard is for the Balcony. I use the Balcony as my workplace.
 - **Lights** section controls all smart lights in this room.
 - **Media** displays the information about my Spotify player.
 
-![Balcony](https://user-images.githubusercontent.com/3459374/109431705-8b4bd400-7a10-11eb-8f65-5d71896192a6.png){: loading=lazy }
+![Balcony](https://user-images.githubusercontent.com/3459374/115125936-3706ae80-9fd4-11eb-922e-e2d9e4d75517.png){: loading=lazy }
 
 ## Vacuum
 
@@ -58,7 +58,7 @@ This dashboard is for controlling a vacuum cleaner robot.
 - **Vacuum card** for controlling a vacuum cleaner and scrips for quick access to the vacuum, which is hidden under the bed. I developed my own [`vacuum-card`](https://github.com/denysdovhan/vacuum-card) for vacuum management.
 - **A map** for displaying the current position of the vacuum in my home. The map is blurred. I use [`lovelace-xiaomi-vacuum-map-car`](https://github.com/PiotrMachowski/lovelace-xiaomi-vacuum-map-card) for displaying a live map, though `vacuum-card` is also capable of displaying live maps.
 
-![Vacuum](https://user-images.githubusercontent.com/3459374/109431769-d9f96e00-7a10-11eb-8ea5-04d1d0a79521.png){: loading=lazy }
+![Vacuum](https://user-images.githubusercontent.com/3459374/115125949-50a7f600-9fd4-11eb-96b5-6df3343c9396.png){: loading=lazy }
 
 ## Car
 
@@ -74,13 +74,13 @@ This dashboard lets me control my Toyota vehicle.
 
     Though, there's no need to worry, since the parking is secured with many security systems.
 
-![Car](https://user-images.githubusercontent.com/3459374/109431845-2b096200-7a11-11eb-91d5-eaafee886d9f.png){: loading=lazy }
+![Car](https://user-images.githubusercontent.com/3459374/115125975-71704b80-9fd4-11eb-93ab-60a6fa830c66.png){: loading=lazy }
 
 ## Cameras
 
 This dashboard lets me watch the live streams from Kyiv (where I live) and from Chernivtsi (where I've grown up). Unfortunately, there is a very small number of publicly accessible live cameras in Kyiv. Most of them are unstable and have very poor quality.
 
-![Cameras](https://user-images.githubusercontent.com/3459374/109431888-5a1fd380-7a11-11eb-986f-cf6ae935764d.png){: loading=lazy }
+![Cameras](https://user-images.githubusercontent.com/3459374/115126127-92856c00-9fd5-11eb-93a3-0c7621cd2d53.png){: loading=lazy }
 
 ## System
 
@@ -90,4 +90,4 @@ This dashboard lets me overview the state of my smart home SystemHealthRegistrat
 - **Adguard Home** let me monitor and control the DNS ad-blocking rates.
 - **Zigbee Bridge** allows toggling pairing mode.
 
-![System](https://user-images.githubusercontent.com/3459374/109431914-80457380-7a11-11eb-8318-dcb596e39922.png){: loading=lazy }
+![System](https://user-images.githubusercontent.com/3459374/115126227-32db9080-9fd6-11eb-9e47-725c0649261c.png){: loading=lazy }
