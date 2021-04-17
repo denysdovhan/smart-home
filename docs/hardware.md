@@ -141,6 +141,16 @@ I used to use Aqara Hub, but it switched to the current approach because of its 
 [aqara-contact]: https://www.aliexpress.com/item/32991903307.html
 [mija-conditions]: https://www.aliexpress.com/item/32870614227.html
 
+## Media Volume
+
+![Transcend volume connected to my Raspberry Pi](https://user-images.githubusercontent.com/3459374/115119826-0eba8800-9fb3-11eb-9b54-ddbe2ea732fb.jpeg)
+
+I've got a [Transcend StoreJet 25M3 2TB](https://www.transcend-info.com/Products/No-284) hard drive from my dad as my birthday present in 2020.
+
+I have this HDD connected to my Raspberry Pi. It is used as a storage for my media files (primarly movies and TV-series). USB 3.0 interface on Raspberry allows high speed reading, so I can easily stream my media using [Plex](https://plex.tv).
+
+Media is downloaded directly to my HDD using [Transmission](https://hub.docker.com/r/linuxserver/transmission) container.
+
 ## Other Devices
 
 Another important device is a smart car alarm. I used [StarLine AS96 BT GSM GPS](https://starline-sales.eu/Car-Alarms/starline-as96-bt-gsm-gps) which is easily integrated with Home Assistant via built-in [StarLine integration](https://www.home-assistant.io/integrations/starline/).
