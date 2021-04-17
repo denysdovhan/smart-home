@@ -6,7 +6,7 @@ cards:
     title: Київ
     cards:
       - type: picture-glance
-        title: Михайлівська площа
+        title: Софійська площа
         camera_image: camera.kyiv_sofiyska
         camera_view: live
         aspect_ratio: 50%
