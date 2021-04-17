@@ -139,7 +139,7 @@ function smart-home:command:password() {
   echo "$password"
 }
 
-function  smart-home:command:docs() {
+function smart-home:command:docs() {
   mkdocs serve --livereload --dev-addr localhost:7000
 }
 
