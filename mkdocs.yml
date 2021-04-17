@@ -16,7 +16,7 @@ theme:
     repo: fontawesome/brands/github
   palette:
     # Light mode
-    - media: "(prefers-color-scheme: light)"
+    - media: '(prefers-color-scheme: light)'
       scheme: default
       primary: cyan
       accent: cyan
@@ -24,7 +24,7 @@ theme:
         icon: material/weather-night
         name: Switch to dark mode
     # Dark mode
-    - media: "(prefers-color-scheme: dark)"
+    - media: '(prefers-color-scheme: dark)'
       scheme: slate
       primary: cyan
       accent: cyan
@@ -40,6 +40,7 @@ nav:
   - Hardware: hardware.md
   - Software:
       - Getting Started: software/getting-started.md
+      - System Setup: software/system.md
   - Home Assistant:
       - Introduction: home-assistant/introduction.md
       - Dashboards: home-assistant/dashboards.md
