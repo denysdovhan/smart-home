@@ -38,6 +38,8 @@ theme:
 nav:
   - Home: index.md
   - Hardware: hardware.md
+  - Software:
+      - Getting Started: software/getting-started.md
   - Home Assistant:
       - Introduction: home-assistant/introduction.md
       - Dashboards: home-assistant/dashboards.md
