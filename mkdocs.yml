@@ -41,6 +41,7 @@ nav:
   - Software:
       - Getting Started: software/getting-started.md
       - System Setup: software/system.md
+      - Ports: software/ports.md
   - Home Assistant:
       - Introduction: home-assistant/introduction.md
       - Dashboards: home-assistant/dashboards.md
