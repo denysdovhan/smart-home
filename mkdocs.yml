@@ -42,6 +42,7 @@ nav:
       - Getting Started: software/getting-started.md
       - System Setup: software/system.md
       - Docker Containers: software/docker.md
+      - Ad-Blocking: software/ad-blocking.md
       - Ports: software/ports.md
   - Home Assistant:
       - Introduction: home-assistant/introduction.md
@@ -49,7 +50,6 @@ nav:
       - Custom Extensions: home-assistant/custom-extensions.md
       - Vacuum Setup: home-assistant/vacuum-setup.md
       - Speech: home-assistant/speech.md
-      - Ad-Blocking: home-assistant/ad-blocking.md
       - Health Checks: home-assistant/health-checks.md
   - Resources: resources.md
 
