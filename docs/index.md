@@ -22,7 +22,7 @@ The best way to discover new ideas and inspire is by [reading the code][github-u
 Read this documentation to see the bigger picture:
 
 - [Hardware](./hardware) that powers my home (server, router, devices, memory)
-- [Software](./software) for my home services (OS, scripts, UIs, containers, applications).
+- [Software](./software/getting-started) for my home services (OS, scripts, UIs, containers, applications).
 - [Home Assistant](./home-assistant/introduction) configuration (automations, dashboards, script).
 - [Resources](./resources) for inspiration (videos, channels, tutorials, articles).
 
