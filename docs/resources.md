@@ -4,7 +4,7 @@ On this page, I'm trying to collect useful resources I used to improve my home:
 
 ## Configurations
 
-- [MacBury Smart House](https://macbury.github.io/SmartHouse) very cool and complex setup. I was inpired a lot from this.
+- [MacBury Smart House](https://macbury.github.io/SmartHouse) very cool and complex setup. I was inspired a lot by this.
 - [Frenck's Home Assistant Configuration](https://github.com/frenck/home-assistant-config) unusual folder structure.
 
 ## Articles
@@ -16,16 +16,16 @@ On this page, I'm trying to collect useful resources I used to improve my home:
 
 ## YouTube Channels
 
-- [JuanMTech YouTube Channel](https://www.youtube.com/channel/UCR7Xa7cU9wfkSY9v3yN2Vtw) about general Home Assistant setup. Very high quality videos.
+- [JuanMTech YouTube Channel](https://www.youtube.com/channel/UCR7Xa7cU9wfkSY9v3yN2Vtw) about general Home Assistant setup. Very high-quality videos.
 - [Zack Barett YouTube Channel](https://www.youtube.com/channel/UCXpteV7qpsWi9uUkOeLAhaA) mostly about Lovelace UI configuration and new Home Assistant features.
-- [DrZzs YouTube Channel](https://www.youtube.com/channel/UC7G4tLa4Kt6A9e3hJ-HO8ng) about almost every possible smart-home related stuff. His hovering talking head might look a bit wierd and even creepy, but the content itself is very useful.
+- [DrZzs YouTube Channel](https://www.youtube.com/channel/UC7G4tLa4Kt6A9e3hJ-HO8ng) about almost every possible smart-home related stuff. His hovering talking head might look a bit weird and even creepy, but the content itself is very useful.
 - [Grayson Adams](https://www.youtube.com/channel/UCOvOYHQOgKg5m0uGmbweZBw) about devices overview, basic Home Assistant setup.
-- [DB Tech](https://www.youtube.com/c/DBTechYT) generally about server administration. Mostly about Docker, Portainer, self-hosted services, OpenMediaVault and Raspberry Pi. Very high quality videos.
+- [DB Tech](https://www.youtube.com/c/DBTechYT) generally about server administration. Mostly about Docker, Portainer, self-hosted services, OpenMediaVault, and Raspberry Pi. Very high-quality videos.
 
 ## YouTube Videos
 
 - [Raspberry Pi 4 Home Server](https://www.youtube.com/playlist?list=PLhMI0SExGwfAU-UMeKxd1Lu5_a60AlA9N) playlist by DB Tech is specifically about smart-home hosted on Raspberry Pi.
-- [Super Simple Cloudflare and Nginx Proxy Manager Setup Using YOUR Domain](https://youtu.be/cI17WMKtntA) by Geedked
+- [Super Simple Cloudflare and Nginx Proxy Manager Setup Using YOUR Domain](https://youtu.be/cI17WMKtntA) by Geeked
 - [CloudFlare - FREE Additional Security For Your Home Server!](https://youtu.be/m-RYTu-Qq3A) by DB Tech
 
 ## Misc
