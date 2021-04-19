@@ -42,6 +42,7 @@ nav:
       - Getting Started: software/getting-started.md
       - System Setup: software/system.md
       - Docker Containers: software/docker.md
+      - External Access: software/external-access.md
       - Ad-Blocking: software/ad-blocking.md
       - Ports: software/ports.md
   - Home Assistant:
