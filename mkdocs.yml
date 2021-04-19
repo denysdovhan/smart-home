@@ -34,6 +34,8 @@ theme:
   features:
     - navigation.tabs
     - navigation.tabs.sticky
+    - navigation.top
+    - navigation.instant
 
 nav:
   - Home: index.md
