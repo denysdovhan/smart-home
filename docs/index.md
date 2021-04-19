@@ -26,6 +26,20 @@ Read this documentation to see the bigger picture:
 - [Home Assistant](./home-assistant/introduction) configuration (automations, dashboards, script).
 - [Resources](./resources) for inspiration (videos, channels, tutorials, articles).
 
+## What's inside?
+
+My home setup for those who is too lazy to read everything:
+
+- [Raspberry Pi 4B](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) as a home server.
+- [Home Assistant](https://home-assistant.io) for home automations.
+- [Mosquitto](https://mosquitto.org/) and [zigbee2mqtt](https://www.zigbee2mqtt.io/) for Zigbee devices.
+- Reverse proxy using [Nginx Proxy Manager](https://nginxproxymanager.com/) with [CloudFlare](https://www.cloudflare.com/).
+- [OpenVPN](https://openvpn.net/) for SSH and Samba access.
+- [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome) for network-level ad-blocking.
+- [Plex Media Server](https://www.plex.tv/media-server-downloads/#plex-media-server) with external hard drive for hosting movies and TV series.
+- [Transmission](https://transmissionbt.com/) for downloading new media to the hard drive.
+- [Umami](https://umami.is/) self-hosted analytics for my wesites.
+
 ## Motivation
 
 I write this documentation for two main reasons:
@@ -40,11 +54,6 @@ I'm renting my apartment. My landlord handles fixing stuff in my home, covering 
 I can't disassemble anything and use custom switches or sockets. It means I can change only easily accessible parts, like bulbs.
 
 ## Future Plans
-
-In the nearest future, my main focuses are:
-
-- Migrating to Docker images. This will allow me to install custom software on my Raspberry Pi. Though I will be responsible for maintenance and backing up.
-- Installing Plex on the server with an external HDD for storing media.
 
 I have a [public Notion board](https://www.notion.so/denysdovhan/f09ea06da5db4cfa84d3ca50417b93b2?v=5fccab53c2fd4ac188ee0b92c2ca1cb9) with ideas and tasks for my smart home. You can follow and comment my plans there.
 
