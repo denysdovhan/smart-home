@@ -17,11 +17,14 @@ This is my personal Home Assistant configuration, awakening my home with automat
 
     Please, keep in mind **this documentation might be outdated** in covering some details. However, I'll try my best to keep this updated.
 
-The best way to discover new ideas and inspire is by [reading the code][github-url], copying-pasting parts of my configuration and adjusting it to your needs. Read this documentation to see the bigger picture:
+The best way to discover new ideas and inspire is by [reading the code][github-url], copying-pasting parts of my configuration and adjusting it to your needs.
 
-- [Hardware](./hardware) that powers my home.
-- [Home Assistant](./home-assistant/introduction) configuration.
-- [Resources](./resources) for inspiration.
+Read this documentation to see the bigger picture:
+
+- [Hardware](./hardware) that powers my home (server, router, devices, memory)
+- [Software](./software) for my home services (OS, scripts, UIs, containers, applications).
+- [Home Assistant](./home-assistant/introduction) configuration (automations, dashboards, script).
+- [Resources](./resources) for inspiration (videos, channels, tutorials, articles).
 
 ## Motivation
 
