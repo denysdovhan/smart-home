@@ -26,9 +26,9 @@
         title: 'Запуск Home Assistant 🏡'
         speak: false
         messages:
-          - "Home Assistant повністю запущено!"
-          - "Home Assistant стартував!"
-          - "Home Assistant готовий до роботи!"
+          - 'Home Assistant повністю запущено!'
+          - 'Home Assistant стартував!'
+          - 'Home Assistant готовий до роботи!'
 
 - id: aqi_alert
   alias: AQI Alert
@@ -135,10 +135,10 @@
       data:
         title: 'Transmission ⬇️'
         messages:
-          - '{{ trigger.event.data.name }} завантажено!'
-          - '{{ trigger.event.data.name }} завантаження завершено!'
-          - '{{ trigger.event.data.name }} викачаний!'
-          - '{{ trigger.event.data.name }} готовий!'
+          - 'Торрент {{ trigger.event.data.name }} завантажено!'
+          - 'Завантажено торрент {{ trigger.event.data.name }}!'
+          - 'Торрент {{ trigger.event.data.name }} викачаний!'
+          - 'Торрент {{ trigger.event.data.name }} готовий!'
         notify_data:
           url: /torrents
 
