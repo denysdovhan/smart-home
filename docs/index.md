@@ -28,7 +28,7 @@ Read this documentation to see the bigger picture:
 
 ## What's inside?
 
-My home setup for those who is too lazy to read everything:
+My home setup for those who are too lazy to read everything:
 
 - [Raspberry Pi 4B](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) as a home server.
 - [Home Assistant](https://home-assistant.io) for home automations.
@@ -36,9 +36,9 @@ My home setup for those who is too lazy to read everything:
 - Reverse proxy using [Nginx Proxy Manager](https://nginxproxymanager.com/) with [CloudFlare](https://www.cloudflare.com/).
 - [OpenVPN](https://openvpn.net/) for SSH and Samba access.
 - [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome) for network-level ad-blocking.
-- [Plex Media Server](https://www.plex.tv/media-server-downloads/#plex-media-server) with external hard drive for hosting movies and TV series.
+- [Plex Media Server](https://www.plex.tv/media-server-downloads/#plex-media-server) with an external hard drive for hosting movies and TV series.
 - [Transmission](https://transmissionbt.com/) for downloading new media to the hard drive.
-- [Umami](https://umami.is/) self-hosted analytics for my wesites.
+- [Umami](https://umami.is/) self-hosted analytics for my websites.
 
 ## Motivation
 
