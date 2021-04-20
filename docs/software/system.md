@@ -1,4 +1,4 @@
-# System Setup
+# System Ovewview
 
 This page describes my system setup. Here you can find software I rely on for running my smart home system.
 
