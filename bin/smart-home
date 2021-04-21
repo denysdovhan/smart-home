@@ -115,15 +115,14 @@ function smart-home:command:restart() {
 }
 
 function smart-home:command:update() {
-  echo "Stopping containers..."
-  docker-compose down --remove-orphans
   echo "Pulling latest images..."
   docker-compose pull
   echo "Building images..."
   docker-compose build
   echo "Starting containers..."
   docker-compose up -d
-  echo "Consider running `smart-home prune` to free up space..."
+  echo "Prune to free up space..."
+  docker image prune -a
 }
 
 function smart-home:command:prune() {
