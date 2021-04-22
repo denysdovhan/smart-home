@@ -53,3 +53,25 @@
   action:
     - service: input_boolean.turn_{{ states('binary_sensor.sleeping_time') }}
       entity_id: input_boolean.do_not_disturb
+
+- id: do_not_disturb_on_calls
+  alias: Do Not Disturb on calls
+  description: Switch Do Not Disturb while camera or mics are on
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.wix_macbook_pro_camera_in_use
+    - platform: state
+      entity_id: binary_sensor.wix_macbook_pro_microphone_in_use
+    - platform: state
+      entity_id: binary_sensor.home_macbook_pro_camera_in_use
+    - platform: state
+      entity_id: binary_sensor.home_macbook_pro_microphone_in_use
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: states('binary_sensor.sleeping_time')
+              state: 'off'
+          sequence:
+            - service: input_boolean.turn_{{ trigger.to_state.state }}
+              entity_id: input_boolean.do_not_disturb
