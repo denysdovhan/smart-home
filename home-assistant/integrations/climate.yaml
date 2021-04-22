@@ -10,6 +10,5 @@ climate:
     heater: switch.balcony_heater
     target_sensor: sensor.balcony_conditions_sensor_temperature
     precision: 0.5
-    target_temp: 22
     min_temp: 15
     max_temp: 30
