@@ -20,6 +20,12 @@ zone:
   # Marry's Work
   - name: CitrusDev
     latitude: 50.4472805397585
-    longitude: 30.500482949428264 
+    longitude: 30.500482949428264
     radius: 150
     icon: 'mdi:briefcase'
+  # City Center
+  - name: City Center
+    latitude: 50.44789746506545
+    longitude: 30.522361141321806
+    radius: 2000
+    icon: 'mdi:city-variant'

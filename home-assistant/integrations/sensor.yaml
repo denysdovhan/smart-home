@@ -153,27 +153,15 @@ sensor:
 
   # Travel Times
   - platform: waze_travel_time
-    name: Travel Time Denys to Home
-    origin: person.denys
+    name: Travel Home to Center
+    origin: zone.home
+    destination: zone.city_center
+    region: EU
+    realtime: true
+  - platform: waze_travel_time
+    name: Travel Center to Home
+    origin: zone.city_center
     destination: zone.home
-    region: EU
-    realtime: true
-  - platform: waze_travel_time
-    name: Travel Time Denys to Work
-    origin: person.denys
-    destination: zone.wix
-    region: EU
-    realtime: true
-  - platform: waze_travel_time
-    name: Travel Time Marry to Home
-    origin: person.marry
-    destination: zone.home
-    region: EU
-    realtime: true
-  - platform: waze_travel_time
-    name: Travel Time Marry to Work
-    origin: person.marry
-    destination: zone.citrusdev
     region: EU
     realtime: true
 
