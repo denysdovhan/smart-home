@@ -70,7 +70,7 @@
     - choose:
         - conditions:
             - condition: state
-              entity_id: states('binary_sensor.sleeping_time')
+              entity_id: binary_sensor.sleeping_time
               state: 'off'
           sequence:
             - service: input_boolean.turn_{{ trigger.to_state.state }}
