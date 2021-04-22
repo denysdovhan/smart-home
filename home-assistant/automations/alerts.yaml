@@ -134,6 +134,7 @@
     - service: script.announcement
       data:
         title: 'Transmission ⬇️'
+        speak: false
         messages:
           - 'Торрент {{ trigger.event.data.name }} завантажено!'
           - 'Завантажено торрент {{ trigger.event.data.name }}!'
