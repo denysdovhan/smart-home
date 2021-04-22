@@ -1,3 +1,7 @@
 # OpenWeather
 weather.nyvky:
   friendly_name: Нивки, Київ
+weather.kyiv:
+  friendly_name: Центр, Київ
+weather.chernivtsi:
+  friendly_name: Роша, Чернівці

@@ -5,6 +5,9 @@ cards:
   - type: vertical-stack
     title: Київ
     cards:
+      - type: weather-forecast
+        entity: weather.kyiv
+        show_forecast: false
       - type: picture-glance
         title: Софійська площа
         camera_image: camera.kyiv_sofiyska
@@ -21,6 +24,9 @@ cards:
   - type: vertical-stack
     title: Чернівці
     cards:
+      - type: weather-forecast
+        entity: weather.chernivtsi
+        show_forecast: false
       - type: picture-glance
         title: Панорама
         camera_image: camera.chernivtsi_landscape
