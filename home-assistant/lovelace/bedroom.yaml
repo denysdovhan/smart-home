@@ -6,11 +6,11 @@ cards:
     title: Світло
     columns: 3
     cards:
-      - type: button
+      - type: light
         entity: light.bedroom_ceiling_light
-      - type: button
+      - type: light
         entity: light.bedroom_bed_lights
-      - type: button
+      - type: light
         entity: light.bedroom_floor_lamp
 
   - type: vertical-stack

@@ -6,7 +6,7 @@ cards:
     title: Світло
     columns: 3
     cards:
-      - type: button
+      - type: light
         entity: light.desk_lamp
       - type: button
         entity: switch.circadian_lighting_desk_flux
@@ -37,7 +37,6 @@ cards:
     cards:
       - type: thermostat
         entity: climate.balcony_heater
-        name: Обігрів балкону
       - type: horizontal-stack
         cards:
           - type: custom:mini-graph-card

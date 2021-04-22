@@ -224,40 +224,12 @@ cards:
                 name: Денис
               - entity: sensor.denyss_iphone_battery_level
                 name: Батарея
-              - type: conditional
-                conditions:
-                  - entity: person.denys
-                    state: home
-                row:
-                  entity: sensor.travel_time_denys_to_work
-                  name: До роботи
-              - type: conditional
-                conditions:
-                  - entity: person.denys
-                    state: not_home
-                row:
-                  entity: sensor.travel_time_denys_to_home
-                  name: Додому
           - type: entities
             entities:
               - entity: person.marry
                 name: Маша
               - entity: sensor.iphone_maria_battery_level
                 name: Батарея
-              - type: conditional
-                conditions:
-                  - entity: person.marry
-                    state: home
-                row:
-                  entity: sensor.travel_time_marry_to_work
-                  name: До роботи
-              - type: conditional
-                conditions:
-                  - entity: person.marry
-                    state: not_home
-                row:
-                  entity: sensor.travel_time_marry_to_home
-                  name: Додому
       - type: map
         entities:
           - person.marry
