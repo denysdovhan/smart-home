@@ -212,6 +212,7 @@ services:
     # Original image does not support ARM
     # image: ghcr.io/mikecao/umami:mysql-latest
     build: ./umami
+    restart: unless-stopped
     ports:
       - 8333:3000
     environment:
