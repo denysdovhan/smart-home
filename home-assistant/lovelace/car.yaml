@@ -99,6 +99,8 @@ cards:
             hours_to_show: 12
             points_per_hour: 2
             color_thresholds:
+              - value: 20
+                color: '#63D668'
               - value: 30
                 color: '#FF974D'
               - value: 45
@@ -115,6 +117,8 @@ cards:
             hours_to_show: 12
             points_per_hour: 2
             color_thresholds:
+              - value: 20
+                color: '#63D668'
               - value: 30
                 color: '#FF974D'
               - value: 45
