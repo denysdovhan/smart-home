@@ -1,6 +1,6 @@
 #
 # HomeKit
-# 
+#
 # https://www.home-assistant.io/integrations/homekit/
 #
 
@@ -35,6 +35,9 @@ homekit:
       - media_player.samsung_tv
       # Switches
       - switch.circadian_lighting_flux
+      # Scripts
+      - script.everyone_is_arriving
+      - script.everyone_is_leaving
     exclude_entities:
       #
       # Manual excludes

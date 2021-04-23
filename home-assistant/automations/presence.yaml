@@ -1,4 +1,4 @@
-- id: everyones_arriving
+- id: everyone_is_arriving
   alias: Everyone is Arriving
   description: Turn on things when people are arriving
   trigger:
@@ -20,34 +20,9 @@
           to: 'on'
       timeout: '01:00:00'
       continue_on_timeout: false
-    # Turn on fans
-    - service: fan.turn_on
-      entity_id: all
-    # Turn on lights after sunset
-    - choose:
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.evening_time
-              state: 'on'
-          sequence:
-            - service: scene.turn_on
-              data:
-                entity_id: scene.evening_lights
-                transition: 5
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.night_time
-              state: 'on'
-          sequence:
-            - service: scene.turn_on
-              data:
-                entity_id: scene.night_lights
-                transition: 5
-    - delay:
-        seconds: 5
-    - service: script.greeting
+    - service: script.everyone_is_arriving
 
-- id: everyones_leaving
+- id: everyone_is_leaving
   alias: Everyone is Leaving
   description: Turn off things when people are leaving
   trigger:
@@ -57,30 +32,4 @@
     to: 'not_home'
     for: '00:10:00'
   action:
-    - service: fan.turn_off
-      entity_id: all
-    - service: light.turn_off
-      entity_id: all
-    - service: climate.turn_off
-      entity_id: all
-    - service: media_player.turn_off
-      entity_id: all
-    - choose:
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.time_to_clean
-              state: 'on'
-          sequence:
-            - service: script.announcement
-              data:
-                speak: false
-                title: 'Пилосос 🧹'
-                messages:
-                  - 'Робот почав прибирання.'
-                  - 'Прибирання розпочато.'
-                  - "{{ state_attr('vacuum.roborock', 'friendly_name') }} почав прибирати."
-                  - "{{ state_attr('vacuum.roborock', 'friendly_name') }} прибирає квартиру."
-                notify_data:
-                  push:
-                    category: VACUUM_REGULAR_CLEANING
-            - service: script.vacuum_regular_cleaning
+    - service: script.everyone_is_leaving
