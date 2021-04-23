@@ -85,7 +85,7 @@ cards:
             hour24: true
 
   - type: vertical-stack
-    title: Місто
+    title: Трафік
     cards:
       - type: grid
         square: false
