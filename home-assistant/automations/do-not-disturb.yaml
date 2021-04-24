@@ -22,10 +22,11 @@
           {% endif %}
     # Purifier
     # Set Purifier speed only when it's running
-    - service: fan.set_speed
-      entity_id: fan.purifier
+    - service: fan.set_preset_mode
+      target:
+        entity_id: fan.purifier
       data:
-        speed: >
+        preset_mode: >
           {% if is_state('fan.purifier', 'on') %}
             {% if is_state('input_boolean.do_not_disturb', 'on') %}
               Silent
