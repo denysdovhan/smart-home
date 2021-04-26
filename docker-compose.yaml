@@ -13,6 +13,21 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - .docker/portainer-ce/data:/data
 
+  # Watchtower
+  # A solution for automating Docker container base image updates
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      WATCHTOWER_CLEANUP: 'true'
+      WATCHTOWER_NO_STARTUP_MESSAGE: 'true'
+      WATCHTOWER_SCHEDULE: '0 0 5 * * 6'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
   # Home Assistant
   # The core of my smart-home automations
   home-assistant:
@@ -219,5 +234,7 @@ services:
       DATABASE_URL: mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/umami
       DATABASE_TYPE: mysql
       HASH_SALT: ${UMAMI_HASH_SALT}
+    labels:
+      com.centurylinklabs.watchtower.enable: 'false'
     depends_on:
       - db
