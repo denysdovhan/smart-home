@@ -38,7 +38,7 @@
           sequence:
             - service: scene.turn_on
               data:
-                entity_id: scene.evening_lights
+                entity_id: scene.night_lights
                 transition: 1
         - conditions:
             - condition: template
@@ -46,15 +46,15 @@
           sequence:
             - service: scene.turn_on
               data:
-                entity_id: scene.bright_lights
+                entity_id: scene.evening_lights
                 transition: 1
         - conditions:
             - condition: template
               value_template: "{{ trigger.payload == 'slide' }}"
           sequence:
-            - service: scene.turn_on
+            - service: light.toggle
               data:
-                entity_id: scene.night_lights
+                entity_id: light.living_room_main_light
                 transition: 1
         - conditions:
             - condition: template
