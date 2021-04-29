@@ -122,7 +122,7 @@ function smart-home:command:update() {
   echo "Starting containers..."
   docker-compose up -d
   echo "Prune to free up space..."
-  docker image prune -a
+  docker image prune -af
 }
 
 function smart-home:command:prune() {
