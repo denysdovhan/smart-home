@@ -245,3 +245,19 @@ services:
       com.centurylinklabs.watchtower.enable: 'false'
     depends_on:
       - db
+
+  # Bitwarden
+  # Vaultwarden is a Rust implementation of Bitwarden API for less powerful devices
+  bitwarden:
+    container_name: bitwarden
+    image: vaultwarden/server:latest-arm32v6
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      WEBSOCKET_ENABLED: 'true'
+    ports:
+      - 3880:80
+      - 3812:3012
+    volumes:
+      - .docker/bitwarden:/data

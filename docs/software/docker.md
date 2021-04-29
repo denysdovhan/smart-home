@@ -109,3 +109,9 @@ I use it for downloading media to [my hard drive](../../hardware#media-volume).
 <!-- prettier-ignore -->
 !!! note
     Official images [does not support ARM architectures](https://github.com/mikecao/umami/issues/593). I've made my own Dockerfile that builds an image right on my Raspberry Pi.
+
+## Bitwarden
+
+![Bitwarden](https://user-images.githubusercontent.com/3459374/116572155-642c5880-a914-11eb-964c-1db0c962a5ef.png)
+
+[Bitwarden](https://bitwarden.com/) is an open-source password manager that can be self-hosted. I'm using [Vaultwarden](https://github.com/dani-garcia/vaultwarden), which is an unofficial Bitwarden client written in Rust. Vaultwarden is especially useful for low powerful machines, like Raspberry Pi.
