@@ -137,56 +137,75 @@ cards:
           - timer.zigbee_permit_join
           - sensor.bridge_state
 
-  - type: grid
+  - type: entities
     title: Сервіси
-    square: false
-    columns: 4
-    cards:
+    entities:
+      - type: button
+        icon: mdi:ubuntu
+        name: Система
+        action_name: Перейти
+        tap_action:
+          action: url
+          url_path: !secret service_system
+      - type: button
+        icon: mdi:docker
+        name: Portainer
+        action_name: Перейти
+        tap_action:
+          action: url
+          url_path: !secret service_portainer
       - type: button
         icon: mdi:database
         name: База даних
+        action_name: Перейти
         tap_action:
           action: url
           url_path: !secret service_database
       - type: button
         icon: mdi:shield-check
-        name: AdGuard
+        name: AdGuard Home
+        action_name: Перейти
         tap_action:
           action: url
           url_path: !secret service_adguard
       - type: button
         icon: mdi:cloud-upload
         name: Бекапи
+        action_name: Перейти
         tap_action:
           action: url
           url_path: !secret service_backups
       - type: button
         icon: mdi:arrow-decision
-        name: Nginx
+        name: Nginx Proxy Manager
+        action_name: Перейти
         tap_action:
           action: url
           url_path: !secret service_nginx
-      - type: button
-        icon: mdi:docker
-        name: Portainer
-        tap_action:
-          action: url
-          url_path: !secret service_portainer
-      - type: button
-        icon: mdi:ubuntu
-        name: Система
-        tap_action:
-          action: url
-          url_path: !secret service_system
-      - type: button
         icon: mdi:zigbee
         name: Zigbee
+        action_name: Перейти
         tap_action:
           action: url
           url_path: !secret service_zigbee
       - type: button
         icon: mdi:download-circle
         name: Торенти
+        action_name: Перейти
         tap_action:
           action: url
           url_path: !secret service_torrents
+      - type: button
+        icon: mdi:google-analytics
+        name: Umami
+        action_name: Перейти
+        tap_action:
+          action: url
+          url_path: !secret service_analytics
+      - type: button
+        icon: mdi:shield-half-full
+        name: Bitwarden
+        action_name: Перейти
+        tap_action:
+          action: url
+          url_path: !secret service_bitwarden
