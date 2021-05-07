@@ -8,7 +8,7 @@ camera:
   - platform: ffmpeg
     name: chernivtsi_landscape
     input: http://langate.tv/camera360/tracks-v1/mono.m3u8
-  
+
   - platform: ffmpeg
     name: chernivtsi_filarmonia
     input: http://langate.tv/filarmonia/tracks-v1/mono.m3u8
@@ -75,3 +75,8 @@ camera:
       - vacuum_position
       - walls
       - zones
+
+  - platform: generic
+    name: ISS
+    still_image_url: !secret iss_map
+    limit_refetch_to_url_change: true

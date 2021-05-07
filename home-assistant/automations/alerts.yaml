@@ -330,3 +330,27 @@
                   - 'Варто поїхати на шиномонтаж для заміни шин.'
                 notify_data:
                   url: /lovelace/car
+
+- id: iss_tire_alert
+  alias: ISS Alert
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.iss
+      to: 'on'
+  action:
+    - service: script.announcement
+      data:
+        title: 'Міжнародна космічна станція 🛰'
+        greetings:
+          - 'МКС пролітає над домом!'
+          - 'На горизонті видніється МКС!'
+          - 'Над домом пролітатиме МКС!'
+          - 'Шукайте на небі МКС!'
+        messages:
+          - "На борту {{ state_attr('binary_sensor.iss', 'number_of_people_in_space') }} людей."
+          - "Екіпаж: {{ state_attr('binary_sensor.iss', 'number_of_people_in_space') }} людей."
+          - "{{ state_attr('binary_sensor.iss', 'number_of_people_in_space') }} на борту."
+        notify_data:
+          push:
+            category: camera
+          entity_id: camera.iss

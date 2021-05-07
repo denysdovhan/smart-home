@@ -47,3 +47,5 @@ binary_sensor:
   # Winter Tires
   - platform: snowtire
     weather: weather.nyvky
+  # International Space Station
+  - platform: iss
