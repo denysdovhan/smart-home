@@ -181,7 +181,8 @@
     attribute: no_water
     from: false
     to: true
-    for: '00:1:00'
+    for:
+      minutes: 1
   action:
     - service: script.announcement
       data:
@@ -204,12 +205,12 @@
       entity_id: binary_sensor.car_wash
       to: 'on'
       for:
-        hours: 6
+        hours: 12
     - platform: state
       entity_id: binary_sensor.car_wash
       to: 'off'
       for:
-        hours: 6
+        hours: 12
   action:
     - choose:
         - conditions:
@@ -261,12 +262,32 @@
       entity_id: binary_sensor.snowtire
       to: 'on'
       for:
+        hours: 24
+    - platform: state
+      entity_id: binary_sensor.snowtire
+      to: 'on'
+      for:
         hours: 48
+    - platform: state
+      entity_id: binary_sensor.snowtire
+      to: 'on'
+      for:
+        hours: 96
+    - platform: state
+      entity_id: binary_sensor.snowtire
+      to: 'off'
+      for:
+        hours: 24
     - platform: state
       entity_id: binary_sensor.snowtire
       to: 'off'
       for:
         hours: 48
+    - platform: state
+      entity_id: binary_sensor.snowtire
+      to: 'off'
+      for:
+        hours: 96
   action:
     - choose:
         - conditions:
