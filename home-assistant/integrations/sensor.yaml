@@ -126,8 +126,6 @@ sensor:
       - cityName
       - stationName
       - localName
-      - latitude
-      - longitude
       - timezone
       - pollutants
 
@@ -150,20 +148,6 @@ sensor:
   #     - code
   #     - name
   #     - createdAt
-
-  # Travel Times
-  - platform: waze_travel_time
-    name: Travel Home to Center
-    origin: zone.home
-    destination: zone.city_center
-    region: EU
-    realtime: true
-  - platform: waze_travel_time
-    name: Travel Center to Home
-    origin: zone.city_center
-    destination: zone.home
-    region: EU
-    realtime: true
 
   # Availability Monitor
   - platform: template

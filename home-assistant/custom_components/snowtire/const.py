@@ -8,7 +8,7 @@ https://github.com/Limych/ha-snowtire/
 # Base component constants
 NAME = "Snowtire Sensor"
 DOMAIN = "snowtire"
-VERSION = "1.2.1"
+VERSION = "1.4.0"
 ISSUE_URL = "https://github.com/Limych/ha-snowtire/issues"
 
 STARTUP_MESSAGE = f"""
@@ -22,7 +22,8 @@ If you have ANY issues with this you need to open an issue here:
 """
 
 # Icons
-ICON = "mdi:snowflake"
+ICON_WINTER = "mdi:snowflake"
+ICON_SUMMER = "mdi:white-balance-sunny"
 
 # Configuration and options
 CONF_WEATHER = "weather"

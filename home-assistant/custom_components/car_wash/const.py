@@ -8,7 +8,6 @@ For more details about this platform, please refer to the documentation at
 https://github.com/Limych/ha-car_wash/
 """
 
-from homeassistant.components.binary_sensor import DOMAIN as BINARY_SENSOR
 from homeassistant.components.weather import (
     ATTR_CONDITION_EXCEPTIONAL,
     ATTR_CONDITION_HAIL,
@@ -22,7 +21,7 @@ from homeassistant.components.weather import (
 # Base component constants
 NAME = "Car Wash"
 DOMAIN = "car_wash"
-VERSION = "1.4.0"
+VERSION = "1.5.0"
 ISSUE_URL = "https://github.com/Limych/ha-car_wash/issues"
 
 STARTUP_MESSAGE = f"""
@@ -38,11 +37,6 @@ If you have ANY issues with this you need to open an issue here:
 # Icons
 ICON = "mdi:car-wash"
 
-# Device classes
-
-# Platforms
-PLATFORMS = [BINARY_SENSOR]
-
 # Configuration and options
 CONF_WEATHER = "weather"
 CONF_DAYS = "days"
@@ -50,8 +44,6 @@ CONF_DAYS = "days"
 # Defaults
 DEFAULT_NAME = "Car Wash"
 DEFAULT_DAYS = 2
-
-# Attributes
 
 
 BAD_CONDITIONS = [
