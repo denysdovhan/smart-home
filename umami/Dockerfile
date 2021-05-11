@@ -5,7 +5,7 @@ ENV DATABASE_TYPE=mysql
 
 RUN apt-get -yqq install git
 
-ADD "https://api.github.com/repos/mikecao/umami/commits?per_page=1" latest_commit
+ADD "https://api.github.com/repos/mikecao/umami/releases?per_page=1" latest_commit
 RUN git clone --depth 1 --single-branch --branch master https://github.com/mikecao/umami.git /app
 
 WORKDIR /app
