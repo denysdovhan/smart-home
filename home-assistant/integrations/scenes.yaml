@@ -26,7 +26,7 @@ scene split:
         state: off
       light.desk_lamp:
         state: off
-      switch.circadian_lighting_flux:
+      switch.adaptive_lighting_home:
         state: on
 
   - id: night_lights
@@ -46,7 +46,7 @@ scene split:
         state: off
       light.living_room_table_lights:
         state: off
-      switch.circadian_lighting_flux:
+      switch.adaptive_lighting_home:
         state: on
 
   - id: evening_lights
@@ -68,7 +68,7 @@ scene split:
         state: on
         brightness: 255
         color_temp: 240
-      switch.circadian_lighting_flux:
+      switch.adaptive_lighting_home:
         state: on
 
   - id: bright_lights
@@ -92,7 +92,7 @@ scene split:
         state: on
         brightness: 255
         color_temp: 240
-      switch.circadian_lighting_flux:
+      switch.adaptive_lighting_home:
         state: on
 
   - id: romantic_lights
@@ -114,5 +114,5 @@ scene split:
         state: on
         brightness: 10
         rgb_color: [255, 0, 0]
-      switch.circadian_lighting_flux:
+      switch.adaptive_lighting_home:
         state: off

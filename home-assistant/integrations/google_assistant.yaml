@@ -46,7 +46,7 @@ google_assistant:
         - ps4
         - console
     # Switch
-    switch.circadian_lighting_flux:
+    switch.adaptive_lighting_home:
       name: Flux
       aliases:
         - circadian lighting

@@ -1,0 +1,13 @@
+#
+# Adaptive Lighting
+#
+# https://github.com/basnijholt/adaptive-lighting
+#
+
+adaptive_lighting:
+  - name: Home
+    lights:
+      - light.living_room_main_light
+      - light.bedroom_ceiling_light
+      - light.living_room_table_lights
+      - light.desk_lamp

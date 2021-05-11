@@ -63,7 +63,7 @@ cards:
             entity: input_boolean.do_not_disturb
           - type: button
             name: Flux
-            entity: switch.circadian_lighting_flux
+            entity: switch.adaptive_lighting_home
 
       - type: grid
         title: Кімнати

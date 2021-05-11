@@ -34,7 +34,7 @@ homekit:
       - media_player.playstation_4
       - media_player.samsung_tv
       # Switches
-      - switch.circadian_lighting_flux
+      - switch.adaptive_lighting_home
       # Scripts
       - script.everyone_is_arriving
       - script.everyone_is_leaving
