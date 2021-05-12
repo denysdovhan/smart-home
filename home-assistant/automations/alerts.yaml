@@ -339,8 +339,8 @@
       to: 'on'
   condition:
     - condition: state
-      entity_id: group.family
-      state: home
+      entity_id: binary_sensor.far_from_home
+      state: 'off'
   action:
     - service: script.announcement
       data:
