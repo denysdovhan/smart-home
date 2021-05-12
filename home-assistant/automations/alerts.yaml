@@ -337,6 +337,10 @@
     - platform: state
       entity_id: binary_sensor.iss
       to: 'on'
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: home
   action:
     - service: script.announcement
       data:
