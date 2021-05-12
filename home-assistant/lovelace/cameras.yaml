@@ -20,6 +20,12 @@ cards:
         camera_view: live
         aspect_ratio: 50%
         entities: []
+      - type: picture-glance
+        title: Нивки
+        camera_image: camera.kyiv_nyvky
+        camera_view: live
+        aspect_ratio: 50%
+        entities: []
 
   - type: vertical-stack
     title: Чернівці
