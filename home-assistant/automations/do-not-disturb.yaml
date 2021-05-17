@@ -61,12 +61,20 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.wix_macbook_pro_camera_in_use
+      for:
+        minutes: 1
     - platform: state
       entity_id: binary_sensor.wix_macbook_pro_microphone_in_use
+      for:
+        minutes: 1
     - platform: state
       entity_id: binary_sensor.home_macbook_pro_camera_in_use
+      for:
+        minutes: 1
     - platform: state
       entity_id: binary_sensor.home_macbook_pro_microphone_in_use
+      for:
+        minutes: 1
   action:
     - choose:
         - conditions:
