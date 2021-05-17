@@ -82,6 +82,12 @@ This dashboard lets me watch the live streams from Kyiv (where I live) and from 
 
 ![Cameras](https://user-images.githubusercontent.com/3459374/115126127-92856c00-9fd5-11eb-93a3-0c7621cd2d53.png){: loading=lazy }
 
+## Space
+
+This dashboard displays information about International Space Station flying over my home location. It's just interesting to catch ISS flying on the sky.
+
+![Space](https://user-images.githubusercontent.com/3459374/118517248-b86e6f80-b73f-11eb-8f7f-519166aeaeaf.png)
+
 ## System
 
 This dashboard lets me overview the state of my smart home SystemHealthRegistration
