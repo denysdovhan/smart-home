@@ -9,7 +9,10 @@
       entity_id: group.family
       state: 'home'
     - condition: state
-      entity_id: group.lights
+      entity_id: group.living_room_lights
+      state: 'off'
+    - condition: state
+      entity_id: group.bedroom_lights
       state: 'off'
   action:
     - service: script.announcement
@@ -47,7 +50,10 @@
       entity_id: sun.sun
       state: 'above_horizon'
     - condition: state
-      entity_id: group.lights
+      entity_id: group.living_room_lights
+      state: 'off'
+    - condition: state
+      entity_id: group.bedroom_lights
       state: 'off'
     - condition: state
       entity_id: binary_sensor.activity_time
