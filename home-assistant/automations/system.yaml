@@ -78,3 +78,28 @@
                   - "Режим «Не турбувати» {% if is_state('input_boolean.do_not_disturb', 'on') %} увімкнено {% else %} вимкнено {% endif%}."
                   - "Режим тиші {% if is_state('input_boolean.do_not_disturb', 'on') %} увімкнено {% else %} вимкнено {% endif%}."
                   - "{% if is_state('input_boolean.do_not_disturb', 'on') %} Увімкнено {% else %} Вимкнено {% endif%} режим тиші."
+
+- id: turn_off_lights_after_outage
+  alias: Turn Off Lights After Outage
+  trigger:
+    platform: homeassistant
+    event: start
+  condition:
+    - condition: state
+      entity_id: binary_sensor.sleeping_time
+      state: 'on'
+    - condition: state
+      entity_id: group.family
+      state: 'not_home'
+  action:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.lights_out
+        transition: 1
+    # Wait a minute for devices to come online
+    - delay:
+        minutes: 1
+    - service: scene.turn_on
+      data:
+        entity_id: scene.lights_out
+        transition: 1
