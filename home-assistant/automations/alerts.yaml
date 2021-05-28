@@ -14,6 +14,25 @@
           - "Реліз нової версії Home Assistant: {{ state_attr('binary_sensor.updater', 'newest_version') }}."
           - "Версія Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} вже доступна!"
 
+- id: hacs_releases_alert
+  alias: HACS Releases Alert
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.hacs
+      above: 0
+  action:
+    - service: script.announcement
+      data:
+        service: notify.denys
+        title: 'Оновлення HACS 🎉'
+        speak: false
+        messages:
+          - "Доступна оновлення для {{ states('sensor.hacs') }} пакетів в HACS."
+          - "HACS має {{ states('sensor.hacs') }} оновлень."
+          - "Достуно {{ states('sensor.hacs') }} оновлень в HACS."
+        notify_data:
+          url: /hacs/entry
+
 - id: home_assistant_start
   alias: Home Assistant Start
   trigger:
