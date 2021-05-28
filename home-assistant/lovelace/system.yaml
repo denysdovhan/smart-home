@@ -182,7 +182,7 @@ cards:
         tap_action:
           action: url
           url_path: !secret service_nginx
-        icon: mdi:zigbee
+      - icon: mdi:zigbee
         name: Zigbee
         action_name: Перейти
         tap_action:

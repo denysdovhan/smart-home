@@ -9,4 +9,4 @@ fan:
     name: humidifier
     model: deerma.humidifier.mjjsq
     host: !secret humidifier_host
-    token:  !secret humidifier_token
+    token: !secret humidifier_token

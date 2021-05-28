@@ -75,10 +75,13 @@ function smart-home:command:init() {
   fi
 
   echo "Installing additional packages..."
-  sudo apt-get install -y git cockpit avahi-daemon network-manager python3-pip
+  sudo apt-get install -y git cockpit avahi-daemon network-manager python3-pip nodejs
 
   echo "Installing python dependencies..."
   pip3 install -r "$SMART_HOME_DIR/requirements.txt"
+  
+  echo "Addint pre-commit hooks..."
+  pre-commit install
 
   if [ ! -f "$SMART_HOME_DIR/.env" ]; then
     echo "Creating .env file..."

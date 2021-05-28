@@ -3,12 +3,12 @@
 fail_fast: true
 exclude: custom_components
 repos:
-  - repo: https://github.com/prettier/prettier
-    rev: 2.0.5
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: 'v2.3.0'
     hooks:
       - id: prettier
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
+    rev: 'v2.3.0'
     hooks:
       - id: check-json
       - id: check-merge-conflict
