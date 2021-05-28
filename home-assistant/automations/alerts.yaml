@@ -360,6 +360,9 @@
     - condition: state
       entity_id: binary_sensor.far_from_home
       state: 'off'
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
   action:
     - service: script.announcement
       data:
