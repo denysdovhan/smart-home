@@ -241,6 +241,7 @@ services:
       DATABASE_URL: mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/umami
       DATABASE_TYPE: mysql
       HASH_SALT: ${UMAMI_HASH_SALT}
+      IGNORE_IP: ${UMAMI_IGNORE_IP}
     labels:
       com.centurylinklabs.watchtower.enable: 'false'
     depends_on:
