@@ -282,6 +282,7 @@ const X="adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.pro
 
   .map {
     max-width: 95%;
+    image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
   }
 
