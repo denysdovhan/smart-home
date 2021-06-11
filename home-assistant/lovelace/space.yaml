@@ -2,6 +2,10 @@ path: space
 title: Космос
 icon: mdi:space-station
 cards:
+  - type: vertical-stack
+    title: Сонце
+    cards:
+      - type: custom:sun-card
   - type: horizontal-stack
     title: Міжнародна космічна станція
     cards:
