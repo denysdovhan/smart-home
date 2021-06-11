@@ -8,18 +8,6 @@
     - platform: state
       entity_id: input_boolean.do_not_disturb
   action:
-    # Speakers
-    - service: media_player.volume_set
-      data:
-        entity_id: media_player.all_speakers
-        volume_level: >
-          {% if not is_state('media_player.all_speakers', 'playing') %}
-            {% if is_state('input_boolean.do_not_disturb', 'on') %}
-              0.20
-            {% else %}
-              0.75
-            {% endif %}
-          {% endif %}
     # Purifier
     # Set Purifier speed only when it's running
     - service: fan.set_preset_mode
