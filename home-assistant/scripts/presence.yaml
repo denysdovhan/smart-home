@@ -53,11 +53,13 @@ everyone_is_leaving:
                 speak: false
                 title: 'Пилосос 🧹'
                 messages:
-                  - 'Робот почав прибирання.'
-                  - 'Прибирання розпочато.'
-                  - "{{ state_attr('vacuum.roborock', 'friendly_name') }} почав прибирати."
-                  - "{{ state_attr('vacuum.roborock', 'friendly_name') }} прибирає квартиру."
+                  - 'Пора почати регулярне прибирання.'
+                  - 'Час прибирати вдома.'
+                  - 'Бажаєте прибрати вдома?'
+                  - 'Почати прибирання?'
+                  - "{{ state_attr('vacuum.roborock', 'friendly_name') }} пропонує домашнє прибирання."
+                  - "{{ state_attr('vacuum.roborock', 'friendly_name') }} хоче прибирати квартиру."
+                  - "{{ state_attr('vacuum.roborock', 'friendly_name') }} давно не прибирав. Почати?"
                 notify_data:
                   push:
-                    category: VACUUM_REGULAR_CLEANING
-            - service: script.vacuum_regular_cleaning
+                    category: VACUUM_ASK_CLEANING
