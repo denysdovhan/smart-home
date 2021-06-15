@@ -23,6 +23,8 @@ lovelace:
       type: module
     - url: /hacsfiles/home-assistant-sun-card/home-assistant-sun-card.js
       type: module
+    - url: /hacsfiles/transmission-card/transmission-card.js
+      type: module
     #
     # DEV
     # Uncomment when needed
