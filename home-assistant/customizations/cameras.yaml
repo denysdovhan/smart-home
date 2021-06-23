@@ -7,5 +7,9 @@ camera.kyiv_mykhailivska:
   friendly_name: Mykhailivska Square
 camera.kyiv_sofiyska:
   friendly_name: Sofiyska square
-camera.kyiv_nyvky:
-  friendly_name: Nyvky
+# camera.kyiv_nyvky:
+# friendly_name: Nyvky
+camera.kyiv_peremohy:
+  friendly_name: Peremohy square
+camera.chernivtsi_kobylianska:
+  friendly_name: Kobylianska street

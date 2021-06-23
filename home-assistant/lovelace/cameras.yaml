@@ -21,8 +21,8 @@ cards:
         aspect_ratio: 50%
         entities: []
       - type: picture-glance
-        title: Нивки
-        camera_image: camera.kyiv_nyvky
+        title: Площа Перемоги
+        camera_image: camera.kyiv_peremohy
         camera_view: live
         aspect_ratio: 50%
         entities: []
@@ -42,6 +42,12 @@ cards:
       - type: picture-glance
         title: Площа філармонії
         camera_image: camera.chernivtsi_filarmonia
+        camera_view: live
+        aspect_ratio: 50%
+        entities: []
+      - type: picture-glance
+        title: Вулиця О.Кобилянської
+        camera_image: camera.chernivtsi_kobylianska
         camera_view: live
         aspect_ratio: 50%
         entities: []

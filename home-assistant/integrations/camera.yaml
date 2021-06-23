@@ -10,6 +10,10 @@ camera:
     input: http://langate.tv/camera360/tracks-v1/mono.m3u8
 
   - platform: ffmpeg
+    name: chernivtsi_kobylianska
+    input: http://langate.tv/d4fee077-1a44-47fb-a367-d15cad794a2a/tracks-v1/mono.m3u8
+
+  - platform: ffmpeg
     name: chernivtsi_filarmonia
     input: http://langate.tv/filarmonia/tracks-v1/mono.m3u8
 
@@ -21,9 +25,13 @@ camera:
     name: kyiv_mykhailivska
     input: http://vps.guru.ua/hls/mihaylovskaya2812.m3u8
 
+  # - platform: ffmpeg
+  #   name: kyiv_nyvky
+  #   input: https://rs.saga.net.ua:8401/hls/live.stream.m3u8
+
   - platform: ffmpeg
-    name: kyiv_nyvky
-    input: https://rs.saga.net.ua:8401/hls/live.stream.m3u8
+    name: kyiv_peremohy
+    input: http://vps.guru.ua/hls/pobedy.m3u8
 
   - platform: xiaomi_cloud_map_extractor
     host: !secret vacuum_host
