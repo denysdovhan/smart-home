@@ -10,10 +10,6 @@ camera:
     input: http://langate.tv/camera360/tracks-v1/mono.m3u8
 
   - platform: ffmpeg
-    name: chernivtsi_kobylianska
-    input: http://langate.tv/d4fee077-1a44-47fb-a367-d15cad794a2a/tracks-v1/mono.m3u8
-
-  - platform: ffmpeg
     name: chernivtsi_filarmonia
     input: http://langate.tv/filarmonia/tracks-v1/mono.m3u8
 

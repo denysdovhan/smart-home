@@ -45,9 +45,3 @@ cards:
         camera_view: live
         aspect_ratio: 50%
         entities: []
-      - type: picture-glance
-        title: Вулиця О.Кобилянської
-        camera_image: camera.chernivtsi_kobylianska
-        camera_view: live
-        aspect_ratio: 50%
-        entities: []
