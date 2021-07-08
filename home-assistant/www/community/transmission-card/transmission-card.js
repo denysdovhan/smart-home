@@ -96,6 +96,8 @@ class TransmissionCard extends LitElement {
       'default_type': 'total',
       'display_mode': 'compact',
       'sensor_name': 'transmission',
+      'header_text': 'Transmission',
+      'hide_header': false,
     }
 
     this.config = {
@@ -113,7 +115,11 @@ class TransmissionCard extends LitElement {
 
     const torrents = this._getTorrents(this.hass, this.selectedType, this.config.sensor_name);
     return html`
-      <ha-card header="Transmission">
+      <ha-card>
+        <div class="card-header">
+          ${this.renderCardHeader1()}
+          ${this.renderCardHeader2()}
+        </div>
         <div>
           <div id="title">
               ${this.renderTitle()}
@@ -228,6 +234,30 @@ class TransmissionCard extends LitElement {
       </div>
     `;
   }
+  
+  renderCardHeader1() {
+    if (this.config.hide_header) {
+      return html``;
+    }
+    
+    return html`
+      <div class="v-name">
+        ${this.config.header_text}
+      </div>
+    `;
+  }
+
+  renderCardHeader2() {
+    if (!this.config.hide_header) {
+      return html``;
+    }
+    
+    return html`
+      <div class="h-name">
+        ${this.config.header_text}
+      </div>
+    `;
+  }
 
   renderTypeSelect() {
     if (this.config.hide_type) {
@@ -299,6 +329,9 @@ class TransmissionCard extends LitElement {
     }
     .downloading {
       background-color: var(--paper-item-icon-active-color);
+    }
+    .h-name {
+      display: none;
     }
     .c-Downloading, .c-UpDown {
       color: var(--paper-item-icon-active-color);
