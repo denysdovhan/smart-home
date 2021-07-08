@@ -37,10 +37,26 @@ binary_sensor:
           {% set time_for_cleaning = current_time - last_cleaning_start > (60 * 60 * 36) %}
           {% set last_cleaning_was_short = last_cleaning_stop - last_cleaning_start < (60 * 5) %}
           {{ time_for_cleaning or last_cleaning_was_short }}
+
       far_from_home:
         friendly_name: Far From Home
         value_template: >-
           {{ states('proximity.home') | int > 50 }}
+
+      denys_on_call:
+        friendly_name: Denys On Call
+        value_template: >-
+          {% set camera_on = is_state('binary_sensor.wix_macbook_pro_camera_in_use', 'on') %}
+          {% set mic_on = is_state('binary_sensor.wix_macbook_pro_microphone_in_use', 'on') %}
+          {% set at_home = is_state('person.denys', 'home') %}
+          {{ at_home and (camera_on or mic_on) }}
+      marry_on_call:
+        friendly_name: Marry On Call
+        value_template: >-
+          {% set camera_on = is_state('binary_sensor.home_macbook_pro_camera_in_use', 'on') %}
+          {% set mic_on = is_state('binary_sensor.home_macbook_pro_microphone_in_use', 'on') %}
+          {% set at_home = is_state('person.marry', 'home') %}
+          {{ at_home and (camera_on or mic_on) }}
   # Car Wash
   - platform: car_wash
     weather: weather.nyvky
