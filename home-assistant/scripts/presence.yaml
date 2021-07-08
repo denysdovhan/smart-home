@@ -4,6 +4,8 @@ everyone_is_arriving:
     # Turn on fans
     - service: fan.turn_on
       entity_id: all
+    # Set device to correct state of DND
+    - service: script.do_not_disturb_mode
     # Turn on lights after sunset
     - choose:
         - conditions:
@@ -17,15 +19,6 @@ everyone_is_arriving:
             - service: scene.turn_on
               data:
                 entity_id: scene.evening_lights
-                transition: 5
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.night_time
-              state: 'on'
-          sequence:
-            - service: scene.turn_on
-              data:
-                entity_id: scene.night_lights
                 transition: 5
     - delay:
         seconds: 5

@@ -1,0 +1,40 @@
+silent_mode:
+  alias: Silence Mode
+  sequance:
+    - service: fan.set_preset_mode
+      target:
+        entity_id: fan.purifier
+      data:
+        preset_mode: Silent
+
+    - service: xiaomi_miio_airpurifier.fan_set_led_off
+      entity_id: fan.humidifier
+
+activity_mode:
+  alias: Activity Mode
+  sequence:
+    - service: fan.set_preset_mode
+      target:
+        entity_id: fan.purifier
+      data:
+        preset_mode: Auto
+
+    - service: xiaomi_miio_airpurifier.fan_set_led_off
+      entity_id: fan.humidifier
+
+do_not_disturb_mode:
+  alias: Do Not Disturb Mode
+  sequence:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.do_not_disurb
+              state: 'on'
+          sequence:
+            - service: script.silent_mode
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.do_not_disurb
+              state: 'off'
+          sequence:
+            - service: script.activity_mode

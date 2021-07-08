@@ -8,28 +8,7 @@
     - platform: state
       entity_id: input_boolean.do_not_disturb
   action:
-    # Purifier
-    # Set Purifier speed only when it's running
-    - service: fan.set_preset_mode
-      target:
-        entity_id: fan.purifier
-      data:
-        preset_mode: >
-          {% if is_state('fan.purifier', 'on') %}
-            {% if is_state('input_boolean.do_not_disturb', 'on') %}
-              Silent
-            {% else %}
-              Auto
-            {% endif %}
-          {% endif %}
-    # Humidifier
-    - service: >
-        {% if is_state('input_boolean.do_not_disturb', 'on') %}
-          xiaomi_miio_airpurifier.fan_set_led_off
-        {% else %}
-          xiaomi_miio_airpurifier.fan_set_led_on
-        {% endif %}
-      entity_id: fan.humidifier
+    - service: script.do_not_disturb_mode
 
 - id: do_not_disturb_while_sleeping_time
   alias: Do Not Disturb while Sleeping Time
