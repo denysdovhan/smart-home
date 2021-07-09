@@ -1,6 +1,6 @@
 silent_mode:
   alias: Silence Mode
-  sequance:
+  sequence:
     - service: fan.set_preset_mode
       target:
         entity_id: fan.purifier
