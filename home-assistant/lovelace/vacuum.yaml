@@ -50,11 +50,9 @@ cards:
           - entity: script.vacuum_access
             name: Виїхати з-під ліжка
             action_name: Виїхати
-            secondary_info: last-triggered
           - entity: script.vacuum_maintenance
             name: Обслуговування пилососа
             action_name: Обслужити
-            secondary_info: last-triggered
 
   - type: vertical-stack
     title: Карта

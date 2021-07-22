@@ -28,13 +28,13 @@ do_not_disturb_mode:
     - choose:
         - conditions:
             - condition: state
-              entity_id: binary_sensor.do_not_disurb
+              entity_id: input_boolean.do_not_disturb
               state: 'on'
           sequence:
             - service: script.silent_mode
         - conditions:
             - condition: state
-              entity_id: binary_sensor.do_not_disurb
+              entity_id: input_boolean.do_not_disturb
               state: 'off'
           sequence:
             - service: script.activity_mode
