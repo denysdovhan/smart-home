@@ -171,3 +171,26 @@ sensor:
             {% set domains = [states.light, states.media_player, states.fan] %}
             {% set states = ['unavailable', 'unknown', 'none'] %}
             {{ expand(domains) | selectattr('state', 'in', states) | map(attribute='name') | list }}
+
+  # Time for new home
+  - platform: template
+    sensors:
+      fayna_days_left:
+        friendly_name: Fayna Days Left
+        unit_of_measurement: days
+        value_template: >-
+          {{ (as_local(as_datetime("2023-04-01")) - now()).days }}
+      fayna_days_past:
+        friendly_name: Fayna Days Past
+        unit_of_measurement: days
+        value_template: >-
+          {{ (now() - as_local(as_datetime("2021-07-22"))).days }}
+      fayna_progress:
+        friendly_name: Fayna Progress
+        unit_of_measurement: '%'
+        value_template: >-
+          {% set day = 60 * 60 * 24 %}
+          {% set days_left = (as_timestamp("2023-04-01 00:00:00") - as_timestamp(now())) / day %}
+          {% set days_past = (as_timestamp(now()) - as_timestamp("2021-07-22 13:00")) / day %}
+          {% set days_total = days_left + days_past %}
+          {{ (days_past / days_total * 100) | round(2) }}
