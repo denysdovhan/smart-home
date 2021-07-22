@@ -25,6 +25,8 @@ lovelace:
       type: module
     - url: /hacsfiles/transmission-card/transmission-card.js
       type: module
+    - url: /hacsfiles/bar-card/bar-card.js
+      type: module
     #
     # DEV
     # Uncomment when needed
