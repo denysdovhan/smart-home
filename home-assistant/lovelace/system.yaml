@@ -48,47 +48,13 @@ cards:
             hour24: true
             show:
               graph: bar
+
       - type: custom:transmission-card
         hide_type: false
         default_type: 'active'
-      - type: grid
-        title: Система
-        columns: 2
-        square: false
-        cards:
-          - type: gauge
-            name: Процесор
-            entity: sensor.processor_use
-            severity:
-              green: 0
-              yellow: 75
-              red: 90
-          - type: gauge
-            name: Оперативна пам’ять
-            entity: sensor.memory_use_percent
-            severity:
-              green: 0
-              yellow: 75
-              red: 90
-          - type: gauge
-            name: Диск системи
-            entity: sensor.disk_use_percent
-            severity:
-              green: 0
-              yellow: 75
-              red: 90
-          - type: gauge
-            name: Диск медіа
-            entity: sensor.disk_use_percent_media
-            severity:
-              green: 0
-              yellow: 75
-              red: 90
 
-  - type: vertical-stack
-    title: AdGuard Home
-    cards:
       - type: grid
+        title: AdGuard Home
         columns: 2
         square: false
         cards:
@@ -126,18 +92,43 @@ cards:
             points_per_hour: 2
             animate: true
             hour24: true
-      - type: entities
-        title: AdGuard DNS
-        entities:
-          - switch.adguard_protection
-          - switch.adguard_filtering
-          - switch.adguard_parental_control
-          - switch.adguard_safe_browsing
-          - switch.adguard_safe_search
 
   - type: vertical-stack
-    title: Інше
     cards:
+      - type: grid
+        title: Система
+        columns: 2
+        square: false
+        cards:
+          - type: gauge
+            name: Процесор
+            entity: sensor.processor_use
+            severity:
+              green: 0
+              yellow: 75
+              red: 90
+          - type: gauge
+            name: Оперативна пам’ять
+            entity: sensor.memory_use_percent
+            severity:
+              green: 0
+              yellow: 75
+              red: 90
+          - type: gauge
+            name: Диск системи
+            entity: sensor.disk_use_percent
+            severity:
+              green: 0
+              yellow: 75
+              red: 90
+          - type: gauge
+            name: Диск медіа
+            entity: sensor.disk_use_percent_media
+            severity:
+              green: 0
+              yellow: 75
+              red: 90
+
       - type: entities
         title: Zigbee Bridge
         entities:
@@ -145,10 +136,8 @@ cards:
           - timer.zigbee_permit_join
           - sensor.bridge_state
 
-  - type: vertical-stack
-    title: Сервіси
-    cards:
       - type: entities
+        title: Сервіси
         entities:
           - type: button
             icon: mdi:ubuntu
