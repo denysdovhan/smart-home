@@ -381,3 +381,26 @@
           push:
             category: camera
           entity_id: camera.iss
+
+- id: fayna_progress
+  alias: Fayna Town Progress Alert
+  trigger:
+    - platform: template
+      value_template: >-
+        {{ (states('sensor.fayna_progress') | float) % 1 == 0 }}}
+  action:
+    - service: script.announcement
+      data:
+        title: 'Файна Таун 🏙'
+        greetings:
+          - "Готовність будівництва {{ states('sensor.fayna_progress') | int }}%."
+          - "Готовність {{ states('sensor.fayna_progress') | int }}%."
+          - "Будинок готовий на {{ states('sensor.fayna_progress') | int }}%."
+          - "Будівництво просунулось на {{ states('sensor.fayna_progress') | int }}%."
+        messages:
+          - "Залишилось чекати {{ states('sensor.fayna_days_left') }}, а пройшло вже {{ states('sensor.fayna_days_past') }} днів."
+          - "Залишилось {{ states('sensor.fayna_days_left') }} днів. Пройшло {{ states('sensor.fayna_days_past') }}."
+          - "Пройшло вже {{ states('sensor.fayna_days_past') }} днів. Залишилось {{ states('sensor.fayna_days_left') }}."
+          - "{{ states('sensor.fayna_days_past') }} днів пройшло. {{ states('sensor.fayna_days_left') }} залишилось."
+        # notify_data:
+        # url: /lovelace/space
