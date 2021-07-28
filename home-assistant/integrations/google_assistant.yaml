@@ -61,23 +61,34 @@ google_assistant:
     # Prevent exposing specific entities
     # ----------------------------------
 
-    # Exposed by Table Lights
+    # Table Lights
     light.living_room_lower_table_light:
       expose: false
     light.living_room_upper_table_light:
       expose: false
-    # Exposed by Main Light
+    # Main Light
     light.living_room_main_light_bulb_1:
+      expose: false
+    switch.living_room_main_light_bulb_1_power_outage_memory:
       expose: false
     light.living_room_main_light_bulb_2:
       expose: false
+    switch.living_room_main_light_bulb_2_power_outage_memory:
+      expose: false
     light.living_room_main_light_bulb_3:
+      expose: false
+    switch.living_room_main_light_bulb_3_power_outage_memory:
       expose: false
     light.living_room_main_light_bulb_4:
       expose: false
-    # Duplication for lights
+    switch.living_room_main_light_bulb_4_power_outage_memory:
+      expose: false
+    # Bedroom Lights
+    switch.bedroom_ceiling_light_power_outage_memory:
+      expose: false
     switch.bedroom_bed_lights:
       expose: false
+    # Duplication for lights
     switch.living_room_tv_lights:
       expose: false
     switch.balcony_heater:
@@ -117,4 +128,11 @@ google_assistant:
     switch.transmission_turtle_mode:
       expose: false
     switch.transmission_switch:
+      expose: false
+    # Adaptive Lighting
+    switch.adaptive_lighting_adapt_brightness_home:
+      expose: false
+    switch.adaptive_lighting_adapt_color_home:
+      expose: false
+    switch.adaptive_lighting_sleep_mode_home:
       expose: false
