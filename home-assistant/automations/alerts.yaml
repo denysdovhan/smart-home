@@ -403,4 +403,4 @@
           - "Пройшло вже {{ states('sensor.fayna_days_past') }} днів. Залишилось {{ states('sensor.fayna_days_left') }}."
           - "{{ states('sensor.fayna_days_past') }} днів пройшло. {{ states('sensor.fayna_days_left') }} залишилось."
         notify_data:
-        url: /lovelace/cameras
+          url: /lovelace/cameras
