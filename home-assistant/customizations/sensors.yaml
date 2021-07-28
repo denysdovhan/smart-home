@@ -147,3 +147,16 @@ sensor.magic_cube_linkquality:
   friendly_name: Magic Cube Linkquality
 sensor.magic_cube_voltage:
   friendly_name: Magic Cube Voltage
+
+# Fayna Town
+sensor.fayna_days_left:
+  friendly_name: Fayna Days Left
+  icon: mdi:calendar-arrow-right
+  unit_of_measurement: days
+sensor.fayna_days_past:
+  friendly_name: Fayna Days Past
+  icon: mdi:calendar-arrow-left
+  unit_of_measurement: days
+sensor.fayna_progress:
+  friendly_name: Fayna Progress
+  unit_of_measurement: '%'
