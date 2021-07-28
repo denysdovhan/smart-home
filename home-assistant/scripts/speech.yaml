@@ -1,5 +1,5 @@
 announcement:
-  alias: Send a push-notification and make an announcement on smart speaker
+  alias: Announcement
   fields:
     title:
       description: A title for a push-notification
@@ -13,12 +13,15 @@ announcement:
       description: Optionally specify to make the announcement silently (true by default)
     notify:
       description: Optionally specify to make voice-only announcement (true by default)
+    force_speak:
+      description: Force speaking even in DND (false by default)
     notify_data:
       description: Optionally pass additional data for a notification
   variables:
     service: notify.all
     speak: true
     notify: true
+    force_speak: false
     notify_data:
       url: /lovelace/home
     greetings: []
@@ -41,6 +44,16 @@ announcement:
             - condition: state
               entity_id: input_boolean.do_not_disturb
               state: 'off'
+          sequence:
+            - service: tts.google_say
+              data:
+                entity_id: media_player.all_speakers
+                message: '{{ message }}'
+        - conditions:
+            - condition: template
+              value_template: '{{ speak is true }}'
+            - condition: template
+              value_template: '{{ force_speak is true }}'
           sequence:
             - service: tts.google_say
               data:
@@ -115,6 +128,7 @@ greeting:
             - service: script.announcement
               data:
                 notify: false
+                force_speak: true
                 greetings: '{{ greeting }}'
                 messages: '{{ day_phrases }}'
         - conditions:
@@ -125,10 +139,12 @@ greeting:
             - service: script.announcement
               data:
                 notify: false
+                force_speak: true
                 greetings: '{{ greeting }}'
                 messages: '{{ night_phrases }}'
       default:
         - service: script.announcement
           data:
             notify: false
+            force_speak: true
             messages: '{{ greeting }}'

@@ -14,14 +14,6 @@ binary_sensor:
     after: '12:00'
     before: '21:00'
   - platform: tod
-    name: Evening Time
-    after: sunset
-    before: '00:00'
-  - platform: tod
-    name: Night Time
-    after: '00:00'
-    before: sunrise
-  - platform: tod
     name: Sleeping Time
     after: '00:00'
     before: '10:00'

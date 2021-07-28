@@ -10,11 +10,8 @@ everyone_is_arriving:
     - choose:
         - conditions:
             - condition: state
-              entity_id: binary_sensor.evening_time
-              state: 'on'
-            - condition: numeric_state
-              entity_id: sensor.living_room_movement_sensor_illuminance
-              below: 15
+              entity_id: sun.sun
+              state: 'below_horizon'
           sequence:
             - service: scene.turn_on
               data:
