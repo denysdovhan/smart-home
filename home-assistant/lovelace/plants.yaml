@@ -1,7 +1,0 @@
-path: plants
-title: Вазони
-icon: mdi:sprout
-cards:
-  - type: plant-status
-    entity: plant.dracaena
-    name: Драцена

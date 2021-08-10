@@ -377,7 +377,7 @@
           - "Екіпаж: {{ state_attr('binary_sensor.iss', 'number_of_people_in_space') }} людей."
           - "{{ state_attr('binary_sensor.iss', 'number_of_people_in_space') }} людей на борту."
         notify_data:
-          url: /lovelace/space
+          url: /lovelace/observation
           push:
             category: camera
           entity_id: camera.iss
@@ -387,7 +387,7 @@
   trigger:
     - platform: template
       value_template: >-
-        {{ (states('sensor.fayna_progress') | float) % 1 == 0 }}}
+        {{ (states('sensor.fayna_progress') | float) % 1 == 0 }}
   action:
     - service: script.announcement
       data:
@@ -403,4 +403,4 @@
           - "Пройшло вже {{ states('sensor.fayna_days_past') }} днів. Залишилось {{ states('sensor.fayna_days_left') }}."
           - "{{ states('sensor.fayna_days_past') }} днів пройшло. {{ states('sensor.fayna_days_left') }} залишилось."
         notify_data:
-          url: /lovelace/cameras
+          url: /lovelace/observation

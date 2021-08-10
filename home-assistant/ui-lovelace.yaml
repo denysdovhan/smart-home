@@ -13,6 +13,5 @@ views:
   - !include lovelace/vacuum.yaml
   - !include lovelace/car.yaml
   - !include lovelace/cameras.yaml
-  - !include lovelace/plants.yaml
-  - !include lovelace/space.yaml
+  - !include lovelace/observation.yaml
   - !include lovelace/system.yaml

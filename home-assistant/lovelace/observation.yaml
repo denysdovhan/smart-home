@@ -1,0 +1,63 @@
+path: observation
+title: Спостереження
+icon: mdi:eye
+cards:
+  - type: vertical-stack
+    title: Сонце
+    cards:
+      - type: custom:sun-card
+
+  - type: vertical-stack
+    title: Міжнародна космічна станція
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: entity
+            name: На борту
+            entity: binary_sensor.iss
+            attribute: number_of_people_in_space
+            unit: людей
+            icon: mdi:human-greeting
+          - type: entity
+            name: Наступне сходження
+            entity: binary_sensor.iss
+            attribute: next_rise
+            icon: mdi:weather-sunset-up
+      - type: picture-glance
+        title: Міжнародна космічна станція
+        camera_image: camera.iss
+        camera_view: live
+        entities: []
+
+  - type: vertical-stack
+    title: Вазони
+    cards:
+      - type: plant-status
+        entity: plant.dracaena
+        name: Драцена
+
+  - type: vertical-stack
+    title: Файна Таун
+    cards:
+      - type: custom:bar-card
+        entity: sensor.fayna_progress
+        name: Будівництво
+        icon: mdi:domain
+        positions:
+          icon: inside
+          indicator: inside
+          name: inside
+          value: inside
+        animation:
+          state: 'on'
+      - type: horizontal-stack
+        cards:
+          - type: entity
+            name: Днів залинилось
+            entity: sensor.fayna_days_left
+          - type: entity
+            entity: sensor.fayna_days_past
+            name: Днів пройшло
+      - type: iframe
+        url: //youtube.com/embed/RxqM8u2lr7g?autoplay=1
+        aspect_ratio: 16x9

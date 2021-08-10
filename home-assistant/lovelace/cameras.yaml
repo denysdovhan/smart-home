@@ -26,26 +26,6 @@ cards:
         camera_view: live
         aspect_ratio: 50%
         entities: []
-      - type: entities
-        title: Файна Таун
-        entities:
-          - type: custom:bar-card
-            entity: sensor.fayna_progress
-            name: Будівництво
-            icon: mdi:domain
-            entity_row: true
-            positions:
-              icon: inside
-              indicator: inside
-              name: inside
-              minmax: inside
-              value: inside
-            animation:
-              state: 'on'
-          - entity: sensor.fayna_days_left
-            name: Днів залинилось
-          - entity: sensor.fayna_days_past
-            name: Днів пройшло
 
   - type: vertical-stack
     title: Чернівці
