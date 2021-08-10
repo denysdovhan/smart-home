@@ -34,6 +34,7 @@ token-*.txt
 /zigbee2mqtt/secret.yaml
 /zigbee2mqtt/state.json
 /zigbee2mqtt/log
+/zigbee2mqtt/coordinator_backup.json
 
 # IDE
 .vscode
