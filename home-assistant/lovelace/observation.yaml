@@ -53,11 +53,11 @@ cards:
       - type: horizontal-stack
         cards:
           - type: entity
-            name: Днів залинилось
-            entity: sensor.fayna_days_left
-          - type: entity
             entity: sensor.fayna_days_past
             name: Днів пройшло
+          - type: entity
+            name: Днів залинилось
+            entity: sensor.fayna_days_left
       - type: iframe
         url: //youtube.com/embed/RxqM8u2lr7g?autoplay=1
         aspect_ratio: 16x9
