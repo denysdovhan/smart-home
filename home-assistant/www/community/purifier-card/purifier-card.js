@@ -420,54 +420,58 @@ const d="adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.pro
     color: var(--primary-color);
     padding-right: 15px;
   }
-`;customElements.get("ha-icon-button")||customElements.define("ha-icon-button",class extends(customElements.get("paper-icon-button")){});customElements.define("purifier-card",class extends _{static get properties(){return{hass:Object,config:Object,requestInProgress:Boolean}}static get styles(){return nC}static async getConfigElement(){return document.createElement("purifier-card-editor")}static getStubConfig(A,C){const[I]=C.filter((A=>"fan"===A.substr(0,A.indexOf("."))));return{entity:I||""}}get entity(){return this.hass.states[this.config.entity]}get showName(){return void 0===this.config.show_name||this.config.show_name}get showState(){return void 0===this.config.show_state||this.config.show_state}get showToolbar(){return void 0===this.config.show_toolbar||this.config.show_toolbar}get compactView(){return void 0!==this.config.compact_view&&this.config.compact_view}setConfig(A){if(!A.entity)throw new Error(HC("error.missing_entity"));this.config=A}getCardSize(){return 2}shouldUpdate(A){return function(A,C,I){if(C.has("config")||I)return!0;if(A.config.entity){var E=C.get("hass");return!E||E.states[A.config.entity]!==A.hass.states[A.config.entity]}return!1}(this,A)}updated(A){A.get("hass")&&A.get("hass").states[this.config.entity]!==this.hass.states[this.config.entity]&&(this.requestInProgress=!1)}handleMore(){SA(this,"hass-more-info",{entityId:this.entity.entity_id},{bubbles:!0,composed:!0})}handleSpeed(A){const C=A.target.getAttribute("value");this.callService("fan.set_speed",{speed:C})}handlePresetMode(A){const C=A.target.getAttribute("value");this.callService("fan.set_preset_mode",{preset_mode:C})}callService(A,C={},I=!0){const[E,g]=A.split(".");this.hass.callService(E,g,{entity_id:this.config.entity,...C}),I&&(this.requestInProgress=!0,this.requestUpdate())}renderSpeed(){const{attributes:{speed:A,speed_list:C,supported_features:I}}=this.entity;if(!(C&&1&I))return t``;const E=C.indexOf(A);return t`
-      <paper-menu-button
-        slot="dropdown-trigger"
-        .horizontalAlign=${"right"}
-        .verticalAlign=${"top"}
-        .verticalOffset=${40}
-        .noAnimations=${!0}
-        @click="${A=>A.stopPropagation()}"
-      >
-        <paper-button slot="dropdown-trigger">
-          <ha-icon icon="mdi:fan"></ha-icon>
-          <span show=${!0}> ${HC("speed."+A)||A} </span>
-        </paper-button>
-        <paper-listbox
-          slot="dropdown-content"
-          selected=${E}
-          @click="${A=>this.handleSpeed(A)}"
+`;customElements.get("ha-icon-button")||customElements.define("ha-icon-button",class extends(customElements.get("paper-icon-button")){});customElements.define("purifier-card",class extends _{static get properties(){return{hass:Object,config:Object,requestInProgress:Boolean}}static get styles(){return nC}static async getConfigElement(){return document.createElement("purifier-card-editor")}static getStubConfig(A,C){const[I]=C.filter((A=>"fan"===A.substr(0,A.indexOf("."))));return{entity:I||""}}get entity(){return this.hass.states[this.config.entity]}get showSpeed(){return void 0!==this.config.show_speed&&this.config.show_speed}get showPresetMode(){return void 0===this.config.show_preset_mode||this.config.show_preset_mode}get showName(){return void 0===this.config.show_name||this.config.show_name}get showState(){return void 0===this.config.show_state||this.config.show_state}get showToolbar(){return void 0===this.config.show_toolbar||this.config.show_toolbar}get compactView(){return void 0!==this.config.compact_view&&this.config.compact_view}setConfig(A){if(!A.entity)throw new Error(HC("error.missing_entity"));this.config=A}getCardSize(){return 2}shouldUpdate(A){return function(A,C,I){if(C.has("config")||I)return!0;if(A.config.entity){var E=C.get("hass");return!E||E.states[A.config.entity]!==A.hass.states[A.config.entity]}return!1}(this,A)}updated(A){A.get("hass")&&A.get("hass").states[this.config.entity]!==this.hass.states[this.config.entity]&&(this.requestInProgress=!1)}handleMore(){SA(this,"hass-more-info",{entityId:this.entity.entity_id},{bubbles:!0,composed:!0})}handleSpeed(A){const C=A.target.getAttribute("value");this.callService("fan.set_speed",{speed:C})}handlePresetMode(A){const C=A.target.getAttribute("value");this.callService("fan.set_preset_mode",{preset_mode:C})}callService(A,C={},I=!0){const[E,g]=A.split(".");this.hass.callService(E,g,{entity_id:this.config.entity,...C}),I&&(this.requestInProgress=!0,this.requestUpdate())}renderSpeed(){const{attributes:{speed:A,speed_list:C,supported_features:I}}=this.entity;if(!(this.showSpeed()&&C&&1&I))return t``;const E=C.indexOf(A);return t`
+      <div class="speed>
+        <paper-menu-button
+          slot="dropdown-trigger"
+          .horizontalAlign=${"right"}
+          .verticalAlign=${"top"}
+          .verticalOffset=${40}
+          .noAnimations=${!0}
+          @click="${A=>A.stopPropagation()}"
         >
-          ${C.map((A=>t`<paper-item value=${A}
-                >${HC("speed."+A)||A}</paper-item
-              >`))}
-        </paper-listbox>
-      </paper-menu-button>
-    `}renderPresetMode(){const{attributes:{preset_mode:A,preset_modes:C,supported_features:I}}=this.entity;if(!(C&&8&I))return t``;const E=C.indexOf(A);return t`
-      <paper-menu-button
-        slot="dropdown-trigger"
-        .horizontalAlign=${"right"}
-        .verticalAlign=${"top"}
-        .verticalOffset=${40}
-        .noAnimations=${!0}
-        @click="${A=>A.stopPropagation()}"
-      >
-        <paper-button slot="dropdown-trigger">
-          <ha-icon icon="mdi:fan"></ha-icon>
-          <span show=${!0}
-            >${HC("preset_mode."+A)||A}
-          </span>
-        </paper-button>
-        <paper-listbox
-          slot="dropdown-content"
-          selected=${E}
-          @click="${A=>this.handlePresetMode(A)}"
+          <paper-button slot="dropdown-trigger">
+            <ha-icon icon="mdi:fan"></ha-icon>
+            <span show=${!0}> ${HC("speed."+A)||A} </span>
+          </paper-button>
+          <paper-listbox
+            slot="dropdown-content"
+            selected=${E}
+            @click="${A=>this.handleSpeed(A)}"
+          >
+            ${C.map((A=>t`<paper-item value=${A}
+                  >${HC("speed."+A)||A}</paper-item
+                >`))}
+          </paper-listbox>
+        </paper-menu-button>
+      </div>
+    `}renderPresetMode(){const{attributes:{preset_mode:A,preset_modes:C,supported_features:I}}=this.entity;if(!(this.showPresetMode()&&C&&8&I))return t``;const E=C.indexOf(A);return t`
+      <div class="preset-mode">
+        <paper-menu-button
+          slot="dropdown-trigger"
+          .horizontalAlign=${"right"}
+          .verticalAlign=${"top"}
+          .verticalOffset=${40}
+          .noAnimations=${!0}
+          @click="${A=>A.stopPropagation()}"
         >
-          ${C.map((A=>t`<paper-item value=${A}
-                >${HC("preset_mode."+A)||A}</paper-item
-              >`))}
-        </paper-listbox>
-      </paper-menu-button>
+          <paper-button slot="dropdown-trigger">
+            <ha-icon icon="mdi:fan"></ha-icon>
+            <span show=${!0}
+              >${HC("preset_mode."+A)||A}
+            </span>
+          </paper-button>
+          <paper-listbox
+            slot="dropdown-content"
+            selected=${E}
+            @click="${A=>this.handlePresetMode(A)}"
+          >
+            ${C.map((A=>t`<paper-item value=${A}
+                  >${HC("preset_mode."+A)||A}</paper-item
+                >`))}
+          </paper-listbox>
+        </paper-menu-button>
+      </div>
     `}renderAQI(){const{aqi:A={}}=this.config,{entity_id:C,attribute:I="aqi",unit:E="AQI"}=A,g=C?this.hass.states[C].state:this.entity.attributes[I];let Q="";return g<10?Q=t`<span class="number-off">00</span>`:g<100&&(Q=t`<span class="number-off">0</span>`),t`
       <div class="current-aqi">
         ${Q}<span class="number-on">${g}</span>
@@ -528,8 +532,8 @@ const d="adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.pro
           ?more-info="true"
         >
           <div class="header">
-            <div class="speed">${this.renderSpeed()}</div>
-            <div class="preset-mode">${this.renderPresetMode()}</div>
+            ${this.renderSpeed()}
+            ${this.renderPresetMode()}
           </div>
 
           <div class="image ${I}">${this.renderAQI()}</div>
