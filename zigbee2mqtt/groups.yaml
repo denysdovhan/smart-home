@@ -1,6 +1,5 @@
 '1':
   friendly_name: living_room_main_light
-  transition: 1
   devices:
     - 0x00158d0002d3c856/1
     - 0x00158d000450cca4/1
