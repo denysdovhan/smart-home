@@ -27,9 +27,24 @@
         title: 'Оновлення HACS 🎉'
         speak: false
         messages:
-          - "Доступна оновлення для {{ states('sensor.hacs') }} пакетів в HACS."
-          - "HACS має {{ states('sensor.hacs') }} оновлень."
-          - "Достуно {{ states('sensor.hacs') }} оновлень в HACS."
+          - >-
+            Доступні оновлення для {{ states('sensor.hacs') }} пакетів в HACS:
+
+            {% for repo in state_attr('sensor.hacs', 'repositories') %}
+            • {{ repo.display_name }}: {{ repo.installed_version }} → {{ repo.available_version }}
+            {% endfor %}
+          - >-
+            HACS має {{ states('sensor.hacs') }} оновлень:
+
+            {% for repo in state_attr('sensor.hacs', 'repositories') %}
+            • {{ repo.display_name }}: {{ repo.installed_version }} → {{ repo.available_version }}
+            {% endfor %}
+          - >-
+            Достуно {{ states('sensor.hacs') }} оновлень в HACS:
+
+            {% for repo in state_attr('sensor.hacs', 'repositories') %}
+            • {{ repo.display_name }}: {{ repo.installed_version }} → {{ repo.available_version }}
+            {% endfor %}
         notify_data:
           url: /hacs/entry
 
