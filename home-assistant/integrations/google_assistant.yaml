@@ -45,6 +45,12 @@ google_assistant:
       aliases:
         - ps4
         - console
+    media_player.samsung_tv:
+      expose: true
+      aliases:
+        - tv
+        - tevelevision
+        - samsung tv
     # Switch
     switch.adaptive_lighting_home:
       name: Flux
