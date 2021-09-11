@@ -83,8 +83,3 @@ camera:
       - vacuum_position
       - walls
       - zones
-
-  - platform: generic
-    name: ISS
-    still_image_url: !secret iss_map
-    limit_refetch_to_url_change: true
