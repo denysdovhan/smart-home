@@ -10,7 +10,7 @@ RUN git clone --depth 1 --single-branch --branch master https://github.com/mikec
 
 WORKDIR /app
 
-RUN yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile --network-timeout 1000000
 RUN yarn next telemetry disable
 RUN yarn build
 
