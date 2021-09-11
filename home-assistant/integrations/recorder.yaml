@@ -1,9 +1,0 @@
-#
-# RESTful Command
-#
-# https://www.home-assistant.io/integrations/recorder/
-#
-
-recorder:
-  purge_keep_days: 14
-  commit_interval: 30
