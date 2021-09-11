@@ -82,6 +82,19 @@ services:
     privileged: true
     network_mode: host
 
+  # ESPHome
+  # A system to control ESP8266/ESP32 devices
+  esphome:
+    container_name: esphome
+    image: esphome/esphome
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./esphome:/config:rw
+      - /etc/localtime:/etc/localtime:ro
+    network_mode: host
+
   # Duplicati
   # Simple and flexible UI for backing up stuff
   duplicati:

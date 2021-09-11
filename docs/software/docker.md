@@ -32,6 +32,8 @@ In my case, this is an MQTT broker (basically, a man in the middle) between [Hom
 
 In my case, it bridges my Zigbee devices to Home Assistant via CC2531 sniffer. You can read more about it in the [Hardware section](../../hardware).
 
+<!-- TODO: ESPHOME -->
+
 ## Duplicati
 
 ![Duplicati](https://user-images.githubusercontent.com/3459374/115125056-6e725c80-9fce-11eb-813b-07f3e5441f7b.png)

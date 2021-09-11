@@ -9,6 +9,7 @@ Here's a table of services and ports exposed via `docker-compose`:
 | Home Assistant      | 8123                                                             |
 | Mosquitto           | 1888                                                             |
 | Zigbee2MQTT         | 8099                                                             |
+| ESPHome             | 6052                                                             |
 | Duplicati           | 8200                                                             |
 | Adminer             | 8080                                                             |
 | Nginx Proxy Manager | 80, 443, 8081                                                    |
