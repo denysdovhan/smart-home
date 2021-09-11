@@ -125,12 +125,12 @@ function smart-home:command:update() {
   echo "Starting containers..."
   docker-compose up -d
   echo "Prune to free up space..."
-  docker image prune -af
+  docker system prune --volumes -f
 }
 
 function smart-home:command:prune() {
   echo "Deletting all images not associated with a container..."
-  docker image prune -a
+  docker system prune --volumes
 }
 
 function smart-home:command:password() {
