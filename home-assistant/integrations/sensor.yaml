@@ -25,29 +25,6 @@ sensor:
     name: dracaena
     mac: 'C4:7C:8D:6D:49:73'
 
-  # Humidifier
-  - platform: template
-    sensors:
-      humidifier_humidity:
-        value_template: >-
-          {{ state_attr('fan.humidifier', 'humidity') }}
-      humidifier_temperature:
-        value_template: >-
-          {{ state_attr('fan.humidifier', 'temperature') | round(2) }}
-
-  # Purifier
-  - platform: template
-    sensors:
-      purifier_humidity:
-        value_template: >-
-          {{ state_attr('fan.purifier', 'humidity') }}
-      purifier_temperature:
-        value_template: >-
-          {{ state_attr('fan.purifier', 'temperature') | round(2) }}
-      purifier_aqi:
-        value_template: >-
-          {{ state_attr('fan.purifier', 'aqi') }}
-
   # Temperature
   - platform: min_max
     name: Home Temperature
@@ -55,13 +32,13 @@ sensor:
     entity_ids:
       - sensor.living_room_conditions_sensor_temperature
       - sensor.humidifier_temperature
-      - sensor.purifier_temperature
+      - sensor.air_purifier_temperature
   - platform: min_max
     name: Living Room Temperature
     type: mean
     entity_ids:
       - sensor.living_room_conditions_sensor_temperature
-      - sensor.purifier_temperature
+      - sensor.air_purifier_temperature
   - platform: min_max
     name: Bedroom Temperature
     type: mean
@@ -76,13 +53,13 @@ sensor:
     entity_ids:
       - sensor.living_room_conditions_sensor_humidity
       - sensor.humidifier_humidity
-      - sensor.purifier_humidity
+      - sensor.air_purifier_humidity
   - platform: min_max
     name: Living Room Humidity
     type: mean
     entity_ids:
       - sensor.living_room_conditions_sensor_humidity
-      - sensor.purifier_humidity
+      - sensor.air_purifier_humidity
   - platform: min_max
     name: Bedroom Humidity
     type: mean
@@ -90,20 +67,37 @@ sensor:
       - sensor.living_room_conditions_sensor_humidity
       - sensor.humidifier_humidity
 
-  # Eco City AQI
+  # Humidifier
+  - platform: template
+    sensors:
+      humidifier_humidity:
+        value_template: >-
+          {{ state_attr('fan.humidifier', 'humidity') }}
+      humidifier_temperature:
+        value_template: >-
+          {{ state_attr('fan.humidifier', 'temperature') | round(2) }}
+
+  # Sviatoshyn PM2.5
+  - platform: template
+    sensors:
+      sviatoshyn_pm2_5:
+        value_template: >-
+          {{ state_attr('sensor.sviatoshyn_aqi', 'pm25') | round() }}
+
+  # Lun Misto AQI
   - platform: rest
-    name: nyvky_aqi
-    resource: https://eco-city.org.ua/output.json
+    name: sviatoshyn_aqi
+    resource: https://misto.lun.ua/api/air/v1/public/data/
     value_template: >-
-      {% set station = 'EcoCity_867' %}
+      {% set station = '125' %}
       {# #}
       {% macro aqi(aqihigh, aqilow, conchigh, conclow, conc) -%}
         {{ ((aqihigh - aqilow) / (conchigh - conclow) * (conc - conclow) + aqilow) | int }}
       {%- endmacro %}
       {# #}
       {% for sensor in value_json %}
-        {% if sensor.id == station %}
-          {% set conc = sensor.pollutants[0].value | float %}
+        {% if sensor.station.name == station %}
+          {% set conc = sensor.particles[2].pm25 | float %}
           {% if conc >= 0 and conc <= 50 %}
               {{ aqi(50, 0, 12, 0, conc) }}
           {% elif conc > 50 and conc <= 100 %}
@@ -124,14 +118,11 @@ sensor:
         {% endif %}
       {% endfor %}
     scan_interval: 120 # every 2 minutes
-    json_attributes_path: "$.[?(@.id=='EcoCity_867')]"
+    json_attributes_path: "$.[?(@.station.name=='125')].particles[2]"
     json_attributes:
-      - id
-      - cityName
-      - stationName
-      - localName
-      - timezone
-      - pollutants
+      - pm25
+      - pm10
+      - pm100
 
   # Kyiv Smart Card
   #

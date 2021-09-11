@@ -100,25 +100,15 @@ sensor.humidifier_temperature:
   unit_of_measurement: '°C'
   device_class: temperature
 
-# Purifier
-sensor.purifier_humidity:
-  friendly_name: Purifier Humidity
-  unit_of_measurement: '%'
-  device_class: humidity
-sensor.purifier_temperature:
-  friendly_name: Purifier Temperature
-  unit_of_measurement: '°C'
-  device_class: temperature
-sensor.purifier_aqi:
-  friendly_name: Purifier AQI
+# LUN Misto AQI
+sensor.sviatoshyn_aqi:
+  friendly_name: Sviatoshyn AQI
   icon: mdi:cloud
   unit_of_measurement: 'AQI'
-
-# Eco City AQI
-sensor.nyvky_aqi:
-  friendly_name: Nyvky AQI
-  icon: mdi:cloud
-  unit_of_measurement: 'AQI'
+sensor.sviatoshyn_pm2_5:
+  friendly_name: Sviatoshyn PM2.5
+  icon: mdi:blur
+  unit_of_measurement: 'µg/m³'
 
 # Car
 sensor.toyota_balance:

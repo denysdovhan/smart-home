@@ -3,7 +3,7 @@ silent_mode:
   sequence:
     - service: fan.set_preset_mode
       target:
-        entity_id: fan.purifier
+        entity_id: fan.air_purifier
       data:
         preset_mode: Silent
 
@@ -15,7 +15,7 @@ activity_mode:
   sequence:
     - service: fan.set_preset_mode
       target:
-        entity_id: fan.purifier
+        entity_id: fan.air_purifier
       data:
         preset_mode: Auto
 
