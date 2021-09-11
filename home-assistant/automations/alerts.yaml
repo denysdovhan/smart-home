@@ -30,21 +30,21 @@
           - >-
             Доступні оновлення для {{ states('sensor.hacs') }} пакетів в HACS:
 
-            {% for repo in state_attr('sensor.hacs', 'repositories') %}
-            • {{ repo.display_name }}: {{ repo.installed_version }} → {{ repo.available_version }}
-            {% endfor %}
+            {%- for repo in state_attr('sensor.hacs', 'repositories') %}
+              • {{ repo.display_name }}: {{ repo.installed_version }} → {{ repo.available_version }}
+            {%- endfor -%}
           - >-
             HACS має {{ states('sensor.hacs') }} оновлень:
 
-            {% for repo in state_attr('sensor.hacs', 'repositories') %}
-            • {{ repo.display_name }}: {{ repo.installed_version }} → {{ repo.available_version }}
-            {% endfor %}
+            {%- for repo in state_attr('sensor.hacs', 'repositories') %}
+              • {{ repo.display_name }}: {{ repo.installed_version }} → {{ repo.available_version }}
+            {%- endfor -%}
           - >-
             Достуно {{ states('sensor.hacs') }} оновлень в HACS:
 
-            {% for repo in state_attr('sensor.hacs', 'repositories') %}
-            • {{ repo.display_name }}: {{ repo.installed_version }} → {{ repo.available_version }}
-            {% endfor %}
+            {%- for repo in state_attr('sensor.hacs', 'repositories') %}
+              • {{ repo.display_name }}: {{ repo.installed_version }} → {{ repo.available_version }}
+            {%- endfor -%}
         notify_data:
           url: /hacs/entry
 
@@ -69,19 +69,19 @@
   mode: single
   trigger:
     - platform: numeric_state
-      entity_id: sensor.nyvky_aqi
+      entity_id: sensor.sviatoshyn_aqi
       above: 150
       below: 200
       for:
         minutes: 30
     - platform: numeric_state
-      entity_id: sensor.nyvky_aqi
+      entity_id: sensor.sviatoshyn_aqi
       above: 201
       below: 300
       for:
         minutes: 30
     - platform: numeric_state
-      entity_id: sensor.nyvky_aqi
+      entity_id: sensor.sviatoshyn_aqi
       above: 301
       for:
         minutes: 30
@@ -89,7 +89,7 @@
     - choose:
         - conditions:
             - condition: numeric_state
-              entity_id: sensor.nyvky_aqi
+              entity_id: sensor.sviatoshyn_aqi
               above: 150
               below: 200
           sequence:
@@ -108,7 +108,7 @@
                   - 'Заняття спортом на вулиці заборонені.'
         - conditions:
             - condition: numeric_state
-              entity_id: sensor.nyvky_aqi
+              entity_id: sensor.sviatoshyn_aqi
               above: 201
               below: 300
           sequence:
@@ -118,7 +118,7 @@
                 greetings:
                   - 'Рівень якості повітря: {{ trigger.to_state.state | int }} AQI'
                   - 'Надворі дуже шкідливе повітря: {{ trigger.to_state.state | int }} AQI'
-                  - "Дуже шкідливе повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+                  - "Дуже шкідливе повітря: {{ states('sensor.sviatoshyn_aqi') | int }} AQI"
                   - '{{ trigger.to_state.state | int }} AQI.'
                 messages:
                   - 'Може викликати захворювання у здорових людей при тривалому впливі.'
@@ -127,7 +127,7 @@
                   - 'Заняття спортом на вулиці заборонені.'
         - conditions:
             - condition: numeric_state
-              entity_id: sensor.nyvky_aqi
+              entity_id: sensor.sviatoshyn_aqi
               above: 301
           sequence:
             - service: script.announcement
@@ -153,7 +153,7 @@
           data:
             title: 'Повітря 🌫'
             messages:
-              - "Погіршується якість повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+              - "Погіршується якість повітря: {{ states('sensor.sviatoshyn_aqi') | int }} AQI"
             notify_data:
               url: /lovelace/home
     - delay:
@@ -364,38 +364,6 @@
                   - 'Варто поїхати на шиномонтаж для заміни шин.'
                 notify_data:
                   url: /lovelace/car
-
-- id: iss_tire_alert
-  alias: ISS Alert
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.iss
-      to: 'on'
-  condition:
-    - condition: state
-      entity_id: binary_sensor.far_from_home
-      state: 'off'
-    - condition: state
-      entity_id: sun.sun
-      state: 'below_horizon'
-  action:
-    - service: script.announcement
-      data:
-        title: 'Міжнародна космічна станція 🛰'
-        greetings:
-          - 'МКС пролітає над домом!'
-          - 'На горизонті видніється МКС!'
-          - 'Над домом пролітатиме МКС!'
-          - 'Шукайте на небі МКС!'
-        messages:
-          - "На борту {{ state_attr('binary_sensor.iss', 'number_of_people_in_space') }} людей."
-          - "Екіпаж: {{ state_attr('binary_sensor.iss', 'number_of_people_in_space') }} людей."
-          - "{{ state_attr('binary_sensor.iss', 'number_of_people_in_space') }} людей на борту."
-        notify_data:
-          url: /lovelace/observation
-          push:
-            category: camera
-          entity_id: camera.iss
 
 - id: fayna_progress
   alias: Fayna Town Progress Alert
