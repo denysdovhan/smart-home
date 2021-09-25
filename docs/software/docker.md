@@ -32,7 +32,13 @@ In my case, this is an MQTT broker (basically, a man in the middle) between [Hom
 
 In my case, it bridges my Zigbee devices to Home Assistant via CC2531 sniffer. You can read more about it in the [Hardware section](../../hardware).
 
-<!-- TODO: ESPHOME -->
+## ESPHome
+
+![ESPHome](https://user-images.githubusercontent.com/3459374/134775986-076a68af-7fff-4251-8e38-36072302f1bb.png)
+
+[ESPHome](https://esphome.io/) is a system to control ESP8266/ESP32 devices by simple and powerful configuration files and control them remotely through Home Automation systems.
+
+I use ESPHome for connecting and controlling my Midea AC remotely.
 
 ## Duplicati
 

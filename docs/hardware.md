@@ -83,6 +83,12 @@ Below you will find a list of my devices connected to the local network. Most of
 
 \*\* — means the device is integrated via custom integration.
 
+### ESP Devices
+
+I use two ESP8266 devices based on [iot-uni-dongle](https://github.com/dudanov/iot-uni-dongle) for controlling my Midea ACs.
+
+![IMG_8682](https://user-images.githubusercontent.com/3459374/134776312-a3f4eb00-fd78-46bf-8e9c-74c8a124bfa6.jpeg)
+
 <!-- Devices -->
 
 [apple-tv]: https://www.apple.com/apple-tv-4k/
