@@ -3,7 +3,7 @@ esphome:
   platform: ESP8266
   board: esp12e
 
-# Enable logging
+# Disable logging over UART (required)
 logger:
   baud_rate: 0
 
@@ -23,35 +23,33 @@ wifi:
   password: !secret wifi_password
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: 'Living-Room-AC Fallback Hotspot'
+    ssid: 'Living Room AC Hotspot'
     password: !secret living_room_ac_password
 
 captive_portal:
 
-# Optional (if you want modify settings)
-midea_dongle:
-  strength_icon: true
-
 # Main settings
 climate:
-  - platform: midea_ac
-    name: 'Living Room AC'
+  - platform: midea
+    name: Living Room AC
+    autoconf: true
     visual:
       min_temperature: 17 °C
       max_temperature: 30 °C
       temperature_step: 1 °C
-    beeper: false
     custom_fan_modes:
       - SILENT
       - TURBO
-    preset_eco: true
-    preset_sleep: true
-    preset_boost: true
-    swing_horizontal: true
-    swing_both: true
-    outdoor_temperature:
-      name: 'Living Room AC Temperature'
     power_usage:
-      name: 'Living Room AC Power'
-    humidity_setpoint:
-      name: 'Living Room AC Humidity'
+      name: Living Room AC Power
+
+# Beeper Control
+switch:
+  - platform: template
+    name: Living Room AC Beeper
+    icon: mdi:volume-source
+    optimistic: true
+    turn_on_action:
+      midea_ac.beeper_on:
+    turn_off_action:
+      midea_ac.beeper_off:
