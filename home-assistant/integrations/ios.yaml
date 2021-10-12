@@ -25,12 +25,23 @@ ios:
             title: 'На базу'
             activationMode: 'background'
             destructive: true
-      - name: Vacuum Ask Maintenance
-        identifier: VACUUM_ASK_MAINTENANCE
+      - name: Vacuum Maintenance
+        identifier: VACUUM_MAINTENANCE
         actions:
           - identifier: VACUUM_PAUSE
             title: 'Пауза'
             activationMode: 'background'
+          - identifier: VACUUM_RETURN_TO_BASE
+            title: 'На базу'
+            activationMode: 'background'
+            destructive: true
+      - name: Vacuum Ask Maintenance
+        identifier: VACUUM_ASK_MAINTENANCE
+        actions:
+          - identifier: VACUUM_GO_TO_MAINTENANCE
+            title: 'Обслужити'
+            activationMode: 'background'
+            destructive: true
           - identifier: VACUUM_RETURN_TO_BASE
             title: 'На базу'
             activationMode: 'background'

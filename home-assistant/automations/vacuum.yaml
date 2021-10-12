@@ -158,9 +158,107 @@
           - 'Наберіть води та почистіть його!'
         notify_data:
           push:
-            category: VACUUM_ASK_MAINTENANCE
+            category: VACUUM_MAINTENANCE
           url: /lovelace/vacuum
     - service: script.vacuum_maintenance
+
+- id: vacuum_replacements
+  alias: Vacuum Replacements Alert
+  trigger:
+    - platform: numeric_state
+      id: main_brush
+      entity_id: vacuum.roborock
+      attribute: main_brush_left
+      below: 1
+    - platform: numeric_state
+      id: side_brush
+      entity_id: vacuum.roborock
+      attribute: side_brush_left
+      below: 1
+    - platform: numeric_state
+      id: filter
+      entity_id: vacuum.roborock
+      attribute: filter_left
+      below: 1
+    - platform: numeric_state
+      id: sensor_dirty
+      entity_id: vacuum.roborock
+      attribute: sensor_dirty_left
+      below: 1
+  action:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: main_brush
+          sequence:
+            - service: script.announcement
+              data:
+                title: 'Пилосос 🧹'
+                greetings:
+                  - 'Головна щітка потребує заміни.'
+                  - 'Потрібно замінити основну щітку.'
+                  - 'Замініть основну щітку.'
+                messages:
+                  - 'Не забудьте обнулити лічильник після заміни та замовити нову щітку.'
+                  - 'Обнуліть лічильник після заміни та замовте нову щітку.'
+                notify_data:
+                  push:
+                    category: VACUUM_ASK_MAINTENANCE
+                  url: /lovelace/vacuum
+        - conditions:
+            - condition: trigger
+              id: side_brush
+          sequence:
+            - service: script.announcement
+              data:
+                title: 'Пилосос 🧹'
+                greetings:
+                  - 'Бокова щітка потребує заміни.'
+                  - 'Потрібно замінити бокову щітку.'
+                  - 'Замініть бокову щітку.'
+                messages:
+                  - 'Не забудьте обнулити лічильник після заміни та замовити нову щітку.'
+                  - 'Обнуліть лічильник після заміни та замовте нову щітку.'
+                notify_data:
+                  push:
+                    category: VACUUM_ASK_MAINTENANCE
+                  url: /lovelace/vacuum
+        - conditions:
+            - condition: trigger
+              id: filter
+          sequence:
+            - service: script.announcement
+              data:
+                title: 'Пилосос 🧹'
+                greetings:
+                  - 'Основний фільтр потребує заміни.'
+                  - 'Потрібно замінити фільтр пилососа.'
+                  - 'Замініть фільтр пилососа.'
+                messages:
+                  - 'Не забудьте обнулити лічильник після заміни та замовити новий фільтр.'
+                  - 'Обнуліть лічильник після заміни та замовте новий фільтр.'
+                notify_data:
+                  push:
+                    category: VACUUM_ASK_MAINTENANCE
+                  url: /lovelace/vacuum
+        - conditions:
+            - condition: trigger
+              id: sensor_dirty
+          sequence:
+            - service: script.announcement
+              data:
+                title: 'Пилосос 🧹'
+                greetings:
+                  - 'Сенсори орієнтації забруднились.'
+                  - 'Потрібно очистити сенсори пилососа.'
+                  - 'Очистіть сенсори пилососа.'
+                messages:
+                  - 'Не забудьте обнулити лічильник після очищення.'
+                  - 'Обнуліть лічильник після очищення.'
+                notify_data:
+                  push:
+                    category: VACUUM_ASK_MAINTENANCE
+                  url: /lovelace/vacuum
 
 - id: vacuum_ios_actions_handling
   alias: Vacuum iOS Actions Handling
@@ -186,3 +284,8 @@
           sequence:
             - service: vacuum.return_to_base
               entity_id: vacuum.roborock
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.event.data.actionName == 'VACUUM_GO_TO_MAINTENANCE' }}"
+          sequence:
+            - service: script.vacuum_maintenance
