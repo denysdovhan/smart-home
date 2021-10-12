@@ -77,13 +77,6 @@ sensor:
         value_template: >-
           {{ state_attr('fan.humidifier', 'temperature') | round(2) }}
 
-  # Sviatoshyn PM2.5
-  - platform: template
-    sensors:
-      sviatoshyn_pm2_5:
-        value_template: >-
-          {{ state_attr('sensor.sviatoshyn_aqi', 'pm25') | round() }}
-
   # Lun Misto AQI
   - platform: rest
     name: sviatoshyn_aqi
@@ -92,26 +85,26 @@ sensor:
       {% set station = '125' %}
       {# #}
       {% macro aqi(aqihigh, aqilow, conchigh, conclow, conc) -%}
-        {{ ((aqihigh - aqilow) / (conchigh - conclow) * (conc - conclow) + aqilow) | int }}
+        {{ (aqilow + (conc - conclow) * (aqihigh - aqilow) / (conchigh - conclow)) | round }}
       {%- endmacro %}
       {# #}
       {% for sensor in value_json %}
         {% if sensor.station.name == station %}
-          {% set conc = sensor.particles[2].pm25 | float %}
-          {% if conc >= 0 and conc <= 50 %}
+          {% set conc = sensor.particles[2].pm25 %}
+          {% if conc >= 0 and conc < 12 %}
               {{ aqi(50, 0, 12, 0, conc) }}
-          {% elif conc > 50 and conc <= 100 %}
-              {{ aqi(100, 51, 35.4, 12.1, conc) }}
-          {% elif conc > 100 and conc <= 150 %}
-              {{ aqi(150, 101, 55.4, 35.5, conc) }}
-          {% elif conc > 150 and conc <= 200 %}
-              {{ aqi(200, 151, 150.4, 55.5, conc) }}
-          {% elif conc > 200 and conc <= 300 %}
-              {{ aqi(300, 201, 250.4, 150.5, conc) }}
-          {% elif conc > 300 and conc <= 400 %}
-              {{ aqi(400, 301, 350.4, 250.5, conc) }}
-          {% elif conc > 400 and conc <= 500 %}
-              {{ aqi(500, 401, 500.4, 350.5, conc) }}
+          {% elif conc >= 12 and conc < 35.5 %}
+              {{ aqi(100, 51, 35.5, 12, conc) }}
+          {% elif conc >= 35.5 and conc < 55.5 %}
+              {{ aqi(150, 101, 55.5, 35.5, conc) }}
+          {% elif conc >= 55.5 and conc < 150 %}
+              {{ aqi(200, 151, 150.5, 55.5, conc) }}
+          {% elif conc >= 150 and conc < 250.5 %}
+              {{ aqi(300, 201, 250.5, 150.5, conc) }}
+          {% elif conc >= 250.5 and conc < 350.5 %}
+              {{ aqi(400, 301, 350.5, 250.5, conc) }}
+          {% elif conc >= 350.5 and conc < 500.5 %}
+              {{ aqi(500, 401, 500.5, 350.5, conc) }}
           {% else %}
               unknown
           {% endif %}
@@ -123,6 +116,13 @@ sensor:
       - pm25
       - pm10
       - pm100
+
+  # Sviatoshyn PM2.5
+  - platform: template
+    sensors:
+      sviatoshyn_pm2_5:
+        value_template: >-
+          {{ state_attr('sensor.sviatoshyn_aqi', 'pm25') | round() }}
 
   # Kyiv Smart Card
   #
