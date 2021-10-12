@@ -77,6 +77,17 @@ sensor:
         value_template: >-
           {{ state_attr('fan.humidifier', 'temperature') | round(2) }}
 
+  # Lun Misto
+  - platform: rest
+    name: Misto Lun
+    resource: https://api.meteostation.online/chrome/addon/informer/
+    value_template: 'OK'
+    scan_interval: 120 # every 2 minutes
+    json_attributes:
+      - lunmisto_air
+      - tomtom_jams
+      - tomtom_temp
+
   # Lun Misto AQI
   - platform: rest
     name: sviatoshyn_aqi
@@ -117,12 +128,18 @@ sensor:
       - pm10
       - pm100
 
-  # Sviatoshyn PM2.5
+  # Lun Misto Sensors
   - platform: template
     sensors:
       sviatoshyn_pm2_5:
         value_template: >-
           {{ state_attr('sensor.sviatoshyn_aqi', 'pm25') | round() }}
+      kyiv_aqi:
+        value_template: >-
+          {{ states.sensor.misto_lun.attributes.lunmisto_air.aqi_scale_value | round() }}
+      kyiv_traffic_jams:
+        value_template: >-
+          {{ states.sensor.misto_lun.attributes.tomtom_jams.jams | round() }}
 
   # Kyiv Smart Card
   #

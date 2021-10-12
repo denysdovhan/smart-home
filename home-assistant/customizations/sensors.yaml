@@ -109,6 +109,14 @@ sensor.sviatoshyn_pm2_5:
   friendly_name: Sviatoshyn PM2.5
   icon: mdi:blur
   unit_of_measurement: 'µg/m³'
+sensor.kyiv_aqi:
+  friendly_name: Kyiv AQI
+  icon: mdi:cloud
+  unit_of_measurement: 'AQI'
+sensor.kyiv_traffic_jams:
+  friendly_name: Kyiv Traffic Jams
+  icon: mdi:traffic-light
+  unit_of_measurement: '%'
 
 # Car
 sensor.toyota_balance:
