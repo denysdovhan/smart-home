@@ -64,6 +64,92 @@
           - 'Home Assistant стартував!'
           - 'Home Assistant готовий до роботи!'
 
+- id: system_peaks
+  alias: System Peaks Alert
+  trigger:
+    - platform: numeric_state
+      id: cpu
+      entity_id: sensor.processor_use
+      above: 90
+      for:
+        seconds: 30
+    - platform: numeric_state
+      id: ram
+      entity_id: sensor.memory_use_percent
+      above: 90
+      for:
+        seconds: 30
+    - platform: numeric_state
+      id: system_disk
+      entity_id: sensor.disk_use_percent
+      above: 90
+      for:
+        minutes: 1
+    - platform: numeric_state
+      id: media_disk
+      entity_id: sensor.disk_use_percent_media
+      above: 90
+      for:
+        minutes: 1
+  action:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: cpu
+          sequence:
+            - service: script.announcement
+              data:
+                title: 'Системний пік 🔥'
+                greetings:
+                  - 'Процесор навантажений на {{ trigger.to_state.state }}%.'
+                  - 'Навантаження на процесор {{ trigger.to_state.state }}%.'
+                  - 'CPU: {{ trigger.to_state.state | int }}%.'
+                messages:
+                  - 'Складнощі з виконанням поточного завдання.'
+                  - 'Аномально велике навантаження на процесор.'
+        - conditions:
+            - condition: trigger
+              id: ram
+          sequence:
+            - service: script.announcement
+              data:
+                title: 'Системний пік 🔥'
+                greetings:
+                  - 'Оперативна пам’ять заповнена на {{ trigger.to_state.state }}%.'
+                  - 'Навантаження на оперативну пам’ять {{ trigger.to_state.state }}%.'
+                  - 'RAM: {{ trigger.to_state.state }}%.'
+                messages:
+                  - 'Складнощі з виконанням поточного завдання.'
+                  - 'Аномально велике навантаження на процесор.'
+        - conditions:
+            - condition: trigger
+              id: system_disk
+          sequence:
+            - service: script.announcement
+              data:
+                title: 'Системний пік 🔥'
+                greetings:
+                  - 'Системний диск заповнений на {{ trigger.to_state.state }}%.'
+                  - 'Заповнення системного диску {{ trigger.to_state.state }}%.'
+                messages:
+                  - 'Системний диск заповнюється. Потрібно видалити застарілі файли.'
+                  - 'Аномально велике заповнення системної пам’яті.'
+        - conditions:
+            - condition: trigger
+              id: media_disk
+          sequence:
+            - service: script.announcement
+              data:
+                title: 'Системний пік 🔥'
+                greetings:
+                  - 'Диск медіа заповнений на {{ trigger.to_state.state }}%.'
+                  - 'Заповнення медіа диску {{ trigger.to_state.state }}%.'
+                messages:
+                  - 'Медіа диск заповнюється. Потрібно видалити зайві медіафайли.'
+                  - 'Аномально велике заповнення зовнішнього жорсткого диску.'
+    - delay:
+        minutes: 10
+
 - id: aqi_alert
   alias: AQI Alert
   mode: single
