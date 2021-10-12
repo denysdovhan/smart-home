@@ -41,7 +41,7 @@
   trigger:
     platform: numeric_state
     entity_id: sensor.living_room_movement_sensor_illuminance
-    below: 15
+    below: 50
   condition:
     - condition: state
       entity_id: group.family
