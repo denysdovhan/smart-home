@@ -69,18 +69,21 @@
   mode: single
   trigger:
     - platform: numeric_state
+      id: moderate
       entity_id: sensor.sviatoshyn_aqi
       above: 150
       below: 200
       for:
         minutes: 30
     - platform: numeric_state
+      id: high
       entity_id: sensor.sviatoshyn_aqi
       above: 201
       below: 300
       for:
         minutes: 30
     - platform: numeric_state
+      id: dangerous
       entity_id: sensor.sviatoshyn_aqi
       above: 301
       for:
@@ -88,10 +91,8 @@
   action:
     - choose:
         - conditions:
-            - condition: numeric_state
-              entity_id: sensor.sviatoshyn_aqi
-              above: 150
-              below: 200
+            - condition: trigger
+              id: moderate
           sequence:
             - service: script.announcement
               data:
@@ -107,10 +108,8 @@
                   - 'Людям із захворюваннями категорично заборонено перебувати на вулиці.'
                   - 'Заняття спортом на вулиці заборонені.'
         - conditions:
-            - condition: numeric_state
-              entity_id: sensor.sviatoshyn_aqi
-              above: 201
-              below: 300
+            - condition: trigger
+              id: high
           sequence:
             - service: script.announcement
               data:
@@ -126,9 +125,8 @@
                   - 'Ризик інсульту та інфаркту у людей похилого віку.'
                   - 'Заняття спортом на вулиці заборонені.'
         - conditions:
-            - condition: numeric_state
-              entity_id: sensor.sviatoshyn_aqi
-              above: 301
+            - condition: trigger
+              id: dangerous
           sequence:
             - service: script.announcement
               data:
@@ -236,11 +234,13 @@
   alias: Car Washing Alert
   trigger:
     - platform: state
+      id: wash_car
       entity_id: binary_sensor.car_wash
       to: 'on'
       for:
         hours: 12
     - platform: state
+      id: do_not_wash_car
       entity_id: binary_sensor.car_wash
       to: 'off'
       for:
@@ -248,9 +248,8 @@
   action:
     - choose:
         - conditions:
-            - condition: state
-              entity_id: binary_sensor.car_wash
-              state: 'on'
+            - condition: trigger
+              id: wash_car
           sequence:
             - service: script.announcement
               data:
@@ -269,9 +268,8 @@
                 notify_data:
                   url: /lovelace/car
         - conditions:
-            - condition: state
-              entity_id: binary_sensor.car_wash
-              state: 'off'
+            - condition: trigger
+              id: do_not_wash_car
           sequence:
             - service: script.announcement
               data:
@@ -369,9 +367,19 @@
   alias: Fayna Town Progress Alert
   trigger:
     - platform: template
+      id: precentage
       value_template: >-
         {{ (states('sensor.fayna_progress') | float) % 1 == 0 }}
+    - platform: template
+      id: hundereds
+      value_template: >-
+        {{ states('sensor.fayna_days_past') % 50 == 0 }}
   action:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: percentage
+          sequence:
     - service: script.announcement
       data:
         title: 'Файна Таун 🏙'
@@ -387,3 +395,22 @@
           - "{{ states('sensor.fayna_days_past') }} днів пройшло. {{ states('sensor.fayna_days_left') }} залишилось."
         notify_data:
           url: /lovelace/observation
+        - conditions:
+            - condition: trigger
+              id: hundereds
+          sequence:
+            - service: script.announcement
+              data:
+                title: 'Файна Таун 🏙'
+                greetings:
+                  - "Пройшло вже {{ states('sensor.fayna_days_past') }} днів з дня купівлі квартири."
+                  - "Пройшло {{ states('sensor.fayna_days_past') }} днів від дня купівлі квартири."
+                  - "Пройшло {{ states('sensor.fayna_days_past') }} днів."
+                messages:
+                  - "Залишилось чекати {{ states('sensor.fayna_days_left') }}."
+                  - "Залишилось {{ states('sensor.fayna_days_left') }} днів."
+                  - "Залишилось {{ states('sensor.fayna_days_left') }}."
+                  - "{{ states('sensor.fayna_days_left') }} залишилось."
+                notify_data:
+                  url: /lovelace/observation
+
