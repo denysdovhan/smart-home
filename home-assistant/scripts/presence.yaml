@@ -38,6 +38,9 @@ everyone_is_leaving:
             - condition: state
               entity_id: binary_sensor.time_to_clean
               state: 'on'
+            - condition: state
+              entity_id: vacuum.roborock
+              state: 'docked'
           sequence:
             - service: script.announcement
               data:

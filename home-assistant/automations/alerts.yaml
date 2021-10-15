@@ -459,28 +459,28 @@
     - platform: template
       id: hundereds
       value_template: >-
-        {{ states('sensor.fayna_days_past') % 50 == 0 }}
+        {{ (states('sensor.fayna_days_past') | int) % 50 == 0 }}"
   action:
     - choose:
         - conditions:
             - condition: trigger
               id: percentage
           sequence:
-    - service: script.announcement
-      data:
-        title: 'Файна Таун 🏙'
-        greetings:
-          - "Готовність будівництва {{ states('sensor.fayna_progress') | int }}%."
-          - "Готовність {{ states('sensor.fayna_progress') | int }}%."
-          - "Будинок готовий на {{ states('sensor.fayna_progress') | int }}%."
-          - "Будівництво просунулось на {{ states('sensor.fayna_progress') | int }}%."
-        messages:
-          - "Залишилось чекати {{ states('sensor.fayna_days_left') }}, а пройшло вже {{ states('sensor.fayna_days_past') }} днів."
-          - "Залишилось {{ states('sensor.fayna_days_left') }} днів. Пройшло {{ states('sensor.fayna_days_past') }}."
-          - "Пройшло вже {{ states('sensor.fayna_days_past') }} днів. Залишилось {{ states('sensor.fayna_days_left') }}."
-          - "{{ states('sensor.fayna_days_past') }} днів пройшло. {{ states('sensor.fayna_days_left') }} залишилось."
-        notify_data:
-          url: /lovelace/observation
+            - service: script.announcement
+              data:
+                title: 'Файна Таун 🏙'
+                greetings:
+                  - "Готовність будівництва {{ states('sensor.fayna_progress') | int }}%."
+                  - "Готовність {{ states('sensor.fayna_progress') | int }}%."
+                  - "Будинок готовий на {{ states('sensor.fayna_progress') | int }}%."
+                  - "Будівництво просунулось на {{ states('sensor.fayna_progress') | int }}%."
+                messages:
+                  - "Залишилось чекати {{ states('sensor.fayna_days_left') }}, а пройшло вже {{ states('sensor.fayna_days_past') }} днів."
+                  - "Залишилось {{ states('sensor.fayna_days_left') }} днів. Пройшло {{ states('sensor.fayna_days_past') }}."
+                  - "Пройшло вже {{ states('sensor.fayna_days_past') }} днів. Залишилось {{ states('sensor.fayna_days_left') }}."
+                  - "{{ states('sensor.fayna_days_past') }} днів пройшло. {{ states('sensor.fayna_days_left') }} залишилось."
+                notify_data:
+                  url: /lovelace/observation
         - conditions:
             - condition: trigger
               id: hundereds
@@ -500,3 +500,22 @@
                 notify_data:
                   url: /lovelace/observation
 
+# WIP
+- id: rain_alert
+  alias: Alert for upcoming rain
+  trigger:
+    - platform: template
+      id: nyvky_hourly
+      value_template: >-
+        {% set hours = 6 %}
+        {{ 'rainy' in state_attr('weather.kyiv_hourly', 'forecast')[:hours] | map(attribute='condition') }}
+    - platform: numeric_state
+      id: probability
+      entity_id: sensor.nyvky_forecast_precipitation_probability
+      above: 10
+      # for: "01:10:05"
+  action:
+    - service: notify.denys
+      data:
+        title: 'Імовірність дощу '
+        message: "Щогодинно {{ 'rainy' in state_attr('weather.kyiv_hourly', 'forecast')[:hours] | map(attribute='condition') }}. Імовірність: {{ states('sensor.nyvky_forecast_precipitation_probability') }}"
