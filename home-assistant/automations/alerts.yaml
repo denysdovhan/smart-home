@@ -453,13 +453,13 @@
   alias: Fayna Town Progress Alert
   trigger:
     - platform: template
-      id: precentage
+      id: percentage
       value_template: >-
         {{ (states('sensor.fayna_progress') | float) % 1 == 0 }}
     - platform: template
       id: hundereds
       value_template: >-
-        {{ (states('sensor.fayna_days_past') | int) % 50 == 0 }}"
+        {{ (states('sensor.fayna_days_past') | int) % 50 == 0 }}
   action:
     - choose:
         - conditions:
