@@ -20,7 +20,44 @@
           to: 'on'
       timeout: '01:00:00'
       continue_on_timeout: false
-    - service: script.everyone_is_arriving
+    # Turn on lights after sunset
+    - choose:
+        - conditions:
+            - condition: sun
+              after: sunset
+            - condition: time
+              before: 00:00
+          sequence:
+            - service: scene.turn_on
+              data:
+                entity_id: scene.evening_lights
+                transition: 5
+            - service: light.turn_on
+              data:
+                entity_id: light.living_room_main_light
+                brightness: 255
+        - conditions:
+            - condition: sun
+              before: sunrise
+            - condition: time
+              after: 00:00
+          sequence:
+            - service: scene.turn_on
+              data:
+                entity_id: scene.evening_lights
+                transition: 5
+    # Turn on fans
+    - service: fan.turn_on
+      entity_id: all
+    # Greet people with a delay
+    - delay:
+        seconds: 5
+    - service: script.greeting
+    # Wait for a phrase to be said
+    - delay:
+        seconds: 30
+    # Set device to correct state of DND
+    - service: script.do_not_disturb_mode
 
 - id: everyone_is_leaving
   alias: Everyone is Leaving
@@ -32,4 +69,35 @@
     to: 'not_home'
     for: '00:10:00'
   action:
-    - service: script.everyone_is_leaving
+    - service: fan.turn_off
+      entity_id: all
+    - service: light.turn_off
+      entity_id: all
+    - service: climate.turn_off
+      entity_id: all
+    - service: media_player.turn_off
+      entity_id: all
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.time_to_clean
+              state: 'on'
+            - condition: state
+              entity_id: vacuum.roborock
+              state: 'docked'
+          sequence:
+            - service: script.announcement
+              data:
+                speak: false
+                title: 'Пилосос 🧹'
+                messages:
+                  - 'Пора почати регулярне прибирання.'
+                  - 'Час прибирати вдома.'
+                  - 'Бажаєте прибрати вдома?'
+                  - 'Почати прибирання?'
+                  - "{{ state_attr('vacuum.roborock', 'friendly_name') }} пропонує домашнє прибирання."
+                  - "{{ state_attr('vacuum.roborock', 'friendly_name') }} хоче прибирати квартиру."
+                  - "{{ state_attr('vacuum.roborock', 'friendly_name') }} давно не прибирав. Почати?"
+                notify_data:
+                  push:
+                    category: VACUUM_ASK_CLEANING
