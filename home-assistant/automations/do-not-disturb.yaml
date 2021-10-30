@@ -27,19 +27,17 @@
   description: Switch Do Not Disturb while camera or mics are on
   trigger:
     - platform: state
-      entity_id: binary_sensor.denys_on_call
+      entity_id: binary_sensor.denys_on_dnd
       for:
         minutes: 1
     - platform: state
-      entity_id: binary_sensor.marry_on_call
+      entity_id: binary_sensor.marry_on_dnd
       for:
         minutes: 1
+  condition:
+    - condition: state
+      entity_id: binary_sensor.sleeping_time
+      state: 'off'
   action:
-    - choose:
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.sleeping_time
-              state: 'off'
-          sequence:
-            - service: input_boolean.turn_{{ trigger.to_state.state }}
-              entity_id: input_boolean.do_not_disturb
+    - service: input_boolean.turn_{{ trigger.to_state.state }}
+      entity_id: input_boolean.do_not_disturb

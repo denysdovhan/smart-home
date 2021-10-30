@@ -35,20 +35,22 @@ binary_sensor:
         value_template: >-
           {{ states('proximity.home') | int > 50 }}
 
-      denys_on_call:
+      denys_on_dnd:
         friendly_name: Denys On Call
         value_template: >-
           {% set camera_on = is_state('binary_sensor.wix_macbook_pro_camera_in_use', 'on') %}
           {% set mic_on = is_state('binary_sensor.wix_macbook_pro_microphone_in_use', 'on') %}
+          {% set focus_on = is_state('binary_sensor.denyss_iphone_focus', 'on') %}
           {% set at_home = is_state('person.denys', 'home') %}
-          {{ at_home and (camera_on or mic_on) }}
-      marry_on_call:
+          {{ at_home and (camera_on or mic_on or focus_on) }}
+      marry_on_dnd:
         friendly_name: Marry On Call
         value_template: >-
           {% set camera_on = is_state('binary_sensor.home_macbook_pro_camera_in_use', 'on') %}
           {% set mic_on = is_state('binary_sensor.home_macbook_pro_microphone_in_use', 'on') %}
+          {% set focus_on = is_state('binary_sensor.iphone_maria_focus', 'on') %}
           {% set at_home = is_state('person.marry', 'home') %}
-          {{ at_home and (camera_on or mic_on) }}
+          {{ at_home and (camera_on or mic_on or focus_on) }}
 
       work_display_connected:
         friendly_name: Working Display Connected
