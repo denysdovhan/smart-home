@@ -10,6 +10,11 @@ silent_mode:
     - service: xiaomi_miio_airpurifier.fan_set_led_off
       entity_id: fan.humidifier
 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.all_speakers
+        volume_level: 0.25
+
 activity_mode:
   alias: Activity Mode
   sequence:
@@ -19,8 +24,13 @@ activity_mode:
       data:
         preset_mode: Auto
 
-    - service: xiaomi_miio_airpurifier.fan_set_led_off
+    - service: xiaomi_miio_airpurifier.fan_set_led_on
       entity_id: fan.humidifier
+
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.all_speakers
+        volume_level: 0.75
 
 do_not_disturb_mode:
   alias: Do Not Disturb Mode
