@@ -107,6 +107,8 @@
                 messages:
                   - 'Складнощі з виконанням поточного завдання.'
                   - 'Аномально велике навантаження на процесор.'
+                notify_data:
+                  url: /lovelace/system
         - conditions:
             - condition: trigger
               id: ram
@@ -121,6 +123,8 @@
                 messages:
                   - 'Складнощі з виконанням поточного завдання.'
                   - 'Аномально велике навантаження на процесор.'
+                notify_data:
+                  url: /lovelace/system
         - conditions:
             - condition: trigger
               id: system_disk
@@ -134,6 +138,8 @@
                 messages:
                   - 'Системний диск заповнюється. Потрібно видалити застарілі файли.'
                   - 'Аномально велике заповнення системної пам’яті.'
+                notify_data:
+                  url: /lovelace/system
         - conditions:
             - condition: trigger
               id: media_disk
@@ -147,6 +153,8 @@
                 messages:
                   - 'Медіа диск заповнюється. Потрібно видалити зайві медіафайли.'
                   - 'Аномально велике заповнення зовнішнього жорсткого диску.'
+                notify_data:
+                  url: /lovelace/system
     - delay:
         minutes: 10
 
@@ -193,6 +201,8 @@
                   - 'Спричиняє дискомфорт при диханні у здорових людей.'
                   - 'Людям із захворюваннями категорично заборонено перебувати на вулиці.'
                   - 'Заняття спортом на вулиці заборонені.'
+                notify_data:
+                  url: /lovelace/cities
         - conditions:
             - condition: trigger
               id: high
@@ -210,6 +220,8 @@
                   - 'Людям із захворюваннями категорично заборонено перебувати на вулиці.'
                   - 'Ризик інсульту та інфаркту у людей похилого віку.'
                   - 'Заняття спортом на вулиці заборонені.'
+                notify_data:
+                  url: /lovelace/cities
         - conditions:
             - condition: trigger
               id: dangerous
@@ -232,6 +244,8 @@
                   - 'Людям із захворюваннями категорично заборонено перебувати на вулиці.'
                   - 'Існує ризик інсульту та інфаркту!'
                   - 'Негативні наслідки навіть під час легкої активності!'
+                notify_data:
+                  url: /lovelace/cities
       default:
         - service: script.announcement
           data:
@@ -239,7 +253,7 @@
             messages:
               - "Погіршується якість повітря: {{ states('sensor.sviatoshyn_aqi') | int }} AQI"
             notify_data:
-              url: /lovelace/home
+              url: /lovelace/cities
     - delay:
         hours: 2
 

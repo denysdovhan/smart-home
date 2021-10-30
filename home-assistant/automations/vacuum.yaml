@@ -3,7 +3,7 @@
   description: Regular vacuum cleaning every two days
   trigger:
     - platform: time_pattern
-      hours: /3
+      hours: /4
       minutes: 0
       seconds: 0
   condition:
@@ -45,8 +45,12 @@
           - "{{ state_attr('vacuum.roborock', 'friendly_name') }} хоче прибирати квартиру."
           - "{{ state_attr('vacuum.roborock', 'friendly_name') }} давно не прибирав. Почати?"
         notify_data:
-          push:
-            category: VACUUM_ASK_CLEANING
+          url: /lovelace/vacuum
+          actions:
+            - action: VACUUM_START
+              title: Почати прибирання
+              activationMode: background
+              authenticationRequired: true
 
 - id: vacuum_finish_cleaning
   alias: Vacuum Stop Cleaning
@@ -157,9 +161,15 @@
           - 'Почистіть його та наберіть нової води у бак!'
           - 'Наберіть води та почистіть його!'
         notify_data:
-          push:
-            category: VACUUM_MAINTENANCE
           url: /lovelace/vacuum
+          actions:
+            - identifier: VACUUM_PAUSE
+              title: 'Пауза'
+              activationMode: 'background'
+            - identifier: VACUUM_RETURN_TO_BASE
+              title: 'На базу'
+              activationMode: 'background'
+              destructive: true
     - service: script.vacuum_maintenance
 
 - id: vacuum_replacements
@@ -202,9 +212,16 @@
                   - 'Не забудьте обнулити лічильник після заміни та замовити нову щітку.'
                   - 'Обнуліть лічильник після заміни та замовте нову щітку.'
                 notify_data:
-                  push:
-                    category: VACUUM_ASK_MAINTENANCE
                   url: /lovelace/vacuum
+                  actions:
+                    - identifier: VACUUM_GO_TO_MAINTENANCE
+                      title: 'Обслужити'
+                      activationMode: 'background'
+                      destructive: true
+                    - identifier: VACUUM_RETURN_TO_BASE
+                      title: 'На базу'
+                      activationMode: 'background'
+                      destructive: true
         - conditions:
             - condition: trigger
               id: side_brush
@@ -220,9 +237,16 @@
                   - 'Не забудьте обнулити лічильник після заміни та замовити нову щітку.'
                   - 'Обнуліть лічильник після заміни та замовте нову щітку.'
                 notify_data:
-                  push:
-                    category: VACUUM_ASK_MAINTENANCE
                   url: /lovelace/vacuum
+                  actions:
+                    - identifier: VACUUM_GO_TO_MAINTENANCE
+                      title: 'Обслужити'
+                      activationMode: 'background'
+                      destructive: true
+                    - identifier: VACUUM_RETURN_TO_BASE
+                      title: 'На базу'
+                      activationMode: 'background'
+                      destructive: true
         - conditions:
             - condition: trigger
               id: filter
@@ -238,9 +262,16 @@
                   - 'Не забудьте обнулити лічильник після заміни та замовити новий фільтр.'
                   - 'Обнуліть лічильник після заміни та замовте новий фільтр.'
                 notify_data:
-                  push:
-                    category: VACUUM_ASK_MAINTENANCE
                   url: /lovelace/vacuum
+                  actions:
+                    - identifier: VACUUM_GO_TO_MAINTENANCE
+                      title: 'Обслужити'
+                      activationMode: 'background'
+                      destructive: true
+                    - identifier: VACUUM_RETURN_TO_BASE
+                      title: 'На базу'
+                      activationMode: 'background'
+                      destructive: true
         - conditions:
             - condition: trigger
               id: sensor_dirty
@@ -256,36 +287,43 @@
                   - 'Не забудьте обнулити лічильник після очищення.'
                   - 'Обнуліть лічильник після очищення.'
                 notify_data:
-                  push:
-                    category: VACUUM_ASK_MAINTENANCE
                   url: /lovelace/vacuum
+                  actions:
+                    - identifier: VACUUM_GO_TO_MAINTENANCE
+                      title: 'Обслужити'
+                      activationMode: 'background'
+                      destructive: true
+                    - identifier: VACUUM_RETURN_TO_BASE
+                      title: 'На базу'
+                      activationMode: 'background'
+                      destructive: true
 
 - id: vacuum_ios_actions_handling
   alias: Vacuum iOS Actions Handling
   trigger:
     platform: event
-    event_type: ios.notification_action_fired
+    event_type: mobile_app_notification_action
   action:
     - choose:
         - conditions:
             - condition: template
-              value_template: "{{ trigger.event.data.actionName == 'VACUUM_START' }}"
+              value_template: "{{ trigger.event.data.action == 'VACUUM_START' }}"
           sequence:
             - service: script.vacuum_regular_cleaning
         - conditions:
             - condition: template
-              value_template: "{{ trigger.event.data.actionName == 'VACUUM_PAUSE' }}"
+              value_template: "{{ trigger.event.data.action == 'VACUUM_PAUSE' }}"
           sequence:
             - service: vacuum.pause
               entity_id: vacuum.roborock
         - conditions:
             - condition: template
-              value_template: "{{ trigger.event.data.actionName == 'VACUUM_RETURN_TO_BASE' }}"
+              value_template: "{{ trigger.event.data.action == 'VACUUM_RETURN_TO_BASE' }}"
           sequence:
             - service: vacuum.return_to_base
               entity_id: vacuum.roborock
         - conditions:
             - condition: template
-              value_template: "{{ trigger.event.data.actionName == 'VACUUM_GO_TO_MAINTENANCE' }}"
+              value_template: "{{ trigger.event.data.action == 'VACUUM_GO_TO_MAINTENANCE' }}"
           sequence:
             - service: script.vacuum_maintenance
