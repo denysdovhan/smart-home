@@ -50,9 +50,17 @@
                 transition: 1
         - conditions:
             - condition: template
-              value_template: "{{ trigger.payload == 'slide' }}"
+              value_template: "{{ trigger.payload == 'rotate_right' }}"
           sequence:
-            - service: light.toggle
+            - service: light.turn_on
+              data:
+                entity_id: light.living_room_main_light
+                transition: 1
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.payload == 'rotate_left' }}"
+          sequence:
+            - service: light.turn_off
               data:
                 entity_id: light.living_room_main_light
                 transition: 1
