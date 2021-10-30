@@ -82,7 +82,7 @@ sensor:
     name: Misto Lun
     resource: https://api.meteostation.online/chrome/addon/informer/
     value_template: 'OK'
-    scan_interval: 120 # every 2 minutes
+    scan_interval: 300 # every 5 minutes
     json_attributes:
       - lunmisto_air
       - tomtom_jams
@@ -121,7 +121,7 @@ sensor:
           {% endif %}
         {% endif %}
       {% endfor %}
-    scan_interval: 120 # every 2 minutes
+    scan_interval: 300 # every 5 minutes
     json_attributes_path: "$.[?(@.station.name=='125')].particles[2]"
     json_attributes:
       - pm25
