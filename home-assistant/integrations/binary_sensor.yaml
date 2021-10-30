@@ -49,6 +49,15 @@ binary_sensor:
           {% set mic_on = is_state('binary_sensor.home_macbook_pro_microphone_in_use', 'on') %}
           {% set at_home = is_state('person.marry', 'home') %}
           {{ at_home and (camera_on or mic_on) }}
+
+      work_display_connected:
+        friendly_name: Working Display Connected
+        value_template: >-
+          {% set at_home = is_state('device_tracker.wix_macbook_pro', 'home') %}
+          {% set display_connected = is_state('sensor.wix_macbook_pro_primary_display_name', 'LG HDR 4K') %}
+          {% set active = is_state('binary_sensor.wix_macbook_pro_active', 'on') %}
+          {{ at_home and display_connected and active }}
+
   # Car Wash
   - platform: car_wash
     weather: weather.nyvky
