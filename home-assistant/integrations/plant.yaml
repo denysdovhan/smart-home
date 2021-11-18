@@ -18,3 +18,4 @@ plant:
     max_conductivity: 2000
     min_brightness: 1000
     max_brightness: 30000
+    check_days: 10
