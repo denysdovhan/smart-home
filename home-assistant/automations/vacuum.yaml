@@ -51,6 +51,10 @@
               title: Почати прибирання
               activationMode: background
               authenticationRequired: true
+            - action: VACUUM_START_GENTLE
+              title: Почати тихе прибирання
+              activationMode: background
+              authenticationRequired: true
 
 - id: vacuum_finish_cleaning
   alias: Vacuum Stop Cleaning
@@ -310,6 +314,11 @@
               value_template: "{{ trigger.event.data.action == 'VACUUM_START' }}"
           sequence:
             - service: script.vacuum_regular_cleaning
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.event.data.action == 'VACUUM_START_GENTLE' }}"
+          sequence:
+            - service: script.vacuum_gentle_cleaning
         - conditions:
             - condition: template
               value_template: "{{ trigger.event.data.action == 'VACUUM_PAUSE' }}"

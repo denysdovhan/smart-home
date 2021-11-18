@@ -27,6 +27,18 @@ vacuum_regular_cleaning:
     - service: vacuum.start
       entity_id: vacuum.roborock
 
+vacuum_gentle_cleaning:
+  alias: Vacuum Gentle Cleaning
+  sequence:
+    - service: vacuum.set_fan_speed
+      entity_id: vacuum.roborock
+      data:
+        fan_speed: Gentle
+    - delay:
+        seconds: 5
+    - service: vacuum.start
+      entity_id: vacuum.roborock
+
 vacuum_maintenance:
   alias: Vacuum Maintenance
   icon: mdi:screwdriver
