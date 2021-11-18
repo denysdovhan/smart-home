@@ -202,7 +202,7 @@
                   - 'Людям із захворюваннями категорично заборонено перебувати на вулиці.'
                   - 'Заняття спортом на вулиці заборонені.'
                 notify_data:
-                  url: /lovelace/cities
+                  url: /lovelace/air
         - conditions:
             - condition: trigger
               id: high
@@ -221,7 +221,7 @@
                   - 'Ризик інсульту та інфаркту у людей похилого віку.'
                   - 'Заняття спортом на вулиці заборонені.'
                 notify_data:
-                  url: /lovelace/cities
+                  url: /lovelace/air
         - conditions:
             - condition: trigger
               id: dangerous
@@ -245,7 +245,7 @@
                   - 'Існує ризик інсульту та інфаркту!'
                   - 'Негативні наслідки навіть під час легкої активності!'
                 notify_data:
-                  url: /lovelace/cities
+                  url: /lovelace/air
       default:
         - service: script.announcement
           data:
@@ -253,7 +253,7 @@
             messages:
               - "Погіршується якість повітря: {{ states('sensor.sviatoshyn_aqi') | int }} AQI"
             notify_data:
-              url: /lovelace/cities
+              url: /lovelace/air
     - delay:
         hours: 2
 
@@ -338,13 +338,13 @@
       entity_id: binary_sensor.car_wash
       to: 'on'
       for:
-        hours: 12
+        hours: 24
     - platform: state
       id: do_not_wash_car
       entity_id: binary_sensor.car_wash
       to: 'off'
       for:
-        hours: 12
+        hours: 24
   action:
     - choose:
         - conditions:
@@ -394,38 +394,21 @@
       entity_id: binary_sensor.snowtire
       to: 'on'
       for:
-        hours: 24
-    - platform: state
-      entity_id: binary_sensor.snowtire
-      to: 'on'
-      for:
-        hours: 48
-    - platform: state
-      entity_id: binary_sensor.snowtire
-      to: 'on'
-      for:
-        hours: 96
-    - platform: state
-      entity_id: binary_sensor.snowtire
-      to: 'off'
-      for:
-        hours: 24
-    - platform: state
-      entity_id: binary_sensor.snowtire
-      to: 'off'
-      for:
         hours: 48
     - platform: state
       entity_id: binary_sensor.snowtire
       to: 'off'
       for:
-        hours: 96
+        hours: 48
   action:
     - choose:
         - conditions:
             - condition: state
               entity_id: binary_sensor.snowtire
               state: 'on'
+            - alias: 'Only in October, November'
+              condition: template
+              value_template: '{{ now().month in [10, 11] }}'
           sequence:
             - service: script.announcement
               data:
@@ -446,6 +429,9 @@
             - condition: state
               entity_id: binary_sensor.snowtire
               state: 'off'
+            - alias: 'Only in March, April'
+              condition: template
+              value_template: '{{ now().month in [3, 4] }}'
           sequence:
             - service: script.announcement
               data:
