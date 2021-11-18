@@ -12,20 +12,12 @@
   friendly_name: magic_cube
 '0x00158d000450cca4':
   friendly_name: living_room_main_light_bulb_1
-  optimistic: false
-  retain: true
 '0x00158d0002d3c856':
   friendly_name: living_room_main_light_bulb_2
-  optimistic: false
-  retain: true
 '0x00158d00045ec07b':
   friendly_name: living_room_main_light_bulb_3
-  optimistic: false
-  retain: true
 '0x00158d0002d71dab':
   friendly_name: living_room_main_light_bulb_4
-  optimistic: false
-  retain: true
 '0x00158d0003972938':
   friendly_name: front_door_sensor
 '0x00158d0005343e97':
