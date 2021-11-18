@@ -60,6 +60,12 @@ binary_sensor:
           {% set active = is_state('binary_sensor.wix_macbook_pro_active', 'on') %}
           {{ at_home and display_connected and active }}
 
+      balcony_comfort_temperature:
+        friendly_name: Balcony Comfort Temperature
+        value_template: >-
+          {% set current = state_attr('climate.balcony_heater', 'current_temperature') %}
+          {% set target = state_attr('climate.balcony_heater', 'temperature') %}
+          {{ current >= target }}
   # Car Wash
   - platform: car_wash
     weather: weather.nyvky
