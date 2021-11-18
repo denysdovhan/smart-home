@@ -142,7 +142,7 @@
     - condition: template
       value_template: >
         {% set last_maintenance = as_timestamp(state_attr('automation.vacuum_maintenance', 'last_triggered')) | int %}
-        {% set last_cleaning = as_timestamp(state_attr('vacuum.roborock', 'clean_start')) | int %}
+        {% set last_cleaning = as_timestamp(states('sensor.roborock_last_clean_start')) | int %}
         {{ last_cleaning > last_maintenance }}
   action:
     - service: script.announcement
