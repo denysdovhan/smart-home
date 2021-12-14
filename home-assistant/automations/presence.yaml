@@ -21,31 +21,10 @@
       timeout: '01:00:00'
       continue_on_timeout: false
     # Turn on lights after sunset
-    - choose:
-        - conditions:
-            - condition: sun
-              after: sunset
-            - condition: time
-              before: 00:00
-          sequence:
-            - service: scene.turn_on
-              data:
-                entity_id: scene.evening_lights
-                transition: 5
-            - service: light.turn_on
-              data:
-                entity_id: light.living_room_main_light
-                brightness: 255
-        - conditions:
-            - condition: sun
-              before: sunrise
-            - condition: time
-              after: 00:00
-          sequence:
-            - service: scene.turn_on
-              data:
-                entity_id: scene.evening_lights
-                transition: 5
+    - service: scene.turn_on
+      data:
+        entity_id: scene.evening_lights
+        transition: 5
     # Turn on fans
     - service: fan.turn_on
       entity_id: all
