@@ -503,17 +503,21 @@
   alias: Alert for upcoming rain
   trigger:
     - platform: template
-      id: nyvky_hourly
       value_template: >-
-        {% set hours = 6 %}
-        {{ 'rainy' in state_attr('weather.kyiv_hourly', 'forecast')[:hours] | map(attribute='condition') }}
-    - platform: numeric_state
-      id: probability
-      entity_id: sensor.nyvky_forecast_precipitation_probability
-      above: 10
-      # for: "01:10:05"
+        {{ state_attr('weather.kyiv_hourly', 'forecast')[3].condition == 'rainy' }}
+  conditions:
+    - condition: state
+      entity_id: group.family
+      state: home
   action:
+    - variables:
+        precipitation: >-
+          {{ state_attr('weather.kyiv_hourly', 'forecast')[3].precipitation }}
+        temperature: >-
+          {{ state_attr('weather.kyiv_hourly', 'forecast')[3].temperature }}
+        wind_speed: >-
+          {{ state_attr('weather.kyiv_hourly', 'forecast')[3].wind_speed }}
     - service: notify.denys
       data:
-        title: 'Імовірність дощу '
-        message: "Щогодинно {{ 'rainy' in state_attr('weather.kyiv_hourly', 'forecast')[:hours] | map(attribute='condition') }}. Імовірність: {{ states('sensor.nyvky_forecast_precipitation_probability') }}"
+        title: 'Імовірність дощу'
+        message: 'Дощ за 3 години. Опади {{ precipitation }}мм, температура {{ temperature }}°С, вітер {{ wind_speed }}м/с.'
