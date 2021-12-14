@@ -31,7 +31,7 @@ sensor:
     type: mean
     entity_ids:
       - sensor.living_room_conditions_sensor_temperature
-      - sensor.humidifier_temperature
+      - sensor.air_humidifier_temperature
       - sensor.air_purifier_temperature
   - platform: min_max
     name: Living Room Temperature
@@ -44,7 +44,7 @@ sensor:
     type: mean
     entity_ids:
       - sensor.living_room_conditions_sensor_temperature
-      - sensor.humidifier_temperature
+      - sensor.air_humidifier_temperature
 
   # Humidity
   - platform: min_max
@@ -52,7 +52,7 @@ sensor:
     type: mean
     entity_ids:
       - sensor.living_room_conditions_sensor_humidity
-      - sensor.humidifier_humidity
+      - sensor.air_humidifier_humidity
       - sensor.air_purifier_humidity
   - platform: min_max
     name: Living Room Humidity
@@ -65,17 +65,7 @@ sensor:
     type: mean
     entity_ids:
       - sensor.living_room_conditions_sensor_humidity
-      - sensor.humidifier_humidity
-
-  # Humidifier
-  - platform: template
-    sensors:
-      humidifier_humidity:
-        value_template: >-
-          {{ state_attr('fan.humidifier', 'humidity') }}
-      humidifier_temperature:
-        value_template: >-
-          {{ state_attr('fan.humidifier', 'temperature') | round(2) }}
+      - sensor.air_humidifier_humidity
 
   # Lun Misto
   - platform: rest

@@ -309,10 +309,8 @@
   description: Notify when humidifier's water tank is empty
   trigger:
     platform: state
-    entity_id: fan.humidifier
-    attribute: no_water
-    from: false
-    to: true
+    entity_id: binary_sensor.air_humidifier_water_tank_empty
+    to: 'on'
     for:
       minutes: 1
   action:

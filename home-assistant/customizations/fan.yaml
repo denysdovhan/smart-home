@@ -1,4 +1,0 @@
-# Humidifier
-fan.humidifier:
-  friendly_name: Humidifier
-  icon: mdi:air-humidifier

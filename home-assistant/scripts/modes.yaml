@@ -7,8 +7,8 @@ silent_mode:
       data:
         preset_mode: Silent
 
-    - service: xiaomi_miio_airpurifier.fan_set_led_off
-      entity_id: fan.humidifier
+    - service: switch.turn_off
+      entity_id: switch.air_humidifier_led
 
     - service: media_player.volume_set
       data:
@@ -24,8 +24,8 @@ activity_mode:
       data:
         preset_mode: Auto
 
-    - service: xiaomi_miio_airpurifier.fan_set_led_on
-      entity_id: fan.humidifier
+    - service: switch.turn_on
+      entity_id: switch.air_humidifier_led
 
     - service: media_player.volume_set
       data:

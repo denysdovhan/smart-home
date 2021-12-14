@@ -90,16 +90,6 @@ sensor.bedroom_humidity:
   unit_of_measurement: '%'
   device_class: humidity
 
-# Humidifier
-sensor.humidifier_humidity:
-  friendly_name: Humidifier Humidity
-  unit_of_measurement: '%'
-  device_class: humidity
-sensor.humidifier_temperature:
-  friendly_name: Humidifier Temperature
-  unit_of_measurement: '°C'
-  device_class: temperature
-
 # LUN Misto AQI
 sensor.sviatoshyn_aqi:
   friendly_name: Sviatoshyn AQI
