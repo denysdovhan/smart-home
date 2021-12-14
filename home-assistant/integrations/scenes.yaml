@@ -67,7 +67,7 @@ scene split:
       light.living_room_table_lights:
         state: on
         brightness: 255
-        color_temp: 240
+        color_temp: 220
       switch.adaptive_lighting_home:
         state: on
 
