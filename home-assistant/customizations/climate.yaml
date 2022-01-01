@@ -1,0 +1,7 @@
+# Climate
+climate.bedroom_heater:
+  friendly_name: Bedroom Heater
+  icon: mdi:radiator
+climate.living_room_heater:
+  friendly_name: Living Room Heater
+  icon: mdi:radiator

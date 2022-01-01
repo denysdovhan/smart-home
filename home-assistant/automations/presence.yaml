@@ -53,7 +53,10 @@
     - service: light.turn_off
       entity_id: all
     - service: climate.turn_off
-      entity_id: all
+      entity_id:
+        - climate.living_room_ac
+        - climate.bedroom_ac
+        - climate.balcony_heater
     - service: media_player.turn_off
       entity_id: all
     - choose:

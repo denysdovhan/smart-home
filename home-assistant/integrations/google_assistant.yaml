@@ -153,3 +153,20 @@ google_assistant:
       expose: false
     switch.living_room_ac_beeper:
       expose: false
+    # Thermostats
+    climate.living_room_trv:
+      expose: false
+    switch.living_room_trv_auto_lock:
+      expose: false
+    switch.living_room_trv_away_mode:
+      expose: false
+    switch.living_room_trv_window_detection:
+      expose: false
+    climate.bedroom_trv:
+      expose: false
+    switch.bedroom_trv_auto_lock:
+      expose: false
+    switch.bedroom_trv_away_mode:
+      expose: false
+    switch.bedroom_trv_window_detection:
+      expose: false
