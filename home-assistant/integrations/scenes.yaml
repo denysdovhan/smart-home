@@ -26,6 +26,8 @@ scene split:
         state: off
       light.desk_lamp:
         state: off
+      light.corridor_light:
+        state: off
       switch.adaptive_lighting_home:
         state: on
 
@@ -45,6 +47,8 @@ scene split:
       light.living_room_main_light:
         state: off
       light.living_room_table_lights:
+        state: off
+      light.corridor_light:
         state: off
       switch.adaptive_lighting_home:
         state: on
@@ -92,6 +96,8 @@ scene split:
         state: on
         brightness: 255
         color_temp: 240
+      switch.corridor_light:
+        state: on
       switch.adaptive_lighting_home:
         state: on
 

@@ -89,6 +89,8 @@ google_assistant:
       expose: false
     switch.living_room_main_light_bulb_4_power_outage_memory:
       expose: false
+    switch.corridor_light:
+      expose: false
     # Bedroom Lights
     switch.bedroom_ceiling_light_power_outage_memory:
       expose: false

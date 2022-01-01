@@ -39,9 +39,12 @@
 - id: turn_on_lights_on_low_illuminance
   alias: Turn on lights on low illuminance
   trigger:
-    platform: numeric_state
-    entity_id: sensor.living_room_movement_sensor_illuminance
-    below: 50
+    - platform: numeric_state
+      entity_id: sensor.living_room_movement_sensor_illuminance_lux
+      below: 50
+    - platform: numeric_state
+      entity_id: sensor.bedroom_movement_sensor_illuminance_lux
+      below: 10
   condition:
     - condition: state
       entity_id: group.family
@@ -82,3 +85,75 @@
       data:
         entity_id: scene.evening_lights
         transition: 5
+
+- id: turn_on_corridor_light_when_door_is_open
+  alias: Turn on Corridor Light When Door is Open
+  mode: restart
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.front_door_sensor_contact
+      to: 'on'
+  action:
+    - alias: Turn on Corridor Light
+      service: light.turn_on
+      entity_id: light.corridor_light
+    - alias: Wait for some time
+      delay:
+        minutes: 5
+    - alias: Turn off Corridor Light
+      service: light.turn_off
+      entity_id: light.corridor_light
+
+- id: turn_off_corridor_light_when_door_is_closed
+  alias: Turn off Corridor Light When Door is Closed
+  mode: restart
+  trigger:
+    - platform: state
+      entity_id: light.corridor_light
+      to: 'on'
+  action:
+    - wait_for_trigger:
+        - platform: state
+          entity_id: binary_sensor.front_door_sensor_contact
+          from: 'on'
+          to: 'off'
+      timeout:
+        minutes: 15
+    - choose:
+        - conditions: '{{ wait.trigger is not none }}'
+          sequence:
+            - delay:
+                minutes: 2
+            - service: light.turn_off
+              entity_id: light.corridor_light
+      default:
+        - variables:
+            turn_off_corridor_light: "{{ 'TURN_OFF_CORRIDOR_LIGHT' ~ context.id }}"
+        - service: script.announcement
+          data:
+            title: 'Світло у коридорі 💡'
+            speak: false
+            greetings:
+              - Світло у коридорі горить вже 15 хвилин.
+              - Світло у коридорі досі горить.
+              - Досі горить світло у коридорі.
+            messages:
+              - 'Вимкнути?'
+              - 'Натисніть і потримайте на сповіщення, щоб вимкнути.'
+              - 'Глибоке натискання на сповіщення, щоб вимкнути.'
+              - 'Натисніть, щоб вимкнути.'
+            notify_data:
+              actions:
+                - action: '{{ turn_off_corridor_light }}'
+                  title: Вимкнути світло
+              url: /lovelace/living_room
+        - wait_for_trigger:
+            - platform: event
+              event_type: mobile_app_notification_action
+              event_data:
+                action: '{{ turn_off_corridor_light }}'
+          timeout:
+            hours: 1
+          continue_on_timeout: false
+        - service: light.turn_off
+          entity_id: light.corridor_light
