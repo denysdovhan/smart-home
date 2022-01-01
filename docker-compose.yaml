@@ -39,7 +39,7 @@ services:
   # The core of my smart-home automations
   home-assistant:
     container_name: home-assistant
-    image: homeassistant/${HOME_ASSISTANT_IMAGE}
+    image: ghcr.io/home-assistant/home-assistant:stable
     volumes:
       - ./home-assistant:/config
       - ${MEDIA_VOLUME}:/media
@@ -47,6 +47,7 @@ services:
     env_file:
       - .env
     restart: unless-stopped
+    privileged: true
     network_mode: host
 
   # MQTT

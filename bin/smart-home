@@ -87,7 +87,7 @@ function smart-home:command:init() {
     echo "Creating .env file..."
     cp "$SMART_HOME_DIR/.env.example" "$SMART_HOME_DIR/.env"
   fi
-  
+
   if [ ! -d "$SMART_HOME_DIR/.backups" ]; then
     echo "Creating .backups directory..."
     mkdir -p "$SMART_HOME_DIR/.backups"
