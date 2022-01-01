@@ -164,21 +164,21 @@
   trigger:
     - platform: numeric_state
       id: moderate
-      entity_id: sensor.sviatoshyn_aqi
+      entity_id: sensor.nyvky_aqi
       above: 150
       below: 200
       for:
         minutes: 30
     - platform: numeric_state
       id: high
-      entity_id: sensor.sviatoshyn_aqi
+      entity_id: sensor.nyvky_aqi
       above: 201
       below: 300
       for:
         minutes: 30
     - platform: numeric_state
       id: dangerous
-      entity_id: sensor.sviatoshyn_aqi
+      entity_id: sensor.nyvky_aqi
       above: 301
       for:
         minutes: 30
@@ -202,7 +202,7 @@
                   - 'Людям із захворюваннями категорично заборонено перебувати на вулиці.'
                   - 'Заняття спортом на вулиці заборонені.'
                 notify_data:
-                  url: /lovelace/air
+                  url: /lovelace/city
         - conditions:
             - condition: trigger
               id: high
@@ -213,7 +213,7 @@
                 greetings:
                   - 'Рівень якості повітря: {{ trigger.to_state.state | int }} AQI'
                   - 'Надворі дуже шкідливе повітря: {{ trigger.to_state.state | int }} AQI'
-                  - "Дуже шкідливе повітря: {{ states('sensor.sviatoshyn_aqi') | int }} AQI"
+                  - "Дуже шкідливе повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
                   - '{{ trigger.to_state.state | int }} AQI.'
                 messages:
                   - 'Може викликати захворювання у здорових людей при тривалому впливі.'
@@ -221,7 +221,7 @@
                   - 'Ризик інсульту та інфаркту у людей похилого віку.'
                   - 'Заняття спортом на вулиці заборонені.'
                 notify_data:
-                  url: /lovelace/air
+                  url: /lovelace/city
         - conditions:
             - condition: trigger
               id: dangerous
@@ -245,15 +245,15 @@
                   - 'Існує ризик інсульту та інфаркту!'
                   - 'Негативні наслідки навіть під час легкої активності!'
                 notify_data:
-                  url: /lovelace/air
+                  url: /lovelace/city
       default:
         - service: script.announcement
           data:
             title: 'Повітря 🌫'
             messages:
-              - "Погіршується якість повітря: {{ states('sensor.sviatoshyn_aqi') | int }} AQI"
+              - "Погіршується якість повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
             notify_data:
-              url: /lovelace/air
+              url: /lovelace/city
     - delay:
         hours: 2
 
@@ -311,8 +311,6 @@
     platform: state
     entity_id: binary_sensor.air_humidifier_water_tank_empty
     to: 'on'
-    for:
-      minutes: 1
   action:
     - service: script.announcement
       data:
@@ -503,12 +501,13 @@
   alias: Alert for upcoming rain
   trigger:
     - platform: template
+      # FIXME: snowy
       value_template: >-
         {{ state_attr('weather.kyiv_hourly', 'forecast')[3].condition == 'rainy' }}
-  conditions:
+  condition:
     - condition: state
       entity_id: group.family
-      state: home
+      state: 'home'
   action:
     - variables:
         precipitation: >-
