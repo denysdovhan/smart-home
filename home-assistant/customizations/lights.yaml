@@ -1,38 +1,4 @@
 # Table Lights
 light.living_room_table_lights:
   friendly_name: Table Lights
-  icon: mdi:ceiling-light
-light.living_room_lower_table_light:
-  friendly_name: Lower Table Light
-light.living_room_upper_table_light:
-  friendly_name: Upper Table Light
-
-# Main Light
-light.living_room_main_light:
-  friendly_name: Main Light
-  icon: mdi:vanity-light
-
-# Ceiling Light
-light.bedroom_ceiling_light:
-  friendly_name: Ceiling Light
-  icon: mdi:ceiling-light
-sensor.bedroom_ceiling_light_linkquality:
-  friendly_name: Ceiling Light Linkquality
-
-# Floor Lamp
-light.bedroom_floor_lamp:
-  friendly_name: Floor Lamp
-  icon: mdi:floor-lamp
-
-# Switch Lights
-light.bedroom_bed_lights:
-  friendly_name: Bed Lights
-  icon: mdi:string-lights
-light.living_room_tv_lights:
-  friendly_name: TV Lights
-  icon: mdi:string-lights
-
-# Desk Lamp
-light.desk_lamp:
-  friendly_name: Desk Lamp
-  icon: mdi:desk-lamp
+  icon: mdi:ceiling-light-multiple

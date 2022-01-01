@@ -7,7 +7,7 @@ camera.kyiv_mykhailivska:
   friendly_name: Mykhailivska Square
 camera.kyiv_sofiyska:
   friendly_name: Sofiyska square
-# camera.kyiv_nyvky:
-# friendly_name: Nyvky
-camera.kyiv_peremohy:
-  friendly_name: Peremohy square
+
+# Vacuum Map
+camera.roborock_live_map:
+  friendly_name: Robin Live Map

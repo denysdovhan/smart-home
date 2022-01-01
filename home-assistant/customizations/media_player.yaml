@@ -1,20 +1,5 @@
-# Google Speakers
-media_player.all_speakers:
-  friendly_name: All Speakers
-media_player.bedroom_speaker:
-  friendly_name: Bedroom Speaker
-media_player.living_room_speaker:
-  friendly_name: Living Room Speaker
-
 # Samsung TV
 media_player.samsung_tv:
   friendly_name: Samsung TV
   icon: mdi:youtube-tv
   device_class: tv
-
-# Apple TV
-media_player.apple_tv:
-  friendly_name: Living Room Apple TV
-  icon: mdi:apple
-remote.apple_tv:
-  friendly_name: Living Room Apple TV
