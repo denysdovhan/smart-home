@@ -33,7 +33,7 @@ binary_sensor:
       far_from_home:
         friendly_name: Far From Home
         value_template: >-
-          {{ states('proximity.home') | int > 50 }}
+          {{ states('proximity.home') | int(0) > 50 }}
 
       denys_on_dnd:
         friendly_name: Denys On Call
@@ -63,8 +63,8 @@ binary_sensor:
       balcony_comfort_temperature:
         friendly_name: Balcony Comfort Temperature
         value_template: >-
-          {% set current = state_attr('climate.balcony_heater', 'current_temperature') %}
-          {% set target = state_attr('climate.balcony_heater', 'temperature') %}
+          {% set current = state_attr('climate.balcony_heater', 'current_temperature') | float | default(10) %}
+          {% set target = state_attr('climate.balcony_heater', 'temperature') | float | default(20) %}
           {{ current >= target }}
   # Car Wash
   - platform: car_wash

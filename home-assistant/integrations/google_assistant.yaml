@@ -17,6 +17,7 @@ google_assistant:
     - switch
     - script
     - climate
+    - humidifier
   entity_config:
     # Input Booleans
     input_boolean.zigbee_permit_join:
@@ -128,11 +129,7 @@ google_assistant:
     # Scripts
     script.greeting:
       expose: false
-    script.speak:
-      expose: false
     script.announcement:
-      expose: false
-    script.stream_camera_to_apple_tv:
       expose: false
     script.vacuum_regular_cleaning:
       expose: false

@@ -7,6 +7,10 @@
       event: start
     - platform: state
       entity_id: input_boolean.do_not_disturb
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: 'home'
   action:
     - service: script.do_not_disturb_mode
 
@@ -18,6 +22,10 @@
       event: start
     - platform: state
       entity_id: binary_sensor.sleeping_time
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: 'home'
   action:
     - service: input_boolean.turn_{{ states('binary_sensor.sleeping_time') }}
       entity_id: input_boolean.do_not_disturb
@@ -38,6 +46,9 @@
     - condition: state
       entity_id: binary_sensor.sleeping_time
       state: 'off'
+    - condition: state
+      entity_id: group.family
+      state: 'home'
   action:
     - service: input_boolean.turn_{{ trigger.to_state.state }}
       entity_id: input_boolean.do_not_disturb

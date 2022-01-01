@@ -21,14 +21,6 @@ camera:
     name: kyiv_mykhailivska
     input: http://vps.guru.ua/hls/mihaylovskaya2812.m3u8
 
-  # - platform: ffmpeg
-  #   name: kyiv_nyvky
-  #   input: https://rs.saga.net.ua:8401/hls/live.stream.m3u8
-
-  - platform: ffmpeg
-    name: kyiv_peremohy
-    input: http://vps.guru.ua/hls/pobedy.m3u8
-
   - platform: xiaomi_cloud_map_extractor
     host: !secret vacuum_host
     token: !secret vacuum_token
