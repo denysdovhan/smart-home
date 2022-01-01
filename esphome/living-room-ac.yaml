@@ -40,8 +40,6 @@ climate:
     custom_fan_modes:
       - SILENT
       - TURBO
-    power_usage:
-      name: Living Room AC Power
 
 # Beeper Control
 switch:
