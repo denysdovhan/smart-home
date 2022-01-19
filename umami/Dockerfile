@@ -1,4 +1,4 @@
-FROM node:12.18
+FROM node:12.22
 
 ENV DATABASE_URL="mysql://umami:umami@db:3306/umami"
 ENV DATABASE_TYPE=mysql
