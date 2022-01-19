@@ -1,0 +1,77 @@
+#
+# Template
+#
+# https://www.home-assistant.io/integrations/template/
+#
+
+template:
+  - sensor:
+      # Living Room Smart + Dumb Devices
+      - name: Living Room Total energy
+        state_class: total_increasing
+        device_class: energy
+        unit_of_measurement: kWh
+        state: >-
+          {% set devices = states('sensor.living_room_devices_energy') | float(0) %}
+          {% set fridge = states('sensor.fridge_energy') | float(0) %}
+          {% set rbpi = states('sensor.raspberry_pi_energy') | float(0) %}
+          {% set router = states('sensor.router_energy') | float(0) %}
+          {{ devices + fridge + rbpi + router }}
+
+      - name: Total energy
+        state_class: total_increasing
+        device_class: energy
+        unit_of_measurement: kWh
+        state: >-
+          {% set living_room = states('sensor.living_room_total_energy') | float(0) %}
+          {% set bedroom = states('sensor.bedroom_total_energy') | float(0) %}
+          {% set balcony = states('sensor.balcony_total_energy') | float(0) %}
+          {{ living_room + bedroom + balcony }}
+
+      - name: Total power
+        state_class: measurement
+        device_class: power
+        unit_of_measurement: W
+        state: >-
+          {% set living_room = states('sensor.living_room_devices_power') | float(0) %}
+          {% set bedroom = states('sensor.bedroom_total_power') | float(0) %}
+          {% set balcony = states('sensor.balcony_total_power') | float(0) %}
+          {{ living_room + bedroom + balcony }}
+
+      - name: Energy Price
+        device_class: monetary
+        unit_of_measurement: UAH/kWh
+        state: >-
+          {% set below_limit_price = 1.44 %}
+          {% set above_limit_price = 1.68 %}
+
+          {% if is_state('utility_meter.energy_monthly', 'peak') %}
+            {{ below_limit_price }}
+          {% elif is_state('utility_meter.energy_monthly', 'offpeak') %}
+            {{ below_limit_price * 0.5 }}
+          {% elif is_state('utility_meter.energy_monthly', 'peak_overlimit') %}
+            {{ above_limit_price }}
+          {% elif is_state('utility_meter.energy_monthly', 'offpeak_overlimit') %}
+            {{ above_limit_price * 0.5 }}
+          {% else %}
+            None
+          {% endif %}
+
+      - name: Monthly Energy Cost
+        device_class: monetary
+        unit_of_measurement: UAH
+        state: >-
+          {% set below_limit_price = 1.44 %}
+          {% set above_limit_price = 1.68 %}
+
+          {% set peak_consumed = states('sensor.energy_monthly_peak') | float(0) %}
+          {% set offpeak_consumed = states('sensor.energy_monthly_offpeak') | float(0) %}
+          {% set peak_overlimit_consumed = states('sensor.energy_monthly_peak_overlimit') | float(0) %}
+          {% set offpeak_overlimit_consumed = states('sensor.energy_monthly_offpeak_overlimit') | float(0) %}
+
+          {% set peak_cost = peak_consumed * below_limit_price %}
+          {% set offpeak_cost = offpeak_consumed * below_limit_price * 0.5 %}
+          {% set peak_overlimit_consumed = peak_overlimit_consumed * above_limit_price %}
+          {% set offpeak_overlimit_consumed = offpeak_overlimit_consumed * above_limit_price * 0.5 %}
+
+          {{ peak_cost + offpeak_cost + peak_overlimit_consumed + offpeak_overlimit_consumed }}

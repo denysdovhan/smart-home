@@ -496,27 +496,62 @@
                 notify_data:
                   url: /lovelace/observation
 
-# WIP
-- id: rain_alert
-  alias: Alert for upcoming rain
+- id: monthly_energy_alert
+  alias: Monthy Energy Usage Alert
+  description: Switch energy tariff and notify about the consumption
   trigger:
-    - platform: template
-      # FIXME: snowy
-      value_template: >-
-        {{ state_attr('weather.kyiv_hourly', 'forecast')[3].condition == 'rainy' }}
-  condition:
-    - condition: state
-      entity_id: group.family
-      state: 'home'
+    - platform: numeric_state
+      id: period_start
+      entity_id: sensor.energy_monthly_total
+      below: 0.01
+    - platform: numeric_state
+      id: period_finish
+      entity_id: sensor.energy_monthly_total
+      above: 250
   action:
-    - variables:
-        precipitation: >-
-          {{ state_attr('weather.kyiv_hourly', 'forecast')[3].precipitation }}
-        temperature: >-
-          {{ state_attr('weather.kyiv_hourly', 'forecast')[3].temperature }}
-        wind_speed: >-
-          {{ state_attr('weather.kyiv_hourly', 'forecast')[3].wind_speed }}
-    - service: notify.denys
-      data:
-        title: 'Імовірність дощу'
-        message: 'Дощ за 3 години. Опади {{ precipitation }}мм, температура {{ temperature }}°С, вітер {{ wind_speed }}м/с.'
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: period_start
+          sequence:
+            - service: script.announcement
+              data:
+                title: Електрика ⚡️
+                speak: false
+                service: notify.denys
+                greetings:
+                  - Минулого місяця спожито {{ trigger.from_state.state }}kWh
+                  - Минулого періоду ви спожили {{ trigger.from_state.state }}kWh
+                  - >-
+                    Попереднього місяця використано {{ trigger.from_state.state
+                    }}kWh
+                  - >-
+                    Попереднього періоду використано {{ trigger.from_state.state
+                    }}kWh
+                messages:
+                  - >-
+                    на {{ states('sensor.monthly_energy_cost') | float(0) |
+                    round(2) }}₴.
+                  - >-
+                    за {{ states('sensor.monthly_energy_cost') | float(0) |
+                    round(2) }}₴.
+                notify_data:
+                  url: /energy
+        - conditions:
+            - condition: trigger
+              id: period_finish
+          sequence:
+            - service: script.announcement
+              data:
+                title: Електрика ⚡️
+                speak: false
+                service: notify.denys
+                greetings:
+                  - Спожито понад 250kWh за місяць.
+                  - Використано більше 250kWh за місяць.
+                  - Ви використали електрику більше 250kWh за місяць.
+                messages:
+                  - Надалі застосовується вищий тариф.
+                  - Далі застосовується підвищений тариф.
+                notify_data:
+                  url: /energy
