@@ -1,3 +1,19 @@
+- id: sync_living_room_trv_temperature
+  alias: Sync Living Room TRV temperature
+  use_blueprint:
+    path: denysdovhan/sync_trv_with_external_sensor.yaml
+    input:
+      valve: climate.living_room_heater
+      temp_sensor: sensor.living_room_temperature
+
+- id: sync_bedroom_trv_temperature
+  alias: Sync Bedroom TRV temperature
+  use_blueprint:
+    path: denysdovhan/sync_trv_with_external_sensor.yaml
+    input:
+      valve: climate.bedroom_heater
+      temp_sensor: sensor.bedroom_temperature
+
 - id: turn_on_balcony_heater
   alias: Turn on Balcony Heater
   trigger:
@@ -33,6 +49,11 @@
 - id: turn_off_balcony_heater
   alias: Turn off Balcony Heater
   trigger:
+    - platform: state
+      entity_id: light.desk_lampk
+      to: 'off'
+      for:
+        minutes: 30
     - platform: state
       entity_id: binary_sensor.work_display_connected
       to: 'off'

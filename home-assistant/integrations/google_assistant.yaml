@@ -63,6 +63,14 @@ google_assistant:
         - flux lights
         - adaptive ligths
         - adaptive lightning
+    climate.living_room_heater:
+      aliases:
+        - Living Room TRV
+        - Living Room Valve
+    climate.bedroom_heater:
+      aliases:
+        - Bedroom TRV
+        - Bedroom Valve
 
     # ----------------------------------
     # Prevent exposing specific entities
@@ -151,19 +159,19 @@ google_assistant:
     switch.living_room_ac_beeper:
       expose: false
     # Thermostats
-    climate.living_room_trv:
+    switch.living_room_heater_auto_lock:
       expose: false
-    switch.living_room_trv_auto_lock:
+    switch.living_room_heater_away_mode:
       expose: false
-    switch.living_room_trv_away_mode:
+    switch.living_room_heater_window_detection:
       expose: false
-    switch.living_room_trv_window_detection:
+    switch.living_room_heater_valve_detection:
       expose: false
-    climate.bedroom_trv:
+    switch.bedroom_heater_auto_lock:
       expose: false
-    switch.bedroom_trv_auto_lock:
+    switch.bedroom_heater_away_mode:
       expose: false
-    switch.bedroom_trv_away_mode:
+    switch.bedroom_heater_window_detection:
       expose: false
-    switch.bedroom_trv_window_detection:
+    switch.bedroom_heater_valve_detection:
       expose: false

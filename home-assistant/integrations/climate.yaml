@@ -12,23 +12,3 @@ climate:
     precision: 0.5
     min_temp: 15
     max_temp: 30
-
-  - platform: ai_thermostat
-    name: bedroom_heater
-    thermostat: climate.bedroom_trv
-    temperature_sensor: sensor.bedroom_temperature
-    weather: weather.nyvky # if this is set, the outdoor_sensor is ignored, remove the outdoor_sensor config!
-    off_temperature: 10
-    # window_sensors: group.office_windows
-    # window_off_delay: 15 # seconds
-    valve_maintenance: true
-
-  - platform: ai_thermostat
-    name: living_room_heater
-    thermostat: climate.living_room_trv
-    temperature_sensor: sensor.living_room_temperature
-    weather: weather.nyvky # if this is set, the outdoor_sensor is ignored, remove the outdoor_sensor config!
-    off_temperature: 10
-    # window_sensors: group.office_windows
-    # window_off_delay: 15 # seconds
-    valve_maintenance: true
