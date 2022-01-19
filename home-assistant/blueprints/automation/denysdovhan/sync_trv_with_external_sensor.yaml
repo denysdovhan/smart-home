@@ -28,19 +28,24 @@ trigger:
     minutes: '/10'
   - platform: state
     entity_id: climate.living_room_heater
+    attribute: current_temperature
     to: ~
     for:
-      seconds: 30
+      seconds: 15
   - platform: state
     entity_id: sensor.living_room_temperature
     to: ~
     for:
-      seconds: 30
+      seconds: 15
   - platform: template
     value_template: '{{ (current_temp - external_temp) | abs > 0.5 }}'
 condition:
   condition: and
   conditions:
+    - condition: template
+      value_template: "{{ states(valve) != 'unavailable' }}"
+    - condition: template
+      value_template: "{{ states(valve) != 'unknown' }}"
     - condition: template
       value_template: "{{ states(temp_sensor) != 'unavailable' }}"
     - condition: template
