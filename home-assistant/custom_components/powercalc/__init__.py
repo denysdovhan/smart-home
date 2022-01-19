@@ -8,6 +8,10 @@ from datetime import timedelta
 import homeassistant.helpers.config_validation as cv
 import homeassistant.helpers.entity_registry as er
 import voluptuous as vol
+from homeassistant.components.integration.sensor import (
+    INTEGRATION_METHOD,
+    TRAPEZOIDAL_METHOD,
+)
 from homeassistant.components.light import DOMAIN as LIGHT_DOMAIN
 from homeassistant.components.sensor import DOMAIN as SENSOR_DOMAIN
 from homeassistant.components.utility_meter import DEFAULT_OFFSET, max_28_days
@@ -26,6 +30,7 @@ from .const import (
     CONF_CREATE_ENERGY_SENSORS,
     CONF_CREATE_UTILITY_METERS,
     CONF_ENABLE_AUTODISCOVERY,
+    CONF_ENERGY_INTEGRATION_METHOD,
     CONF_ENERGY_SENSOR_NAMING,
     CONF_POWER_SENSOR_NAMING,
     CONF_UTILITY_METER_OFFSET,
@@ -60,7 +65,7 @@ CONFIG_SCHEMA = vol.Schema(
                     vol.Optional(
                         CONF_ENERGY_SENSOR_NAMING, default=DEFAULT_ENERGY_NAME_PATTERN
                     ): validate_name_pattern,
-                    vol.Optional(CONF_ENABLE_AUTODISCOVERY, default=False): cv.boolean,
+                    vol.Optional(CONF_ENABLE_AUTODISCOVERY, default=True): cv.boolean,
                     vol.Optional(CONF_CREATE_ENERGY_SENSORS, default=True): cv.boolean,
                     vol.Optional(CONF_CREATE_UTILITY_METERS, default=False): cv.boolean,
                     vol.Optional(
@@ -69,6 +74,9 @@ CONFIG_SCHEMA = vol.Schema(
                     vol.Optional(
                         CONF_UTILITY_METER_OFFSET, default=DEFAULT_OFFSET
                     ): vol.All(cv.time_period, cv.positive_timedelta, max_28_days),
+                    vol.Optional(
+                        CONF_ENERGY_INTEGRATION_METHOD, default=TRAPEZOIDAL_METHOD
+                    ): vol.In(INTEGRATION_METHOD),
                 }
             ),
         )
@@ -92,7 +100,7 @@ async def async_setup(hass: HomeAssistantType, config: dict) -> bool:
     hass.data[DOMAIN] = {
         DATA_CALCULATOR_FACTORY: PowerCalculatorStrategyFactory(hass),
         DOMAIN_CONFIG: domain_config,
-        DATA_CONFIGURED_ENTITIES: [],
+        DATA_CONFIGURED_ENTITIES: {},
         DATA_DISCOVERED_ENTITIES: [],
     }
 

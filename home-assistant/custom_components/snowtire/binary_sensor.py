@@ -1,5 +1,5 @@
 #
-#  Copyright (c) 2020, Andrey "Limych" Khrolenok <andrey@khrolenok.ru>
+#  Copyright (c) 2020-2021, Andrey "Limych" Khrolenok <andrey@khrolenok.ru>
 #  Creative Commons BY-NC-SA 4.0 International Public License
 #  (see LICENSE.md or https://creativecommons.org/licenses/by-nc-sa/4.0/)
 #
@@ -94,16 +94,18 @@ class SnowtireBinarySensor(BinarySensorEntity):
         days: int,
     ):
         """Initialize the sensor."""
-        self._name = friendly_name
         self._weather_entity = weather_entity
         self._days = days
-        self._state = None
 
-        self._unique_id = (
+        self._attr_unique_id = (
             "%s-%d" % (self._weather_entity, self._days)
             if unique_id == "__legacy__"
             else unique_id
         )
+        self._attr_name = friendly_name
+        self._attr_is_on = None
+        self._attr_should_poll = False
+        self._attr_device_class = f"{DOMAIN}__type"
 
     async def async_added_to_hass(self):
         """Register callbacks."""
@@ -126,34 +128,9 @@ class SnowtireBinarySensor(BinarySensorEntity):
         self.hass.bus.async_listen_once(EVENT_HOMEASSISTANT_START, sensor_startup)
 
     @property
-    def should_poll(self):
-        """No polling needed."""
-        return False
-
-    @property
-    def unique_id(self):
-        """Return a unique ID of this sensor."""
-        return self._unique_id
-
-    @property
-    def device_class(self):
-        """Return the class of this device, from component DEVICE_CLASSES."""
-        return f"{DOMAIN}__type"
-
-    @property
-    def name(self):
-        """Return the name of the sensor."""
-        return self._name
-
-    @property
     def available(self) -> bool:
         """Return True if entity is available."""
-        return self._state is not None
-
-    @property
-    def is_on(self):
-        """Return True if sensor is on."""
-        return self._state
+        return self._attr_is_on is not None
 
     @property
     def icon(self):
@@ -226,9 +203,9 @@ class SnowtireBinarySensor(BinarySensorEntity):
         for i in temp:
             if i <= 0.5:
                 _LOGGER.debug("Too cold temperature detected!")
-                self._state = True
+                self._attr_is_on = True
                 return
 
         temp = sum(temp) / len(temp)
         _LOGGER.debug("Average temperature: %.1f°C", temp)
-        self._state = temp < 7
+        self._attr_is_on = temp < 7

@@ -21,6 +21,7 @@ from custom_components.powercalc.const import (
     CONF_UTILITY_METER_OFFSET,
     CONF_UTILITY_METER_TYPES,
 )
+from custom_components.powercalc.migrate import async_set_unique_id
 from custom_components.powercalc.sensors.energy import (
     DailyEnergySensor,
     VirtualEnergySensor,
@@ -30,7 +31,7 @@ from custom_components.powercalc.sensors.group import GroupedEnergySensor
 _LOGGER = logging.getLogger(__name__)
 
 
-def create_utility_meters(
+async def create_utility_meters(
     hass: HomeAssistantType,
     energy_sensor: Union[VirtualEnergySensor, GroupedEnergySensor, DailyEnergySensor],
     sensor_config: dict,
@@ -70,9 +71,27 @@ def create_utility_meters(
         if "delta_values" in signature.parameters:
             params["delta_values"] = False
 
-        utility_meter = UtilityMeterSensor(**params)
+        utility_meter = VirtualUtilityMeter(**params)
+
+        if energy_sensor.unique_id:
+            unique_id = f"{energy_sensor.unique_id}_{meter_type}"
+            # Set new unique id if this entity already exists in the entity registry
+            async_set_unique_id(hass, entity_id, unique_id)
+            utility_meter.unique_id = unique_id
 
         hass.data[DATA_UTILITY][entity_id][DATA_TARIFF_SENSORS] = [utility_meter]
         utility_meters.append(utility_meter)
 
     return utility_meters
+
+
+class VirtualUtilityMeter(UtilityMeterSensor):
+    @property
+    def unique_id(self):
+        """Return the name of the group."""
+        return self._attr_unique_id
+
+    @unique_id.setter
+    def unique_id(self, value):
+        """Set last changed datetime."""
+        self._attr_unique_id = value

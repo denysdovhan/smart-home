@@ -87,53 +87,33 @@ async def async_setup_platform(
 class CarWashBinarySensor(BinarySensorEntity):
     """Implementation of an Car Wash binary sensor."""
 
-    def __init__(self, unique_id, friendly_name: str, weather_entity, days):
+    def __init__(
+        self,
+        unique_id: Optional[str],
+        friendly_name: str,
+        weather_entity: str,
+        days: int,
+    ):
         """Initialize the sensor."""
-        self._name = friendly_name
         self._weather_entity = weather_entity
         self._days = days
-        self._state = None
 
-        self._unique_id = (
+        self._attr_should_poll = False  # No polling needed
+        self._attr_name = friendly_name
+        self._attr_is_on = None
+        self._attr_icon = ICON
+        self._attr_device_class = f"{DOMAIN}__"
+        #
+        self._attr_unique_id = (
             DOMAIN + "-" + str(self._weather_entity).split(".")[1]
             if unique_id == "__legacy__"
             else unique_id
         )
 
     @property
-    def unique_id(self):
-        """Return a unique ID of this sensor."""
-        return self._unique_id
-
-    @property
-    def should_poll(self):
-        """No polling needed."""
-        return False
-
-    @property
-    def device_class(self):
-        """Return the class of this device, from component DEVICE_CLASSES."""
-        return f"{DOMAIN}__"
-
-    @property
-    def name(self):
-        """Return the name of the sensor."""
-        return self._name
-
-    @property
     def available(self) -> bool:
         """Return True if entity is available."""
-        return self._state is not None
-
-    @property
-    def is_on(self):
-        """Return True if sensor is on."""
-        return self._state
-
-    @property
-    def icon(self):
-        """Return the icon to use in the frontend, if any."""
-        return ICON
+        return self._attr_is_on is not None
 
     async def async_added_to_hass(self):
         """Register callbacks."""
@@ -182,7 +162,7 @@ class CarWashBinarySensor(BinarySensorEntity):
         forecast = wdata.attributes.get(ATTR_FORECAST)
 
         if forecast is None:
-            self._state = None
+            self._attr_is_on = None
             raise HomeAssistantError(
                 "Can't get forecast data! Are you sure it's the weather provider?"
             )
@@ -193,7 +173,7 @@ class CarWashBinarySensor(BinarySensorEntity):
 
         if cond in BAD_CONDITIONS:
             _LOGGER.debug("Detected bad weather condition")
-            self._state = False
+            self._attr_is_on = False
             return
 
         today = dt_util.start_of_local_day()
@@ -233,11 +213,11 @@ class CarWashBinarySensor(BinarySensorEntity):
 
             if prec and prec != "null":
                 _LOGGER.debug("Precipitation detected")
-                self._state = False
+                self._attr_is_on = False
                 return
             if cond in BAD_CONDITIONS:
                 _LOGGER.debug("Detected bad weather condition")
-                self._state = False
+                self._attr_is_on = False
                 return
             if tmin is not None and fc_date != cur_date:
                 tmin = self._temp2c(tmin, tmpu)
@@ -245,7 +225,7 @@ class CarWashBinarySensor(BinarySensorEntity):
                     _LOGGER.debug(
                         "Detected passage of temperature through melting point"
                     )
-                    self._state = False
+                    self._attr_is_on = False
                     return
                 temp = tmin
             if tmax is not None:
@@ -254,9 +234,9 @@ class CarWashBinarySensor(BinarySensorEntity):
                     _LOGGER.debug(
                         "Detected passage of temperature through melting point"
                     )
-                    self._state = False
+                    self._attr_is_on = False
                     return
                 temp = tmax
 
         _LOGGER.debug("Inspection done. No bad forecast detected")
-        self._state = True
+        self._attr_is_on = True
