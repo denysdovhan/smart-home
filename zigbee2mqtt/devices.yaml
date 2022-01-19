@@ -25,6 +25,6 @@
 '0x04cf8cdf3c891af6':
   friendly_name: corridor_light
 '0x8cf681fffeb0dbd5':
-  friendly_name: bedroom_trv
+  friendly_name: bedroom_heater
 '0x8cf681fffeab0589':
-  friendly_name: living_room_trv
+  friendly_name: living_room_heater
