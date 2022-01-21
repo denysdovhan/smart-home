@@ -145,8 +145,8 @@
     # And there was at least one cleaning after previous maintenance
     - condition: template
       value_template: >
-        {% set last_maintenance = as_timestamp(state_attr('automation.vacuum_maintenance', 'last_triggered')) | int %}
-        {% set last_cleaning = as_timestamp(states('sensor.roborock_last_clean_start')) | int %}
+        {% set last_maintenance = as_timestamp(state_attr('automation.vacuum_maintenance', 'last_triggered')) | int(0) %}
+        {% set last_cleaning = as_timestamp(states('sensor.roborock_last_clean_start')) | int(0) %}
         {{ last_cleaning > last_maintenance }}
   action:
     - service: script.announcement

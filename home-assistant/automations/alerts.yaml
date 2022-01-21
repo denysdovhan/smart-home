@@ -103,7 +103,7 @@
                 greetings:
                   - 'Процесор навантажений на {{ trigger.to_state.state }}%.'
                   - 'Навантаження на процесор {{ trigger.to_state.state }}%.'
-                  - 'CPU: {{ trigger.to_state.state | int }}%.'
+                  - 'CPU: {{ trigger.to_state.state | int(0) }}%.'
                 messages:
                   - 'Складнощі з виконанням поточного завдання.'
                   - 'Аномально велике навантаження на процесор.'
@@ -192,10 +192,10 @@
               data:
                 title: 'Шкідливе повітря 🥴'
                 greetings:
-                  - 'Рівень якості повітря: {{ trigger.to_state.state | int }} AQI'
-                  - 'Шкідливе повітря надворі: {{ trigger.to_state.state | int }} AQI'
-                  - 'Шкідливе повітря: {{ trigger.to_state.state | int }} AQI'
-                  - '{{ trigger.to_state.state | int }} AQI.'
+                  - 'Рівень якості повітря: {{ trigger.to_state.state | int(0) }} AQI'
+                  - 'Шкідливе повітря надворі: {{ trigger.to_state.state | int(0) }} AQI'
+                  - 'Шкідливе повітря: {{ trigger.to_state.state | int(0) }} AQI'
+                  - '{{ trigger.to_state.state | int(0) }} AQI.'
                 messages:
                   - 'Може викликати дискомфорт при диханні.'
                   - 'Спричиняє дискомфорт при диханні у здорових людей.'
@@ -211,10 +211,10 @@
               data:
                 title: 'Дуже шкідливе повітря 😷'
                 greetings:
-                  - 'Рівень якості повітря: {{ trigger.to_state.state | int }} AQI'
-                  - 'Надворі дуже шкідливе повітря: {{ trigger.to_state.state | int }} AQI'
-                  - "Дуже шкідливе повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
-                  - '{{ trigger.to_state.state | int }} AQI.'
+                  - 'Рівень якості повітря: {{ trigger.to_state.state | int(0) }} AQI'
+                  - 'Надворі дуже шкідливе повітря: {{ trigger.to_state.state | int(0) }} AQI'
+                  - "Дуже шкідливе повітря: {{ states('sensor.nyvky_aqi') | int(0) }} AQI"
+                  - '{{ trigger.to_state.state | int(0) }} AQI.'
                 messages:
                   - 'Може викликати захворювання у здорових людей при тривалому впливі.'
                   - 'Людям із захворюваннями категорично заборонено перебувати на вулиці.'
@@ -230,10 +230,10 @@
               data:
                 title: 'Небезпечне повітря ☠️'
                 greetings:
-                  - 'Рівень якості повітря: {{ trigger.to_state.state | int }} AQI'
-                  - 'Надворі небезпечне повітря: {{ trigger.to_state.state | int }} AQI'
-                  - 'Небезпечне повітря: {{ trigger.to_state.state | int }} AQI'
-                  - '{{ trigger.to_state.state | int }} AQI.'
+                  - 'Рівень якості повітря: {{ trigger.to_state.state | int(0) }} AQI'
+                  - 'Надворі небезпечне повітря: {{ trigger.to_state.state | int(0) }} AQI'
+                  - 'Небезпечне повітря: {{ trigger.to_state.state | int(0) }} AQI'
+                  - '{{ trigger.to_state.state | int(0) }} AQI.'
                 messages:
                   - 'Це небезпечно для здоров’я!'
                   - 'Залишайтесь вдома!'
@@ -251,7 +251,7 @@
           data:
             title: 'Повітря 🌫'
             messages:
-              - "Погіршується якість повітря: {{ states('sensor.nyvky_aqi') | int }} AQI"
+              - "Погіршується якість повітря: {{ states('sensor.nyvky_aqi') | int(0) }} AQI"
             notify_data:
               url: /lovelace/city
     - delay:
@@ -451,11 +451,11 @@
     - platform: template
       id: percentage
       value_template: >-
-        {{ (states('sensor.fayna_progress') | float) % 1 == 0 }}
+        {{ (states('sensor.fayna_progress') | float(1)) % 1 == 0 }}
     - platform: template
       id: hundereds
       value_template: >-
-        {{ (states('sensor.fayna_days_past') | int) % 50 == 0 }}
+        {{ (states('sensor.fayna_days_past') | float(1)) % 50 == 0 }}
   action:
     - choose:
         - conditions:
@@ -466,10 +466,10 @@
               data:
                 title: 'Файна Таун 🏙'
                 greetings:
-                  - "Готовність будівництва {{ states('sensor.fayna_progress') | int }}%."
-                  - "Готовність {{ states('sensor.fayna_progress') | int }}%."
-                  - "Будинок готовий на {{ states('sensor.fayna_progress') | int }}%."
-                  - "Будівництво просунулось на {{ states('sensor.fayna_progress') | int }}%."
+                  - "Готовність будівництва {{ states('sensor.fayna_progress') | int(0) }}%."
+                  - "Готовність {{ states('sensor.fayna_progress') | int(0) }}%."
+                  - "Будинок готовий на {{ states('sensor.fayna_progress') | int(0) }}%."
+                  - "Будівництво просунулось на {{ states('sensor.fayna_progress') | int(0) }}%."
                 messages:
                   - "Залишилось чекати {{ states('sensor.fayna_days_left') }}, а пройшло вже {{ states('sensor.fayna_days_past') }} днів."
                   - "Залишилось {{ states('sensor.fayna_days_left') }} днів. Пройшло {{ states('sensor.fayna_days_past') }}."

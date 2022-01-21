@@ -136,19 +136,19 @@ sensor:
     sensors:
       roborock_main_brush_left_hours:
         value_template: >-
-          {{ (states('sensor.roborock_main_brush_left') | float / 3600) | round(1) }}
+          {{ (states('sensor.roborock_main_brush_left') | float(0) / 3600) | round(1) }}
 
       roborock_side_brush_left_hours:
         value_template: >-
-          {{ (states('sensor.roborock_side_brush_left') | float / 3600) | round(1) }}
+          {{ (states('sensor.roborock_side_brush_left') | float(0) / 3600) | round(1) }}
 
       roborock_filter_left_hours:
         value_template: >-
-          {{ (states('sensor.roborock_filter_left') | float / 3600) | round(1) }}
+          {{ (states('sensor.roborock_filter_left') | float(0) / 3600) | round(1) }}
 
       roborock_sensor_dirty_left_hours:
         value_template: >-
-          {{ (states('sensor.roborock_sensor_dirty_left') | float / 3600) | round(1) }}
+          {{ (states('sensor.roborock_sensor_dirty_left') | float(0) / 3600) | round(1) }}
 
   # Kyiv Smart Card
   #
