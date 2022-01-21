@@ -208,7 +208,7 @@ sensor:
 
   # Estimated Power Usage
   - platform: powercalc
-    create_group: Living Room
+    create_group: Living Room Devices
     entities:
       - entity_id: light.living_room_table_lights
         multiply_factor: 2
@@ -280,7 +280,7 @@ sensor:
         standby_power: 0.5
 
   - platform: powercalc
-    create_group: Bedroom
+    create_group: Bedroom Total
     entities:
       - entity_id: light.bedroom_floor_lamp
         linear:
@@ -317,7 +317,7 @@ sensor:
         standby_power: 3
 
   - platform: powercalc
-    create_group: Balcony
+    create_group: Balcony Total
     entities:
       - entity_id: light.desk_lamp
         linear:
@@ -335,3 +335,15 @@ sensor:
     name: Fridge Energy
     daily_fixed_energy:
       value: 0.831 # 299 kWh/year (0.831 kWh/day)
+
+  - platform: powercalc
+    name: Router Energy
+    daily_fixed_energy:
+      value: 10
+      unit_of_measurement: W
+
+  - platform: powercalc
+    name: Raspberry Pi Energy
+    daily_fixed_energy:
+      value: 5
+      unit_of_measurement: W
