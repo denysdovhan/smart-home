@@ -19,8 +19,8 @@ max_exceeded: silent
 variables:
   valve: !input valve
   temp_sensor: !input temp_sensor
-  device_addr: "{{ state_attr(valve, 'device').ieeeAddr }}"
   external_temp: "{{ states(temp_sensor) | float(0) | round(1, 'half') }}"
+  device_addr: "{{ state_attr(valve, 'device').ieeeAddr }}"
   current_temp: "{{ state_attr(valve, 'current_temperature') | float(0) | round(1, 'half') }}"
   local_calibration: "{{ state_attr(valve, 'local_temperature_calibration') | float(0) | round(1, 'half') }}"
 trigger:
@@ -37,8 +37,6 @@ trigger:
     to: ~
     for:
       seconds: 15
-  - platform: template
-    value_template: '{{ (current_temp - external_temp) | abs > 0.5 }}'
 condition:
   condition: and
   conditions:
