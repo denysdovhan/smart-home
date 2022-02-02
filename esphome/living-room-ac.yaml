@@ -24,7 +24,7 @@ wifi:
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: 'Living Room AC Hotspot'
-    password: !secret living_room_ac_password
+    password: !secret esphome_living_room_ac_password
 
 captive_portal:
 
