@@ -28,6 +28,8 @@ image
 /GA_SERVICE_ACCOUNT.json
 /www/community
 token-*.txt
+custom_components
+!custom_components/README.md
 
 # Zigbee2MQTT
 /zigbee2mqtt/.configuration.yaml.bk
