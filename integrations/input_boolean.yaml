@@ -5,10 +5,6 @@
 #
 
 input_boolean:
-  zigbee_permit_join:
-    name: Allow devices to join
-    initial: off
-    icon: mdi:cellphone-wireless
   do_not_disturb:
     name: Do Not Disturb
     initial: off
