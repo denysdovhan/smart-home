@@ -7,4 +7,4 @@
 homeassistant:
   # Load customizations
   # Only for those device that are not customisable from UI
-  customize: !include_dir_merge_named customizations
+  customize: !include_dir_merge_named ../customizations
