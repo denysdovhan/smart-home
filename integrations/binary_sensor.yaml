@@ -23,9 +23,9 @@ binary_sensor:
       time_to_clean:
         friendly_name: Time to Clean
         value_template: >-
-          {% set last_cleaning_start = as_timestamp(states('sensor.roborock_last_clean_start')) | int(0) %}
+          {% set last_cleaning_start = as_timestamp(states('sensor.roborock_last_clean_start'), 0) %}
           {% set last_cleaning_duration = states('sensor.roborock_last_clean_duration') | int(0) %}
-          {% set current_time = as_timestamp(now()) | int(0) %}
+          {% set current_time = as_timestamp(now(), 0) %}
           {% set time_for_cleaning = current_time - last_cleaning_start > (60 * 60 * 48) %}
           {% set last_cleaning_was_short = last_cleaning_duration < (60 * 5) %}
           {{ time_for_cleaning or last_cleaning_was_short }}

@@ -201,8 +201,8 @@ sensor:
       fayna_progress:
         value_template: >-
           {% set day = 60 * 60 * 24 %}
-          {% set days_left = (as_timestamp("2023-04-01 00:00:00") - as_timestamp(now())) / day %}
-          {% set days_past = (as_timestamp(now()) - as_timestamp("2021-07-22 13:00")) / day %}
+          {% set days_left = (as_timestamp("2023-04-01 00:00:00") - as_timestamp(now(), 0)) / day %}
+          {% set days_past = (as_timestamp(now(), 0) - as_timestamp("2021-07-22 13:00")) / day %}
           {% set days_total = days_left + days_past %}
           {{ (days_past / days_total * 100) | round(2) }}
 
@@ -225,6 +225,10 @@ sensor:
       - entity_id: light.living_room_tv_lights
         fixed:
           power: "{{ states('sensor.tv_lights_real_time_energy') }}"
+      - entity_id: light.corridor_light
+        fixed:
+          power: 9
+        multiply_factor: 4
       - entity_id: climate.living_room_ac
         fixed:
           states_power:

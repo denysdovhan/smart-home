@@ -20,11 +20,14 @@
         notify: false
         greetings:
           - 'Вечоріє.'
+          - 'Вечір надворі.'
           - 'Скоро стемніє.'
           - 'Сонечко зайшло за обрій.'
           - 'Скоро вдома стане темно.'
           - 'Сонце опустилось за обрій.'
         messages:
+          - 'Зробимо вдома світліше.'
+          - 'Нехай буде світло.'
           - 'Доречно увімкнути світло.'
           - 'Вмикаємо світло.'
           - 'Вмикаю світло.'
@@ -41,7 +44,7 @@
   trigger:
     - platform: numeric_state
       entity_id: sensor.living_room_movement_sensor_illuminance_lux
-      below: 50
+      below: 25
     - platform: numeric_state
       entity_id: sensor.bedroom_movement_sensor_illuminance_lux
       below: 10

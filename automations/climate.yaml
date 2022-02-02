@@ -102,7 +102,7 @@
       entity_id: person.denys
       state: 'home'
     - condition: time
-      after: '8:00'
+      after: '08:00'
       before: '15:00'
   action:
     - alias: Prepare a action variable
