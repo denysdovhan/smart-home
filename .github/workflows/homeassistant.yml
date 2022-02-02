@@ -1,4 +1,4 @@
-name: Home Assistant
+name: Home Assistant CI
 
 on:
   push:
@@ -10,6 +10,9 @@ jobs:
   home-assistant-stable:
     name: Home Assistant Stable
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ['stable', 'beta', 'dev']
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
@@ -17,32 +20,9 @@ jobs:
       - name: Prepare Stubs
         run: cp -R ./stubs/* ./
 
-      - name: Home Assistant Version
-        uses: docker://homeassistant/home-assistant
-        with:
-          args: python -m homeassistant --version
-
       - name: Home Assistant Check
-        uses: docker://homeassistant/home-assistant
+        uses: frenck/action-home-assistant@v1
         with:
-          args: python -m homeassistant --config . --script check_config --info all
-
-  home-assistant-beta:
-    name: Home Assistant Beta
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-
-      - name: Prepare Stubs
-        run: cp -R ./stubs/* ./
-
-      - name: Home Assistant Version
-        uses: docker://homeassistant/home-assistant:beta
-        with:
-          args: python -m homeassistant --version
-
-      - name: Home Assistant Check
-        uses: docker://homeassistant/home-assistant:beta
-        with:
-          args: python -m homeassistant --config . --script check_config --info all
+          path: '.'
+          secrets: ./secrets.example.yaml
+          version: '${{ matrix.version }}'
