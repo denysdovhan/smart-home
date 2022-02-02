@@ -75,3 +75,19 @@ template:
           {% set offpeak_overlimit_consumed = offpeak_overlimit_consumed * above_limit_price * 0.5 %}
 
           {{ peak_cost + offpeak_cost + peak_overlimit_consumed + offpeak_overlimit_consumed }}
+        attributes:
+          last_period: >-
+            {% set below_limit_price = 1.44 %}
+            {% set above_limit_price = 1.68 %}
+
+            {% set peak_consumed = state_attr('sensor.energy_monthly_peak', 'last_period') | float(0) %}
+            {% set offpeak_consumed = state_attr('sensor.energy_monthly_offpeak', 'last_period') | float(0) %}
+            {% set peak_overlimit_consumed = state_attr('sensor.energy_monthly_peak_overlimit', 'last_period') | float(0) %}
+            {% set offpeak_overlimit_consumed = state_attr('sensor.energy_monthly_offpeak_overlimit', 'last_period') | float(0) %}
+
+            {% set peak_cost = peak_consumed * below_limit_price %}
+            {% set offpeak_cost = offpeak_consumed * below_limit_price * 0.5 %}
+            {% set peak_overlimit_consumed = peak_overlimit_consumed * above_limit_price %}
+            {% set offpeak_overlimit_consumed = offpeak_overlimit_consumed * above_limit_price * 0.5 %}
+
+            {{ peak_cost + offpeak_cost + peak_overlimit_consumed + offpeak_overlimit_consumed }}

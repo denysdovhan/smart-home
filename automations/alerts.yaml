@@ -522,19 +522,11 @@
                 greetings:
                   - Минулого місяця спожито {{ trigger.from_state.state }}kWh
                   - Минулого періоду ви спожили {{ trigger.from_state.state }}kWh
-                  - >-
-                    Попереднього місяця використано {{ trigger.from_state.state
-                    }}kWh
-                  - >-
-                    Попереднього періоду використано {{ trigger.from_state.state
-                    }}kWh
+                  - Попереднього місяця використано {{ trigger.from_state.state }}kWh
+                  - Попереднього періоду використано {{ trigger.from_state.state }}kWh
                 messages:
-                  - >-
-                    на {{ states('sensor.monthly_energy_cost') | float(0) |
-                    round(2) }}₴.
-                  - >-
-                    за {{ states('sensor.monthly_energy_cost') | float(0) |
-                    round(2) }}₴.
+                  - на {{ state_attr('sensor.monthly_energy_cost', 'last_period') | float(0) | round(2) }}₴.
+                  - за {{ state_attr('sensor.monthly_energy_cost', 'last_period') | float(0) | round(2) }}₴.
                 notify_data:
                   url: /energy
         - conditions:
