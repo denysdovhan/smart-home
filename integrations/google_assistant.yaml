@@ -6,7 +6,7 @@
 
 google_assistant:
   project_id: !secret google_project_id
-  service_account: !secret google_service_account
+  service_account: !include ../GA_SERVICE_ACCOUNT.json
   report_state: true
   exposed_domains:
     - light
