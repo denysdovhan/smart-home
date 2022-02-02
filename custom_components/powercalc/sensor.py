@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import copy
 import logging
+import uuid
 from datetime import timedelta
 from typing import Final, cast
 
@@ -98,7 +98,7 @@ from .errors import (
     SensorConfigurationError,
 )
 from .model_discovery import is_supported_model
-from .sensors.energy import DailyEnergySensor, VirtualEnergySensor, create_energy_sensor
+from .sensors.energy import DailyEnergySensor, EnergySensor, create_energy_sensor
 from .sensors.group import GroupedEnergySensor, GroupedPowerSensor, GroupedSensor
 from .sensors.power import PowerSensor, RealPowerSensor, create_power_sensor
 from .sensors.utility_meter import create_utility_meters
@@ -172,14 +172,6 @@ SENSOR_CONFIG = {
             vol.Optional(CONF_TEMPLATE): cv.template,
         }
     ),
-    vol.Optional(CONF_CREATE_GROUP): cv.string,
-    vol.Optional(CONF_INCLUDE, default={}): vol.Schema(
-        {
-            vol.Optional(CONF_AREA): cv.string,
-            vol.Optional(CONF_GROUP): cv.entity_id,
-            vol.Optional(CONF_TEMPLATE): cv.template,
-        }
-    ),
 }
 
 
@@ -230,11 +222,25 @@ async def async_setup_platform(
         )
 
 
-def get_merged_sensor_configuration(*configs: dict) -> dict:
+def get_merged_sensor_configuration(*configs: dict, validate: bool = True) -> dict:
     """Merges configuration from multiple levels (sensor, group, global) into a single dict"""
 
+    exclude_from_merging = [
+        CONF_NAME,
+        CONF_ENTITY_ID,
+        CONF_POWER_SENSOR_ID,
+    ]
+    num_configs = len(configs)
+
     merged_config = {}
-    for config in configs:
+    for i, config in enumerate(configs, 1):
+
+        # Remove config properties which are only allowed on the deepest level
+        if i < num_configs:
+            for key in exclude_from_merging:
+                if key in config:
+                    config.pop(key)
+
         merged_config.update(config)
 
     if not CONF_CREATE_ENERGY_SENSOR in merged_config:
@@ -242,7 +248,10 @@ def get_merged_sensor_configuration(*configs: dict) -> dict:
             CONF_CREATE_ENERGY_SENSORS
         )
 
-    if not CONF_ENTITY_ID in merged_config:
+    if CONF_DAILY_FIXED_ENERGY in merged_config:
+        merged_config[CONF_ENTITY_ID] = DUMMY_ENTITY_ID
+
+    if validate and not CONF_ENTITY_ID in merged_config:
         raise SensorConfigurationError(
             "You must supply an entity_id in the configuration, see the README"
         )
@@ -278,9 +287,6 @@ async def create_sensors(
     existing_sensors = []
     if CONF_ENTITIES in config:
         for entity_config in config[CONF_ENTITIES]:
-            if CONF_ENTITY_ID in entity_config:
-                sensor_configs.update({entity_config[CONF_ENTITY_ID]: entity_config})
-
             # When there are nested entities, combine these with the current entities, resursively
             if CONF_ENTITIES in entity_config:
                 (child_new_sensors, child_existing_sensors) = await create_sensors(
@@ -288,6 +294,10 @@ async def create_sensors(
                 )
                 new_sensors.extend(child_new_sensors)
                 existing_sensors.extend(child_existing_sensors)
+                continue
+
+            entity_id = entity_config.get(CONF_ENTITY_ID) or str(uuid.uuid4())
+            sensor_configs.update({entity_id: entity_config})
 
     # Automatically add a bunch of entities by area or evaluating template
     if CONF_INCLUDE in config:
@@ -295,13 +305,10 @@ async def create_sensors(
         sensor_configs = {
             entity.entity_id: {CONF_ENTITY_ID: entity.entity_id}
             for entity in entities
-            if await is_supported_model(hass, entity)
+            if entity and await is_supported_model(hass, entity)
         } | sensor_configs
 
     # Create sensors for each entity
-    if not sensor_configs:
-        raise SensorConfigurationError("Could not resolve any entities")
-
     for sensor_config in sensor_configs.values():
         merged_sensor_config = get_merged_sensor_configuration(
             global_config, config, sensor_config
@@ -315,6 +322,16 @@ async def create_sensors(
         except SensorConfigurationError as error:
             _LOGGER.error(error)
 
+    if not new_sensors and not existing_sensors:
+        if CONF_CREATE_GROUP in config:
+            raise SensorConfigurationError(
+                f"Could not resolve any entities in group '{config.get(CONF_CREATE_GROUP)}'"
+            )
+        elif not sensor_configs:
+            raise SensorConfigurationError(
+                f"Could not resolve any entities for non-group sensor"
+            )
+
     # Create group sensors (power, energy, utility)
     if CONF_CREATE_GROUP in config:
         group_entities = new_sensors + existing_sensors
@@ -323,7 +340,7 @@ async def create_sensors(
             _LOGGER.error("Could not create group %s, no entities resolved", group_name)
         group_sensors = await create_group_sensors(
             group_name,
-            merged_sensor_config,
+            get_merged_sensor_configuration(global_config, config, validate=False),
             group_entities,
             hass=hass,
         )
@@ -431,9 +448,7 @@ async def create_group_sensors(
     group_sensors.append(GroupedPowerSensor(name, power_sensor_ids, hass))
     _LOGGER.debug("Creating grouped power sensor: %s", name)
 
-    energy_sensors = list(
-        filter(lambda elm: isinstance(elm, VirtualEnergySensor), entities)
-    )
+    energy_sensors = list(filter(lambda elm: isinstance(elm, EnergySensor), entities))
     energy_sensor_ids = list(map(lambda x: x.entity_id, energy_sensors))
     name_pattern = sensor_config.get(CONF_ENERGY_SENSOR_NAMING)
     name = name_pattern.format(group_name)
