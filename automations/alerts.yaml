@@ -13,6 +13,8 @@
           - "Доступна нова версія Home Assistant: {{ state_attr('binary_sensor.updater', 'newest_version') }}."
           - "Реліз нової версії Home Assistant: {{ state_attr('binary_sensor.updater', 'newest_version') }}."
           - "Версія Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} вже доступна!"
+        notify_data:
+          group: system
 
 - id: hacs_releases_alert
   alias: HACS Releases Alert
@@ -47,6 +49,8 @@
             {%- endfor -%}
         notify_data:
           url: /hacs/entry
+          group: system
+          tag: hacs-updates
 
 - id: home_assistant_start
   alias: Home Assistant Start
@@ -63,6 +67,9 @@
           - 'Home Assistant повністю запущено!'
           - 'Home Assistant стартував!'
           - 'Home Assistant готовий до роботи!'
+        notify_data:
+          group: system
+          tag: ha-start
 
 - id: system_peaks
   alias: System Peaks Alert
@@ -109,6 +116,7 @@
                   - 'Аномально велике навантаження на процесор.'
                 notify_data:
                   url: /lovelace/system
+                  group: system
         - conditions:
             - condition: trigger
               id: ram
@@ -125,6 +133,7 @@
                   - 'Аномально велике навантаження на процесор.'
                 notify_data:
                   url: /lovelace/system
+                  group: system
         - conditions:
             - condition: trigger
               id: system_disk
@@ -140,6 +149,7 @@
                   - 'Аномально велике заповнення системної пам’яті.'
                 notify_data:
                   url: /lovelace/system
+                  group: system
         - conditions:
             - condition: trigger
               id: media_disk
@@ -155,6 +165,7 @@
                   - 'Аномально велике заповнення зовнішнього жорсткого диску.'
                 notify_data:
                   url: /lovelace/system
+                  group: system
     - delay:
         minutes: 10
 
@@ -274,6 +285,7 @@
           - 'Торрент {{ trigger.event.data.name }} готовий!'
         notify_data:
           url: /torrents
+          group: system
 
 - id: unavailable_devices_notifications
   alias: Unavailable Devices Alert
@@ -303,6 +315,8 @@
           - 'Перевірте підключення або перезапустіть.'
           - 'Перепідключіть або перезапустіть.'
           - 'Спробуйте перевірити з’єднання та перезапустити.'
+        notify_data:
+          group: system
 
 - id: humidifier_no_water
   alias: Humidifier No Water
@@ -363,6 +377,7 @@
                   - 'Вдалий час, щоб помити авто.'
                 notify_data:
                   url: /lovelace/car
+                  group: car
         - conditions:
             - condition: trigger
               id: do_not_wash_car
@@ -382,6 +397,7 @@
                   - 'Краще залишити авто брудним.'
                 notify_data:
                   url: /lovelace/car
+                  group: car
 
 - id: snow_tire_alert
   alias: Snow Tire Alert
@@ -421,6 +437,7 @@
                   - 'Варто поїхати на шиномонтаж для заміни шин.'
                 notify_data:
                   url: /lovelace/car
+                  group: car
         - conditions:
             - condition: state
               entity_id: binary_sensor.snowtire
@@ -444,6 +461,7 @@
                   - 'Варто поїхати на шиномонтаж для заміни шин.'
                 notify_data:
                   url: /lovelace/car
+                  group: car
 
 - id: fayna_progress
   alias: Fayna Town Progress Alert

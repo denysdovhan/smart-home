@@ -96,6 +96,8 @@
                   - "{{ state_attr('vacuum.roborock', 'friendly_name') }} давно не прибирав. Почати?"
                 notify_data:
                   url: /lovelace/vacuum
+                  group: vacuum
+                  tag: vacuum-cleaning
                   actions:
                     - action: VACUUM_START
                       title: Почати прибирання

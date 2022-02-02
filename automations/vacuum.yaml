@@ -46,6 +46,8 @@
           - "{{ state_attr('vacuum.roborock', 'friendly_name') }} давно не прибирав. Почати?"
         notify_data:
           url: /lovelace/vacuum
+          group: vacuum
+          tag: vacuum-cleaning
           actions:
             - action: VACUUM_START
               title: Почати прибирання
@@ -103,6 +105,7 @@
           - "Пам'ятайте, що чисто не там, де прибирають, а там де не смітять!"
           - 'Подякуйте роботу за прибирання — він старався для вас.'
         notify_data:
+          group: vacuum
           url: /lovelace/vacuum
 
 - id: vacuum_error_notification
@@ -128,6 +131,7 @@
           - "{{ state_attr('vacuum.roborock', 'friendly_name') }} просить про допомогу!"
           - "{{ state_attr('vacuum.roborock', 'friendly_name') }} потребує вашої допомоги!"
         notify_data:
+          group: vacuum
           url: /lovelace/vacuum
 
 - id: vacuum_ask_maintenance
@@ -166,6 +170,7 @@
           - 'Наберіть води та почистіть його!'
         notify_data:
           url: /lovelace/vacuum
+          group: vacuum
           actions:
             - identifier: VACUUM_PAUSE
               title: 'Пауза'
@@ -217,6 +222,7 @@
                   - 'Обнуліть лічильник після заміни та замовте нову щітку.'
                 notify_data:
                   url: /lovelace/vacuum
+                  group: vacuum
                   actions:
                     - identifier: VACUUM_GO_TO_MAINTENANCE
                       title: 'Обслужити'
@@ -242,6 +248,7 @@
                   - 'Обнуліть лічильник після заміни та замовте нову щітку.'
                 notify_data:
                   url: /lovelace/vacuum
+                  group: vacuum
                   actions:
                     - identifier: VACUUM_GO_TO_MAINTENANCE
                       title: 'Обслужити'
@@ -267,6 +274,7 @@
                   - 'Обнуліть лічильник після заміни та замовте новий фільтр.'
                 notify_data:
                   url: /lovelace/vacuum
+                  group: vacuum
                   actions:
                     - identifier: VACUUM_GO_TO_MAINTENANCE
                       title: 'Обслужити'
@@ -292,6 +300,7 @@
                   - 'Обнуліть лічильник після очищення.'
                 notify_data:
                   url: /lovelace/vacuum
+                  group: vacuum
                   actions:
                     - identifier: VACUUM_GO_TO_MAINTENANCE
                       title: 'Обслужити'
