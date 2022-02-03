@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # Welcome to my Smart Home!
 
 === "Home"
@@ -56,7 +61,6 @@ My home setup for those who are too lazy to read everything:
 - [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome) for network-level ad-blocking.
 - [Plex Media Server](https://www.plex.tv/media-server-downloads/#plex-media-server) with an external hard drive for hosting movies and TV series.
 - [Transmission](https://transmissionbt.com/) for downloading new media to the hard drive.
-- [Umami](https://umami.is/) self-hosted analytics for my websites.
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden) for password management (Rust implementation of [Bitwarden](https://bitwarden.com/)).
 
 ## Motivation
