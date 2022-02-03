@@ -66,3 +66,15 @@ sensor.fayna_days_past:
 sensor.fayna_progress:
   friendly_name: Fayna Progress
   unit_of_measurement: '%'
+
+# Energy Meter
+utility_meter.energy_monthly:
+  friendly_name: Energy Monthly Tariff
+sensor.energy_monthly_peak:
+  friendly_name: Energy Monthly Peak Usage
+sensor.energy_monthly_offpeak:
+  friendly_name: Energy Monthly Off Peak Usage
+sensor.energy_monthly_peak_overlimit:
+  friendly_name: Energy Monthly Peak Overlimit Usage
+sensor.energy_monthly_offpeak_overlimit:
+  friendly_name: Energy Monthly Off Peak Overlimit Usage
