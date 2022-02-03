@@ -2,39 +2,73 @@
 
 My smart home can be quickly deployed using this guide:
 
-- Backup everything before performing any action.
-- Install [Ubuntu Server](https://ubuntu.com/download/raspberry-pi) on card via [Raspberry Pi Imager](https://www.raspberrypi.org/software/).
-- Once flashing is done, add a file called `ssh` in the root of the card. This is required to turn on SSH access.
-- Insert card and plug in Raspberry Pi. Let it a few minutes to start.
-- Connect via ssh using `ssh ubuntu@<ip>`. You can get the IP in router's connected devices panel.
-- Clone `smart-home` to home folder.
-- Add smart-home binaries to `PATH` and set `SMART_HOME_DIR`:
-  ```bash
-  echo 'export SMART_HOME_DIR="$HOME/smart-home"' >> ~/.bashrc
-  echo 'export PATH="$PATH:$HOME/smart-home/bin"' >> ~/.bashrc
-  source ~/.bashrc
-  ```
-- Init smart-home via `smart-home init`.
-- Fix network manager vie `smart-home setup-network`.
-- Generate new mqtt user via `smart-home add-mosquitto-user`.
-- Fill secret credentials in `.env` file. Use `smart-home password` to generate new passwords.
-- Go to Cockpit dashboard (`https://<ip>:`) and set hostname, mount external storage. Reboot after changes.
-- Run `smart-home adguard-resolved` to free up port 53 for AdGuard Home.
-- Spin up containers via `smart-home start`. This command will pull down images and star up containers.
+1.  Backup everything before performing any action.
 
-## Development
+1.  Install [Raspberry Pi OS x64](https://downloads.raspberrypi.org/raspios_arm64/images/).
 
-Sometime I might want to test something simple localy. [Multipass](https://multipass.run/) is a very nice command line tool for creating Ubuntu VMs on demand.
+1.  Press CMD-Shift-X during flashing and setup SSH access, password and timezone before flashing.
 
-These commands will help launch and connect to a Ubuntu VM:
+1.  Insert card and plug in Raspberry Pi. Let it a few minutes to start.
 
-```sh
-# Launch a new machine called `smart-home` with 16GB disk and 2GB RAM
-multipass launch --name smart-home --disk 16G --mem 2G
+1.  Connect via ssh using `ssh pi@<ip>`. You can get the IP in router's connected devices panel.
 
-# Mount a smart-home folder to ~/smart-home on a created VM
-multipass mount . smart-home:~/smart-home
+1.  `sudo apt update && sudo apt upgrade -y`
 
-# SSH into created VM
-multipass shell smart-home
-```
+1.  `sudo rpi-update`
+
+1.  `sudo reboot`
+
+1.  `sudo apt-get install -y jq wget curl udisks2 apparmor-utils libglib2.0-bin network-manager dbus`
+
+1.  Setup WiFi and Ethernet
+
+    1.  `sudo nano /etc/dhcpcd.conf`
+    1.  Add `denyinterfaces wlan0` at the end of the file.
+    1.  `sudo reboot`
+    1.  `sudo nmtui`. Connect to the WiFi. Set static IP.
+    1.  Add route for WiFi `0.0.0.0/0` with `204` as a metric. In order to fallback to WiFi when Ethernet is disconnected.
+
+1.  `sudo raspi-config`. Setup locales.
+
+1.  Fix AppArmor issues.
+
+    1. `sudo nano /boot/cmdline.txt`
+    1. Add `lsm=apparmor` and the end of the line.
+
+1.  `sudo reboot`
+
+1.  Install Docker
+
+    ```bash
+    sudo curl -fsSL get.docker.com | sh
+    sudo gpasswd -a $USER docker
+    newgrp docker
+    ```
+
+1.  Installing OS-Agent
+
+    ```bash
+    wget https://github.com/home-assistant/os-agent/releases/download/1.2.2/os-agent_1.2.2_linux_aarch64.deb
+    sudo dpkg -i os-agent_1.2.2_linux_aarch64.deb
+    ```
+
+1.  Installing Home Assistant Supervised
+
+    ```bash
+    wget https://github.com/home-assistant/supervised-installer/releases/latest/download/homeassistant-supervised.deb
+    sudo dpkg -i homeassistant-supervised.deb
+    ```
+
+1.  Recover from the latest backup.
+
+1.  Add smart-home binaries to `PATH` and set `SMART_HOME_DIR`:
+
+    ```bash
+    echo 'export SMART_HOME_DIR="/usr/share/hassio/homeassistant"' >> ~/.bashrc
+    echo 'export PATH="$PATH:$SMART_HOME_DIR/bin"' >> ~/.bashrc
+    source ~/.bashrc
+    ```
+
+1.  Go to Cockpit dashboard (`https://<ip>:`) and set hostname, mount external storage. Reboot after changes.
+
+1.  Spin up containers via `smart-home start`. This command will pull down images and star up containers.
