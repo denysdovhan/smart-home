@@ -46,6 +46,7 @@ function smart-home:command:help() {
   smart-home update                     stop, update and restart all services
   smart-home prune                      delete obsolete containers
   smart-home password                   generate a password
+  smart-home docs                       start dev server for docs
 "
 }
 
