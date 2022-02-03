@@ -83,9 +83,9 @@
                 speak: false
                 title: Не турбувати 💤
                 messages:
-                  - "Режим «Не турбувати» {% if is_state('input_boolean.do_not_disturb', 'on') %} увімкнено {% else %} вимкнено {% endif%}."
-                  - "Режим тиші {% if is_state('input_boolean.do_not_disturb', 'on') %} увімкнено {% else %} вимкнено {% endif%}."
-                  - "{% if is_state('input_boolean.do_not_disturb', 'on') %} Увімкнено {% else %} Вимкнено {% endif%} режим тиші."
+                  - "Режим «Не турбувати» {{ is_state('input_boolean.do_not_disturb', 'on') | iif('увімкнено', 'вимкнено') }}."
+                  - "Режим тиші {{ is_state('input_boolean.do_not_disturb', 'on') | iif('увімкнено', 'вимкнено') }}."
+                  - "{{ is_state('input_boolean.do_not_disturb', 'on') | iif('Увімкнено', 'Вимкнено') }} режим тиші."
 
 - id: turn_off_lights_after_outage
   alias: Turn Off Lights After Outage

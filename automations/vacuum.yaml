@@ -145,7 +145,7 @@
     # Every 5th cleaning
     - condition: template
       value_template: >
-        {{ states('sensor.roborock_total_clean_count') % 5 == 0 }}
+        {{ states('sensor.roborock_total_clean_count') | int(1) % 5 == 0 }}
     # And there was at least one cleaning after previous maintenance
     - condition: template
       value_template: >
