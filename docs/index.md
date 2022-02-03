@@ -1,6 +1,24 @@
 # Welcome to my Smart Home!
 
-![Home](https://user-images.githubusercontent.com/3459374/115125884-d37c8100-9fd3-11eb-92c9-74253af26bc6.png)
+=== "Home"
+
+    ![Home](https://user-images.githubusercontent.com/3459374/152371766-1d2a1e17-34d3-4fe6-9e6d-aded02f14de1.png)
+
+=== "Living Room"
+
+    ![Living Room](https://user-images.githubusercontent.com/3459374/152372151-be201bd1-cef9-4ce5-a59d-fd1b534934dc.png){: loading=lazy }
+
+=== "Bedroom"
+
+    ![Bedroom](https://user-images.githubusercontent.com/3459374/152372530-703121d2-2a96-4acc-a664-65109447ab93.png){: loading=lazy }
+
+=== "Balcony"
+
+    ![Baclony](https://user-images.githubusercontent.com/3459374/152372756-a14bbc12-cd40-4549-b93b-6205d8356ce9.png){: loading=lazy }
+
+=== "System"
+
+    ![Living Room](https://user-images.githubusercontent.com/3459374/152374825-4e564a75-7c8d-4001-b71a-00dcd5291e73.png){: loading=lazy }
 
 [![GitHub Workflow Status][github-img]][github-url]
 [![Last Commit][last-commit-img]][github-url]
