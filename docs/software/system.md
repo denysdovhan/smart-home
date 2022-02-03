@@ -2,27 +2,9 @@
 
 This page describes my system setup. Here you can find software I rely on for running my smart home system.
 
-## Prior art
+## [Raspberry Pi OS Bullseye](https://downloads.raspberrypi.org/raspios_arm64/images/)
 
-Previously, I've been using [Home Assistant OS](https://www.home-assistant.io/installation/#compare-installation-methods) installation. Home Assistant OS was installed directly on my Raspberry Pi, controlling every aspect of it.
-
-<!-- prettier-ignore -->
-!!! info
-    Home Assistant OS is nice, especially for newbies. Supervisor handles everything: networking, addons, updates, backups, etc. This lets you start quickly, automate your home, thinking in a safe box.
-
-    **Please, use it if you don't fell confident enough** in networking, Linux, and DevOps stuff.
-
-The only major downside is an inability to control the system. You cannot host custom software alongside Home Assistant, you don't have full access to your system, you cannot mount external drives.
-
-As my knowledge was growing, so was my demands. Raspberry Pi is a very capable device, so I knew I can host more useful things for my home on it. First of all, I wanted to hook up an external hard drive and stream my media via Plex.
-
-However, leaving Home Assistant OS means **no more benefits of Supervisor**. I should manage my system myself: network, updates, backups. This bears more responsibility and headache.
-
-I've been developing an alternative solution gradually for a few months, looking for a replacement for every part of the Supervisor's functionality. Then, when I felt confident, I migrated to my new setup.
-
-## [Ubuntu Server 20.04 LTS](https://ubuntu.com/download/server)
-
-I use [Ubuntu](https://ubuntu.com/) as a primary OS for my Raspberry Pi. Ubuntu is a well-maintained Linux distribution with a huge community and large support forums.
+I use Raspberry Pi OS as a primary OS for my Raspberry Pi. It's besically Debian 11, so it's officially supported by Home Assistant Supervised.
 
 It officially [supports Raspberry Pi](https://ubuntu.com/download/raspberry-pi) and can be easily installed via the official Raspberry Pi Imager.
 
@@ -42,12 +24,44 @@ Docker allows to encapsulate everything related to a single service within a con
 
 This tool let me easily manage my system from web browser: network, external drives, processes and services, system update, etc.
 
-## [avahi-daemon](https://www.avahi.org/)
+## [Home Assistant Supervised](https://github.com/home-assistant/supervised-installer)
 
-In simple works, Avahi is a tool to make my server with `hostname` discoverable in local network as `hostname.local`. This let me avoid typing local IP address every time I want to access my server localy.
+[Home Assistant](https://www.home-assistant.io) is an open-source home automation platform that puts local control and privacy first. This is the heart of my smart home.
+
+Home Assistant powers my home automation binds my devices together, passes them to Google Home and HomeKit, etc.
+
+Home Assistant Supervised handles home automation services: MQTT, zigbee2mqtt, ESPHome, AirCast. It also handles updates, hardware and backups.
+
+You can read more about it in [Home Assistant section](../../home-assistant/introduction/) of this documentation.
 
 ## [smart-home](https://github.com/denysdovhan/smart-home/blob/master/bin/smart-home)
 
 Thi is just a bash script I wrote for personal need. You can [find it here](https://github.com/denysdovhan/smart-home/blob/master/bin/smart-home).
 
 This performs typical tasks I do in my smart home, like bootstraping, controlling server, updating, etc.
+
+## Prior art
+
+### Home Assistant OS
+
+Previously, I've been using [Home Assistant OS](https://www.home-assistant.io/installation/#compare-installation-methods) installation. Home Assistant OS was installed directly on my Raspberry Pi, controlling every aspect of it.
+
+<!-- prettier-ignore -->
+!!! info
+    Home Assistant OS is nice, especially for newbies. Supervisor handles everything: networking, addons, updates, backups, etc. This lets you start quickly, automate your home, thinking in a safe box.
+
+    **Please, use it if you don't fell confident enough** in networking, Linux, and DevOps stuff.
+
+The only major downside is an inability to control the system. You cannot host custom software alongside Home Assistant, you don't have full access to your system, you cannot mount external drives.
+
+As my knowledge was growing, so was my demands. Raspberry Pi is a very capable device, so I knew I can host more useful things for my home on it. First of all, I wanted to hook up an external hard drive and stream my media via Plex.
+
+However, leaving Home Assistant OS means **no more benefits of Supervisor**. I should manage my system myself: network, updates, backups. This bears more responsibility and headache.
+
+I've been developing an alternative solution gradually for a few months, looking for a replacement for every part of the Supervisor's functionality. Then, when I felt confident, I migrated to my new setup.
+
+### Home Assistant Container
+
+I was running HA Container for a year or so. This worked well for me, though I've been really missing Supervisor benefits.
+
+Eventually, with a migration to a new memory card, I've decided to change my setup to HA Supervised.
