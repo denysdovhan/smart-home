@@ -1,0 +1,32 @@
+#
+# Logger
+#
+# https://www.home-assistant.io/integrations/logger/
+#
+
+logger:
+  default: warning
+  filters:
+    libav.hls:
+      # Cameras sometimes have ivalid timestampts
+      - 'Invalid timestamps stream=0, pts='
+
+    pyhap.characteristic:
+      # Humidifier's target temperatur is sometimes 0 during the startup.
+      - 'TargetHumidifierDehumidifierState: value=0 is an invalid value.'
+
+    homeassistant.components.camera:
+      # Vacuum Map sometimes takes longer to update.
+      - 'Updating xiaomi_cloud_map_extractor camera took longer than the scheduled update interval'
+
+    homeassistant.components.mqtt.number:
+      # Calibration values sometimes go out of range. That's a valve's bug.
+      - '_heater_local_temperature_calibration:'
+
+    homeassistant.components.stream:
+      # Live city cameras are often go offline. That is not a problem.
+      - 'Error from stream worker: Error opening stream http://vps.guru.ua'
+
+    homeassistant.helpers.entity:
+      # Vacuum Map sometime take more time to update.
+      - 'Update of camera.roborock_live_map is taking over 10 seconds'

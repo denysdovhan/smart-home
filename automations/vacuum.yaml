@@ -1,0 +1,347 @@
+- id: vacuum_regular_cleaning
+  alias: Vacuum Ask Regular Cleaning
+  description: Regular vacuum cleaning every two days
+  trigger:
+    - platform: time_pattern
+      hours: /4
+      minutes: 0
+      seconds: 0
+  condition:
+    # Robot is docked
+    - condition: state
+      entity_id: vacuum.roborock
+      state: 'docked'
+    # It's working day
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    # Only on activity time
+    - condition: state
+      entity_id: binary_sensor.activity_time
+      state: 'on'
+    # Do Not Disturb mode is off
+    - condition: state
+      entity_id: input_boolean.do_not_disturb
+      state: 'off'
+    # Time for cleaning or last cleaning was short
+    - condition: state
+      entity_id: binary_sensor.time_to_clean
+      state: 'on'
+    # We are not out of the city
+    - condition: state
+      entity_id: binary_sensor.far_from_home
+      state: 'off'
+  action:
+    - service: script.announcement
+      data:
+        speak: false
+        title: 'Пилосос 🧹'
+        messages:
+          - 'Пора почати регулярне прибирання.'
+          - 'Час прибирати вдома.'
+          - 'Бажаєте прибрати вдома?'
+          - 'Вдома давно не прибирали. Почати прибирання?'
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} пропонує домашнє прибирання."
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} хоче прибирати квартиру."
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} давно не прибирав. Почати?"
+        notify_data:
+          url: /lovelace/vacuum
+          group: vacuum
+          tag: vacuum-cleaning
+          actions:
+            - action: VACUUM_START
+              title: Почати прибирання
+              activationMode: background
+              authenticationRequired: true
+            - action: VACUUM_START_GENTLE
+              title: Почати тихе прибирання
+              activationMode: background
+              authenticationRequired: true
+
+- id: vacuum_finish_cleaning
+  alias: Vacuum Stop Cleaning
+  description: Send vacuum home when somebody comes home
+  trigger:
+    platform: state
+    entity_id: group.family
+    from: not_home
+    to: home
+  condition:
+    # Send vacuum home only when it's cleaning
+    - condition: state
+      entity_id: vacuum.roborock
+      state: 'cleaning'
+  action:
+    - service: vacuum.return_to_base
+      entity_id: vacuum.roborock
+
+- id: vacuum_finish_notification
+  alias: Vacuum Finish Notification
+  description: Notify when vacuum finished cleaning
+  trigger:
+    platform: state
+    entity_id: vacuum.roborock
+    from: 'cleaning'
+    to: 'returning'
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: not_home
+  action:
+    - service: script.announcement
+      data:
+        speak: false
+        title: 'Пилосос 🧹'
+        greetings:
+          - 'Прибирання закінчено!'
+          - 'Робот прибрав квартиру!'
+          - 'Робот все прибрав!'
+          - 'Тепер вдома чисто!'
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} виконав своє завдання."
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} закінчив з прибиранням."
+        messages:
+          - 'Повертаємось на базу!'
+          - 'Намагайтесь підтримувати порядок!'
+          - "Пам'ятайте, що чисто не там, де прибирають, а там де не смітять!"
+          - 'Подякуйте роботу за прибирання — він старався для вас.'
+        notify_data:
+          group: vacuum
+          url: /lovelace/vacuum
+
+- id: vacuum_error_notification
+  alias: Vacuum Error Notification
+  description: Notify when error with vacuum occured
+  trigger:
+    platform: state
+    entity_id: vacuum.roborock
+    to: 'error'
+  action:
+    - service: script.announcement
+      data:
+        speak: false
+        title: 'Пилосос 🧹'
+        greetings:
+          - 'Ой!'
+          - 'Увага!'
+          - 'Халепа!'
+        messages:
+          - 'Проблема з пилососом!'
+          - "Виникла непередбачувана ситуація з роботом: {{ state_attr('vacuum.roborock', 'error') }}"
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} зіткнувся з помилкою."
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} просить про допомогу!"
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} потребує вашої допомоги!"
+        notify_data:
+          group: vacuum
+          url: /lovelace/vacuum
+
+- id: vacuum_ask_maintenance
+  alias: Vacuum Ask Maintenance
+  description: Send vacuum near trash bin and ask for maintenance
+  trigger:
+    platform: state
+    entity_id: vacuum.roborock
+    to: 'docked'
+  condition:
+    # Every 5th cleaning
+    - condition: template
+      value_template: >
+        {{ states('sensor.roborock_total_clean_count') | int(1) % 5 == 0 }}
+    # And there was at least one cleaning after previous maintenance
+    - condition: template
+      value_template: >
+        {% set last_maintenance = as_timestamp(state_attr('automation.vacuum_maintenance', 'last_triggered'), 0) %}
+        {% set last_cleaning = as_timestamp(states('sensor.roborock_last_clean_start'), 0) %}
+        {{ last_cleaning > last_maintenance }}
+  action:
+    - service: script.announcement
+      data:
+        title: 'Пилосос 🧹'
+        greetings:
+          - 'Потрібно обслужити пилосос.'
+          - 'Час обслуговування пилососа.'
+          - 'Робот трудився для вас, а тепер потребує вашої уваги.'
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} потребує піклування про себе."
+          - "{{ state_attr('vacuum.roborock', 'friendly_name') }} просить про обслуговування."
+        messages:
+          - 'Почистіть ганчірку та наберати свіжої води.'
+          - 'Викиньте сміття та наберіть нової води.'
+          - 'Викиньте сміття, наберіть води і почистіть ганчірку.'
+          - 'Почистіть його та наберіть нової води у бак!'
+          - 'Наберіть води та почистіть його!'
+        notify_data:
+          url: /lovelace/vacuum
+          group: vacuum
+          actions:
+            - identifier: VACUUM_PAUSE
+              title: 'Пауза'
+              activationMode: 'background'
+            - identifier: VACUUM_RETURN_TO_BASE
+              title: 'На базу'
+              activationMode: 'background'
+              destructive: true
+    - service: script.vacuum_maintenance
+
+- id: vacuum_replacements
+  alias: Vacuum Replacements Alert
+  trigger:
+    - platform: numeric_state
+      id: main_brush
+      entity_id: vacuum.roborock
+      attribute: main_brush_left
+      below: 1
+    - platform: numeric_state
+      id: side_brush
+      entity_id: vacuum.roborock
+      attribute: side_brush_left
+      below: 1
+    - platform: numeric_state
+      id: filter
+      entity_id: vacuum.roborock
+      attribute: filter_left
+      below: 1
+    - platform: numeric_state
+      id: sensor_dirty
+      entity_id: vacuum.roborock
+      attribute: sensor_dirty_left
+      below: 1
+  action:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: main_brush
+          sequence:
+            - service: script.announcement
+              data:
+                title: 'Пилосос 🧹'
+                greetings:
+                  - 'Головна щітка потребує заміни.'
+                  - 'Потрібно замінити основну щітку.'
+                  - 'Замініть основну щітку.'
+                messages:
+                  - 'Не забудьте обнулити лічильник після заміни та замовити нову щітку.'
+                  - 'Обнуліть лічильник після заміни та замовте нову щітку.'
+                notify_data:
+                  url: /lovelace/vacuum
+                  group: vacuum
+                  actions:
+                    - identifier: VACUUM_GO_TO_MAINTENANCE
+                      title: 'Обслужити'
+                      activationMode: 'background'
+                      destructive: true
+                    - identifier: VACUUM_RETURN_TO_BASE
+                      title: 'На базу'
+                      activationMode: 'background'
+                      destructive: true
+        - conditions:
+            - condition: trigger
+              id: side_brush
+          sequence:
+            - service: script.announcement
+              data:
+                title: 'Пилосос 🧹'
+                greetings:
+                  - 'Бокова щітка потребує заміни.'
+                  - 'Потрібно замінити бокову щітку.'
+                  - 'Замініть бокову щітку.'
+                messages:
+                  - 'Не забудьте обнулити лічильник після заміни та замовити нову щітку.'
+                  - 'Обнуліть лічильник після заміни та замовте нову щітку.'
+                notify_data:
+                  url: /lovelace/vacuum
+                  group: vacuum
+                  actions:
+                    - identifier: VACUUM_GO_TO_MAINTENANCE
+                      title: 'Обслужити'
+                      activationMode: 'background'
+                      destructive: true
+                    - identifier: VACUUM_RETURN_TO_BASE
+                      title: 'На базу'
+                      activationMode: 'background'
+                      destructive: true
+        - conditions:
+            - condition: trigger
+              id: filter
+          sequence:
+            - service: script.announcement
+              data:
+                title: 'Пилосос 🧹'
+                greetings:
+                  - 'Основний фільтр потребує заміни.'
+                  - 'Потрібно замінити фільтр пилососа.'
+                  - 'Замініть фільтр пилососа.'
+                messages:
+                  - 'Не забудьте обнулити лічильник після заміни та замовити новий фільтр.'
+                  - 'Обнуліть лічильник після заміни та замовте новий фільтр.'
+                notify_data:
+                  url: /lovelace/vacuum
+                  group: vacuum
+                  actions:
+                    - identifier: VACUUM_GO_TO_MAINTENANCE
+                      title: 'Обслужити'
+                      activationMode: 'background'
+                      destructive: true
+                    - identifier: VACUUM_RETURN_TO_BASE
+                      title: 'На базу'
+                      activationMode: 'background'
+                      destructive: true
+        - conditions:
+            - condition: trigger
+              id: sensor_dirty
+          sequence:
+            - service: script.announcement
+              data:
+                title: 'Пилосос 🧹'
+                greetings:
+                  - 'Сенсори орієнтації забруднились.'
+                  - 'Потрібно очистити сенсори пилососа.'
+                  - 'Очистіть сенсори пилососа.'
+                messages:
+                  - 'Не забудьте обнулити лічильник після очищення.'
+                  - 'Обнуліть лічильник після очищення.'
+                notify_data:
+                  url: /lovelace/vacuum
+                  group: vacuum
+                  actions:
+                    - identifier: VACUUM_GO_TO_MAINTENANCE
+                      title: 'Обслужити'
+                      activationMode: 'background'
+                      destructive: true
+                    - identifier: VACUUM_RETURN_TO_BASE
+                      title: 'На базу'
+                      activationMode: 'background'
+                      destructive: true
+
+- id: vacuum_ios_actions_handling
+  alias: Vacuum iOS Actions Handling
+  trigger:
+    platform: event
+    event_type: mobile_app_notification_action
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.event.data.action == 'VACUUM_START' }}"
+          sequence:
+            - service: script.vacuum_regular_cleaning
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.event.data.action == 'VACUUM_START_GENTLE' }}"
+          sequence:
+            - service: script.vacuum_gentle_cleaning
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.event.data.action == 'VACUUM_PAUSE' }}"
+          sequence:
+            - service: vacuum.pause
+              entity_id: vacuum.roborock
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.event.data.action == 'VACUUM_RETURN_TO_BASE' }}"
+          sequence:
+            - service: vacuum.return_to_base
+              entity_id: vacuum.roborock
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.event.data.action == 'VACUUM_GO_TO_MAINTENANCE' }}"
+          sequence:
+            - service: script.vacuum_maintenance

@@ -1,0 +1,170 @@
+- id: sync_living_room_trv_temperature
+  alias: Sync Living Room TRV temperature
+  use_blueprint:
+    path: denysdovhan/sync_trv_with_external_sensor.yaml
+    input:
+      valve: climate.living_room_heater
+      temp_sensor: sensor.living_room_temperature
+
+- id: sync_bedroom_trv_temperature
+  alias: Sync Bedroom TRV temperature
+  use_blueprint:
+    path: denysdovhan/sync_trv_with_external_sensor.yaml
+    input:
+      valve: climate.bedroom_heater
+      temp_sensor: sensor.bedroom_temperature
+
+- id: turn_on_balcony_heater
+  alias: Turn on Balcony Heater
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.work_display_connected
+      to: 'on'
+    - platform: state
+      entity_id: light.desk_lamp
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.balcony_comfort_temperature
+      to: 'off'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.balcony_comfort_temperature
+      state: 'off'
+    - condition: state
+      entity_id: climate.balcony_heater
+      state: 'off'
+    # Either display or desk_lamp should be on when the temperature is low
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.work_display_connected
+          state: 'on'
+        - condition: state
+          entity_id: light.desk_lamp
+          state: 'on'
+  action:
+    - service: climate.turn_on
+      entity_id: climate.balcony_heater
+
+- id: turn_off_balcony_heater
+  alias: Turn off Balcony Heater
+  trigger:
+    - platform: state
+      entity_id: light.desk_lampk
+      to: 'off'
+      for:
+        minutes: 30
+    - platform: state
+      entity_id: binary_sensor.work_display_connected
+      to: 'off'
+      for:
+        minutes: 30
+    - platform: state
+      entity_id: binary_sensor.balcony_comfort_temperature
+      to: 'on'
+      for:
+        minutes: 30
+  condition:
+    - condition: state
+      entity_id: climate.balcony_heater
+      state: 'heat'
+    # Do not turn off if it is cold on balcony
+    - condition: state
+      entity_id: binary_sensor.balcony_comfort_temperature
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.work_display_connected
+      state: 'off'
+  action:
+    - service: climate.turn_off
+      entity_id: climate.balcony_heater
+    # Turn off desk lamp as well
+    - condition: state
+      entity_id: light.desk_lamp
+      state: 'on'
+    - service: light.turn_off
+      entity_id: light.desk_lamp
+
+- id: work_on_balcony
+  alias: Work on Balcony
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.denyss_iphone_focus
+      to: 'off'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.balcony_comfort_temperature
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    - condition: state
+      entity_id: person.denys
+      state: 'home'
+    - condition: time
+      after: '08:00'
+      before: '15:00'
+  action:
+    - alias: Prepare a action variable
+      variables:
+        heat_action: "{{ 'HEAT_' ~ context.id }}"
+        delay_minutes: '{{ range(1, 30) | random }}'
+    - alias: Wait for some time after wake up
+      delay:
+        minutes: '{{ delay_minutes }}'
+    - alias: Send an actionable notification
+      service: script.announcement
+      data:
+        service: notify.denys
+        title: 'Робоче місце 🖥'
+        speak: false
+        greetings:
+          - "На балконі {{ states('sensor.balcony_conditions_sensor_temperature') | round(1) }}°C."
+          - "Температура на балконі {{ states('sensor.balcony_conditions_sensor_temperature') | round(1) }}°C."
+          - "Зараз на балконі {{ states('sensor.balcony_conditions_sensor_temperature') | round(1) }}°C."
+        messages:
+          - 'Хочете увімкнути обігрів?'
+          - 'Нагріти балкон для роботи?'
+          - 'Увімкнути обігрівач?'
+          - 'Нагріти до комфортної температури?'
+          - 'Підігріти комфортної температури?'
+        notify_data:
+          actions:
+            - action: '{{ heat_action }}'
+              title: Нагріти балкон
+          url: /lovelace/balcony
+    - alias: Wait for notification to be pressed
+      wait_for_trigger:
+        - platform: event
+          event_type: mobile_app_notification_action
+          event_data:
+            action: '{{ heat_action }}'
+      timeout: '12:00:00'
+      continue_on_timeout: false
+    - alias: Start heating the balcony
+      service: climate.turn_on
+      entity_id: climate.balcony_heater
+    - alias: Wait to heat up
+      wait_for_trigger:
+        - platform: state
+          entity_id: binary_sensor.balcony_comfort_temperature
+          to: 'on'
+      timeout: '6:00:00'
+      continue_on_timeout: false
+    - alias: Notify about comfort temperature
+      service: script.announcement
+      data:
+        service: notify.denys
+        title: 'Робоче місце 🖥'
+        speak: false
+        greetings:
+          - 'Можна йти працювати.'
+          - 'Балкон готовий до роботи.'
+          - 'Робоче місце нагріте до комфортної темпертарури.'
+          - 'Робоче місце готове.'
+        messages:
+          - "На балконі {{ states('sensor.balcony_conditions_sensor_temperature') | round(1) }}°C."
+          - "Температура: {{ states('sensor.balcony_conditions_sensor_temperature') | round(1) }}°C."
+          - "Зараз на балконі {{ states('sensor.balcony_conditions_sensor_temperature') | round(1) }}°C."
+        notify_data:
+          url: /lovelace/balcony

@@ -1,0 +1,28 @@
+name: Home Assistant CI
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: 0 12 * * *
+
+jobs:
+  home-assistant-stable:
+    name: Home Assistant Stable
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ['stable', 'beta', 'dev']
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Prepare Stubs
+        run: cp -R ./stubs/* ./
+
+      - name: Home Assistant Check
+        uses: frenck/action-home-assistant@v1
+        with:
+          path: '.'
+          secrets: ./secrets.example.yaml
+          version: '${{ matrix.version }}'

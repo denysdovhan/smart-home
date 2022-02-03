@@ -1,0 +1,11 @@
+#
+# Input Boolean
+#
+# https://www.home-assistant.io/integrations/input_boolean/
+#
+
+input_boolean:
+  do_not_disturb:
+    name: Do Not Disturb
+    initial: off
+    icon: mdi:bell-sleep

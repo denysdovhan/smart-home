@@ -1,0 +1,74 @@
+#
+# Binary Sensor
+#
+# https://www.home-assistant.io/integrations/binary_sensor/
+#
+
+binary_sensor:
+  # Workday
+  - platform: workday
+    country: UA
+  # Times of the Day
+  - platform: tod
+    name: Activity Time
+    after: '12:00'
+    before: '21:00'
+  - platform: tod
+    name: Sleeping Time
+    after: '00:00'
+    before: '10:00'
+  # Template
+  - platform: template
+    sensors:
+      time_to_clean:
+        friendly_name: Time to Clean
+        value_template: >-
+          {% set last_cleaning_start = as_timestamp(states('sensor.roborock_last_clean_start'), 0) %}
+          {% set last_cleaning_duration = states('sensor.roborock_last_clean_duration') | int(0) %}
+          {% set current_time = as_timestamp(now(), 0) %}
+          {% set time_for_cleaning = current_time - last_cleaning_start > (60 * 60 * 48) %}
+          {% set last_cleaning_was_short = last_cleaning_duration < (60 * 5) %}
+          {{ time_for_cleaning or last_cleaning_was_short }}
+
+      far_from_home:
+        friendly_name: Far From Home
+        value_template: >-
+          {{ states('proximity.home') | int(0) > 50 }}
+
+      denys_on_dnd:
+        friendly_name: Denys On Call
+        value_template: >-
+          {% set camera_on = is_state('binary_sensor.wix_macbook_pro_camera_in_use', 'on') %}
+          {% set mic_on = is_state('binary_sensor.wix_macbook_pro_microphone_in_use', 'on') %}
+          {% set focus_on = is_state('binary_sensor.denyss_iphone_focus', 'on') %}
+          {% set at_home = is_state('person.denys', 'home') %}
+          {{ at_home and (camera_on or mic_on or focus_on) }}
+      marry_on_dnd:
+        friendly_name: Marry On Call
+        value_template: >-
+          {% set camera_on = is_state('binary_sensor.home_macbook_pro_camera_in_use', 'on') %}
+          {% set mic_on = is_state('binary_sensor.home_macbook_pro_microphone_in_use', 'on') %}
+          {% set focus_on = is_state('binary_sensor.iphone_maria_focus', 'on') %}
+          {% set at_home = is_state('person.marry', 'home') %}
+          {{ at_home and (camera_on or mic_on or focus_on) }}
+
+      work_display_connected:
+        friendly_name: Working Display Connected
+        value_template: >-
+          {% set at_home = is_state('device_tracker.wix_macbook_pro', 'home') %}
+          {% set display_connected = is_state('sensor.wix_macbook_pro_primary_display_name', 'LG HDR 4K') %}
+          {% set active = is_state('binary_sensor.wix_macbook_pro_active', 'on') %}
+          {{ at_home and display_connected and active }}
+
+      balcony_comfort_temperature:
+        friendly_name: Balcony Comfort Temperature
+        value_template: >-
+          {% set current = state_attr('climate.balcony_heater', 'current_temperature') | float(10) %}
+          {% set target = state_attr('climate.balcony_heater', 'temperature') | float(10) %}
+          {{ current >= target }}
+  # Car Wash
+  - platform: car_wash
+    weather: weather.nyvky
+  # Winter Tires
+  - platform: snowtire
+    weather: weather.nyvky
