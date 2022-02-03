@@ -1,9 +1,7 @@
 # Generic ignores
 *.log*
 *.conf
-*.db
-*.db-shm
-*.db-wal
+*.db*
 *.pyc
 ._*
 __pycache__
