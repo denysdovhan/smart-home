@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # Hardware
 
 This is the list of the hardware that is present in my smart home.
@@ -6,13 +11,19 @@ This is the list of the hardware that is present in my smart home.
 
 The heart of my smart home is a home server based on [Raspberry Pi 4 Model B](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) with 4GB of RAM onboard. It's a small, affordable, but nonetheless a very capable device. It's held within an [aluminum alloy case](https://www.aliexpress.com/item/4000039821460.html?spm=a2g0s.9042311.0.0.27424c4dyqD1Vd) I bought on AliExpress. The aluminum case itself helps to disperse heat. Additionally, it came with a heat sink set and a tiny cooling fan.
 
-As storage, I use a [SanDisk Extreme Pro MicroSD A2 V30 64GB](https://www.amazon.com/SanDisk-Extreme-UHS-I-128GB-Adapter/dp/B07G3H5RBT). This card is fast and reliable in handling small I/O operations.
+As storage, I use a [SanDisk Extreme Pro MicroSD A2 V30 128GB](https://www.amazon.com/SanDisk-Extreme-UHS-I-128GB-Adapter/dp/B07G3H5RBT) (previously 64GB). This card is fast and reliable in handling small I/O operations.
+
+<!-- prettier-ignore -->
+!!! info
+    Previous 64GB SD-card served well for more than 2 years. After some time, my server started to shutdown randomly. Power supply was normal, so I decided to update to 128GB card.
+
+    Ideally, it's better to upgrade to SSD, but I keep this option for the future.
 
 <!-- prettier-ignore -->
 !!! info
     Home Assistant team [recommands](https://www.home-assistant.io/installation/raspberrypi#suggested-hardware) to use [Application Class 2](https://www.sdcard.org/developers/overview/application/index.html) as they handle small I/O much more consistently than cards not optimized to host applications. A 32 GB or bigger card is recommended.
 
-I use official [Raspberry Pi 15.3W USB-C Power Supply](https://www.raspberrypi.org/products/type-c-power-supply/) for powering my smart home server. It is important to get enough power for Raspberry Pi to work properly. Home Assistant requires at least 3A power and this power supply cable handles it just right.
+I use official [Raspberry Pi 15W USB-C Power Supply](https://www.raspberrypi.org/products/type-c-power-supply/) for powering my smart home server. It is important to get enough power for Raspberry Pi to work properly. Home Assistant requires at least 3A power and this power supply cable handles it just right.
 
 === "Home Server Hardware"
 
@@ -118,7 +129,13 @@ I use two ESP8266 devices based on [iot-uni-dongle](https://github.com/dudanov/i
 
 ## Zigbee Network
 
-My Zigbee devices are connected to Home Assistant via [CC2531 Sniffer Board](https://www.aliexpress.com/item/4000059514865.html) as a coordinator. Devices are controlled by Home Assistant via: [zigbee2mqtt](https://www.zigbee2mqtt.io/) + [Mosquitto](https://mosquitto.org/) + [MQTT Integration](https://www.home-assistant.io/integrations/mqtt/).
+My Zigbee devices are connected to Home Assistant via [SMARTLIGHT CC2652P Zigbee USB Adapter SLZB-02](https://smartlight.me/smart-home-devices/zigbee-devices/zigbee-coordinator-v4-cc2652p) as a coordinator. Devices are controlled by Home Assistant via: [zigbee2mqtt](https://www.zigbee2mqtt.io/) + [Mosquitto](https://mosquitto.org/) + [MQTT Integration](https://www.home-assistant.io/integrations/mqtt/).
+
+<!-- prettier-ignore -->
+!!! note
+    Previosly my Zigbee network was working with [CC2531 Sniffer Board](https://www.aliexpress.com/item/4000059514865.html) as a coordinator.
+    It was fine with small amount of devices, but as my network grew I started to [get weird behavior](https://github.com/home-assistant/core/issues/52301).
+    Additioanlly, I've discovered that [CC2531 is no longer recommended by zigbee2mqtt developers](https://www.zigbee2mqtt.io/guide/adapters/#not-recommended).
 
 <!-- prettier-ignore -->
 !!! tip
@@ -137,6 +154,7 @@ I used to use Aqara Hub, but it switched to the current approach because of its 
 | [Aqara Conditions Sensor][aqara-conditions] |    1     | Internal temperature, humidity and pressure data |
 | [Aqara Contact Sensor][aqara-contact]       |    1     | Detection front door opening                     |
 | [MiJia Conditions Sensor][mija-conditions]  |    1     | Internal temperature and humidity data           |
+| [Tuya Smart ZigBee Radiator][tuya-trv]      |    2     | Adjusting heaters temperature                    |
 
 <!-- Devices -->
 
@@ -146,6 +164,7 @@ I used to use Aqara Hub, but it switched to the current approach because of its 
 [aqara-conditions]: https://www.aliexpress.com/item/32990414707.html
 [aqara-contact]: https://www.aliexpress.com/item/32991903307.html
 [mija-conditions]: https://www.aliexpress.com/item/32870614227.html
+[tuya-trv]: https://a.aliexpress.com/_ApW4sD
 
 ## Media Volume
 
