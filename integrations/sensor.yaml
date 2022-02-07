@@ -16,10 +16,19 @@ sensor:
     resources:
       - type: disk_use_percent
         arg: /
-      - type: disk_use_percent
-        arg: /media
       - type: processor_use
       - type: memory_use_percent
+      - type: processor_temperature
+
+  - platform: ssh
+    name: Media Disk Use Percent
+    host: !secret ssh_host
+    username: !secret ssh_username
+    password: !secret ssh_password
+    command: df -h -B 1G | grep /mnt/media | awk '{print $5}'
+    value_template: "{{ value.split('\r\n')[1].replace('%', '') }}"
+    unit_of_measurement: '%'
+    scan_interval: 600 # every 10 minutes
 
   - platform: miflora
     name: dracaena

@@ -81,6 +81,12 @@
       for:
         seconds: 30
     - platform: numeric_state
+      id: temperature
+      entity_id: sensor.processor_temperature
+      above: 80
+      for:
+        minutes: 30
+    - platform: numeric_state
       id: ram
       entity_id: sensor.memory_use_percent
       above: 90
@@ -94,7 +100,7 @@
         minutes: 1
     - platform: numeric_state
       id: media_disk
-      entity_id: sensor.disk_use_percent_media
+      entity_id: sensor.media_disk_use_percent
       above: 90
       for:
         minutes: 1
@@ -114,6 +120,22 @@
                 messages:
                   - 'Складнощі з виконанням поточного завдання.'
                   - 'Аномально велике навантаження на процесор.'
+                notify_data:
+                  url: /lovelace/system
+                  group: system
+        - conditions:
+            - condition: trigger
+              id: temperature
+          sequence:
+            - service: script.announcement
+              data:
+                title: 'Системний пік 🔥'
+                greetings:
+                  - 'Температура процесора {{ trigger.to_state.state }}°С.'
+                  - 'Процесор нагрівся до {{ trigger.to_state.state }}°С.'
+                messages:
+                  - 'Аномально велике навантаження на процесор.'
+                  - 'Охолодження процесора не справляється з навантаженням.'
                 notify_data:
                   url: /lovelace/system
                   group: system
@@ -159,10 +181,10 @@
                 title: 'Системний пік 🔥'
                 greetings:
                   - 'Диск медіа заповнений на {{ trigger.to_state.state }}%.'
-                  - 'Заповнення медіа диску {{ trigger.to_state.state }}%.'
+                  - 'Заповнення диску медіа {{ trigger.to_state.state }}%.'
                 messages:
-                  - 'Медіа диск заповнюється. Потрібно видалити зайві медіафайли.'
-                  - 'Аномально велике заповнення зовнішнього жорсткого диску.'
+                  - 'Диск для медіа заповнюється. Потрібно видалити застарілі файли.'
+                  - 'Занадто багато файлів на диску медіа.'
                 notify_data:
                   url: /lovelace/system
                   group: system
