@@ -19,4 +19,4 @@ light:
     entity_id: switch.living_room_tv_lights
   - platform: switch
     name: corridor_light
-    entity_id: switch.corridor_light_switch
+    entity_id: switch.corridor_light
