@@ -146,15 +146,16 @@ I used to use Aqara Hub, but it switched to the current approach because of its 
 
 ### Devices
 
-| Device                                      | Quantity | Notes                                            |
-| :------------------------------------------ | :------: | :----------------------------------------------- |
-| [Aqara Smart LED Bulb 9W][aqara-bulb]       |    5     | Ceiling and Main lights                          |
-| [Aqara Motion Sensor][aqara-motion]         |    2     | Detecting motions in both rooms                  |
-| [Aqara Magic Cube Controller][aqara-cube]   |    1     | Controlling lights, scenes and modes             |
-| [Aqara Conditions Sensor][aqara-conditions] |    1     | Internal temperature, humidity and pressure data |
-| [Aqara Contact Sensor][aqara-contact]       |    1     | Detection front door opening                     |
-| [MiJia Conditions Sensor][mija-conditions]  |    1     | Internal temperature and humidity data           |
-| [Tuya Smart ZigBee Radiator][tuya-trv]      |    2     | Adjusting heaters temperature                    |
+| Device                                                         | Quantity | Notes                                            |
+| :------------------------------------------------------------- | :------: | :----------------------------------------------- |
+| [Aqara Smart LED Bulb 9W][aqara-bulb]                          |    5     | Ceiling and Main lights                          |
+| [Aqara Motion Sensor][aqara-motion]                            |    2     | Detecting motions in both rooms                  |
+| [Aqara Magic Cube Controller][aqara-cube]                      |    1     | Controlling lights, scenes and modes             |
+| [Aqara Conditions Sensor][aqara-conditions]                    |    1     | Internal temperature, humidity and pressure data |
+| [Aqara Contact Sensor][aqara-contact]                          |    1     | Detection front door opening                     |
+| [Aqara Single Switch Module T1 (without neutral)][aqara-relay] |    1     | Switching corridor light                         |
+| [MiJia Conditions Sensor][mija-conditions]                     |    1     | Internal temperature and humidity data           |
+| [Tuya Smart ZigBee Radiator][tuya-trv]                         |    2     | Adjusting heaters temperature                    |
 
 <!-- Devices -->
 
@@ -163,6 +164,7 @@ I used to use Aqara Hub, but it switched to the current approach because of its 
 [aqara-cube]: https://www.aliexpress.com/item/32986728343.html
 [aqara-conditions]: https://www.aliexpress.com/item/32990414707.html
 [aqara-contact]: https://www.aliexpress.com/item/32991903307.html
+[aqara-relay]: https://www.zigbee2mqtt.io/devices/DLKZMK12LM.html
 [mija-conditions]: https://www.aliexpress.com/item/32870614227.html
 [tuya-trv]: https://a.aliexpress.com/_ApW4sD
 
