@@ -1,6 +1,5 @@
 # Temperature
 sensor.home_temperature:
-  friendly_name: Home Temperature
   unit_of_measurement: '°C'
   device_class: temperature
 sensor.living_room_temperature:
@@ -28,44 +27,11 @@ sensor.bedroom_humidity:
 
 # LUN Misto AQI
 sensor.nyvky_aqi:
-  friendly_name: Nyvky AQI
   icon: mdi:cloud
-  unit_of_measurement: 'AQI'
-sensor.nyvky_pm2_5:
-  friendly_name: Nyvky PM2.5
-  icon: mdi:blur
-  unit_of_measurement: 'µg/m³'
-sensor.kyiv_aqi:
-  friendly_name: Kyiv AQI
-  icon: mdi:cloud
-  unit_of_measurement: 'AQI'
-sensor.kyiv_traffic_jams:
-  friendly_name: Kyiv Traffic Jams
-  icon: mdi:traffic-light
-  unit_of_measurement: '%'
 
 # Car
-sensor.toyota_balance:
-  unit_of_measurement: '₴'
-sensor.toyota_battery:
-  icon: mdi:car-battery
 device_tracker.toyota_location:
   entity_picture: /local/images/toyota.png
-binary_sensor.toyota_doors:
-  icon: mdi:car-door
-
-# Fayna Town
-sensor.fayna_days_left:
-  friendly_name: Fayna Days Left
-  icon: mdi:calendar-arrow-right
-  unit_of_measurement: days
-sensor.fayna_days_past:
-  friendly_name: Fayna Days Past
-  icon: mdi:calendar-arrow-left
-  unit_of_measurement: days
-sensor.fayna_progress:
-  friendly_name: Fayna Progress
-  unit_of_measurement: '%'
 
 # Energy Meter
 utility_meter.energy_monthly:

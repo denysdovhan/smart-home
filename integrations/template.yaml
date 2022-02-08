@@ -5,6 +5,149 @@
 #
 
 template:
+  - binary_sensor:
+      - name: Time to Clean
+        state: >-
+          {% set last_cleaning_start = as_timestamp(states('sensor.roborock_last_clean_start'), 0) %}
+          {% set last_cleaning_duration = states('sensor.roborock_last_clean_duration') | int(0) %}
+          {% set current_time = as_timestamp(now(), 0) %}
+          {% set time_for_cleaning = current_time - last_cleaning_start > (60 * 60 * 48) %}
+          {% set last_cleaning_was_short = last_cleaning_duration < (60 * 5) %}
+          {{ time_for_cleaning or last_cleaning_was_short }}
+
+      - name: Far From Home
+        state: >-
+          {{ states('proximity.home') | int(0) > 50 }}
+
+      - name: Denys On Call
+        state: >-
+          {% set camera_on = is_state('binary_sensor.wix_macbook_pro_camera_in_use', 'on') %}
+          {% set mic_on = is_state('binary_sensor.wix_macbook_pro_microphone_in_use', 'on') %}
+          {% set focus_on = is_state('binary_sensor.denyss_iphone_focus', 'on') %}
+          {% set at_home = is_state('person.denys', 'home') %}
+          {{ at_home and (camera_on or mic_on or focus_on) }}
+        icon: >-
+          {{ iif(is_state('binary_sensor.denys_on_call', 'on'), 'mdi:bell', 'mdi:bell-off') }}
+
+      - name: Marry On Call
+        state: >-
+          {% set camera_on = is_state('binary_sensor.home_macbook_pro_camera_in_use', 'on') %}
+          {% set mic_on = is_state('binary_sensor.home_macbook_pro_microphone_in_use', 'on') %}
+          {% set focus_on = is_state('binary_sensor.iphone_maria_focus', 'on') %}
+          {% set at_home = is_state('person.marry', 'home') %}
+          {{ at_home and (camera_on or mic_on or focus_on) }}
+        icon: >-
+          {{ iif(is_state('binary_sensor.denys_on_call', 'on'), 'mdi:bell', 'mdi:bell-off') }}
+
+      - name: Working Display Connected
+        state: >-
+          {% set at_home = is_state('device_tracker.wix_macbook_pro', 'home') %}
+          {% set display_connected = is_state('sensor.wix_macbook_pro_primary_display_name', 'LG HDR 4K') %}
+          {% set active = is_state('binary_sensor.wix_macbook_pro_active', 'on') %}
+          {{ at_home and display_connected and active }}
+        icon: >-
+          {{ iif(is_state('binary_sensor.working_display_connected', 'on'), 'mdi:monitor-dashboard', 'mdi:monitor-off') }}
+
+      - name: Balcony Comfort Temperature
+        state: >-
+          {% set current = state_attr('climate.balcony_heater', 'current_temperature') | float(10) %}
+          {% set target = state_attr('climate.balcony_heater', 'temperature') | float(10) %}
+          {{ current >= target }}
+        icon: >-
+          {{ iif(is_state('binary_sensor.working_display_connected', 'on'), 'mdi:thermometer', 'mdi:thermometer-low') }}
+
+  # Misto Lun Sensors
+  - sensor:
+      - name: Nyvky PM2.5
+        icon: mdi:blur
+        unit_of_measurement: 'µg/m³'
+        device_class: pm25
+        state: >-
+          {{ state_attr('sensor.nyvky_aqi', 'pm25') | round() }}
+
+      - name: Kyiv AQI
+        icon: mdi:cloud
+        unit_of_measurement: AQI
+        device_class: aqi
+        state: >-
+          {{ states.sensor.misto_lun.attributes.lunmisto_air.aqi_scale_value | round() }}
+
+      - name: Kyiv Traffic Jams
+        icon: mdi:traffic-light
+        unit_of_measurement: '%'
+        state: >-
+          {{ states.sensor.misto_lun.attributes.tomtom_jams.jams | round() }}
+
+  # Availability Monitor
+  - sensor:
+      - name: Unavailable Devices
+        state: >-
+          {% set domains = [states.light, states.media_player, states.fan, states.humidifier] %}
+          {% set states = ['unavailable', 'unknown', 'none'] %}
+          {{ expand(domains) | selectattr('state', 'in', states) | list | length }}
+        icon: >-
+          {{ iif(states('sensor.unavailable_devices') > 0, 'mdi:lan-connect', 'mdi:lan-disconnect') }}
+        attributes:
+          entities: >-
+            {% set domains = [states.light, states.media_player, states.fan, states.humidifier] %}
+            {% set states = ['unavailable', 'unknown', 'none'] %}
+            {{ expand(domains) | selectattr('state', 'in', states) | map(attribute='entity_id') | list }}
+          entities_names: >-
+            {% set domains = [states.light, states.media_player, states.fan, states.humidifier] %}
+            {% set states = ['unavailable', 'unknown', 'none'] %}
+            {{ expand(domains) | selectattr('state', 'in', states) | map(attribute='name') | list }}
+
+  # Time To New Home
+  - sensor:
+      - name: Fayna Days Left
+        unit_of_measurement: days
+        state: >-
+          {{ (as_local(as_datetime("2023-04-01")) - now()).days }}
+        icon: mdi:calendar-arrow-right
+
+      - name: Fayna Days Past
+        unit_of_measurement: days
+        state: >-
+          {{ (now() - as_local(as_datetime("2021-07-22"))).days }}
+        icon: mdi:calendar-arrow-left
+
+      - name: Fayna Progress
+        unit_of_measurement: '%'
+        state: >-
+          {% set day = 60 * 60 * 24 %}
+          {% set days_left = (as_timestamp("2023-04-01 00:00:00") - as_timestamp(now(), 0)) / day %}
+          {% set days_past = (as_timestamp(now(), 0) - as_timestamp("2021-07-22 13:00")) / day %}
+          {% set days_total = days_left + days_past %}
+          {{ (days_past / days_total * 100) | round(2) }}
+        icon: mdi:crane
+
+  # Vacuum Sensors
+  - sensor:
+      - name: Roborock Main Brush Left Hours
+        state: >-
+          {{ (states('sensor.roborock_main_brush_left') | float(0) / 3600) | round(1) }}
+        icon: >-
+          {{ state_attr('sensor.roborock_main_brush_left', 'icon') }}
+
+      - name: Roborock Side Brush Left Hours
+        state: >-
+          {{ (states('sensor.roborock_side_brush_left') | float(0) / 3600) | round(1) }}
+        icon: >-
+          {{ state_attr('sensor.roborock_side_brush_left', 'icon') }}
+
+      - name: Roborock Filter Left Hours
+        state: >-
+          {{ (states('sensor.roborock_filter_left') | float(0) / 3600) | round(1) }}
+        icon: >-
+          {{ state_attr('sensor.roborock_filter_left', 'icon') }}
+
+      - name: Roborock Sensor Dirty Left Hours
+        state: >-
+          {{ (states('sensor.roborock_sensor_dirty_left') | float(0) / 3600) | round(1) }}
+        icon: >-
+          {{ state_attr('sensor.roborock_sensor_dirty_left', 'icon') }}
+
+  # Energy Sensors
   - sensor:
       # Living Room Smart + Dumb Devices
       - name: Living Room Total energy

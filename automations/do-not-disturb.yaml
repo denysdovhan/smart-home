@@ -35,11 +35,11 @@
   description: Switch Do Not Disturb while camera or mics are on
   trigger:
     - platform: state
-      entity_id: binary_sensor.denys_on_dnd
+      entity_id: binary_sensor.denys_on_call
       for:
         minutes: 1
     - platform: state
-      entity_id: binary_sensor.marry_on_dnd
+      entity_id: binary_sensor.marry_on_call
       for:
         minutes: 1
   condition:

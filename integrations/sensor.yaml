@@ -89,7 +89,9 @@ sensor:
 
   # Lun Misto AQI
   - platform: rest
-    name: nyvky_aqi
+    name: Nyvky AQI
+    unit_of_measurement: 'AQI'
+    device_class: aqi
     resource: https://misto.lun.ua/api/air/v1/public/data/
     value_template: >-
       {% set station = '70' %}
@@ -126,94 +128,6 @@ sensor:
       - pm25
       - pm10
       - pm100
-
-  # Lun Misto Sensors
-  - platform: template
-    sensors:
-      nyvky_pm2_5:
-        value_template: >-
-          {{ state_attr('sensor.nyvky_aqi', 'pm25') | round() }}
-      kyiv_aqi:
-        value_template: >-
-          {{ states.sensor.misto_lun.attributes.lunmisto_air.aqi_scale_value | round() }}
-      kyiv_traffic_jams:
-        value_template: >-
-          {{ states.sensor.misto_lun.attributes.tomtom_jams.jams | round() }}
-
-  # Vacuum
-  - platform: template
-    sensors:
-      roborock_main_brush_left_hours:
-        value_template: >-
-          {{ (states('sensor.roborock_main_brush_left') | float(0) / 3600) | round(1) }}
-
-      roborock_side_brush_left_hours:
-        value_template: >-
-          {{ (states('sensor.roborock_side_brush_left') | float(0) / 3600) | round(1) }}
-
-      roborock_filter_left_hours:
-        value_template: >-
-          {{ (states('sensor.roborock_filter_left') | float(0) / 3600) | round(1) }}
-
-      roborock_sensor_dirty_left_hours:
-        value_template: >-
-          {{ (states('sensor.roborock_sensor_dirty_left') | float(0) / 3600) | round(1) }}
-
-  # Kyiv Smart Card
-  #
-  # FIXME: Token gets invalid every 24 hours. Needs renewal.
-  #
-  # - platform: rest
-  #   name: kyivsmartcard_denys
-  #   resource: https://my.kyivcity.gov.ua/api/me/travel-cards
-  #   headers:
-  #     User-Agent: Home Assistant
-  #     Content-Type: application/json
-  #     Connection: keep-alive
-  #     Authorization: !secret kyivsmartcard_denys_token
-  #   value_template: >-
-  #     {{ value_json[0].assets.purchases[0].residualUnits }}
-  #   json_attributes_path: "$.[0]"
-  #   json_attributes:
-  #     - code
-  #     - name
-  #     - createdAt
-
-  # Availability Monitor
-  - platform: template
-    sensors:
-      unavailable_devices:
-        friendly_name: Unavailable Devices
-        value_template: >-
-          {% set domains = [states.light, states.media_player, states.fan] %}
-          {% set states = ['unavailable', 'unknown', 'none'] %}
-          {{ expand(domains) | selectattr('state', 'in', states) | list | length }}
-        attribute_templates:
-          entities: >-
-            {% set domains = [states.light, states.media_player, states.fan] %}
-            {% set states = ['unavailable', 'unknown', 'none'] %}
-            {{ expand(domains) | selectattr('state', 'in', states) | map(attribute='entity_id') | list }}
-          entities_names: >-
-            {% set domains = [states.light, states.media_player, states.fan] %}
-            {% set states = ['unavailable', 'unknown', 'none'] %}
-            {{ expand(domains) | selectattr('state', 'in', states) | map(attribute='name') | list }}
-
-  # Time for new home
-  - platform: template
-    sensors:
-      fayna_days_left:
-        value_template: >-
-          {{ (as_local(as_datetime("2023-04-01")) - now()).days }}
-      fayna_days_past:
-        value_template: >-
-          {{ (now() - as_local(as_datetime("2021-07-22"))).days }}
-      fayna_progress:
-        value_template: >-
-          {% set day = 60 * 60 * 24 %}
-          {% set days_left = (as_timestamp("2023-04-01 00:00:00") - as_timestamp(now(), 0)) / day %}
-          {% set days_past = (as_timestamp(now(), 0) - as_timestamp("2021-07-22 13:00")) / day %}
-          {% set days_total = days_left + days_past %}
-          {{ (days_past / days_total * 100) | round(2) }}
 
   # Estimated Power Usage
   - platform: powercalc
