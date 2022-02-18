@@ -64,6 +64,32 @@ template:
         icon: >-
           {{ iif(is_state('binary_sensor.heating_season', 'on'), 'mdi:radiator', 'mdi:radiator-off') }}
 
+      - name: Bike Day
+        state: >-
+          {% set wont_rain = state_attr('binary_sensor.bike_day', 'wont_rain') %}
+          {% set no_precipitation = state_attr('binary_sensor.bike_day', 'no_precipitation') %}
+          {% set warm = state_attr('binary_sensor.bike_day', 'warm') %}
+          {% set no_storm = state_attr('binary_sensor.bike_day', 'no_storm') %}
+
+          {{ warm_enough and no_storm and (wont_rain or no_precipitation) }}
+        icon: >-
+          {{ iif(is_state('binary_sensor.bike_day', 'on'), 'mdi:bike-fast', 'mdi:bike') }}
+        attributes:
+          wont_rain: >-
+            {% set hours = 9 %}
+            {% set target_probability = 30 %}
+            {{ states('sensor.nyvky_forecast_precipitation_probability') | float(0) < target_probability }}
+          no_precipitation: >-
+            {% set hours = 9 %}
+            {{ state_attr('weather.kyiv_hourly', 'forecast')[:hours] | selectattr('precipitation', 'le', 0.1) | list | count == hours }}
+          warm: >-
+            {% set hours = 9 %}
+            {% set target_temp = 10 %}
+            {{ state_attr('weather.kyiv_hourly', 'forecast')[:hours] | selectattr('temperature', 'ge', target_temp) | list | count == hours }}
+          no_storm: >-
+            {% set max_wind_speed = 20 %}
+            {{ states('sensor.nyvky_forecast_wind_speed') | float(0) < max_wind_speed }}
+
   # Misto Lun Sensors
   - sensor:
       - name: Nyvky PM2.5
