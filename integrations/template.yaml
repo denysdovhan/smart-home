@@ -56,6 +56,14 @@ template:
         icon: >-
           {{ iif(is_state('binary_sensor.working_display_connected', 'on'), 'mdi:thermometer', 'mdi:thermometer-low') }}
 
+      - name: Heating Season
+        state: >-
+          {% set days = 3 %}
+          {% set threshold = 8 %}
+          {{ state_attr('weather.nyvky', 'forecast')[:days] | selectattr('temperature', 'le', threshold) | list | count }}
+        icon: >-
+          {{ iif(is_state('binary_sensor.heating_season', 'on'), 'mdi:radiator', 'mdi:radiator-off') }}
+
   # Misto Lun Sensors
   - sensor:
       - name: Nyvky PM2.5
