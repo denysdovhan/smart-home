@@ -21,6 +21,8 @@ CONF_ENERGY_INTEGRATION_METHOD = "energy_integration_method"
 CONF_ENERGY_SENSOR_NAMING = "energy_sensor_naming"
 CONF_FIXED = "fixed"
 CONF_GROUP = "group"
+CONF_GAMMA_CURVE = "gamma_curve"
+CONF_IGNORE_UNAVAILABLE_STATE = "ignore_unavailable_state"
 CONF_INCLUDE = "include"
 CONF_LINEAR = "linear"
 CONF_MODEL = "model"
@@ -28,8 +30,6 @@ CONF_MANUFACTURER = "manufacturer"
 CONF_MODE = "mode"
 CONF_MULTIPLY_FACTOR = "multiply_factor"
 CONF_MULTIPLY_FACTOR_STANDBY = "multiply_factor_standby"
-CONF_MIN_WATT = "min_watt"
-CONF_MAX_WATT = "max_watt"
 CONF_POWER_FACTOR = "power_factor"
 CONF_POWER_SENSOR_NAMING = "power_sensor_naming"
 CONF_POWER = "power"
@@ -41,7 +41,6 @@ CONF_TEMPLATE = "template"
 CONF_UPDATE_FREQUENCY = "update_frequency"
 CONF_VALUE = "value"
 CONF_VOLTAGE = "voltage"
-CONF_WATT = "watt"
 CONF_WLED = "wled"
 CONF_STATES_POWER = "states_power"
 CONF_STANDBY_POWER = "standby_power"
@@ -92,11 +91,14 @@ MANUFACTURER_ALIASES = {
 
 MODEL_DIRECTORY_MAPPING = {
     "IKEA of Sweden": {
+        "FLOALT panel WS 30x30": "L1527",
+        "FLOALT panel WS 60x60": "L1529",
         "TRADFRI bulb E14 WS opal 400lm": "LED1536G5",
         "TRADFRI bulb GU10 WS 400lm": "LED1537R6",
         "TRADFRI bulb E27 WS opal 980lm": "LED1545G12",
         "TRADFRI bulb E27 WS clear 950lm": "LED1546G12",
         "TRADFRI bulb E27 opal 1000lm": "LED1623G12",
+        "TRADFRI bulb E27 W opal 1000lm": "LED1623G12",
         "TRADFRI bulb E27 CWS opal 600lm": "LED1624G9",
         "TRADFRI bulb E14 W op/ch 400lm": "LED1649C5",
         "TRADFRI bulb GU10 W 400lm": "LED1650R5",
@@ -108,16 +110,26 @@ MODEL_DIRECTORY_MAPPING = {
         "TRADFRI bulb E27 WW 806lm": "LED1836G9",
         "TRADFRI bulb E27 WW clear 250lm": "LED1842G3",
         "TRADFRI bulb GU10 WW 400lm": "LED1837R5",
+        "TRADFRI bulb GU10 CWS 345lm": "LED1923R5",
+        "TRADFRI bulb E27 CWS 806lm": "LED1924G9",
         "TRADFRIbulbE14WSglobeopal470lm": "LED2002G5",
+        "TRADFRIbulbE27WSglobeopal1055lm": "LED2003G10",
+        "TTRADFRIbulbGU10WS345lm": "LED2005R5",
+        "TRADFRI bulb GU10 WW 345lm": "LED2005R5",
         "LEPTITER Recessed spot light": "T1820",
     },
     "Signify Netherlands B.V.": {
+        "9290022166": "LCA001",
+        "929001953101": "LCG002",
+        "9290012573A": "LCT015",
         "440400982841": "LCT024",
-        "8718696449691": "LWB010",
-        "3417711P6": "LTW017",
-        "3418931P6": "LTC012",
+        "7602031P7": "LCT026", 
         "3261030P6": "LTC001",
         "3261031P6": "LTC001",
         "3261048P6": "LTC001",
+        "3418931P6": "LTC012",
+        "3417711P6": "LTW017",
+        "8718699673147": "LWA001",
+        "8718696449691": "LWB010",
     },
 }
