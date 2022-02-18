@@ -14,6 +14,69 @@
       valve: climate.bedroom_heater
       temp_sensor: sensor.bedroom_temperature
 
+
+- id: valve_maintenance
+  alias: Valve Maintenance
+  description: Fully opens and closes valves in order to keep them functional
+  trigger:
+    platform: time
+    at: '12:00'
+  condition:
+    - alias: First day of the month
+      condition: template
+      value_template: '{{ now().day == 1 }}'
+    - alias: Middle of the month
+      condition: template
+      value_template: '{{ now().day == 15 }}'
+  action:
+    - alias: Fully open valves
+      service: select.select_option
+      data:
+        entity_id:
+          - select.living_room_heater_force
+          - select.bedroom_heater_force
+        option: open
+
+    - alias: Wait for valves to open
+      wait_for_trigger:
+        - platform: numeric_state
+          entity_id:
+            - sensor.living_room_heater_position
+            - sensor.bedroom_heater_position
+          above: 99
+          for:
+            seconds: 30
+      timeout:
+        minutes: 2
+
+    - alias: Fully close valves
+      service: select.select_option
+      data:
+        entity_id:
+          - select.living_room_heater_force
+          - select.bedroom_heater_force
+        option: close
+
+    - alias: Wait for valves to close
+      wait_for_trigger:
+        - platform: numeric_state
+          entity_id:
+            - sensor.living_room_heater_position
+            - sensor.bedroom_heater_position
+          below: 1
+          for:
+            seconds: 30
+      timeout:
+        minutes: 2
+
+    - alias: Switch valves back to normal
+      service: select.select_option
+      data:
+        entity_id:
+          - select.living_room_heater_force
+          - select.bedroom_heater_force
+        option: normal
+
 - id: turn_on_balcony_heater
   alias: Turn on Balcony Heater
   trigger:
