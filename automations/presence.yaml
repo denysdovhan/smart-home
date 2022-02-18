@@ -7,8 +7,23 @@
     from: 'not_home'
     to: 'home'
   action:
-    # Wait for someone to come
-    - wait_for_trigger:
+    - alias: Switch heaters to Manual during Heating Season
+      choose:
+        - conditions:
+            condition: state
+            entity_id: binary_sensor.heating_season
+            state: 'on'
+          sequence:
+            - alias: Set TRVs to normal
+              service: climate.set_preset_mode
+              data:
+                entity_id:
+                  - climate.living_room_heater
+                  - climate.bedroom_heater
+                preset_mode: manual
+
+    - alias: Wait for someone to come
+      wait_for_trigger:
         - platform: state
           entity_id: binary_sensor.front_door_sensor_contact
           to: 'on'
@@ -20,8 +35,9 @@
           to: 'on'
       timeout: '01:00:00'
       continue_on_timeout: false
-    # Turn on lights after sunset
-    - choose:
+
+    - alias: Turn on lights after sunset
+      choose:
         - conditions:
             - condition: or
               conditions:
@@ -39,21 +55,28 @@
               data:
                 entity_id: scene.evening_lights
                 transition: 5
-    # Turn on Air Purifier
-    - service: fan.turn_on
+
+    - alias: Turn on Air Purifier
+      service: fan.turn_on
       entity_id: fan.air_purifier
-    # Turn on Air Humidifier
-    - service: humidifier.turn_on
+
+    - alias: Turn on Air Humidifier
+      service: humidifier.turn_on
       entity_id: humidifier.air_humidifier
-    # Greet people with a delay
-    - delay:
+
+    - alias: Wait a second for everyone to come in
+      delay:
         seconds: 5
-    - service: script.greeting
-    # Wait for a phrase to be said
-    - delay:
+
+    - alias: Greet people with a delay
+      service: script.greeting
+
+    - alias: Wait for a phrase to be said
+      delay:
         minutes: 1
-    # Set device to correct state of DND
-    - service: script.do_not_disturb_mode
+
+    - alias: Set device to correct state of DND
+      service: script.do_not_disturb_mode
 
 - id: everyone_is_leaving
   alias: Everyone is Leaving
@@ -65,20 +88,46 @@
     to: 'not_home'
     for: '00:10:00'
   action:
-    - service: fan.turn_off
+    - alias: Turn off Air Pufirier
+      service: fan.turn_off
       entity_id: fan.air_purifier
-    - service: humidifier.turn_off
+
+    - alias: Turn off Air Humidifier
+      service: humidifier.turn_off
       entity_id: humidifier.air_humidifier
-    - service: light.turn_off
+
+    - alias: Turn off all the lights
+      service: light.turn_off
       entity_id: all
-    - service: climate.turn_off
+
+    - alias: Turn off ACs and Balcony heater
+      service: climate.turn_off
       entity_id:
         - climate.living_room_ac
         - climate.bedroom_ac
         - climate.balcony_heater
-    - service: media_player.turn_off
+
+    - alias: Switch heaters to Eco during Heating Season
+      choose:
+        - conditions:
+            condition: state
+            entity_id: binary_sensor.heating_season
+            state: 'on'
+          sequence:
+            - alias: Set TRVs to normal
+              service: climate.set_preset_mode
+              data:
+                entity_id:
+                  - climate.living_room_heater
+                  - climate.bedroom_heater
+                preset_mode: eco
+
+    - alias: Turn off all Media Players
+      service: media_player.turn_off
       entity_id: all
-    - choose:
+
+    - alias: Ask for cleaning when appropriate
+      choose:
         - conditions:
             - condition: state
               entity_id: binary_sensor.time_to_clean
