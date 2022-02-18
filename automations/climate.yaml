@@ -14,6 +14,64 @@
       valve: climate.bedroom_heater
       temp_sensor: sensor.bedroom_temperature
 
+- id: switch_heaters_during_heating_season
+  alias: Switch Heaters during Heating Season
+  description: Turn on/off heaters when Heating Season in on
+  trigger:
+    platform: state
+    entity_id: binary_sensor.heating_season
+  action:
+    - alias: Choose what to do with the heaters
+      choose:
+        - conditions:
+            - alias: Start of the Heating Season
+              condition: state
+              entity_id: binary_sensor.heating_season
+              state: 'on'
+            - alias: And heaters are still off
+              condition: state
+              entity_id:
+                - climate.living_room_heater
+                - climate.bedroom_heater
+              state: 'off'
+          sequence:
+            - alias: Turn on Heating
+              service: climate.set_hvac_mode
+              data:
+                entity_id:
+                  - climate.living_room_heater
+                  - climate.bedroom_heater
+                hvac_mode: auto
+      default:
+        - alias: Turn off Heating
+          service: climate.set_hvac_mode
+          data:
+            entity_id:
+              - climate.living_room_heater
+              - climate.bedroom_heater
+            hvac_mode: off
+
+    - alias: Notify about the action
+      service: script.announcement
+      data:
+        title: Опалення 🔥
+        speak: false
+        greetings:
+          - "Прогнозується {{ iif(is_state('binary_sensor.heating_season'), 'похолодання', 'потепління') }}."
+          - "Наближається {{ iif(is_state('binary_sensor.heating_season'), 'холодна', 'тепла') }} погода."
+          - "Найближчі 3 дні очікується температура {{ iif(is_state('binary_sensor.heating_season'), 'нижче', 'вище') }} 8°C."
+          - "Температура {{ iif(is_state('binary_sensor.heating_season'), 'опуститься нижче', 'підніметься вище') }} 8°C."
+        messages:
+          - "{{ iif(is_state('binary_sensor.heating_season'), 'Починаємо', 'Закінчуємо') }} опалювальний період."
+          - "{{ iif(is_state('binary_sensor.heating_season'), 'Початок', 'Кінець') }} опалювального сезону."
+          - "{{ iif(is_state('binary_sensor.heating_season'), 'Розпочинаємо', 'Закінчуємо') }} опалювальний сезон."
+          - "{{ iif(is_state('binary_sensor.heating_season'), 'Вмикаємо', 'Вимикаємо') }} опалювання вдома."
+          - "{{ iif(is_state('binary_sensor.heating_season'), 'Увімкнено', 'Вимкнено') }} опалення."
+        notify_data:
+          actions:
+            - action: '{{ heat_action }}'
+              title: Нагріти балкон
+          url: /lovelace/balcony
 
 - id: valve_maintenance
   alias: Valve Maintenance
