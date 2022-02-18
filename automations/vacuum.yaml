@@ -7,30 +7,30 @@
       minutes: 0
       seconds: 0
   condition:
-    # Robot is docked
-    - condition: state
+    - alias: Robot is docked
+      condition: state
       entity_id: vacuum.roborock
       state: 'docked'
-    # It's working day
-    - condition: state
+    - alias: It's working day
+      condition: state
       entity_id: binary_sensor.workday_sensor
       state: 'on'
-    # Only on activity time
-    - condition: state
+    - alias: Only during activity time
+      condition: state
       entity_id: binary_sensor.activity_time
       state: 'on'
-    # Do Not Disturb mode is off
-    - condition: state
+    - alias: Do Not Disturb mode is off
+      condition: state
       entity_id: input_boolean.do_not_disturb
       state: 'off'
-    # Time for cleaning or last cleaning was short
-    - condition: state
+    - alias: Time for cleaning or last cleaning was short
+      condition: state
       entity_id: binary_sensor.time_to_clean
       state: 'on'
-    # We are not out of the city
-    - condition: state
-      entity_id: binary_sensor.far_from_home
-      state: 'off'
+    - alias: We are not out of the city
+      condition: numeric_state
+      entity_id: proximity.home
+      below: 25
   action:
     - service: script.announcement
       data:
@@ -67,8 +67,8 @@
     from: not_home
     to: home
   condition:
-    # Send vacuum home only when it's cleaning
-    - condition: state
+    - alias: Send vacuum home only when it's cleaning
+      condition: state
       entity_id: vacuum.roborock
       state: 'cleaning'
   action:
@@ -142,12 +142,12 @@
     entity_id: vacuum.roborock
     to: 'docked'
   condition:
-    # Every 5th cleaning
-    - condition: template
+    - alias: Every 5th cleaning
+      condition: template
       value_template: >
         {{ states('sensor.roborock_total_clean_count') | int(1) % 5 == 0 }}
-    # And there was at least one cleaning after previous maintenance
-    - condition: template
+    - alias: And there was at least one cleaning after previous maintenance
+      condition: template
       value_template: >
         {% set last_maintenance = as_timestamp(state_attr('automation.vacuum_maintenance', 'last_triggered'), 0) %}
         {% set last_cleaning = as_timestamp(states('sensor.roborock_last_clean_start'), 0) %}
@@ -179,6 +179,8 @@
               title: 'На базу'
               activationMode: 'background'
               destructive: true
+    - delay:
+        seconds: 5
     - service: script.vacuum_maintenance
 
 - id: vacuum_replacements
