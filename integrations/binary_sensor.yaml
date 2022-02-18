@@ -23,3 +23,9 @@ binary_sensor:
   # Winter Tires
   - platform: snowtire
     weather: weather.nyvky
+  # Do Not Disturb
+  - platform: group
+    name: Do Not Disturb Family
+    entities:
+      - binary_sensor.do_not_disturb_denys
+      - binary_sensor.do_not_disturb_marry
