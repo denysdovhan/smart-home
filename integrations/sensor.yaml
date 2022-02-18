@@ -218,6 +218,14 @@ sensor:
       - entity_id: light.bedroom_bed_lights
         fixed:
           power: "{{ states('sensor.bedroom_bed_lights_real_time_energy') }}"
+      - entity_id: humidifier.air_humidifier
+        fixed:
+          states_power:
+            mode|Low: 18
+            mode|Medium: 21
+            mode|High: 23
+            mode|Humidity: 21
+        standby_power: 4
       - entity_id: climate.bedroom_ac
         fixed:
           states_power:
@@ -254,7 +262,7 @@ sensor:
       - entity_id: switch.balcony_heater
         fixed:
           power: "{{ states('sensor.balcony_heater_real_time_energy') }}"
-      - entity_id: binary_sensor.work_display_connected
+      - entity_id: binary_sensor.working_display_connected
         fixed:
           power: 45 # LG 4K display is on only when connected to laptop
 
