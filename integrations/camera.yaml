@@ -6,6 +6,10 @@
 
 camera:
   - platform: ffmpeg
+    name: Home Camera
+    input: !secret home_camera_stream
+
+  - platform: ffmpeg
     name: chernivtsi_landscape
     input: http://langate.tv/camera360/tracks-v1/mono.m3u8
 
