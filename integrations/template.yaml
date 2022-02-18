@@ -15,29 +15,27 @@ template:
           {% set last_cleaning_was_short = last_cleaning_duration < (60 * 5) %}
           {{ time_for_cleaning or last_cleaning_was_short }}
 
-      - name: Far From Home
-        state: >-
-          {{ states('proximity.home') | int(0) > 50 }}
-
-      - name: Denys On Call
+      - name: Do Not Disturb Denys
         state: >-
           {% set camera_on = is_state('binary_sensor.wix_macbook_pro_camera_in_use', 'on') %}
           {% set mic_on = is_state('binary_sensor.wix_macbook_pro_microphone_in_use', 'on') %}
           {% set focus_on = is_state('binary_sensor.denyss_iphone_focus', 'on') %}
+          {% set sleep_on = is_state('binary_sensor.sleeping_time', 'on') %}
           {% set at_home = is_state('person.denys', 'home') %}
-          {{ at_home and (camera_on or mic_on or focus_on) }}
+          {{ at_home and (camera_on or mic_on or focus_on or sleep_on) }}
         icon: >-
-          {{ iif(is_state('binary_sensor.denys_on_call', 'on'), 'mdi:bell', 'mdi:bell-off') }}
+          {{ iif(is_state('binary_sensor.do_not_disturb_denys', 'on'), 'mdi:bell-off', 'mdi:bell') }}
 
-      - name: Marry On Call
+      - name: Do Not Disturb Marry
         state: >-
           {% set camera_on = is_state('binary_sensor.home_macbook_pro_camera_in_use', 'on') %}
           {% set mic_on = is_state('binary_sensor.home_macbook_pro_microphone_in_use', 'on') %}
           {% set focus_on = is_state('binary_sensor.iphone_maria_focus', 'on') %}
+          {% set sleep_on = is_state('binary_sensor.sleeping_time', 'on') %}
           {% set at_home = is_state('person.marry', 'home') %}
-          {{ at_home and (camera_on or mic_on or focus_on) }}
+          {{ at_home and (camera_on or mic_on or focus_on or sleep_on) }}
         icon: >-
-          {{ iif(is_state('binary_sensor.denys_on_call', 'on'), 'mdi:bell', 'mdi:bell-off') }}
+          {{ iif(is_state('binary_sensor.do_not_disturb_marry', 'on'), 'mdi:bell-off', 'mdi:bell') }}
 
       - name: Working Display Connected
         state: >-
@@ -104,13 +102,13 @@ template:
         unit_of_measurement: AQI
         device_class: aqi
         state: >-
-          {{ states.sensor.misto_lun.attributes.lunmisto_air.aqi_scale_value | round() }}
+          {{ state_attr('sensor.misto_lun', 'lunmisto_air').aqi_scale_value | int(0) }}
 
       - name: Kyiv Traffic Jams
         icon: mdi:traffic-light
         unit_of_measurement: '%'
         state: >-
-          {{ states.sensor.misto_lun.attributes.tomtom_jams.jams | round() }}
+          {{ state_attr('sensor.misto_lun', 'tomtom_jams').jams | int(0) }}
 
   # Availability Monitor
   - sensor:
@@ -120,7 +118,7 @@ template:
           {% set states = ['unavailable', 'unknown', 'none'] %}
           {{ expand(domains) | selectattr('state', 'in', states) | list | length }}
         icon: >-
-          {{ iif(states('sensor.unavailable_devices') > 0, 'mdi:lan-connect', 'mdi:lan-disconnect') }}
+          {{ iif(states('sensor.unavailable_devices') | int(0) > 0, 'mdi:lan-connect', 'mdi:lan-disconnect') }}
         attributes:
           entities: >-
             {% set domains = [states.light, states.media_player, states.fan, states.humidifier] %}
