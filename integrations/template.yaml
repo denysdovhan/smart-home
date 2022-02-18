@@ -161,6 +161,14 @@ template:
           {% set router = states('sensor.router_energy') | float(0) %}
           {{ devices + fridge + rbpi + router }}
 
+      - name: Bathroom Total energy
+        state_class: total_increasing
+        device_class: energy
+        unit_of_measurement: kWh
+        state: >-
+          {% set water_heater = states('sensor.sensor.water_heater_energy') | float(0) %}
+          {{ water_heater }}
+
       - name: Total energy
         state_class: total_increasing
         device_class: energy
@@ -169,7 +177,8 @@ template:
           {% set living_room = states('sensor.living_room_total_energy') | float(0) %}
           {% set bedroom = states('sensor.bedroom_total_energy') | float(0) %}
           {% set balcony = states('sensor.balcony_total_energy') | float(0) %}
-          {{ living_room + bedroom + balcony }}
+          {% set bathroom = states('sensor.bathroom_total_energy') | float(0) %}
+          {{ living_room + bedroom + balcony + bathroom }}
 
       - name: Total power
         state_class: measurement
@@ -179,7 +188,8 @@ template:
           {% set living_room = states('sensor.living_room_devices_power') | float(0) %}
           {% set bedroom = states('sensor.bedroom_total_power') | float(0) %}
           {% set balcony = states('sensor.balcony_total_power') | float(0) %}
-          {{ living_room + bedroom + balcony }}
+          {% set bathroom = states('sensor.bathroom_total_power') | float(0) %}
+          {{ living_room + bedroom + balcony + bathroom }}
 
       - name: Energy Price
         device_class: monetary

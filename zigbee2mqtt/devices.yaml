@@ -28,3 +28,5 @@
   friendly_name: bedroom_heater
 '0x8cf681fffeab0589':
   friendly_name: living_room_heater
+'0x54ef441000312e38':
+  friendly_name: water_heater
