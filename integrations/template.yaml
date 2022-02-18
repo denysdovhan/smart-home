@@ -69,7 +69,7 @@ template:
           {% set warm = state_attr('binary_sensor.bike_day', 'warm') %}
           {% set no_storm = state_attr('binary_sensor.bike_day', 'no_storm') %}
 
-          {{ warm_enough and no_storm and (wont_rain or no_precipitation) }}
+          {{ warm and no_storm and (wont_rain or no_precipitation) }}
         icon: >-
           {{ iif(is_state('binary_sensor.bike_day', 'on'), 'mdi:bike-fast', 'mdi:bike') }}
         attributes:
