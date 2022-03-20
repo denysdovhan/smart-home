@@ -6,6 +6,7 @@ import os
 from collections import defaultdict
 from csv import reader
 from dataclasses import dataclass
+from decimal import Decimal
 from functools import partial
 from typing import Optional, Union
 
@@ -79,7 +80,7 @@ class LutRegistry:
         return lookup_dict
 
     def get_lut_file(self, light_model: LightModel, color_mode: str):
-        path = os.path.join(light_model.get_directory(), f"{color_mode}.csv")
+        path = os.path.join(light_model.get_lut_directory(), f"{color_mode}.csv")
 
         gzip_path = f"{path}.gz"
         if os.path.exists(gzip_path):
@@ -98,7 +99,7 @@ class LutStrategy(PowerCalculationStrategyInterface):
         self._lut_registry = lut_registry
         self._model = model
 
-    async def calculate(self, entity_state: State) -> Optional[float]:
+    async def calculate(self, entity_state: State) -> Optional[Decimal]:
         """Calculate the power consumption based on brightness, mired, hsl values."""
         attrs = entity_state.attributes
         color_mode = attrs.get(ATTR_COLOR_MODE)
@@ -163,7 +164,7 @@ class LutStrategy(PowerCalculationStrategyInterface):
                 brightness,
             )
 
-        power = self.lookup_power(lookup_table, light_setting)
+        power = Decimal(self.lookup_power(lookup_table, light_setting))
         _LOGGER.debug("%s: Calculated power:%s", entity_state.entity_id, power)
         return power
 

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from decimal import Decimal
 from typing import Optional
 
 import voluptuous as vol
@@ -40,7 +41,7 @@ class WledStrategy(PowerCalculationStrategyInterface):
         self._light_entity = light_entity
         self._standby_power = standby_power
 
-    async def calculate(self, entity_state: State) -> Optional[float]:
+    async def calculate(self, entity_state: State) -> Optional[Decimal]:
         if entity_state.entity_id == self._light_entity.entity_id:
             light_state = entity_state.state
         else:

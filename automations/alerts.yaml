@@ -2,7 +2,8 @@
   alias: Home Assistant Release Alert
   trigger:
     - platform: state
-      entity_id: binary_sensor.updater
+      entity_id: binary_sensor.home_assistant_website_update_available
+      to: 'on'
   action:
     - service: script.announcement
       data:
@@ -10,16 +11,25 @@
         title: 'Оновлення Home Assistant 🎉'
         speak: false
         messages:
-          - "Доступна нова версія Home Assistant: {{ state_attr('binary_sensor.updater', 'newest_version') }}."
-          - "Реліз нової версії Home Assistant: {{ state_attr('binary_sensor.updater', 'newest_version') }}."
-          - "Версія Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} вже доступна!"
+          - "Доступна нова версія Home Assistant: {{ states('sensor.home_assistant_website') }}."
+          - "Реліз нової версії Home Assistant: {{ states('sensor.home_assistant_website') }}."
+          - "Версія Home Assistant {{ states('sensor.home_assistant_website') }} вже доступна!"
         notify_data:
+          url: /config/dashboard
           group: system
+          actions:
+            - action: RELEASE_NOTES
+              title: Переглянути зміни
+              uri: "{{ state_attr('sensor.home_assistant_website', 'release_notes') }}"
 
 - id: hacs_releases_alert
   alias: HACS Releases Alert
   trigger:
-    - platform: numeric_state
+    - platform: state
+      entity_id: sensor.hacs
+      to: ~
+  condition:
+    - condition: numeric_state
       entity_id: sensor.hacs
       above: 0
   action:

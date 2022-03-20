@@ -19,6 +19,7 @@ CONF_DAILY_FIXED_ENERGY = "daily_fixed_energy"
 CONF_ENABLE_AUTODISCOVERY = "enable_autodiscovery"
 CONF_ENERGY_INTEGRATION_METHOD = "energy_integration_method"
 CONF_ENERGY_SENSOR_NAMING = "energy_sensor_naming"
+CONF_ENERGY_SENSOR_PRECISION = "energy_sensor_precision"
 CONF_FIXED = "fixed"
 CONF_GROUP = "group"
 CONF_GAMMA_CURVE = "gamma_curve"
@@ -32,6 +33,7 @@ CONF_MULTIPLY_FACTOR = "multiply_factor"
 CONF_MULTIPLY_FACTOR_STANDBY = "multiply_factor_standby"
 CONF_POWER_FACTOR = "power_factor"
 CONF_POWER_SENSOR_NAMING = "power_sensor_naming"
+CONF_POWER_SENSOR_PRECISION = "power_sensor_precision"
 CONF_POWER = "power"
 CONF_POWER_SENSOR_ID = "power_sensor_id"
 CONF_MIN_POWER = "min_power"
@@ -123,7 +125,8 @@ MODEL_DIRECTORY_MAPPING = {
         "929001953101": "LCG002",
         "9290012573A": "LCT015",
         "440400982841": "LCT024",
-        "7602031P7": "LCT026", 
+        "7602031P7": "LCT026",
+        "9290022169": "LTA001",
         "3261030P6": "LTC001",
         "3261031P6": "LTC001",
         "3261048P6": "LTC001",

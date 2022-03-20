@@ -5,13 +5,15 @@ For more details about this platform, please refer to the documentation at
 https://github.com/Limych/ha-snowtire/
 """
 
-# Base component constants
-NAME = "Snowtire Sensor"
-DOMAIN = "snowtire"
-VERSION = "1.4.1"
-ISSUE_URL = "https://github.com/Limych/ha-snowtire/issues"
+from typing import Final
 
-STARTUP_MESSAGE = f"""
+# Base component constants
+NAME: Final = "Snowtire Sensor"
+DOMAIN: Final = "snowtire"
+VERSION: Final = "1.4.2"
+ISSUE_URL: Final = "https://github.com/Limych/ha-snowtire/issues"
+
+STARTUP_MESSAGE: Final = f"""
 -------------------------------------------------------------------
 {NAME}
 Version: {VERSION}
@@ -22,13 +24,13 @@ If you have ANY issues with this you need to open an issue here:
 """
 
 # Icons
-ICON_WINTER = "mdi:snowflake"
-ICON_SUMMER = "mdi:white-balance-sunny"
+ICON_WINTER: Final = "mdi:snowflake"
+ICON_SUMMER: Final = "mdi:white-balance-sunny"
 
 # Configuration and options
-CONF_WEATHER = "weather"
-CONF_DAYS = "days"
+CONF_WEATHER: Final = "weather"
+CONF_DAYS: Final = "days"
 
 # Defaults
-DEFAULT_NAME = "Snowtire"
-DEFAULT_DAYS = 7
+DEFAULT_NAME: Final = "Snowtire"
+DEFAULT_DAYS: Final = 7
