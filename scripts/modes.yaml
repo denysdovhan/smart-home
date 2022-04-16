@@ -75,6 +75,10 @@ away_mode:
                   group: system
                   tag: away-mode
 
+            - alias: Arm Alarm
+              serivce: alarm_control_panel.alarm_arm_away
+              entity_id: alarm_control_panel.home_alarm
+
             - alias: Turn on Presence Simulation
               service: presence_simulation.start
 
@@ -119,6 +123,10 @@ away_mode:
             notify_data:
               group: system
               tag: away-mode
+
+        - alias: Disarm Alarm
+          serivce: alarm_control_panel.alarm_disarm
+          entity_id: alarm_control_panel.home_alarm
 
         - alias: Suggest cleaning home before arrival
           service: script.announcement

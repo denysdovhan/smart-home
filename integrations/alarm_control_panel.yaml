@@ -1,0 +1,11 @@
+#
+# Manual Alarm Control Panel
+#
+# https://www.home-assistant.io/integrations/manual/
+#
+
+alarm_control_panel:
+  - platform: manual
+    name: Home Alarm
+    arming_time: 0
+    delay_time: 0

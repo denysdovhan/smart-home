@@ -1,0 +1,35 @@
+- id: alarm_triggering
+  alias: Alarm Triggering
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.living_room_movement_sensor_occupancy
+        - binary_sensor.bedroom_movement_sensor_occupancy
+        - binary_sensor.front_door_sensor_contact
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: armed_away
+  action:
+    - service: alarm_control_panel.alarm_trigger
+      target:
+        entity_id: alarm_control_panel.home_alarm
+
+- id: alarm_notification
+  alias: Notification for Triggered Alarm
+  trigger:
+    - platform: state
+      entity_id: alarm_control_panel.home_alarm
+      to: 'triggered'
+  action:
+    - service: script.announcement
+      data:
+        title: 'Сигналізація 🚨'
+        messages:
+          - 'Вдома спрацювала сигналізація!'
+          - 'Тривога! Вдома виявлено рух!'
+          - 'Увага! Спрацювала сигналізація!'
+        notify_data:
+          group: alarm
+          entity_id: camera.home_camera
