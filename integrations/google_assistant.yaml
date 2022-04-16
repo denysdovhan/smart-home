@@ -76,44 +76,6 @@ google_assistant:
     # Prevent exposing specific entities
     # ----------------------------------
 
-    # Table Lights
-    light.living_room_lower_table_light:
-      expose: false
-    light.living_room_upper_table_light:
-      expose: false
-    # Main Light
-    light.living_room_main_light_bulb_1:
-      expose: false
-    switch.living_room_main_light_bulb_1_power_outage_memory:
-      expose: false
-    light.living_room_main_light_bulb_2:
-      expose: false
-    switch.living_room_main_light_bulb_2_power_outage_memory:
-      expose: false
-    light.living_room_main_light_bulb_3:
-      expose: false
-    switch.living_room_main_light_bulb_3_power_outage_memory:
-      expose: false
-    light.living_room_main_light_bulb_4:
-      expose: false
-    switch.living_room_main_light_bulb_4_power_outage_memory:
-      expose: false
-    switch.corridor_light:
-      expose: false
-    # Bedroom Lights
-    switch.bedroom_ceiling_light_power_outage_memory:
-      expose: false
-    switch.bedroom_bed_lights:
-      expose: false
-    # Duplication
-    switch.living_room_tv_lights:
-      expose: false
-    switch.balcony_heater:
-      expose: false
-    switch.bedroom_speaker_do_not_disturb:
-      expose: false
-    switch.living_room_speaker_do_not_disturb:
-      expose: false
     # Only from Home Assistant
     switch.adguard_filtering:
       expose: false

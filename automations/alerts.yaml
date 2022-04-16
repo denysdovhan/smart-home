@@ -85,119 +85,77 @@
   alias: System Peaks Alert
   trigger:
     - platform: numeric_state
-      id: cpu
       entity_id: sensor.processor_use
       above: 90
       for:
         seconds: 30
+      variables:
+        greetings:
+          - 'Процесор навантажений на {{ trigger.to_state.state }}%.'
+          - 'Навантаження на процесор {{ trigger.to_state.state }}%.'
+          - 'CPU: {{ trigger.to_state.state | int(0) }}%.'
+        messages:
+          - 'Складнощі з виконанням поточного завдання.'
+          - 'Аномально велике навантаження на процесор.'
     - platform: numeric_state
-      id: temperature
       entity_id: sensor.processor_temperature
       above: 80
       for:
         minutes: 30
+      variables:
+        greetings:
+          - 'Температура процесора {{ trigger.to_state.state }}°С.'
+          - 'Процесор нагрівся до {{ trigger.to_state.state }}°С.'
+        messages:
+          - 'Аномально велике навантаження на процесор.'
+          - 'Охолодження процесора не справляється з навантаженням.'
     - platform: numeric_state
-      id: ram
       entity_id: sensor.memory_use_percent
       above: 90
       for:
         seconds: 30
+      variables:
+        greetings:
+          - 'Оперативна пам’ять заповнена на {{ trigger.to_state.state }}%.'
+          - 'Навантаження на оперативну пам’ять {{ trigger.to_state.state }}%.'
+          - 'RAM: {{ trigger.to_state.state }}%.'
+        messages:
+          - 'Складнощі з виконанням поточного завдання.'
+          - 'Аномально велике навантаження на процесор.'
     - platform: numeric_state
-      id: system_disk
       entity_id: sensor.disk_use_percent
       above: 90
       for:
         minutes: 1
+      variables:
+        greetings:
+          - 'Системний диск заповнений на {{ trigger.to_state.state }}%.'
+          - 'Заповнення системного диску {{ trigger.to_state.state }}%.'
+        messages:
+          - 'Системний диск заповнюється. Потрібно видалити застарілі файли.'
+          - 'Аномально велике заповнення системної пам’яті.'
     - platform: numeric_state
       id: media_disk
       entity_id: sensor.media_disk_use_percent
       above: 90
       for:
         minutes: 1
+      variables:
+        greetings:
+          - 'Диск медіа заповнений на {{ trigger.to_state.state }}%.'
+          - 'Заповнення диску медіа {{ trigger.to_state.state }}%.'
+        messages:
+          - 'Диск для медіа заповнюється. Потрібно видалити застарілі файли.'
+          - 'Занадто багато файлів на диску медіа.'
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: cpu
-          sequence:
-            - service: script.announcement
-              data:
-                title: 'Системний пік 🔥'
-                greetings:
-                  - 'Процесор навантажений на {{ trigger.to_state.state }}%.'
-                  - 'Навантаження на процесор {{ trigger.to_state.state }}%.'
-                  - 'CPU: {{ trigger.to_state.state | int(0) }}%.'
-                messages:
-                  - 'Складнощі з виконанням поточного завдання.'
-                  - 'Аномально велике навантаження на процесор.'
-                notify_data:
-                  url: /lovelace/system
-                  group: system
-        - conditions:
-            - condition: trigger
-              id: temperature
-          sequence:
-            - service: script.announcement
-              data:
-                title: 'Системний пік 🔥'
-                greetings:
-                  - 'Температура процесора {{ trigger.to_state.state }}°С.'
-                  - 'Процесор нагрівся до {{ trigger.to_state.state }}°С.'
-                messages:
-                  - 'Аномально велике навантаження на процесор.'
-                  - 'Охолодження процесора не справляється з навантаженням.'
-                notify_data:
-                  url: /lovelace/system
-                  group: system
-        - conditions:
-            - condition: trigger
-              id: ram
-          sequence:
-            - service: script.announcement
-              data:
-                title: 'Системний пік 🔥'
-                greetings:
-                  - 'Оперативна пам’ять заповнена на {{ trigger.to_state.state }}%.'
-                  - 'Навантаження на оперативну пам’ять {{ trigger.to_state.state }}%.'
-                  - 'RAM: {{ trigger.to_state.state }}%.'
-                messages:
-                  - 'Складнощі з виконанням поточного завдання.'
-                  - 'Аномально велике навантаження на процесор.'
-                notify_data:
-                  url: /lovelace/system
-                  group: system
-        - conditions:
-            - condition: trigger
-              id: system_disk
-          sequence:
-            - service: script.announcement
-              data:
-                title: 'Системний пік 🔥'
-                greetings:
-                  - 'Системний диск заповнений на {{ trigger.to_state.state }}%.'
-                  - 'Заповнення системного диску {{ trigger.to_state.state }}%.'
-                messages:
-                  - 'Системний диск заповнюється. Потрібно видалити застарілі файли.'
-                  - 'Аномально велике заповнення системної пам’яті.'
-                notify_data:
-                  url: /lovelace/system
-                  group: system
-        - conditions:
-            - condition: trigger
-              id: media_disk
-          sequence:
-            - service: script.announcement
-              data:
-                title: 'Системний пік 🔥'
-                greetings:
-                  - 'Диск медіа заповнений на {{ trigger.to_state.state }}%.'
-                  - 'Заповнення диску медіа {{ trigger.to_state.state }}%.'
-                messages:
-                  - 'Диск для медіа заповнюється. Потрібно видалити застарілі файли.'
-                  - 'Занадто багато файлів на диску медіа.'
-                notify_data:
-                  url: /lovelace/system
-                  group: system
+    - service: script.announcement
+      data:
+        title: 'Системний пік 🔥'
+        greetings: '{{ greetings }}'
+        messages: '{{ greetings }}'
+        notify_data:
+          url: /lovelace/system
+          group: system
     - delay:
         minutes: 10
 
@@ -206,97 +164,71 @@
   mode: single
   trigger:
     - platform: numeric_state
-      id: moderate
       entity_id: sensor.nyvky_aqi
       above: 150
       below: 200
       for:
         minutes: 30
+      variables:
+        title: 'Шкідливе повітря 🥴'
+        greetings:
+          - 'Рівень якості повітря: {{ trigger.to_state.state | int(0) }} AQI'
+          - 'Шкідливе повітря надворі: {{ trigger.to_state.state | int(0) }} AQI'
+          - 'Шкідливе повітря: {{ trigger.to_state.state | int(0) }} AQI'
+          - '{{ trigger.to_state.state | int(0) }} AQI.'
+        messages:
+          - 'Може викликати дискомфорт при диханні.'
+          - 'Спричиняє дискомфорт при диханні у здорових людей.'
+          - 'Людям із захворюваннями категорично заборонено перебувати на вулиці.'
+          - 'Заняття спортом на вулиці заборонені.'
     - platform: numeric_state
-      id: high
       entity_id: sensor.nyvky_aqi
       above: 201
       below: 300
       for:
         minutes: 30
+      variables:
+        title: 'Дуже шкідливе повітря 😷'
+        greetings:
+          - 'Рівень якості повітря: {{ trigger.to_state.state | int(0) }} AQI'
+          - 'Надворі дуже шкідливе повітря: {{ trigger.to_state.state | int(0) }} AQI'
+          - "Дуже шкідливе повітря: {{ states('sensor.nyvky_aqi') | int(0) }} AQI"
+          - '{{ trigger.to_state.state | int(0) }} AQI.'
+        messages:
+          - 'Може викликати захворювання у здорових людей при тривалому впливі.'
+          - 'Людям із захворюваннями категорично заборонено перебувати на вулиці.'
+          - 'Ризик інсульту та інфаркту у людей похилого віку.'
+          - 'Заняття спортом на вулиці заборонені.'
     - platform: numeric_state
-      id: dangerous
       entity_id: sensor.nyvky_aqi
       above: 301
       for:
         minutes: 30
+      variables:
+        title: 'Небезпечне повітря ☠️'
+        greetings:
+          - 'Рівень якості повітря: {{ trigger.to_state.state | int(0) }} AQI'
+          - 'Надворі небезпечне повітря: {{ trigger.to_state.state | int(0) }} AQI'
+          - 'Небезпечне повітря: {{ trigger.to_state.state | int(0) }} AQI'
+          - '{{ trigger.to_state.state | int(0) }} AQI.'
+        messages:
+          - 'Це небезпечно для здоров’я!'
+          - 'Залишайтесь вдома!'
+          - 'Не виходьте на вулицю!'
+          - 'Зачиніть вікна!'
+          - 'Серйозний вплив навіть на здорових людей!'
+          - 'Може спричинити серйозні наслідки для здоров’я!'
+          - 'Людям із захворюваннями категорично заборонено перебувати на вулиці.'
+          - 'Існує ризик інсульту та інфаркту!'
+          - 'Негативні наслідки навіть під час легкої активності!'
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: moderate
-          sequence:
-            - service: script.announcement
-              data:
-                title: 'Шкідливе повітря 🥴'
-                greetings:
-                  - 'Рівень якості повітря: {{ trigger.to_state.state | int(0) }} AQI'
-                  - 'Шкідливе повітря надворі: {{ trigger.to_state.state | int(0) }} AQI'
-                  - 'Шкідливе повітря: {{ trigger.to_state.state | int(0) }} AQI'
-                  - '{{ trigger.to_state.state | int(0) }} AQI.'
-                messages:
-                  - 'Може викликати дискомфорт при диханні.'
-                  - 'Спричиняє дискомфорт при диханні у здорових людей.'
-                  - 'Людям із захворюваннями категорично заборонено перебувати на вулиці.'
-                  - 'Заняття спортом на вулиці заборонені.'
-                notify_data:
-                  url: /lovelace/city
-        - conditions:
-            - condition: trigger
-              id: high
-          sequence:
-            - service: script.announcement
-              data:
-                title: 'Дуже шкідливе повітря 😷'
-                greetings:
-                  - 'Рівень якості повітря: {{ trigger.to_state.state | int(0) }} AQI'
-                  - 'Надворі дуже шкідливе повітря: {{ trigger.to_state.state | int(0) }} AQI'
-                  - "Дуже шкідливе повітря: {{ states('sensor.nyvky_aqi') | int(0) }} AQI"
-                  - '{{ trigger.to_state.state | int(0) }} AQI.'
-                messages:
-                  - 'Може викликати захворювання у здорових людей при тривалому впливі.'
-                  - 'Людям із захворюваннями категорично заборонено перебувати на вулиці.'
-                  - 'Ризик інсульту та інфаркту у людей похилого віку.'
-                  - 'Заняття спортом на вулиці заборонені.'
-                notify_data:
-                  url: /lovelace/city
-        - conditions:
-            - condition: trigger
-              id: dangerous
-          sequence:
-            - service: script.announcement
-              data:
-                title: 'Небезпечне повітря ☠️'
-                greetings:
-                  - 'Рівень якості повітря: {{ trigger.to_state.state | int(0) }} AQI'
-                  - 'Надворі небезпечне повітря: {{ trigger.to_state.state | int(0) }} AQI'
-                  - 'Небезпечне повітря: {{ trigger.to_state.state | int(0) }} AQI'
-                  - '{{ trigger.to_state.state | int(0) }} AQI.'
-                messages:
-                  - 'Це небезпечно для здоров’я!'
-                  - 'Залишайтесь вдома!'
-                  - 'Не виходьте на вулицю!'
-                  - 'Зачиніть вікна!'
-                  - 'Серйозний вплив навіть на здорових людей!'
-                  - 'Може спричинити серйозні наслідки для здоров’я!'
-                  - 'Людям із захворюваннями категорично заборонено перебувати на вулиці.'
-                  - 'Існує ризик інсульту та інфаркту!'
-                  - 'Негативні наслідки навіть під час легкої активності!'
-                notify_data:
-                  url: /lovelace/city
-      default:
-        - service: script.announcement
-          data:
-            title: 'Повітря 🌫'
-            messages:
-              - "Погіршується якість повітря: {{ states('sensor.nyvky_aqi') | int(0) }} AQI"
-            notify_data:
-              url: /lovelace/city
+    - service: script.announcement
+      data:
+        title: '{{ title }}'
+        greetings: '{{ greetings }}'
+        messages: '{{ messages }}'
+        notify_data:
+          url: /lovelace/city
     - delay:
         hours: 2
 
@@ -376,60 +308,48 @@
   alias: Car Washing Alert
   trigger:
     - platform: state
-      id: wash_car
       entity_id: binary_sensor.car_wash
       to: 'on'
       for:
         hours: 24
+      variables:
+        title: 'Миття авто 🚘☀️'
+        greetings:
+          - 'Найближчими днями очікується хороша погода.'
+          - 'Хороша погода найближчі 7 днів.'
+          - 'Прогнозується хороша погода!'
+          - 'Попереду гарна погода!'
+        messages:
+          - 'Доречно помити машину.'
+          - 'Можна помити авто.'
+          - 'Варто поїхати на автомийку.'
+          - 'Вдалий час, щоб помити авто.'
     - platform: state
-      id: do_not_wash_car
       entity_id: binary_sensor.car_wash
       to: 'off'
       for:
         hours: 24
+      variables:
+        title: 'Миття авто 🚘🌧'
+        greetings:
+          - 'Найближчими днями очікується погана погода.'
+          - 'Погана погода найближчі 7 днів.'
+          - 'Прогнозується погана погода!'
+          - 'Попереду дощова погода!'
+        messages:
+          - 'Утримайтесь від миття авто.'
+          - 'Не варто мити авто цими днями.'
+          - 'Краще залишити авто брудним.'
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: wash_car
-          sequence:
-            - service: script.announcement
-              data:
-                speak: false
-                title: 'Миття авто 🚘☀️'
-                greetings:
-                  - 'Найближчими днями очікується хороша погода.'
-                  - 'Хороша погода найближчі 7 днів.'
-                  - 'Прогнозується хороша погода!'
-                  - 'Попереду гарна погода!'
-                messages:
-                  - 'Доречно помити машину.'
-                  - 'Можна помити авто.'
-                  - 'Варто поїхати на автомийку.'
-                  - 'Вдалий час, щоб помити авто.'
-                notify_data:
-                  url: /lovelace/car
-                  group: car
-        - conditions:
-            - condition: trigger
-              id: do_not_wash_car
-          sequence:
-            - service: script.announcement
-              data:
-                speak: false
-                title: 'Миття авто 🚘🌧'
-                greetings:
-                  - 'Найближчими днями очікується погана погода.'
-                  - 'Погана погода найближчі 7 днів.'
-                  - 'Прогнозується погана погода!'
-                  - 'Попереду дощова погода!'
-                messages:
-                  - 'Утримайтесь від миття авто.'
-                  - 'Не варто мити авто цими днями.'
-                  - 'Краще залишити авто брудним.'
-                notify_data:
-                  url: /lovelace/car
-                  group: car
+    - service: script.announcement
+      data:
+        speak: false
+        title: '{{ title }}'
+        greetings: '{{ greetings }}'
+        messages: '{{ messages }}'
+        notify_data:
+          url: /lovelace/car
+          group: car
 
 - id: snow_tire_alert
   alias: Snow Tire Alert
@@ -450,9 +370,9 @@
             - condition: state
               entity_id: binary_sensor.snowtire
               state: 'on'
-            - alias: 'Only in October, November'
+            - alias: 'Only in the fall'
               condition: template
-              value_template: '{{ now().month in [10, 11] }}'
+              value_template: '{{ now().month in [9, 10, 11] }}'
           sequence:
             - service: script.announcement
               data:
@@ -474,9 +394,9 @@
             - condition: state
               entity_id: binary_sensor.snowtire
               state: 'off'
-            - alias: 'Only in March, April'
+            - alias: 'Only in the spring'
               condition: template
-              value_template: '{{ now().month in [3, 4] }}'
+              value_template: '{{ now().month in [3, 4, 5] }}'
           sequence:
             - service: script.announcement
               data:
@@ -499,101 +419,75 @@
   alias: Fayna Town Progress Alert
   trigger:
     - platform: template
-      id: percentage
       value_template: >-
         {{ (states('sensor.fayna_progress') | float(1)) % 1 == 0 }}
+      variables:
+        greetings:
+          - "Готовність будівництва {{ states('sensor.fayna_progress') | int(0) }}%."
+          - "Готовність {{ states('sensor.fayna_progress') | int(0) }}%."
+          - "Будинок готовий на {{ states('sensor.fayna_progress') | int(0) }}%."
+          - "Будівництво просунулось на {{ states('sensor.fayna_progress') | int(0) }}%."
+        messages:
+          - "Залишилось чекати {{ states('sensor.fayna_days_left') }}, а пройшло вже {{ states('sensor.fayna_days_past') }} днів."
+          - "Залишилось {{ states('sensor.fayna_days_left') }} днів. Пройшло {{ states('sensor.fayna_days_past') }}."
+          - "Пройшло вже {{ states('sensor.fayna_days_past') }} днів. Залишилось {{ states('sensor.fayna_days_left') }}."
+          - "{{ states('sensor.fayna_days_past') }} днів пройшло. {{ states('sensor.fayna_days_left') }} залишилось."
     - platform: template
-      id: hundereds
       value_template: >-
         {{ (states('sensor.fayna_days_past') | float(1)) % 50 == 0 }}
+      variables:
+        greetings:
+          - "Пройшло вже {{ states('sensor.fayna_days_past') }} днів з дня купівлі квартири."
+          - "Пройшло {{ states('sensor.fayna_days_past') }} днів від дня купівлі квартири."
+          - "Пройшло {{ states('sensor.fayna_days_past') }} днів."
+        messages:
+          - "Залишилось чекати {{ states('sensor.fayna_days_left') }}."
+          - "Залишилось {{ states('sensor.fayna_days_left') }} днів."
+          - "Залишилось {{ states('sensor.fayna_days_left') }}."
+          - "{{ states('sensor.fayna_days_left') }} залишилось."
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: percentage
-          sequence:
-            - service: script.announcement
-              data:
-                title: 'Файна Таун 🏙'
-                greetings:
-                  - "Готовність будівництва {{ states('sensor.fayna_progress') | int(0) }}%."
-                  - "Готовність {{ states('sensor.fayna_progress') | int(0) }}%."
-                  - "Будинок готовий на {{ states('sensor.fayna_progress') | int(0) }}%."
-                  - "Будівництво просунулось на {{ states('sensor.fayna_progress') | int(0) }}%."
-                messages:
-                  - "Залишилось чекати {{ states('sensor.fayna_days_left') }}, а пройшло вже {{ states('sensor.fayna_days_past') }} днів."
-                  - "Залишилось {{ states('sensor.fayna_days_left') }} днів. Пройшло {{ states('sensor.fayna_days_past') }}."
-                  - "Пройшло вже {{ states('sensor.fayna_days_past') }} днів. Залишилось {{ states('sensor.fayna_days_left') }}."
-                  - "{{ states('sensor.fayna_days_past') }} днів пройшло. {{ states('sensor.fayna_days_left') }} залишилось."
-                notify_data:
-                  url: /lovelace/observation
-        - conditions:
-            - condition: trigger
-              id: hundereds
-          sequence:
-            - service: script.announcement
-              data:
-                title: 'Файна Таун 🏙'
-                greetings:
-                  - "Пройшло вже {{ states('sensor.fayna_days_past') }} днів з дня купівлі квартири."
-                  - "Пройшло {{ states('sensor.fayna_days_past') }} днів від дня купівлі квартири."
-                  - "Пройшло {{ states('sensor.fayna_days_past') }} днів."
-                messages:
-                  - "Залишилось чекати {{ states('sensor.fayna_days_left') }}."
-                  - "Залишилось {{ states('sensor.fayna_days_left') }} днів."
-                  - "Залишилось {{ states('sensor.fayna_days_left') }}."
-                  - "{{ states('sensor.fayna_days_left') }} залишилось."
-                notify_data:
-                  url: /lovelace/observation
+    - service: script.announcement
+      data:
+        title: 'Файна Таун 🏙'
+        greetings: '{{ greetings }}'
+        messages: '{{ messages }}'
+        notify_data:
+          url: /lovelace/observation
 
 - id: monthly_energy_alert
   alias: Monthy Energy Usage Alert
   description: Switch energy tariff and notify about the consumption
   trigger:
     - platform: numeric_state
-      id: period_start
       entity_id: sensor.energy_monthly_total
       below: 0.01
+      variables:
+        greetings:
+          - Минулого місяця спожито {{ trigger.from_state.state }}kWh
+          - Минулого періоду ви спожили {{ trigger.from_state.state }}kWh
+          - Попереднього місяця використано {{ trigger.from_state.state }}kWh
+          - Попереднього періоду використано {{ trigger.from_state.state }}kWh
+        messages:
+          - на {{ state_attr('sensor.monthly_energy_cost', 'last_period') | float(0) | round(2) }}₴.
+          - за {{ state_attr('sensor.monthly_energy_cost', 'last_period') | float(0) | round(2) }}₴.
     - platform: numeric_state
-      id: period_finish
       entity_id: sensor.energy_monthly_total
       above: 250
+      variables:
+        greetings:
+          - Спожито понад 250kWh за місяць.
+          - Використано більше 250kWh за місяць.
+          - Ви використали електрику більше 250kWh за місяць.
+        messages:
+          - Надалі застосовується вищий тариф.
+          - Далі застосовується підвищений тариф.
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: period_start
-          sequence:
-            - service: script.announcement
-              data:
-                title: Електрика ⚡️
-                speak: false
-                service: notify.denys
-                greetings:
-                  - Минулого місяця спожито {{ trigger.from_state.state }}kWh
-                  - Минулого періоду ви спожили {{ trigger.from_state.state }}kWh
-                  - Попереднього місяця використано {{ trigger.from_state.state }}kWh
-                  - Попереднього періоду використано {{ trigger.from_state.state }}kWh
-                messages:
-                  - на {{ state_attr('sensor.monthly_energy_cost', 'last_period') | float(0) | round(2) }}₴.
-                  - за {{ state_attr('sensor.monthly_energy_cost', 'last_period') | float(0) | round(2) }}₴.
-                notify_data:
-                  url: /energy
-        - conditions:
-            - condition: trigger
-              id: period_finish
-          sequence:
-            - service: script.announcement
-              data:
-                title: Електрика ⚡️
-                speak: false
-                service: notify.denys
-                greetings:
-                  - Спожито понад 250kWh за місяць.
-                  - Використано більше 250kWh за місяць.
-                  - Ви використали електрику більше 250kWh за місяць.
-                messages:
-                  - Надалі застосовується вищий тариф.
-                  - Далі застосовується підвищений тариф.
-                notify_data:
-                  url: /energy
+    - service: script.announcement
+      data:
+        title: Електрика ⚡️
+        speak: false
+        service: notify.denys
+        greetings: '{{ greetings }}'
+        messages: '{{ messages }}'
+        notify_data:
+          url: /energy

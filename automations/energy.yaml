@@ -23,10 +23,10 @@
               entity_id: sensor.energy_monthly_total
               below: 250
           sequence:
-            - service: utility_meter.select_tariff
+            - service: select.select_option
               data:
-                entity_id: utility_meter.energy_monthly
-                tariff: peak
+                entity_id: select.energy_monthly
+                option: peak
 
         - conditions:
             - condition: state
@@ -36,10 +36,10 @@
               entity_id: sensor.energy_monthly_total
               below: 250
           sequence:
-            - service: utility_meter.select_tariff
+            - service: select.select_option
               data:
-                entity_id: utility_meter.energy_monthly
-                tariff: offpeak
+                entity_id: select.energy_monthly
+                option: offpeak
 
         - conditions:
             - condition: state
@@ -49,10 +49,10 @@
               entity_id: sensor.energy_monthly_total
               above: 250
           sequence:
-            - service: utility_meter.select_tariff
+            - service: select.select_option
               data:
-                entity_id: utility_meter.energy_monthly
-                tariff: peak_overlimit
+                entity_id: select.energy_monthly
+                option: peak_overlimit
 
         - conditions:
             - condition: state
@@ -62,7 +62,7 @@
               entity_id: sensor.energy_monthly_total
               above: 250
           sequence:
-            - service: utility_meter.select_tariff
+            - service: select.select_tariff
               data:
-                entity_id: utility_meter.energy_monthly
-                tariff: offpeak_overlimit
+                entity_id: select.energy_monthly
+                option: offpeak_overlimit
