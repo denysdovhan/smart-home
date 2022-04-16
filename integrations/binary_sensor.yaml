@@ -8,24 +8,9 @@ binary_sensor:
   # Workday
   - platform: workday
     country: UA
-  # Times of the Day
-  - platform: tod
-    name: Activity Time
-    after: '12:00'
-    before: '21:00'
-  - platform: tod
-    name: Sleeping Time
-    after: '00:00'
-    before: '10:00'
   # Car Wash
   - platform: car_wash
     weather: weather.nyvky
   # Winter Tires
   - platform: snowtire
     weather: weather.nyvky
-  # Do Not Disturb
-  - platform: group
-    name: Do Not Disturb Family
-    entities:
-      - binary_sensor.do_not_disturb_denys
-      - binary_sensor.do_not_disturb_marry

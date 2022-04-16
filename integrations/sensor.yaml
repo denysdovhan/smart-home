@@ -34,48 +34,6 @@ sensor:
     name: dracaena
     mac: 'C4:7C:8D:6D:49:73'
 
-  # Temperature
-  - platform: min_max
-    name: Home Temperature
-    type: mean
-    entity_ids:
-      - sensor.living_room_conditions_sensor_temperature
-      - sensor.air_humidifier_temperature
-      - sensor.air_purifier_temperature
-  - platform: min_max
-    name: Living Room Temperature
-    type: mean
-    entity_ids:
-      - sensor.living_room_conditions_sensor_temperature
-      - sensor.air_purifier_temperature
-  - platform: min_max
-    name: Bedroom Temperature
-    type: mean
-    entity_ids:
-      - sensor.living_room_conditions_sensor_temperature
-      - sensor.air_humidifier_temperature
-
-  # Humidity
-  - platform: min_max
-    name: Home Humidity
-    type: mean
-    entity_ids:
-      - sensor.living_room_conditions_sensor_humidity
-      - sensor.air_humidifier_humidity
-      - sensor.air_purifier_humidity
-  - platform: min_max
-    name: Living Room Humidity
-    type: mean
-    entity_ids:
-      - sensor.living_room_conditions_sensor_humidity
-      - sensor.air_purifier_humidity
-  - platform: min_max
-    name: Bedroom Humidity
-    type: mean
-    entity_ids:
-      - sensor.living_room_conditions_sensor_humidity
-      - sensor.air_humidifier_humidity
-
   # Lun Misto
   - platform: rest
     name: Misto Lun

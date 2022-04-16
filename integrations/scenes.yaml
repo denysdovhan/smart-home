@@ -96,7 +96,7 @@ scene split:
         state: on
         brightness: 255
         color_temp: 240
-      switch.corridor_light:
+      ligth.corridor_light:
         state: on
       switch.adaptive_lighting_home:
         state: on

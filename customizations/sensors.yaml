@@ -1,30 +1,3 @@
-# Temperature
-sensor.home_temperature:
-  unit_of_measurement: '°C'
-  device_class: temperature
-sensor.living_room_temperature:
-  friendly_name: Living Room Temperature
-  unit_of_measurement: '°C'
-  device_class: temperature
-sensor.bedroom_temperature:
-  friendly_name: Bedroom Temperature
-  unit_of_measurement: '°C'
-  device_class: temperature
-
-# Humidity
-sensor.home_humidity:
-  friendly_name: Home Humidity
-  unit_of_measurement: '%'
-  device_class: humidity
-sensor.living_room_humidity:
-  friendly_name: Living Room Humidity
-  unit_of_measurement: '%'
-  device_class: humidity
-sensor.bedroom_humidity:
-  friendly_name: Bedroom Humidity
-  unit_of_measurement: '%'
-  device_class: humidity
-
 # LUN Misto AQI
 sensor.nyvky_aqi:
   icon: mdi:cloud
@@ -32,15 +5,3 @@ sensor.nyvky_aqi:
 # Car
 device_tracker.toyota_location:
   entity_picture: /local/images/toyota.png
-
-# Energy Meter
-utility_meter.energy_monthly:
-  friendly_name: Energy Monthly Tariff
-sensor.energy_monthly_peak:
-  friendly_name: Energy Monthly Peak Usage
-sensor.energy_monthly_offpeak:
-  friendly_name: Energy Monthly Off Peak Usage
-sensor.energy_monthly_peak_overlimit:
-  friendly_name: Energy Monthly Peak Overlimit Usage
-sensor.energy_monthly_offpeak_overlimit:
-  friendly_name: Energy Monthly Off Peak Overlimit Usage
