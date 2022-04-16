@@ -60,7 +60,7 @@ class HacsThemeRepository(HacsRepository):
         if self.validate.errors:
             for error in self.validate.errors:
                 if not self.hacs.status.startup:
-                    self.logger.error("%s %s", self, error)
+                    self.logger.error("%s %s", self.string, error)
         return self.validate.success
 
     async def async_post_registration(self):
@@ -82,6 +82,18 @@ class HacsThemeRepository(HacsRepository):
         # Update name
         self.update_filenames()
         self.content.path.local = self.localpath
+
+        # Signal entities to refresh
+        if self.data.installed:
+            self.hacs.hass.bus.async_fire(
+                "hacs/repository",
+                {
+                    "id": 1337,
+                    "action": "update",
+                    "repository": self.data.full_name,
+                    "repository_id": self.data.id,
+                },
+            )
 
     def update_filenames(self) -> None:
         """Get the filename to target."""

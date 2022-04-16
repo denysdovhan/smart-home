@@ -73,12 +73,16 @@ async def autodiscover_model(
     device_registry = await dr.async_get_registry(hass)
     device_entry = device_registry.async_get(entity_entry.device_id)
     model_id = device_entry.model
-    if match := re.search("\((.*)\)$", str(device_entry.model)):
+    if match := re.search("\(([^\(\)]+)\)$", str(device_entry.model)):
         model_id = match.group(1)
 
     manufacturer = device_entry.manufacturer
     if MANUFACTURER_ALIASES.get(manufacturer):
         manufacturer = MANUFACTURER_ALIASES.get(manufacturer)
+    
+    # Make sure we don't have a literal / in model_id, so we don't get issues with sublut directory matching down the road
+    # See github #658
+    model_id = model_id.replace("/", "#slash#")
 
     model_info = ModelInfo(manufacturer, model_id)
 

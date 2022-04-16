@@ -55,7 +55,7 @@ class HacsAppdaemonRepository(HacsRepository):
         if self.validate.errors:
             for error in self.validate.errors:
                 if not self.hacs.status.startup:
-                    self.logger.error("%s %s", self, error)
+                    self.logger.error("%s %s", self.string, error)
         return self.validate.success
 
     @concurrent(concurrenttasks=10, backoff_time=5)
@@ -78,3 +78,15 @@ class HacsAppdaemonRepository(HacsRepository):
 
         # Set local path
         self.content.path.local = self.localpath
+
+        # Signal entities to refresh
+        if self.data.installed:
+            self.hacs.hass.bus.async_fire(
+                "hacs/repository",
+                {
+                    "id": 1337,
+                    "action": "update",
+                    "repository": self.data.full_name,
+                    "repository_id": self.data.id,
+                },
+            )
