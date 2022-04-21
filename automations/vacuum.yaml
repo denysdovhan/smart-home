@@ -187,131 +187,70 @@
   alias: Vacuum Replacements Alert
   trigger:
     - platform: numeric_state
-      id: main_brush
-      entity_id: vacuum.roborock
-      attribute: main_brush_left
-      below: 1
+      entity_id: sensor.roborock_main_brush_left
+      below: 3600 # 1 hour
+      variables:
+        greetings:
+          - 'Головна щітка потребує заміни.'
+          - 'Потрібно замінити основну щітку.'
+          - 'Замініть основну щітку.'
+        messages:
+          - 'Не забудьте обнулити лічильник після заміни та замовити нову щітку.'
+          - 'Обнуліть лічильник після заміни та замовте нову щітку.'
     - platform: numeric_state
       id: side_brush
-      entity_id: vacuum.roborock
-      attribute: side_brush_left
-      below: 1
+      entity_id: sensor.roborock_side_brush_left
+      below: 3600 # 1 hour
+      variables:
+        greetings:
+          - 'Бокова щітка потребує заміни.'
+          - 'Потрібно замінити бокову щітку.'
+          - 'Замініть бокову щітку.'
+        messages:
+          - 'Не забудьте обнулити лічильник після заміни та замовити нову щітку.'
+          - 'Обнуліть лічильник після заміни та замовте нову щітку.'
     - platform: numeric_state
       id: filter
-      entity_id: vacuum.roborock
-      attribute: filter_left
-      below: 1
+      entity_id: sensor.roborock_filter_left
+      below: 3600 # 1 hour
+      variables:
+        greetings:
+          - 'Основний фільтр потребує заміни.'
+          - 'Потрібно замінити фільтр пилососа.'
+          - 'Замініть фільтр пилососа.'
+        messages:
+          - 'Не забудьте обнулити лічильник після заміни та замовити новий фільтр.'
+          - 'Обнуліть лічильник після заміни та замовте новий фільтр.'
     - platform: numeric_state
       id: sensor_dirty
-      entity_id: vacuum.roborock
-      attribute: sensor_dirty_left
-      below: 1
+      entity_id: sensor.roborock_sensor_dirty_left
+      below: 3600 # hour
+      variables:
+        greetings:
+          - 'Сенсори орієнтації забруднились.'
+          - 'Потрібно очистити сенсори пилососа.'
+          - 'Очистіть сенсори пилососа.'
+        messages:
+          - 'Не забудьте обнулити лічильник після очищення.'
+          - 'Обнуліть лічильник після очищення.'
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: main_brush
-          sequence:
-            - service: script.announcement
-              data:
-                title: 'Пилосос 🧹'
-                greetings:
-                  - 'Головна щітка потребує заміни.'
-                  - 'Потрібно замінити основну щітку.'
-                  - 'Замініть основну щітку.'
-                messages:
-                  - 'Не забудьте обнулити лічильник після заміни та замовити нову щітку.'
-                  - 'Обнуліть лічильник після заміни та замовте нову щітку.'
-                notify_data:
-                  url: /lovelace/vacuum
-                  group: vacuum
-                  actions:
-                    - identifier: VACUUM_GO_TO_MAINTENANCE
-                      title: 'Обслужити'
-                      activationMode: 'background'
-                      destructive: true
-                    - identifier: VACUUM_RETURN_TO_BASE
-                      title: 'На базу'
-                      activationMode: 'background'
-                      destructive: true
-        - conditions:
-            - condition: trigger
-              id: side_brush
-          sequence:
-            - service: script.announcement
-              data:
-                title: 'Пилосос 🧹'
-                greetings:
-                  - 'Бокова щітка потребує заміни.'
-                  - 'Потрібно замінити бокову щітку.'
-                  - 'Замініть бокову щітку.'
-                messages:
-                  - 'Не забудьте обнулити лічильник після заміни та замовити нову щітку.'
-                  - 'Обнуліть лічильник після заміни та замовте нову щітку.'
-                notify_data:
-                  url: /lovelace/vacuum
-                  group: vacuum
-                  actions:
-                    - identifier: VACUUM_GO_TO_MAINTENANCE
-                      title: 'Обслужити'
-                      activationMode: 'background'
-                      destructive: true
-                    - identifier: VACUUM_RETURN_TO_BASE
-                      title: 'На базу'
-                      activationMode: 'background'
-                      destructive: true
-        - conditions:
-            - condition: trigger
-              id: filter
-          sequence:
-            - service: script.announcement
-              data:
-                title: 'Пилосос 🧹'
-                greetings:
-                  - 'Основний фільтр потребує заміни.'
-                  - 'Потрібно замінити фільтр пилососа.'
-                  - 'Замініть фільтр пилососа.'
-                messages:
-                  - 'Не забудьте обнулити лічильник після заміни та замовити новий фільтр.'
-                  - 'Обнуліть лічильник після заміни та замовте новий фільтр.'
-                notify_data:
-                  url: /lovelace/vacuum
-                  group: vacuum
-                  actions:
-                    - identifier: VACUUM_GO_TO_MAINTENANCE
-                      title: 'Обслужити'
-                      activationMode: 'background'
-                      destructive: true
-                    - identifier: VACUUM_RETURN_TO_BASE
-                      title: 'На базу'
-                      activationMode: 'background'
-                      destructive: true
-        - conditions:
-            - condition: trigger
-              id: sensor_dirty
-          sequence:
-            - service: script.announcement
-              data:
-                title: 'Пилосос 🧹'
-                greetings:
-                  - 'Сенсори орієнтації забруднились.'
-                  - 'Потрібно очистити сенсори пилососа.'
-                  - 'Очистіть сенсори пилососа.'
-                messages:
-                  - 'Не забудьте обнулити лічильник після очищення.'
-                  - 'Обнуліть лічильник після очищення.'
-                notify_data:
-                  url: /lovelace/vacuum
-                  group: vacuum
-                  actions:
-                    - identifier: VACUUM_GO_TO_MAINTENANCE
-                      title: 'Обслужити'
-                      activationMode: 'background'
-                      destructive: true
-                    - identifier: VACUUM_RETURN_TO_BASE
-                      title: 'На базу'
-                      activationMode: 'background'
-                      destructive: true
+    - service: script.announcement
+      data:
+        title: 'Пилосос 🧹'
+        greetings: '{{ greetings }}'
+        messages: '{{ messages }}'
+        notify_data:
+          url: /lovelace/vacuum
+          group: vacuum
+          actions:
+            - identifier: VACUUM_GO_TO_MAINTENANCE
+              title: 'Обслужити'
+              activationMode: 'background'
+              destructive: true
+            - identifier: VACUUM_RETURN_TO_BASE
+              title: 'На базу'
+              activationMode: 'background'
+              destructive: true
 
 - id: vacuum_ios_actions_handling
   alias: Vacuum iOS Actions Handling
