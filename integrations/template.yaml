@@ -153,32 +153,6 @@ template:
           {{ (days_past / days_total * 100) | round(2) }}
         icon: mdi:crane
 
-  # Vacuum Sensors
-  - sensor:
-      - name: Roborock Main Brush Left Hours
-        state: >-
-          {{ (states('sensor.roborock_main_brush_left') | float(0) / 3600) | round(1) }}
-        icon: >-
-          {{ state_attr('sensor.roborock_main_brush_left', 'icon') }}
-
-      - name: Roborock Side Brush Left Hours
-        state: >-
-          {{ (states('sensor.roborock_side_brush_left') | float(0) / 3600) | round(1) }}
-        icon: >-
-          {{ state_attr('sensor.roborock_side_brush_left', 'icon') }}
-
-      - name: Roborock Filter Left Hours
-        state: >-
-          {{ (states('sensor.roborock_filter_left') | float(0) / 3600) | round(1) }}
-        icon: >-
-          {{ state_attr('sensor.roborock_filter_left', 'icon') }}
-
-      - name: Roborock Sensor Dirty Left Hours
-        state: >-
-          {{ (states('sensor.roborock_sensor_dirty_left') | float(0) / 3600) | round(1) }}
-        icon: >-
-          {{ state_attr('sensor.roborock_sensor_dirty_left', 'icon') }}
-
   # Energy Sensors
   - sensor:
       # Living Room Smart + Dumb Devices
