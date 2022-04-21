@@ -70,6 +70,7 @@ from .const import (
     CONF_DISABLE_STANDBY_POWER,
     CONF_ENERGY_INTEGRATION_METHOD,
     CONF_ENERGY_SENSOR_CATEGORY,
+    CONF_ENERGY_SENSOR_ID,
     CONF_ENERGY_SENSOR_NAMING,
     CONF_FIXED,
     CONF_GROUP,
@@ -96,7 +97,6 @@ from .const import (
     DATA_CONFIGURED_ENTITIES,
     DATA_DISCOVERED_ENTITIES,
     DATA_DOMAIN_ENTITIES,
-    DEFAULT_ENTITY_CATEGORY,
     DISCOVERY_SOURCE_ENTITY,
     DOMAIN,
     DOMAIN_CONFIG,
@@ -182,6 +182,7 @@ SENSOR_CONFIG = {
     vol.Optional(CONF_MULTIPLY_FACTOR_STANDBY, default=False): cv.boolean,
     vol.Optional(CONF_POWER_SENSOR_NAMING): validate_name_pattern,
     vol.Optional(CONF_POWER_SENSOR_CATEGORY): vol.In(ENTITY_CATEGORIES),
+    vol.Optional(CONF_ENERGY_SENSOR_ID): cv.entity_id,
     vol.Optional(CONF_ENERGY_SENSOR_NAMING): validate_name_pattern,
     vol.Optional(CONF_ENERGY_SENSOR_CATEGORY): vol.In(ENTITY_CATEGORIES),
     vol.Optional(CONF_ENERGY_INTEGRATION_METHOD): vol.In(ENERGY_INTEGRATION_METHODS),
@@ -275,10 +276,14 @@ def get_merged_sensor_configuration(*configs: dict, validate: bool = True) -> di
     if CONF_DAILY_FIXED_ENERGY in merged_config:
         merged_config[CONF_ENTITY_ID] = DUMMY_ENTITY_ID
 
-    if validate and not CONF_ENTITY_ID in merged_config:
-        raise SensorConfigurationError(
-            "You must supply an entity_id in the configuration, see the README"
-        )
+    if validate:
+        if (
+            not CONF_CREATE_GROUP in merged_config
+            and not CONF_ENTITY_ID in merged_config
+        ):
+            raise SensorConfigurationError(
+                "You must supply an entity_id in the configuration, see the README"
+            )
 
     return merged_config
 
@@ -312,7 +317,7 @@ async def create_sensors(
     if CONF_ENTITIES in config:
         for entity_config in config[CONF_ENTITIES]:
             # When there are nested entities, combine these with the current entities, resursively
-            if CONF_ENTITIES in entity_config:
+            if CONF_ENTITIES in entity_config or CONF_CREATE_GROUP in entity_config:
                 (child_new_sensors, child_existing_sensors) = await create_sensors(
                     hass, entity_config
                 )

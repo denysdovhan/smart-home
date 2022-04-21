@@ -34,6 +34,7 @@ from custom_components.powercalc.const import (
     CONF_DAILY_FIXED_ENERGY,
     CONF_ENERGY_INTEGRATION_METHOD,
     CONF_ENERGY_SENSOR_CATEGORY,
+    CONF_ENERGY_SENSOR_ID,
     CONF_ENERGY_SENSOR_NAMING,
     CONF_ENERGY_SENSOR_PRECISION,
     CONF_ON_TIME,
@@ -59,6 +60,13 @@ async def create_energy_sensor(
 ) -> EnergySensor:
     """Create the energy sensor entity"""
 
+    # User specified an existing energy sensor with "energy_sensor_id" option. Just return that one
+    if CONF_ENERGY_SENSOR_ID in sensor_config:
+        ent_reg = er.async_get(hass)
+        entity_entry = ent_reg.async_get(sensor_config[CONF_ENERGY_SENSOR_ID])
+        return RealEnergySensor(entity_entry)
+
+    # User specified an existing power sensor with "power_sensor_id" option. Try to find a corresponding energy sensor
     if CONF_POWER_SENSOR_ID in sensor_config and isinstance(
         power_sensor, RealPowerSensor
     ):
@@ -73,6 +81,7 @@ async def create_energy_sensor(
             f"No existing energy sensor found for the power sensor '{power_sensor.entity_id}'"
         )
 
+    # Create an energy sensor based on riemann integral integration, which uses the virtual powercalc sensor as source.
     name_pattern = sensor_config.get(CONF_ENERGY_SENSOR_NAMING)
     name = sensor_config.get(CONF_NAME) or source_entity.name
     name = name_pattern.format(name)
@@ -170,7 +179,17 @@ class VirtualEnergySensor(IntegrationSensor, EnergySensor):
         powercalc_source_entity: str,
         powercalc_source_domain: str,
     ):
-        if AwesomeVersion(HA_VERSION) >= AwesomeVersion("2022.4.0.dev0"):
+        if AwesomeVersion(HA_VERSION) >= AwesomeVersion("2022.5.0.dev0"):
+            super().__init__(
+                source_entity=source_entity,
+                name=name,
+                round_digits=round_digits,
+                unit_prefix=unit_prefix,
+                unit_time=unit_time,
+                integration_method=integration_method,
+                unique_id=unique_id,
+            )
+        elif AwesomeVersion(HA_VERSION) >= AwesomeVersion("2022.4.0.dev0"):
             super().__init__(
                 source_entity=source_entity,
                 name=name,
