@@ -134,7 +134,7 @@ template:
       - name: Fayna Days Left
         unit_of_measurement: days
         state: >-
-          {{ (as_local(as_datetime("2023-04-01")) - now()).days }}
+          {{ (as_local(as_datetime("2023-06-01")) - now()).days }}
         icon: mdi:calendar-arrow-right
 
       - name: Fayna Days Past
@@ -147,7 +147,7 @@ template:
         unit_of_measurement: '%'
         state: >-
           {% set day = 60 * 60 * 24 %}
-          {% set days_left = (as_timestamp("2023-04-01 00:00:00") - as_timestamp(now(), 0)) / day %}
+          {% set days_left = (as_timestamp("2023-06-01 00:00:00") - as_timestamp(now(), 0)) / day %}
           {% set days_past = (as_timestamp(now(), 0) - as_timestamp("2021-07-22 13:00")) / day %}
           {% set days_total = days_left + days_past %}
           {{ (days_past / days_total * 100) | round(2) }}
