@@ -20,6 +20,7 @@
   trigger:
     platform: state
     entity_id: binary_sensor.heating_season
+    to: ~
   action:
     - alias: Choose what to do with the heaters
       choose:
