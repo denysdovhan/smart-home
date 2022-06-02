@@ -358,12 +358,12 @@
       entity_id: binary_sensor.snowtire
       to: 'on'
       for:
-        hours: 48
+        hours: 24
     - platform: state
       entity_id: binary_sensor.snowtire
       to: 'off'
       for:
-        hours: 48
+        hours: 24
   action:
     - choose:
         - conditions:
