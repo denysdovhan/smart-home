@@ -21,7 +21,7 @@ from homeassistant.const import (
 )
 from homeassistant.const import __version__ as HA_VERSION
 from homeassistant.core import callback
-from homeassistant.helpers.entity import async_generate_entity_id
+from homeassistant.helpers.entity import EntityCategory, async_generate_entity_id
 from homeassistant.helpers.event import async_track_time_interval
 from homeassistant.helpers.restore_state import RestoreEntity
 from homeassistant.helpers.template import Template
@@ -34,6 +34,7 @@ from custom_components.powercalc.const import (
     CONF_DAILY_FIXED_ENERGY,
     CONF_ENERGY_INTEGRATION_METHOD,
     CONF_ENERGY_SENSOR_CATEGORY,
+    CONF_ENERGY_SENSOR_FRIENDLY_NAMING,
     CONF_ENERGY_SENSOR_ID,
     CONF_ENERGY_SENSOR_NAMING,
     CONF_ENERGY_SENSOR_PRECISION,
@@ -84,7 +85,11 @@ async def create_energy_sensor(
     # Create an energy sensor based on riemann integral integration, which uses the virtual powercalc sensor as source.
     name_pattern = sensor_config.get(CONF_ENERGY_SENSOR_NAMING)
     name = sensor_config.get(CONF_NAME) or source_entity.name
-    name = name_pattern.format(name)
+    if CONF_ENERGY_SENSOR_FRIENDLY_NAMING in sensor_config:
+        friendly_name_pattern = sensor_config.get(CONF_ENERGY_SENSOR_FRIENDLY_NAMING)
+        name = friendly_name_pattern.format(name)
+    else:
+        name = name_pattern.format(name)
     object_id = sensor_config.get(CONF_NAME) or source_entity.object_id
     entity_id = async_generate_entity_id(
         ENTITY_ID_FORMAT, name_pattern.format(object_id), hass=hass
@@ -217,10 +222,7 @@ class VirtualEnergySensor(IntegrationSensor, EnergySensor):
         self._powercalc_source_domain = powercalc_source_domain
         self.entity_id = entity_id
         if entity_category:
-            if AwesomeVersion(HA_VERSION) >= AwesomeVersion("2021.11"):
-                from homeassistant.helpers.entity import EntityCategory
-
-                self._attr_entity_category = EntityCategory(entity_category)
+            self._attr_entity_category = EntityCategory(entity_category)
 
     @property
     def extra_state_attributes(self) -> dict[str, Any]:

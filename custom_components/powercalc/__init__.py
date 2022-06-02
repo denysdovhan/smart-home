@@ -7,6 +7,7 @@ import logging
 import homeassistant.helpers.config_validation as cv
 import homeassistant.helpers.entity_registry as er
 import voluptuous as vol
+from awesomeversion.awesomeversion import AwesomeVersion
 from homeassistant.components.light import DOMAIN as LIGHT_DOMAIN
 from homeassistant.components.sensor import DOMAIN as SENSOR_DOMAIN
 from homeassistant.components.utility_meter import DEFAULT_OFFSET, max_28_days
@@ -17,9 +18,8 @@ from homeassistant.const import (
     CONF_UNIQUE_ID,
     EVENT_HOMEASSISTANT_STARTED,
 )
-from homeassistant.core import callback
+from homeassistant.const import __version__ as HA_VERSION
 from homeassistant.helpers import discovery
-from homeassistant.helpers.entity_component import EntityComponent
 from homeassistant.helpers.typing import HomeAssistantType
 
 from .common import create_source_entity, validate_name_pattern
@@ -30,9 +30,11 @@ from .const import (
     CONF_ENABLE_AUTODISCOVERY,
     CONF_ENERGY_INTEGRATION_METHOD,
     CONF_ENERGY_SENSOR_CATEGORY,
+    CONF_ENERGY_SENSOR_FRIENDLY_NAMING,
     CONF_ENERGY_SENSOR_NAMING,
     CONF_ENERGY_SENSOR_PRECISION,
     CONF_POWER_SENSOR_CATEGORY,
+    CONF_POWER_SENSOR_FRIENDLY_NAMING,
     CONF_POWER_SENSOR_NAMING,
     CONF_POWER_SENSOR_PRECISION,
     CONF_UTILITY_METER_OFFSET,
@@ -56,6 +58,7 @@ from .const import (
     DOMAIN_CONFIG,
     ENERGY_INTEGRATION_METHODS,
     ENTITY_CATEGORIES,
+    MIN_HA_VERSION,
 )
 from .errors import ModelNotSupported
 from .model_discovery import get_light_model, is_supported_for_autodiscovery
@@ -74,10 +77,16 @@ CONFIG_SCHEMA = vol.Schema(
                         CONF_POWER_SENSOR_NAMING, default=DEFAULT_POWER_NAME_PATTERN
                     ): validate_name_pattern,
                     vol.Optional(
+                        CONF_POWER_SENSOR_FRIENDLY_NAMING
+                    ): validate_name_pattern,
+                    vol.Optional(
                         CONF_POWER_SENSOR_CATEGORY, default=DEFAULT_ENTITY_CATEGORY
                     ): vol.In(ENTITY_CATEGORIES),
                     vol.Optional(
                         CONF_ENERGY_SENSOR_NAMING, default=DEFAULT_ENERGY_NAME_PATTERN
+                    ): validate_name_pattern,
+                    vol.Optional(
+                        CONF_ENERGY_SENSOR_FRIENDLY_NAMING
                     ): validate_name_pattern,
                     vol.Optional(
                         CONF_ENERGY_SENSOR_CATEGORY, default=DEFAULT_ENTITY_CATEGORY
@@ -120,6 +129,13 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup(hass: HomeAssistantType, config: dict) -> bool:
+    if AwesomeVersion(HA_VERSION) < AwesomeVersion(MIN_HA_VERSION):
+        _LOGGER.critical(
+            "Your HA version is outdated for this version of powercalc. Minimum required HA version is %s",
+            MIN_HA_VERSION,
+        )
+        return False
+
     domain_config = config.get(DOMAIN) or {
         CONF_POWER_SENSOR_NAMING: DEFAULT_POWER_NAME_PATTERN,
         CONF_POWER_SENSOR_PRECISION: DEFAULT_POWER_SENSOR_PRECISION,
@@ -173,7 +189,7 @@ async def autodiscover_entities(
         return
 
     _LOGGER.debug("Start auto discovering entities")
-    entity_registry = await er.async_get_registry(hass)
+    entity_registry = er.async_get(hass)
     for entity_entry in list(entity_registry.entities.values()):
         if entity_entry.disabled:
             continue
@@ -220,7 +236,7 @@ async def create_domain_groups(
     hass: HomeAssistantType, global_config: dict, domains: list[str]
 ):
     """Create group sensors aggregating all power sensors from given domains"""
-    component = EntityComponent(_LOGGER, SENSOR_DOMAIN, hass)
+    sensor_component = hass.data[SENSOR_DOMAIN]
     sensor_config = global_config.copy()
     _LOGGER.debug(f"Setting up domain based group sensors..")
     for domain in domains:
@@ -235,5 +251,5 @@ async def create_domain_groups(
         entities = await create_group_sensors(
             group_name, sensor_config, domain_entities, hass
         )
-        await component.async_add_entities(entities)
+        await sensor_component.async_add_entities(entities)
     return []
