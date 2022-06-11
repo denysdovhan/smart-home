@@ -1,14 +1,14 @@
 {
     "measure_description": "Measured with utils/measure script",
-    "measure_device": "Shelly Plug E",
+    "measure_device": "Shelly Plug",
     "measure_method": "script",
     "measure_settings": {
         "SAMPLE_COUNT": 2,
-        "SLEEP_TIME": 12,
-        "VERSION": "v0.10.4"
+        "SLEEP_TIME": 3,
+        "VERSION": "v0.20.3:docker"
     },
-    "name": "Aqara LED light bulb (tunable white)",
-    "standby_power": 0.41,
+    "name": "M\u00fcller Licht E27 Bulb white+color",
+    "standby_power": 0.43,
     "supported_modes": [
         "lut"
     ]
