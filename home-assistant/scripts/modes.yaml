@@ -1,0 +1,221 @@
+do_not_disturb_mode:
+  alias: Do Not Disturb Mode
+  description: A flow for switching home into DND mode and back to normal
+  sequence:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.do_not_disturb
+              state: 'on'
+          sequence:
+            - alias: Make purifier work silently
+              service: fan.set_preset_mode
+              target:
+                entity_id: fan.air_purifier
+              data:
+                preset_mode: Silent
+
+            - alias: No LED light on humidifier
+              service: switch.turn_off
+              entity_id: switch.air_humidifier_led
+
+            - alias: Speakers should not yell
+              service: media_player.volume_set
+              data:
+                entity_id:
+                  - media_player.living_room_speaker
+                  - media_player.bedroom_speaker
+                volume_level: 0.2
+
+      default:
+        - alias: Make Purifier work normaly
+          service: fan.set_preset_mode
+          target:
+            entity_id: fan.air_purifier
+          data:
+            preset_mode: Auto
+
+        - alias: Turn on Humdifier's LED light
+          service: switch.turn_on
+          entity_id: switch.air_humidifier_led
+
+        - alias: Speakers set to normal volume
+          service: media_player.volume_set
+          data:
+            entity_id:
+              - media_player.living_room_speaker
+              - media_player.bedroom_speaker
+            volume_level: 0.6
+
+away_mode:
+  alias: Away Mode
+  description: A flow for switching into Away mode
+  sequence:
+    - alias: Switch to Away Mode or restore from it
+      choose:
+        - conditions:
+            condition: state
+            entity_id: input_boolean.away
+            state: 'on'
+          sequence:
+            - alias: Notify about Away Mode activation
+              service: script.announcement
+              data:
+                speak: false
+                title: Далеко від дому 🏃
+                greetings:
+                  - Режим «Далеко від дому» увімкнено.
+                  - Режим «Далеко від дому» автивовано.
+                  - Активовано режим «Далеко від дому».
+                messages:
+                  - Вмикається симуляція присутності.
+                  - Готуємо дім до вашої відсутності.
+                  - Щасливої дороги!
+                notify_data:
+                  group: system
+                  tag: away-mode
+
+            - alias: Arm Alarm
+              service: alarm_control_panel.alarm_arm_away
+              entity_id: alarm_control_panel.home_alarm
+
+            - alias: Turn on Presence Simulation
+              service: presence_simulation.start
+
+            - alias: Turn on Presence Simulation toggling at night
+              service: automation.turn_on
+              entity_id: automation.away_presence_simulation
+
+            - alias: Turn off Water Heater
+              service: switch.turn_off
+              entity_id: switch.water_heater
+
+            - alias: Climate Adjustments
+              choose:
+                - alias: Set TRV to Away during Heating Season
+                  conditions:
+                    condition: state
+                    entity_id: binary_sensor.heating_season
+                    state: 'on'
+                  sequence:
+                    - alias: Set TRVs to away
+                      service: climate.set_preset_mode
+                      data:
+                        entity_id:
+                          - climate.living_room_heater
+                          - climate.bedroom_heater
+                        preset_mode: away
+
+      default:
+        - alias: Notify about Away Mode activation
+          service: script.announcement
+          data:
+            speak: false
+            title: Далеко від дому 🏃
+            greetings:
+              - Режим «Далеко від дому» вимкнено.
+              - Режим «Далеко від дому» деактивовано.
+              - Деактивовано режим «Далеко від дому».
+            messages:
+              - Вимикаємо симуляцію присутності.
+              - Готуємо дім до вашого прибуття.
+              - Вітаю з поверненням!
+            notify_data:
+              group: system
+              tag: away-mode
+
+        - alias: Disarm Alarm
+          service: alarm_control_panel.alarm_disarm
+          entity_id: alarm_control_panel.home_alarm
+
+        - alias: Suggest cleaning home before arrival
+          service: script.announcement
+          data:
+            speak: false
+            title: 'Пилосос 🧹'
+            greetings:
+              - Cхоже вас давно не було вдома.
+              - Ви були далеко від дому.
+              - Ви на підході додому!
+            messages:
+              - 'Прибрати вдома?'
+              - 'Прибирати перед приїздом?'
+              - 'Бажаєте прибрати перед прибуттям?'
+              - 'Почати прибирання?'
+              - "{{ state_attr('vacuum.roborock', 'friendly_name') }} пропонує домашнє прибирання."
+              - "{{ state_attr('vacuum.roborock', 'friendly_name') }} хоче прибирати квартиру."
+              - "{{ state_attr('vacuum.roborock', 'friendly_name') }} давно не прибирав. Почати?"
+            notify_data:
+              url: /lovelace/vacuum
+              group: vacuum
+              tag: vacuum-cleaning
+              actions:
+                - action: VACUUM_START
+                  title: Почати прибирання
+                  activationMode: background
+                  authenticationRequired: true
+
+        - alias: Turn off Presence Simulation
+          service: presence_simulation.stop
+
+        - alias: Turn off Presence Simulation toggling at night
+          service: automation.turn_off
+          entity_id: automation.away_presence_simulation
+
+        - alias: Turn on Water Heater
+          service: switch.turn_on
+          entity_id: switch.water_heater
+
+        - alias: Climate Adjustments
+          choose:
+            - alias: Home is cold during Heating Season
+              conditions:
+                - condition: state
+                  entity_id: binary_sensor.heating_season
+                  state: 'on'
+                - condition: numeric_state
+                  entity_id: sensor.home_temperature
+                  below: 21
+              sequence:
+                - alias: Set TRVs to boost
+                  service: climate.set_preset_mode
+                  data:
+                    entity_id:
+                      - climate.living_room_heater
+                      - climate.bedroom_heater
+                    preset_mode: 'boost'
+
+            - alias: Home is overheated during Summer
+              conditions:
+                - condition: state
+                  entity_id: binary_sensor.heating_season
+                  state: 'off'
+                - condition: numeric_state
+                  entity_id: sensor.home_temperature
+                  above: 25
+              sequence:
+                - alias: Set ACs to cool down
+                  service: climate.set_temperature
+                  data:
+                    entity_id:
+                      - climate.living_room_ac
+                      - climate.bedroom_ac
+                    temperature: 18
+                    hvac_mode: 'cool'
+
+                - alias: Wait for home to cool down
+                  wait_for_trigger:
+                    platform: numeric_state
+                    entity_id: sensor.home_temperature
+                    below: 24
+                  timeout:
+                    hours: 1
+
+                - alias: Turn off ACs and set temperature to normal
+                  service: climate.set_temperature
+                  data:
+                    entity_id:
+                      - climate.living_room_ac
+                      - climate.bedroom_ac
+                    temperature: 22
+                    hvac_mode: 'off'

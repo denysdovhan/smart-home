@@ -1,0 +1,7 @@
+# LUN Misto AQI
+sensor.outdoor_aqi:
+  icon: mdi:cloud
+
+# Car
+device_tracker.toyota_location:
+  entity_picture: /local/images/toyota.png

@@ -1,0 +1,22 @@
+- id: '1657815860216'
+  alias: Air siren in Kyiv
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.alerts_kyiv_air
+    to: 'on'
+  action:
+  - service: script.announcement
+    data:
+      service: notify.denys
+      title: Повітряна тривога ⚠️
+      speak: false
+      messages:
+      - Повітряна тривога у Києві!
+      notify_data:
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 1
+  mode: single

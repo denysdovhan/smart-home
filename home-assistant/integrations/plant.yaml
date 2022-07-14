@@ -1,0 +1,21 @@
+#
+# Plant
+#
+# https://www.home-assistant.io/integrations/plant/
+#
+
+plant:
+  dracaena:
+    sensors:
+      moisture: sensor.dracaena_moisture
+      battery: sensor.dracaena_battery
+      temperature: sensor.dracaena_temperature
+      conductivity: sensor.dracaena_conductivity
+      brightness: sensor.dracaena_light_intensity
+    min_temperature: 12
+    max_temperature: 32
+    min_conductivity: 350
+    max_conductivity: 2000
+    min_brightness: 800
+    max_brightness: 15000
+    check_days: 10
