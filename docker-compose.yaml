@@ -13,8 +13,111 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - .docker/portainer-ce/data:/data
 
+  # Watchtower
+  # A solution for automating Docker container base image updates
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      WATCHTOWER_CLEANUP: 'true'
+      WATCHTOWER_NO_STARTUP_MESSAGE: 'true'
+      WATCHTOWER_SCHEDULE: '0 0 5 * * 6'
+      WATCHTOWER_NOTIFICATIONS: email
+      WATCHTOWER_NOTIFICATION_EMAIL_FROM: ${EMAIL_SERVER_ADDRESS}
+      WATCHTOWER_NOTIFICATION_EMAIL_TO: ${EMAIL_SERVER_ADDRESS}
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER: ${EMAIL_SERVER}
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT: ${EMAIL_SERVER_PORT}
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER: ${EMAIL_SERVER_USER}
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD: ${EMAIL_SERVER_PASSWORD}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  # Home Assistant
+  # The core of my smart-home automations
+  home-assistant:
+    container_name: home-assistant
+    image: ghcr.io/home-assistant/home-assistant:2022.6 # waiting for fix for Mi Flora
+    volumes:
+      - ./home-assistant:/config
+      - ${MEDIA_VOLUME}:/media
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    labels:
+      com.centurylinklabs.watchtower.enable: 'false'
+
+  # MQTT
+  # A Mosquitto broker for my devices communicating via MQTT
+  mqtt:
+    container_name: mqtt
+    image: eclipse-mosquitto:latest
+    restart: unless-stopped
+    ports:
+      - 1888:1888 # default 1883 doesn't work
+      - 9001:9001
+    volumes:
+      - .docker/mosquitto/data:/mosquitto/data
+      - .docker/mosquitto/log:/mosquitto/log
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  # Zigbee2MQTT
+  # A bridge for zigbee devices to be able to communicate via MQTT
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    image: koenkk/zigbee2mqtt:1.25.1 # latest comes with broken frontend
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      ZIGBEE2MQTT_CONFIG_MQTT_SERVER: ${MQTT_SERVER}
+      ZIGBEE2MQTT_CONFIG_MQTT_USER: ${MQTT_USER}
+      ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD: ${MQTT_PASSWORD}
+    volumes:
+      - /run/udev:/run/udev:ro
+      - ./zigbee2mqtt:/app/data
+    devices:
+      - /dev/ttyUSB0
+    privileged: true
+    network_mode: host
+
+  # ESPHome
+  # A system to control ESP8266/ESP32 devices
+  esphome:
+    container_name: esphome
+    image: esphome/esphome
+    restart: unless-stopped
+    env_file:
+      - .env
+    command: >
+      dashboard --username ${ESPHOME_USERNAME} --password ${ESPHOME_PASSWORD} /config
+    volumes:
+      - ./esphome:/config:rw
+      - /etc/localtime:/etc/localtime:ro
+    network_mode: host
+
+  # Duplicati
+  # Simple and flexible UI for backing up stuff
+  duplicati:
+    container_name: duplicati
+    image: linuxserver/duplicati
+    env_file:
+      - .env
+    volumes:
+      - .docker/duplicati/config:/config #Config Files
+      - .backups:/backups
+      - .:/source
+    ports:
+      - 8200:8200
+    restart: unless-stopped
+
   # MariaDB
-  # A database Nginx Proxy Manager and Umami
+  # A database for Home Assistant, Nginx Proxy Manager and Umami
   db:
     container_name: db
     image: mariadb
@@ -22,7 +125,7 @@ services:
     volumes:
       - .docker/mariadb/db:/var/lib/mysql
       - /etc/localtime:/etc/localtime:ro
-      - ./db:/docker-entrypoint-initdb.d # FIX entrypoint
+      - ./db:/docker-entrypoint-initdb.d
     env_file:
       - .env
 
@@ -61,13 +164,21 @@ services:
     depends_on:
       - db
 
+  # AirConnect
+  # Make AirPlay available for Chromecast devices
+  airconnect:
+    container_name: airconnect
+    image: 1activegeek/airconnect
+    restart: unless-stopped
+    network_mode: host
+
   # Samba
   # Remote access to the file system
   samba:
     container_name: samba
     image: dperson/samba
     volumes:
-      - ${HASSIO_VOLUME}:/mnt/hassio
+      - .:/mnt/smart-home
       - ${MEDIA_VOLUME}:/mnt/media
     environment:
       USERID: ${PUID}
@@ -79,10 +190,27 @@ services:
       - 138:138/udp
     command: >
       samba.sh
-        -s "hassio;/mnt/hassio;yes;no;no;all"
+        -s "smart-home;/mnt/smart-home;yes;no;no;all"
         -s "media;/mnt/media;yes;no;no;all"
         -u ${SAMBA_USER};${SAMBA_PASSWORD}
     restart: unless-stopped
+
+  # AdGuard Home
+  # Ad-blocking DNS server
+  # adguard:
+  #   container_name: adguard
+  #   image: adguard/adguardhome
+  #   restart: unless-stopped
+  #   ports:
+  #     - 53:53/tcp
+  #     - 53:53/udp
+  #     - 67:67/udp
+  #     - 853:853/tcp
+  #     - 8380:80/tcp
+  #     - 8300:3000/tcp
+  #   volumes:
+  #     - .docker/adguard/work:/opt/adguardhome/work
+  #     - .docker/adguard/conf:/opt/adguardhome/conf
 
   # Plex
   # Personal media server with movies and tv-series
@@ -99,23 +227,6 @@ services:
       - ${PLEX_LIBRARY}:/config/Library
       - ${MEDIA_VOLUME}:/media
     restart: unless-stopped
-
-  # AdGuard Home
-  # Ad-blocking DNS server
-  adguard:
-    container_name: adguard
-    image: adguard/adguardhome
-    restart: unless-stopped
-    ports:
-      - 53:53/tcp
-      - 53:53/udp
-      - 67:67/udp
-      - 853:853/tcp
-      - 8380:80/tcp
-      - 8300:3000/tcp
-    volumes:
-      - .docker/adguard/work:/opt/adguardhome/work
-      - .docker/adguard/conf:/opt/adguardhome/conf
 
   # Transmission
   # A torrent client for downloading media
@@ -151,6 +262,8 @@ services:
   #     DATABASE_TYPE: mysql
   #     HASH_SALT: ${UMAMI_HASH_SALT}
   #     IGNORE_IP: ${UMAMI_IGNORE_IP}
+  #   labels:
+  #     com.centurylinklabs.watchtower.enable: 'false'
   #   depends_on:
   #     - db
 
