@@ -4,7 +4,7 @@ groups: groups.yaml
 mqtt:
   base_topic: zigbee2mqtt
   include_device_information: true
-  server: '!secret server'
+  server: mqtt://localhost:1888
   user: '!secret user'
   password: '!secret password'
 serial:
