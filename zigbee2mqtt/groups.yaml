@@ -1,5 +1,5 @@
 '1':
-  friendly_name: living_room_main_light
+  friendly_name: Living Room Main Light
   optimistic: true
   devices:
     - 0x00158d0002d3c856/1

@@ -1,0 +1,19 @@
+homeassistant: true
+devices: devices.yaml
+groups: groups.yaml
+mqtt:
+  base_topic: zigbee2mqtt
+  include_device_information: true
+  server: '!secret server'
+  user: '!secret user'
+  password: '!secret password'
+serial:
+  port: /dev/ttyUSB0
+frontend:
+  port: 8099
+  auth_token: '!secret auth_token'
+  url: '!secret frontend_url'
+advanced:
+  channel: 15
+  last_seen: ISO_8601_local
+  log_level: info

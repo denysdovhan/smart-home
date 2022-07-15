@@ -74,10 +74,6 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-    environment:
-      ZIGBEE2MQTT_CONFIG_MQTT_SERVER: ${MQTT_SERVER}
-      ZIGBEE2MQTT_CONFIG_MQTT_USER: ${MQTT_USER}
-      ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD: ${MQTT_PASSWORD}
     volumes:
       - /run/udev:/run/udev:ro
       - ./zigbee2mqtt:/app/data
