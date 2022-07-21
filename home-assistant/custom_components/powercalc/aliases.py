@@ -22,6 +22,7 @@ MANUFACTURER_DIRECTORY_MAPPING = {
     "Yeelight": "yeelight",
     "TuYa": "tuya",
     "MeLiTec": "melitec",
+    "WiZ": "wiz",
 }
 
 MODEL_DIRECTORY_MAPPING = {
@@ -53,8 +54,10 @@ MODEL_DIRECTORY_MAPPING = {
         "TRADFRI bulb E14 CWS 470lm": "LED1925G6",
         "TRADFRIbulbE14WScandleopal470lm": "LED1949C5",
         "TRADFRIbulbE14WSglobeopal470lm": "LED2002G5",
+        "TRADFRIbulbE14WWclear250lm": "LED1935C3",
         "TRADFRIbulbE27WSglobeopal1055lm": "LED2003G10",
-        "TTRADFRIbulbGU10WS345lm": "LED2005R5",
+        "TRADFRIbulbE27WWclear250lm": "LED1934G3",
+        "TRADFRIbulbGU10WS345lm": "LED2005R5",
         "TRADFRI bulb GU10 WW 345lm": "LED2005R5",
         "LEPTITER Recessed spot light": "T1820",
     },
@@ -65,6 +68,7 @@ MODEL_DIRECTORY_MAPPING = {
         "9290022166": "LCA001",
         "929003053401": "LCA001",
         "9290024687": "LCA007",
+        "929002471601": "LCA008",
         "929001953101": "LCG002",
         "1741430P7": "LCS001",
         "1741530P7": "LCS001",
@@ -92,7 +96,7 @@ MODEL_DIRECTORY_MAPPING = {
         "8718699671211": "LWE002",
         "9290020399": "LWE002",
         "915005106701": "LST002",
-        "7299355PH":"LST001",
+        "7299355PH": "LST001",
         # US Versions. Alias to EU versions
         "LCA005": "LCA001",
         "9290022266A": "LCA001",
