@@ -12,7 +12,6 @@ serial:
 frontend:
   port: 8099
   auth_token: '!secret auth_token'
-  url: '!secret frontend_url'
 advanced:
   channel: 15
   last_seen: ISO_8601_local
