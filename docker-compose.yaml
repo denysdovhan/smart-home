@@ -39,7 +39,7 @@ services:
   # The core of my smart-home automations
   home-assistant:
     container_name: home-assistant
-    image: ghcr.io/home-assistant/home-assistant:2022.6 # waiting for fix for Mi Flora
+    image: ghcr.io/home-assistant/home-assistant:stable
     volumes:
       - ./home-assistant:/config
       - ${MEDIA_VOLUME}:/media
