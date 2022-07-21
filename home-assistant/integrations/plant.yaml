@@ -5,13 +5,12 @@
 #
 
 plant:
-  dracaena:
+  plant:
     sensors:
-      moisture: sensor.dracaena_moisture
-      battery: sensor.dracaena_battery
-      temperature: sensor.dracaena_temperature
-      conductivity: sensor.dracaena_conductivity
-      brightness: sensor.dracaena_light_intensity
+      moisture: sensor.plant_moisture
+      temperature: sensor.plant_temperature
+      conductivity: sensor.plant_conductivity
+      brightness: sensor.plant_illuminance
     min_temperature: 12
     max_temperature: 32
     min_conductivity: 350
