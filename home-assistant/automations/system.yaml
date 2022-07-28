@@ -12,52 +12,45 @@
   alias: Magic Cube Actions
   trigger:
     platform: mqtt
-    topic: zigbee2mqtt/magic_cube/action
+    topic: zigbee2mqtt/Magic Cube/action
   action:
     - choose:
-        - conditions:
-            - condition: template
-              value_template: "{{ trigger.payload == 'flip90' }}"
+        - conditions: "{{ trigger.payload == 'flip90' }}"
           sequence:
             - service: scene.turn_on
               data:
                 entity_id: scene.night_lights
                 transition: 1
-        - conditions:
-            - condition: template
-              value_template: "{{ trigger.payload == 'flip180' }}"
+
+        - conditions: "{{ trigger.payload == 'flip180' }}"
           sequence:
             - service: scene.turn_on
               data:
                 entity_id: scene.evening_lights
                 transition: 1
-        - conditions:
-            - condition: template
-              value_template: "{{ trigger.payload == 'rotate_right' }}"
+
+        - conditions: "{{ trigger.payload == 'rotate_right' }}"
           sequence:
             - service: light.turn_on
               data:
                 entity_id: light.living_room_main_light
                 transition: 1
-        - conditions:
-            - condition: template
-              value_template: "{{ trigger.payload == 'rotate_left' }}"
+
+        - conditions: "{{ trigger.payload == 'rotate_left' }}"
           sequence:
             - service: light.turn_off
               data:
                 entity_id: light.living_room_main_light
                 transition: 1
-        - conditions:
-            - condition: template
-              value_template: "{{ trigger.payload == 'shake' }}"
+
+        - conditions: "{{ trigger.payload == 'shake' }}"
           sequence:
             - service: scene.turn_on
               data:
                 entity_id: scene.lights_out
                 transition: 1
-        - conditions:
-            - condition: template
-              value_template: "{{ trigger.payload == 'tap' }}"
+
+        - conditions: "{{ trigger.payload == 'tap' }}"
           sequence:
             - service: input_boolean.toggle
               entity_id: input_boolean.do_not_disturb

@@ -13,9 +13,6 @@
 '0x00158d0002e9f771':
   friendly_name: Living Room Movement Sensor
   description: Movement Sensor in a Living Room
-'0x00158d000421472b':
-  friendly_name: Magic Cube
-  description: A magic cube for controlling smart home
 '0x00158d000450cca4':
   friendly_name: Living Room Main Light Bulb 1
   description: Bulb 1 in a Main Light group
@@ -49,3 +46,6 @@
 '0xa4c138a8c73a9d0c':
   friendly_name: Kitchen Switch
   description: A 2-gang relay for the lights in the Kitchen
+'0x00158d000421472b':
+  friendly_name: Magic Cube
+  description: Magic Cube for controlling scenes and devices
