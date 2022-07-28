@@ -1,0 +1,14 @@
+#
+# Zone
+#
+# https://www.home-assistant.io/integrations/zone/
+#
+
+zone:
+  # Default home zone has only 100m radius
+  # Device trackers often end up out of this zone causing incorrect behavior
+  - name: Home
+    latitude: !secret latitude
+    longitude: !secret longitude
+    radius: 200
+    icon: mdi:home
