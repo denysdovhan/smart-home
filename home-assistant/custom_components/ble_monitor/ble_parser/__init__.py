@@ -32,6 +32,7 @@ from .ruuvitag import parse_ruuvitag
 from .sensorpush import parse_sensorpush
 from .sensirion import parse_sensirion
 from .switchbot import parse_switchbot
+from .smartdry import parse_smartdry
 from .teltonika import parse_teltonika
 from .thermoplus import parse_thermoplus
 from .thermopro import parse_thermopro
@@ -280,6 +281,10 @@ class BleParser:
                         # BlueMaestro
                         sensor_data = parse_bluemaestro(self, man_spec_data, mac, rssi)
                         break
+                    elif comp_id == 0x01AE and data_len == 0x0F:
+                        # SmartDry
+                        sensor_data = parse_smartdry(self, man_spec_data, mac, rssi)
+                        break
                     elif comp_id == 0x06D5:
                         # Sensirion
                         sensor_data = parse_sensirion(self, man_spec_data, local_name, mac, rssi)
@@ -369,7 +374,7 @@ class BleParser:
                         # Inkbird IBS-TH
                         sensor_data = parse_inkbird(self, man_spec_data, local_name, mac, rssi)
                         break
-                    elif local_name[0:5] == "TP359" and data_len == 0x07:
+                    elif local_name[0:5] in ["TP357", "TP359"] and data_len == 0x07:
                         # Thermopro
                         sensor_data = parse_thermopro(self, man_spec_data, local_name[0:5], mac, rssi)
                         break

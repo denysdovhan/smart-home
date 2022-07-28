@@ -704,6 +704,17 @@ SENSOR_TYPES: tuple[BLEMonitorSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
     ),
     BLEMonitorSensorEntityDescription(
+        key="shake",
+        sensor_class="InstantUpdateSensor",
+        update_behavior="Instantly",
+        name="ble shake",
+        unique_id="sh_",
+        icon="mdi:vibrate",
+        native_unit_of_measurement=None,
+        device_class=None,
+        state_class=None,
+    ),
+    BLEMonitorSensorEntityDescription(
         key="acceleration",
         sensor_class="AccelerationSensor",
         update_behavior="Instantly",
@@ -1010,6 +1021,7 @@ MEASUREMENT_DICT = {
     'YLYK01YL-VENFAN'         : [["rssi"], ["ventilator fan remote"], []],
     'YLYB01YL-BHFRC'          : [["rssi"], ["bathroom heater remote"], []],
     'YLKG07YL/YLKG08YL'       : [["rssi"], ["dimmer"], []],
+    'SU001-T'                 : [["battery", "rssi"], [], ["motion", "switch"]],
     'ATC'                     : [["temperature", "humidity", "battery", "voltage", "rssi"], [], ["switch", "opening"]],
     'Mi Scale V1'             : [["rssi"], ["weight", "non-stabilized weight"], ["weight removed"]],
     'Mi Scale V2'             : [["rssi"], ["weight", "stabilized weight", "non-stabilized weight", "impedance"], ["weight removed"]],
@@ -1076,6 +1088,7 @@ MEASUREMENT_DICT = {
     "Acconeer XM122"          : [["temperature", "battery", "rssi"], [], ["motion"]],
     'K6 Sensor Beacon'        : [["temperature", "humidity", "acceleration", "voltage", "battery", "rssi"], [], []],
     'DSL-C08'                 : [["battery", "rssi", "voltage"], [], ["lock", "childlock"]],
+    'SmartDry cloth dryer'    : [["temperature", "humidity", "voltage", "battery", "shake", "rssi"], [], ["switch"]],
 }
 
 # Sensor manufacturer dictionary
@@ -1128,6 +1141,7 @@ MANUFACTURER_DICT = {
     'K9B-2BTN'                : 'Linptech',
     'K9B-3BTN'                : 'Linptech',
     'XMWXKG01YL'              : 'Xiaomi',
+    'SU001-T'                 : 'Petoneer',
     'ATC'                     : 'ATC',
     'Mi Scale V1'             : 'Xiaomi',
     'Mi Scale V2'             : 'Xiaomi',
@@ -1193,6 +1207,7 @@ MANUFACTURER_DICT = {
     'Laica Smart Scale'       : 'Laica',
     'Acconeer XM122'          : 'Acconeer',
     'K6 Sensor Beacon'        : 'KKM',
+    'SmartDry cloth dryer'    : 'SmartDry',
 }
 
 
@@ -1213,6 +1228,7 @@ AUTO_MANUFACTURER_DICT = {
     'HA BLE DIY'              : 'Home Assistant DIY',
     'TG-BT5-IN'               : 'Mikrotik',
     'TG-BT5-OUT'              : 'Mikrotik',
+    'TP357'                   : 'Thermopro',
     'TP359'                   : 'Thermopro',
     'Tilt Red'                : 'Tilt',
     'Tilt Green'              : 'Tilt',
@@ -1289,6 +1305,7 @@ REPORT_UNKNOWN_LIST = [
     "Ruuvitag",
     "Sensirion",
     "SensorPush",
+    "SmartDry",
     "Switchbot",
     "Teltonika",
     "Thermoplus",
