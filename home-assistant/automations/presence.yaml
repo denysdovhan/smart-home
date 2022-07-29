@@ -6,6 +6,16 @@
     entity_id: group.family
     from: 'not_home'
     to: 'home'
+  condition:
+    # Avoid false-positives
+    - alias: Do not turn on when the lights are on
+      condition: state
+      entity_id: light.lights
+      state: 'off'
+    - alias: No motion detected home
+      condition: state
+      entity_id: binary_sensor.home_occupancy
+      state: 'off'
   action:
     - alias: Switch heaters to Manual during Heating Season
       choose:
@@ -28,12 +38,10 @@
           entity_id: binary_sensor.front_door_sensor_contact
           to: 'on'
         - platform: state
-          entity_id: binary_sensor.living_room_movement_sensor_occupancy
+          entity_id: binary_sensor.home_occupancy
           to: 'on'
-        - platform: state
-          entity_id: binary_sensor.bedroom_movement_sensor_occupancy
-          to: 'on'
-      timeout: '01:00:00'
+      timeout:
+        hours: 2
       continue_on_timeout: false
 
     - alias: Turn on lights after sunset
@@ -86,7 +94,13 @@
     entity_id: group.family
     from: 'home'
     to: 'not_home'
-    for: '00:10:00'
+    for:
+      minutes: 10
+  condition:
+    - alias: Do not trigger when movement at home is detected
+      condition: state
+      entity_id: binary_sensor.home_occupancy
+      state: 'off'
   action:
     - alias: Turn off Air Pufirier
       service: fan.turn_off
