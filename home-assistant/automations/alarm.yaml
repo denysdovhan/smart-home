@@ -3,6 +3,7 @@
   trigger:
     - platform: state
       entity_id:
+        - binary_sensor.home_occupancy
         - binary_sensor.living_room_movement_sensor_occupancy
         - binary_sensor.bedroom_movement_sensor_occupancy
         - binary_sensor.front_door_sensor_contact

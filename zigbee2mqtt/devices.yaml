@@ -1,6 +1,7 @@
 '0x00158d00036577d2':
   friendly_name: Bedroom Movement Sensor
   description: Movement Sensor in a Bedroom
+  occupancy_timeout: 300
 '0x00158d0002c7d522':
   friendly_name: Living Room Conditions Sensor
   description: Conditions sensor in a Living Room providing data for Home Temperature
@@ -13,6 +14,7 @@
 '0x00158d0002e9f771':
   friendly_name: Living Room Movement Sensor
   description: Movement Sensor in a Living Room
+  occupancy_timeout: 300
 '0x00158d000450cca4':
   friendly_name: Living Room Main Light Bulb 1
   description: Bulb 1 in a Main Light group
