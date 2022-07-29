@@ -21,6 +21,8 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.do_not_disturb_family
+      for:
+        seconds: 30
   condition:
     - condition: state
       entity_id: group.family
