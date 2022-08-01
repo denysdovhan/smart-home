@@ -137,7 +137,8 @@ function smart-home:command:password() {
 }
 
 function smart-home:command:docs() {
-  mkdocs serve --livereload --dev-addr localhost:7000
+  local ip="$(hostname -I | awk '{print $1}')"
+  mkdocs serve --livereload --dev-addr "$ip:7000"
 }
 
 function smart-home:command:add-mosquitto-user() {
