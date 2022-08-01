@@ -11,14 +11,6 @@ This is the list of the hardware that is present in my smart home.
 
 The heart of my smart home is a home server based on [Raspberry Pi 4 Model B](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) with 4GB of RAM onboard. It's a small, affordable, but nonetheless a very capable device. It's held within an [aluminum alloy case](https://www.aliexpress.com/item/4000039821460.html?spm=a2g0s.9042311.0.0.27424c4dyqD1Vd) I bought on AliExpress. The aluminum case itself helps to disperse heat. Additionally, it came with a heat sink set and a tiny cooling fan.
 
-As storage, I use a [SanDisk Extreme Pro MicroSD A2 V30 128GB](https://www.amazon.com/SanDisk-Extreme-UHS-I-128GB-Adapter/dp/B07G3H5RBT) (previously 64GB). This card is fast and reliable in handling small I/O operations.
-
-<!-- prettier-ignore -->
-!!! info
-    Previous 64GB SD-card served well for more than 2 years. After some time, my server started to shutdown randomly. Power supply was normal, so I decided to update to 128GB card.
-
-    Ideally, it's better to upgrade to SSD, but I keep this option for the future.
-
 <!-- prettier-ignore -->
 !!! info
     Home Assistant team [recommands](https://www.home-assistant.io/installation/raspberrypi#suggested-hardware) to use [Application Class 2](https://www.sdcard.org/developers/overview/application/index.html) as they handle small I/O much more consistently than cards not optimized to host applications. A 32 GB or bigger card is recommended.
@@ -42,6 +34,30 @@ I use official [Raspberry Pi 15W USB-C Power Supply](https://www.raspberrypi.org
     Here's a whole kit assembled and connected to power:
 
     ![A whole kit assembled and connected to power](https://user-images.githubusercontent.com/3459374/108917386-50c0f080-7638-11eb-9ae2-7bfc379b04d7.jpeg)
+
+### Storage
+
+I use [Kingston SSDNow A400 240GB 2.5"](https://www.kingston.com/en/ssd/a400-solid-state-drive) as a system data storage. It's connected to Raspberry Pi via Ugreen US221 USB 3.0 case adapter. As a media storage I use [Transcend StoreJet 25M3 2TB](https://www.transcend-info.com/Products/No-284) hard drive (which I got from my dad as my birthday present in 2020). Both storages are connecterd via USB 3.0 interface on Raspberry to allow high speed reading, so I can easily stream my media using [Plex](https://plex.tv).
+
+Media is downloaded directly to my HDD using [Transmission](https://hub.docker.com/r/linuxserver/transmission) container.
+
+=== "SSD and HDD Assembled and Connected"
+
+    ![Assembled Storage and Raspberry Pi](https://user-images.githubusercontent.com/3459374/181816177-1f5a1954-845f-4da3-a3e2-fdc2917474bd.jpeg)
+
+=== "SSD whithin a Case"
+
+    ![Kingston SSD in a case](https://user-images.githubusercontent.com/3459374/181772178-48d26d58-8e62-4522-a452-c3b4832da175.jpeg)
+
+=== "HDD Connected"
+
+    ![HDD connected to Raspberry Pi](https://user-images.githubusercontent.com/3459374/115119826-0eba8800-9fb3-11eb-9b54-ddbe2ea732fb.jpeg)
+
+<!-- prettier-ignore -->
+!!! info
+    Previously, I used a [SanDisk Extreme Pro MicroSD A2 V30 128GB](https://www.amazon.com/SanDisk-Extreme-UHS-I-128GB-Adapter/dp/B07G3H5RBT) (previously 64GB).
+
+    Previous 64GB SD-card served well for more than 2 years. After some time, my server started to shutdown randomly. Power supply was normal, so I decided to update to 128GB card.
 
 ## WiFi Network
 
@@ -89,6 +105,8 @@ Below you will find a list of my devices connected to the local network. Most of
 | [Xiaomi Air Purifier 3H][air-purifier]       | `192.168.50.188`   | [Xiaomi Miio][xiaomi-miio]    |
 | [Google Home Mini][google-home-mini]         | `192.168.50.220`   | [Google Cast][cast]           |
 | [Google Nest Mini][google-nest-mini]         | `192.168.50.221`   | [Google Cast][cast]           |
+| [living-room-ac](#esp-devices)               | `192.168.50.x`     | [ESPHome][esphome]            |
+| [bedroom-ac](#esp-devices)                   | `192.168.50.x`     | [ESPHome][esphome]            |
 
 \* — means the device is connected via Ethernet instead of WiFi to ensure a more reliable connection.
 
@@ -126,6 +144,7 @@ I use two ESP8266 devices based on [iot-uni-dongle](https://github.com/dudanov/i
 [xiaomi_airpurifier]: https://github.com/syssi/xiaomi_airpurifier
 [ha-apple-tv]: https://www.home-assistant.io/integrations/apple_tv/
 [ha-samsungtv-tizen]: https://github.com/jaruba/ha-samsungtv-tizen
+[esphome]: https://www.home-assistant.io/integrations/esphome/
 
 ## Zigbee Network
 
@@ -156,6 +175,7 @@ I used to use Aqara Hub, but it switched to the current approach because of its 
 | [Aqara Single Switch Module T1 (without neutral)][aqara-relay] |    1     | Switching corridor light                         |
 | [MiJia Conditions Sensor][mija-conditions]                     |    1     | Internal temperature and humidity data           |
 | [Tuya Smart ZigBee Radiator][tuya-trv]                         |    2     | Adjusting heaters temperature                    |
+| [Lonsonho 2-Gang Switch 2 (without neutral)][lonsonho-switch]  |    1     | Switching kitchen lights                         |
 
 <!-- Devices -->
 
@@ -167,6 +187,7 @@ I used to use Aqara Hub, but it switched to the current approach because of its 
 [aqara-relay]: https://www.zigbee2mqtt.io/devices/DLKZMK12LM.html
 [mija-conditions]: https://www.aliexpress.com/item/32870614227.html
 [tuya-trv]: https://a.aliexpress.com/_ApW4sD
+[lonsonho-switch]: https://www.aliexpress.com/item/4001178298316.html
 
 ## Media Volume
 
