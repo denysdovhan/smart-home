@@ -78,17 +78,19 @@ This allows me to easily expose services from my local network to the internet. 
 
 [Samba Docker container](https://github.com/dperson/samba) allows me to share folders from my machine as Samba volumes. I use it to expose my home config folder (`smart-home`) and my media vault (`media`).
 
-## AdGuard Home
+## Pi-hole
 
-![AdGuard Home](https://user-images.githubusercontent.com/3459374/115125413-8b0f9400-9fd0-11eb-8ae1-a0773c9af151.png)
+![Pi-hole](https://user-images.githubusercontent.com/3459374/182233051-71f35e28-ac2e-4541-905d-abff4c09e132.png)
 
-[AdGuard Home](https://github.com/AdguardTeam/AdGuardHome) is a powerful network-wide ads & trackers blocking DNS server.
+[Pi-hole](https://pi-hole.net) is a powerful network-wide ads & trackers blocking DNS server.
 
 Once it's set up, it'll cover **all** home devices, so there's no need to install any client-side software for that.
 
 You can read more about it in a [section about Ad-Blocking](../ad-blocking).
 
-<!-- TODO: Add reference -->
+<!-- prettier-ignore -->
+!!! note
+    Previously, I used AdGuard Home to blocks advertisements. AdGuard is a company founded and developed by Russians. After Russian invasion in Ukraine I decied to move away from AdGuard.
 
 ## Plex
 

@@ -166,28 +166,13 @@ function smart-home:command:add-mosquitto-user() {
   return 1
 }
 
-function smart-home:command:adguard-resolved() {
-  local config
-  config="/etc/systemd/resolved.conf.d/adguardhome.conf"
+function smart-home:command:fix-systemd-resolved() {
+  sudo cp /etc/resolv.conf /etc/resolv.conf.backup
 
-  sudo mkdir -p "$(dirname $config)"
-
-  if [ -f "$config" ]; then
-    sudo rm "$config" 
-  fi
-
-  sudo touch "$config"
-
-  sudo tee "$config" > /dev/null << EOF
-[Resolve]
-DNS=127.0.0.1
-DNSStubListener=no
-EOF
-
-  sudo mv /etc/resolv.conf /etc/resolv.conf.backup
-  sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
-
-  systemctl reload-or-restart systemd-resolved
+  sudo sed -r -i.orig 's/#?DNSStubListener=yes/DNSStubListener=no/g' /etc/systemd/resolved.conf
+  sudo sh -c 'rm /etc/resolv.conf && ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf'
+  
+  systemctl restart systemd-resolved
 }
 
 function smart-home:command:setup-network() {

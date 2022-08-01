@@ -58,6 +58,7 @@ My home setup for those who are too lazy to read everything:
 - [Mosquitto](https://mosquitto.org/) and [zigbee2mqtt](https://www.zigbee2mqtt.io/) for Zigbee devices.
 - Reverse proxy using [Nginx Proxy Manager](https://nginxproxymanager.com/) with [CloudFlare](https://www.cloudflare.com/).
 - [OpenVPN](https://openvpn.net/) for SSH and Samba access.
+- [Pi-hole](https://pi-hole.net) for blocking ads within home network.
 - [Plex Media Server](https://www.plex.tv/media-server-downloads/#plex-media-server) with an external hard drive for hosting movies and TV series.
 - [Transmission](https://transmissionbt.com/) for downloading new media to the hard drive.
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden) for password management (Rust implementation of [Bitwarden](https://bitwarden.com/)).

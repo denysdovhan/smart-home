@@ -50,7 +50,7 @@ services:
     privileged: true
     network_mode: host
     labels:
-      com.centurylinklabs.watchtower.enable: 'false'
+      com.centurylinklabs.watchtower.enable: false
 
   # MQTT
   # A Mosquitto broker for my devices communicating via MQTT
@@ -191,22 +191,29 @@ services:
         -u ${SAMBA_USER};${SAMBA_PASSWORD}
     restart: unless-stopped
 
-  # AdGuard Home
-  # Ad-blocking DNS server
-  # adguard:
-  #   container_name: adguard
-  #   image: adguard/adguardhome
-  #   restart: unless-stopped
-  #   ports:
-  #     - 53:53/tcp
-  #     - 53:53/udp
-  #     - 67:67/udp
-  #     - 853:853/tcp
-  #     - 8380:80/tcp
-  #     - 8300:3000/tcp
-  #   volumes:
-  #     - .docker/adguard/work:/opt/adguardhome/work
-  #     - .docker/adguard/conf:/opt/adguardhome/conf
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    hostname: smart-home.local
+    ports:
+      - '53:53/tcp' # DNS
+      - '53:53/udp' # DNS
+      - '67:67/udp' # DHCP
+      - '5300:80/tcp' # WEB UI
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ}
+      WEBPASSWORD: ${PIHOLE_WEBPASSWORD}
+      VIRTUAL_HOST: ${PIHOLE_VIRTUAL_HOST}
+    volumes:
+      - .docker/pihole/etc-pihole:/etc/pihole
+      - .docker/pihole/etc-dnsmasq.d:/etc/dnsmasq.d
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+    labels:
+      com.centurylinklabs.watchtower.enable: false
 
   # Plex
   # Personal media server with movies and tv-series

@@ -18,6 +18,7 @@ My smart home can be quickly deployed using this guide:
   ```
 - Init smart-home via `smart-home init`.
 - Fix network manager vie `smart-home setup-network`.
+- Fix network manager vie `smart-home fix-systemd-resolved`.
 - Fill secret credentials in `.env` file. Use `smart-home password` to generate new passwords.
 - Go to Cockpit dashboard (`https://<ip>:`) and set hostname, mount external storage. Reboot after changes.
 - Spin up containers via `smart-home start`. This command will pull down images and star up containers.
