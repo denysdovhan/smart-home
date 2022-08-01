@@ -41,9 +41,9 @@ Here's a list of extensions developed by other developers.
 ### Integrations
 
 - [HACS (Home Assistant Community Store)](//hacs.xyz) — A store for easier management of `custom_components`.
-- [SamsungTV Tizen](https://github.com/jaruba/ha-samsungtv-tizen) — Built-in integration is very limited. It's a modified version of the built-in `samsungtv` integration with some extra features.
 - [Xiaomi Cloud Map Extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor) — This custom integration provides a way to present a live view of a map for a Xiaomi (and Roborock) vacuums.
 - [Adaptive Lighting](https://github.com/basnijholt/adaptive-lighting) — Adaptive Lighting slowly synchronizes your color-changing lights with the regular naturally occurring color temperature of the sky throughout the day. This gives your environment a more natural feel, with cooler hues during the midday and warmer tints near twilight and dawn. Built-in `flux` integration is very limited and bold.
 - [Car Wash](https://github.com/Limych/ha-car_wash) — This component checks the weather forecast for several days in advance and concludes whether it is worth washing the car now.
 - [Snowtire](https://github.com/Limych/ha-snowtire) — This component checks the weather forecast for several days in advance and concludes whether it is time to change car tires from summer to winter and vice versa.
 - [Powercalc](https://github.com/bramstroker/homeassistant-powercalc) — This component calculates estimated power consumption of lights and other appliances. This allows to make use of Energy dashboard even when you don't have smart electricity meters.
+- [Presence Simulation](https://github.com/slashback100/presence_simulation) — This component looks for history of devices and simulates the history with a random shift. Very useful to simulate presence at home when we are away.
