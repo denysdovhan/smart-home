@@ -70,7 +70,7 @@ services:
   # A bridge for zigbee devices to be able to communicate via MQTT
   zigbee2mqtt:
     container_name: zigbee2mqtt
-    image: koenkk/zigbee2mqtt:1.25.1 # latest comes with broken frontend
+    image: koenkk/zigbee2mqtt
     restart: unless-stopped
     env_file:
       - .env
