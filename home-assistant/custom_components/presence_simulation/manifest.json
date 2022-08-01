@@ -1,0 +1,13 @@
+{
+  "domain": "presence_simulation",
+  "name": "Presence Simulation",
+  "documentation": "https://github.com/slashback100/presence_simulation",
+  "issue_tracker": "https://github.com/slashback100/presence_simulation/issues",
+  "dependencies": ["history", "recorder", "scene"],
+  "config_flow": true,
+  "version": "2.2",
+  "codeowners": [
+    "@slashback100"
+  ],
+  "iot_class": "local_polling"
+}

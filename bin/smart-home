@@ -46,7 +46,9 @@ function smart-home:command:help() {
   smart-home update                     stop, update and restart all services
   smart-home prune                      delete obsolete containers
   smart-home password                   generate a password
-  smart-home docs                       start dev server for docs
+  smart-home add-mosquitto-user         add mosquitto user
+  smart-home adguard-resolved           fix AdGuard and systemd-resolved conflict
+  smart-home setup-network              setup network settings
 "
 }
 
@@ -55,11 +57,36 @@ function smart-home:command:init() {
   sudo apt-get update
   sudo apt-get upgrade
 
+  # Install docker
+  if ! smart-home:exists docker; then
+    echo "Installing docker..."
+    curl -fsSL https://get.docker.com | sh
+    sudo usermod -G docker -a "$USER"
+  fi
+
+  if ! smart-home:exists docker-compose; then
+    echo "Installing docker-compose..."
+    sudo apt install -y docker-compose
+  fi
+
+  if ! smart-home:exists mosquitto_passwd; then
+    echo "Installing mosquitto..."
+    sudo apt-get install -y mosquitto
+  fi
+
+  echo "Installing additional packages..."
+  sudo apt-get install -y git cockpit avahi-daemon network-manager python3-pip nodejs
+
   echo "Installing python dependencies..."
   pip3 install -r "$SMART_HOME_DIR/requirements.txt"
   
   echo "Addint pre-commit hooks..."
   pre-commit install
+
+  if [ ! -f "$SMART_HOME_DIR/.env" ]; then
+    echo "Creating .env file..."
+    cp "$SMART_HOME_DIR/.env.example" "$SMART_HOME_DIR/.env"
+  fi
 
   echo "Done!"
   echo "Please, reboot!"
@@ -110,7 +137,94 @@ function smart-home:command:password() {
 }
 
 function smart-home:command:docs() {
-  mkdocs serve --livereload --dev-addr localhost:7000
+  local ip="$(hostname -I | awk '{print $1}')"
+  mkdocs serve --livereload --dev-addr "$ip:7000"
+}
+
+function smart-home:command:add-mosquitto-user() {
+  local user password userdb
+
+  user="${COMMAND_ARGS[0]}"
+  password="$(smart-home:command:password 16)";
+  userdb="$SMART_HOME_DIR/.docker/mosquitto/data/users.db"
+
+  if [ -z "$user" ]; then
+    echo "Please provide a username."
+    return 1;
+  fi
+
+  mkdir -p "$(dirname $userdb)"
+  touch "$userdb"
+  mosquitto_passwd -b "$userdb" "$user" "$password";
+
+  if [ $? -eq 0 ]; then
+    echo "Username: $user";
+    echo "Password: $password";
+    return 0
+  fi
+
+  return 1
+}
+
+function smart-home:command:adguard-resolved() {
+  local config
+  config="/etc/systemd/resolved.conf.d/adguardhome.conf"
+
+  sudo mkdir -p "$(dirname $config)"
+
+  if [ -f "$config" ]; then
+    sudo rm "$config" 
+  fi
+
+  sudo touch "$config"
+
+  sudo tee "$config" > /dev/null << EOF
+[Resolve]
+DNS=127.0.0.1
+DNSStubListener=no
+EOF
+
+  sudo mv /etc/resolv.conf /etc/resolv.conf.backup
+  sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+
+  systemctl reload-or-restart systemd-resolved
+}
+
+function smart-home:command:setup-network() {
+  # Based on:
+  # https://gist.github.com/dbkinghorn/ed923bbcb7ec3f53bd2da5fe5e9b49b2
+  
+  echo "Changing netplan to network manager on all interfaces"
+  
+  # backup existing yaml file
+  cd /etc/netplan || exit
+  sudo cp 50-cloud-init.yaml 50-cloud-init.yaml.bak
+
+  sudo tee /etc/netplan/50-cloud-init.yaml > /dev/null << EOF
+# This file describes the network interfaces available on your system
+# For more information, see netplan(5).
+network:
+  renderer: NetworkManager
+  ethernets:
+    eth0:
+      dhcp4: false
+      addresses:
+        - 192.168.50.113/24
+      gateway4: 192.168.50.1
+      nameservers:
+        addresses: [8.8.8.8, 1.1.1.1]
+  version: 2
+EOF
+
+  # setup netplan for network manager
+  sudo netplan generate
+  sudo netplan apply
+  
+  # make sure network manager is running
+  systemctl enable NetworkManager.service
+  systemctl restart NetworkManager.service
+
+  echo "Done!"
 }
 
 #

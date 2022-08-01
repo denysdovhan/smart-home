@@ -1,0 +1,149 @@
+announcement:
+  alias: Announcement
+  fields:
+    title:
+      description: A title for a push-notification
+    greetings:
+      description: One of these greetings will be randomly picked for announcement
+    messages:
+      description: One of these messages will be randomly picked for announcement
+    service:
+      description: Optially specify who should be notified (all by default)
+    speak:
+      description: Optionally specify to make the announcement silently (true by default)
+    notify:
+      description: Optionally specify to make voice-only announcement (true by default)
+    force_speak:
+      description: Force speaking even in DND (false by default)
+    notify_data:
+      description: Optionally pass additional data for a notification
+  variables:
+    service: notify.all
+    speak: true
+    notify: true
+    force_speak: false
+    notify_data:
+      url: /lovelace/home
+    greetings: []
+    message: >-
+      {% if greetings and messages %}
+        {{ (greetings | random) ~ ' ' ~ (messages | random) }}
+      {% elif messages %}
+        {{ (messages | random) }}
+      {% else %}
+        Немає тексту для озвучення.
+      {% endif %}
+  sequence:
+    - choose:
+        - conditions:
+            - condition: '{{ speak is true }}'
+            - condition: state
+              entity_id: group.family
+              state: 'home'
+            - condition: state
+              entity_id: input_boolean.do_not_disturb
+              state: 'off'
+          sequence:
+            - service: tts.google_say
+              data:
+                entity_id: media_player.all_speakers
+                message: '{{ message }}'
+        - conditions:
+            - condition: '{{ speak is true }}'
+            - condition: '{{ force_speak is true }}'
+          sequence:
+            - service: tts.google_say
+              data:
+                entity_id: media_player.all_speakers
+                message: '{{ message }}'
+    - choose:
+        - conditions:
+            - condition: '{{ notify is true }}'
+          sequence:
+            - service: '{{ service }}'
+              data:
+                title: '{{ title }}'
+                message: '{{ message }}'
+                data: '{{ notify_data }}'
+
+greeting:
+  alias: Greet people upon their arrival
+  variables:
+    greeting:
+      - 'Доброго дня!'
+      - 'Добридень!'
+      - 'Привіт!'
+      - 'Вітаю!'
+      - 'Вітаю вдома!'
+      - 'Без вас було сумно!'
+      - 'Ласкаво прошу додому!'
+      - 'Мої кошенята вдома!'
+      - 'Нарешті ви вдома!'
+      - 'Ви вдома!'
+      - 'Ура! Ви вдома!'
+      - 'Тук-тук!'
+      - 'Хелоу!'
+      - 'Хелоу, котики!'
+      - 'Моя сім’я вдома!'
+      - 'Мої котики вдома!'
+      - 'Кошенята вдома!'
+    day_phrases:
+      - 'Як проходить ваш день?'
+      - 'Вдалого дня!'
+      - 'Ваш дім скучив за вами!'
+      - 'Немає місця, милішого за рідний дім.'
+      - 'Люблю вас! Ви теж любіть один одного!'
+      - 'Що нового?'
+      - 'Як справи?'
+      - 'Де встигли побувати?'
+    night_phrases:
+      - 'Як пройшов ваш день?'
+      - 'Що нового?'
+      - 'Люблю вас! Ви теж любіть один одного!'
+      - 'Приємного і затишного вечора!'
+      - 'Затишного вечора!'
+      - 'Теплого вечора!'
+      - 'Приємного вам вечора!'
+      - 'Класного вечора вам!'
+      - 'Насолоджуйтесь вечором!'
+      - 'Поцілуйте один одного!'
+      - 'Не забудьте обійняти один одного!'
+      - 'Поділіться один з одним теплом'
+      - 'Що цікавого сталось сьогодні?'
+      - 'Що хорошого сталось за сьогодні?'
+  sequence:
+    - service: media_player.volume_set
+      data:
+        entity_id:
+          - media_player.living_room_speaker
+          - media_player.bedroom_speaker
+        volume_level: 0.6
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: sun.sun
+              state: 'above_horizon'
+          sequence:
+            - service: script.announcement
+              data:
+                notify: false
+                force_speak: true
+                greetings: '{{ greeting }}'
+                messages: '{{ day_phrases }}'
+        - conditions:
+            - condition: state
+              entity_id: sun.sun
+              state: 'below_horizon'
+          sequence:
+            - service: script.announcement
+              data:
+                notify: false
+                force_speak: true
+                greetings: '{{ greeting }}'
+                messages: '{{ night_phrases }}'
+      default:
+        - service: script.announcement
+          data:
+            notify: false
+            force_speak: true
+            messages: '{{ greeting }}'

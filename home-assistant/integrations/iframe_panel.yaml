@@ -1,0 +1,29 @@
+panel_iframe:
+  # adguard:
+  #   title: AdGuard Home
+  #   icon: mdi:shield-check
+  #   url: !secret service_adguard
+  torrents:
+    title: Торенти
+    icon: mdi:download-circle
+    url: !secret service_torrents
+  nginx:
+    title: Nginx
+    icon: mdi:arrow-decision
+    url: !secret service_nginx
+    require_admin: true
+  portainer:
+    title: Portainer
+    icon: mdi:docker
+    url: !secret service_portainer
+    require_admin: true
+  esphome:
+    title: ESPHome
+    icon: mdi:chip
+    url: !secret service_esphome
+    require_admin: true
+  zigbee:
+    title: Zigbee
+    icon: mdi:zigbee
+    url: !secret service_zigbee
+    require_admin: true

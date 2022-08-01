@@ -1,0 +1,84 @@
+- id: do_not_disturb
+  alias: Do Not Disturb Flow
+  description: Adjust devices to Do Not Disturb mode
+  mode: queued
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: state
+      entity_id: input_boolean.do_not_disturb
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: 'home'
+  action:
+    - service: script.do_not_disturb_mode
+
+- id: do_not_disturb_on_focus
+  alias: Do Not Disturb on Focus
+  description: Switch Do Not Disturb while camera, mic or focus are on
+  mode: queued
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.do_not_disturb_family
+      for:
+        seconds: 30
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: 'home'
+  action:
+    - service: input_boolean.turn_{{ trigger.to_state.state }}
+      entity_id: input_boolean.do_not_disturb
+
+- id: away
+  alias: Away Flow
+  description: Switch Away mode depending on the Away toggle
+  trigger:
+    - platform: state
+      entity_id: input_boolean.away
+  action:
+    - service: script.away_mode
+
+- id: away_on_leaving_city
+  alias: Away on Leaving City
+  description: Switch
+  trigger:
+    - platform: numeric_state
+      entity_id: proximity.home
+      above: 25
+      variables:
+        service: input_boolean.turn_on
+    - platform: numeric_state
+      entity_id: proximity.home
+      below: 25
+      variables:
+        service: input_boolean.turn_off
+  action:
+    - alias: Switch Away mode depending on the travel direction
+      service: '{{ service }}'
+      entity_id: input_boolean.away
+
+- id: away_presence_simulation
+  alias: Presence Simulation in Away Mode
+  description: Toggle Presence Simulation during Night in Away Mode
+  trigger:
+    platform: state
+    entity_id: sun.sun
+  condition:
+    condition: state
+    entity_id: input_boolean.away
+    state: 'on'
+  action:
+    - choose:
+        - conditions:
+            alias: Only when Sun is below the horizon
+            condition: state
+            entity_id: sun.sun
+            state: 'below_horizon'
+          sequence:
+            - alias: Start Presence Simulation
+              service: presence_simulation.start
+      default:
+        - alias: Stop Presence Simulation
+          service: presence_simulation.stop

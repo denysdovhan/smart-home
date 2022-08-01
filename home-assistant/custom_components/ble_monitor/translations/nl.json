@@ -1,0 +1,105 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Passive BLE Monitor",
+        "description": "Instellen van BLE monitor configuration",
+        "data": {
+          "devices": "Apparaten",
+          "discovery": "Voeg apparaten en sensoren automatisch toe",
+          "decimals": "Aantal decimalen",
+          "period": "Periode",
+          "log_spikes": "Log uitschieters",
+          "use_median": "Gebruik mediaan i.p.v. gemiddelde",
+          "active_scan": "Active scan",
+          "bt_interface": "MAC adres Bluetooth interface",
+          "report_unknown": "Raporteer onbekende BLE advertisements in de HA logs",
+          "restore_state": "Herstel staat na herstart",
+          "bt_auto_restart": "Herstart Bluetooth adapter automatisch bij fout"
+        }
+      },
+      "add_remove_device": {
+        "title": "Apparaat toevoegen",
+        "data": {
+          "mac": "MAC adres",
+          "uuid": "Beacon UUID",
+          "encryption_key": "Encryptie sleutel",
+          "temperature_unit": "Temperatuur eenheid",
+          "decimals": "Aantal decimalen",
+          "use_median": "Gebruik mediaan i.p.v. gemiddelde",
+          "restore_state": "Herstel staat na herstart",
+          "reset_timer": "Reset timer (in seconden, 0 = uit)",
+          "report_unknown": "Raporteer onbekende BLE advertisements in de HA logs",
+          "track_device": "Track apparaat",
+          "tracker_scan_interval": "Device tracker scan interval (in seconden)",
+          "consider_home": "Device tracker beschouw thuis interval (in seconden)",
+          "delete device": "Verwijder apparaat"
+        }
+      }  
+    },
+    "error": {
+      "invalid_mac": "MAC adres dient opgegeven te worden in de vorm 'AA:BB:CC:DD:EE:FF'.",
+      "invalid_uuid": "Beacon UUID moet de vorm '00000000-0000-0000-0000-000000000000' hebben.",
+      "invalid_key": "Encryptie sleutel dient 32 hexadecimale karakters te hebben (24 voor Yeelight sensoren).",
+      "cannot_change_mac": "MAC adres kan niet veranderd worden.",
+      "cannot_change_uuid": "Beacon UUID kan niet worden gewijzigd.",
+      "cannot_delete_device": "Apparaat kon niet verwijderd worden.",
+      "cannot_disable_bt_interface": "disable BT interface kan niet geselecteerd worden als er nog een BT interface is geselecteerd. Deselecteer alle BT interfaces."
+    },
+    "abort": {
+      "single_instance_allowed": "Slechts één instantie van BLE monitor is toegestaan."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Passive BLE Monitor",
+        "description": "Instellen van BLE monitor configuration",
+        "data": {
+          "devices": "Apparaten",
+          "discovery": "Voeg apparaten en sensoren automatisch toe",
+          "decimals": "Aantal decimalen",
+          "period": "Periode",
+          "log_spikes": "Log uitschieters",
+          "use_median": "Gebruik mediaan i.p.v. gemiddelde",
+          "active_scan": "Active scan",
+          "bt_interface": "MAC adres Bluetooth interface",
+          "report_unknown": "Raporteer onbekende BLE advertisements in de HA logs",
+          "restore_state": "Herstel staat na herstart",
+          "bt_auto_restart": "Herstart Bluetooth adapter automatisch bij fout",
+          "not_in_use": "YAML is gebruikt, pas je instellingen aan in YAML"
+        }
+      },
+      "add_remove_device": {
+        "title": "Configureer apparaat",
+        "data": {
+          "mac": "MAC adres",
+          "uuid": "Beacon UUID",
+          "encryption_key": "Encryptie sleutel",
+          "temperature_unit": "Temperatuur eenheid",
+          "decimals": "Aantal decimalen",
+          "use_median": "Gebruik mediaan i.p.v. gemiddelde",
+          "restore_state": "Herstel staat na herstart",
+          "reset_timer": "Reset timer (in seconden, 0 = uit)",
+          "report_unknown": "Raporteer onbekende BLE advertisements in de HA logs",
+          "track_device": "Track apparaat",
+          "tracker_scan_interval": "Device tracker scan interval (in seconden)",
+          "consider_home": "Device tracker beschouw thuis interval (in seconden)",
+          "delete device": "Verwijder apparaat"
+        }
+      }  
+    },
+    "error": {
+      "invalid_mac": "MAC adres dient opgegeven te worden in de vorm 'AA:BB:CC:DD:EE:FF'.",
+      "invalid_uuid": "Beacon UUID moet de vorm '00000000-0000-0000-0000-000000000000' hebben.",
+      "invalid_key": "Encryptie sleutel dient 32 hexadecimale karakters te hebben (24 voor Yeelight sensoren).",
+      "cannot_change_mac": "MAC adres kan niet veranderd worden.",
+      "cannot_change_uuid": "Beacon UUID kan niet worden gewijzigd.",
+      "cannot_delete_device": "Apparaat kon niet verwijderd worden.",
+      "cannot_disable_bt_interface": "disable BT interface kan niet geselecteerd worden als er nog een BT interface is geselecteerd. Deselecteer alle BT interfaces."
+    },
+    "abort": {
+      "not_in_use": "Je hebt BLE monitor in YAML geconfigureerd. Pas je instellingen aan in YAML."
+    }
+  }
+}

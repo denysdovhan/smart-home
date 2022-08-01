@@ -58,7 +58,6 @@ My home setup for those who are too lazy to read everything:
 - [Mosquitto](https://mosquitto.org/) and [zigbee2mqtt](https://www.zigbee2mqtt.io/) for Zigbee devices.
 - Reverse proxy using [Nginx Proxy Manager](https://nginxproxymanager.com/) with [CloudFlare](https://www.cloudflare.com/).
 - [OpenVPN](https://openvpn.net/) for SSH and Samba access.
-- [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome) for network-level ad-blocking.
 - [Plex Media Server](https://www.plex.tv/media-server-downloads/#plex-media-server) with an external hard drive for hosting movies and TV series.
 - [Transmission](https://transmissionbt.com/) for downloading new media to the hard drive.
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden) for password management (Rust implementation of [Bitwarden](https://bitwarden.com/)).
@@ -78,7 +77,9 @@ I can't disassemble anything and use custom switches or sockets. It means I can 
 
 ## Future Plans
 
-I have a [public Notion board](https://www.notion.so/denysdovhan/f09ea06da5db4cfa84d3ca50417b93b2?v=5fccab53c2fd4ac188ee0b92c2ca1cb9) with ideas and tasks for my smart home. You can follow and comment my plans there.
+I have a [public Notion board][notion-board] with ideas and tasks for my smart home. You can follow and comment my plans there.
+
+[See future plans][notion-board]{: .md-button }
 
 ## License
 
@@ -86,6 +87,7 @@ I have a [public Notion board](https://www.notion.so/denysdovhan/f09ea06da5db4cf
 
 <!-- References -->
 
+[notion-board]: https://www.notion.so/denysdovhan/f09ea06da5db4cfa84d3ca50417b93b2?v=5fccab53c2fd4ac188ee0b92c2ca1cb9
 [github-url]: https://github.com/denysdovhan/smart-home
 [github-img]: https://img.shields.io/github/workflow/status/denysdovhan/smart-home/CI/master?style=flat-square
 [last-commit-img]: https://img.shields.io/github/last-commit/denysdovhan/smart-home?style=flat-square

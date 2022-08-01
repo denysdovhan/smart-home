@@ -1,32 +1,53 @@
 '0x00158d00036577d2':
-  friendly_name: bedroom_movement_sensor
+  friendly_name: Bedroom Movement Sensor
+  description: Movement Sensor in a Bedroom
+  occupancy_timeout: 300
 '0x00158d0002c7d522':
-  friendly_name: living_room_conditions_sensor
+  friendly_name: Living Room Conditions Sensor
+  description: Conditions sensor in a Living Room providing data for Home Temperature
 '0x00158d0002d6f60b':
-  friendly_name: bedroom_ceiling_light
+  friendly_name: Bedroom Ceiling Light
   optimistic: false
-  retain: true
+  retain: false
+  homeassistant: {}
+  description: A ceiling light in a Bedroom
 '0x00158d0002e9f771':
-  friendly_name: living_room_movement_sensor
-'0x00158d000421472b':
-  friendly_name: magic_cube
+  friendly_name: Living Room Movement Sensor
+  description: Movement Sensor in a Living Room
+  occupancy_timeout: 300
 '0x00158d000450cca4':
-  friendly_name: living_room_main_light_bulb_1
+  friendly_name: Living Room Main Light Bulb 1
+  description: Bulb 1 in a Main Light group
 '0x00158d0002d3c856':
-  friendly_name: living_room_main_light_bulb_4
+  friendly_name: Living Room Main Light Bulb 4
+  description: Bulb 4 in a Main Light group
 '0x00158d00045ec07b':
-  friendly_name: living_room_main_light_bulb_3
+  friendly_name: Living Room Main Light Bulb 3
+  description: Bulb 3 in a Main Light group
 '0x00158d0002d71dab':
-  friendly_name: living_room_main_light_bulb_2
+  friendly_name: Living Room Main Light Bulb 2
+  description: Bulb 2 in a Main Light group
 '0x00158d0003972938':
-  friendly_name: front_door_sensor
+  friendly_name: Front Door Sensor
+  description: A contact sensor attached to the front door
 '0x00158d0005343e97':
-  friendly_name: balcony_conditions_sensor
+  friendly_name: Balcony Conditions Sensor
+  description: Conditions Sensor on the Balcony. Provides data for Balcony Heater
 '0x04cf8cdf3c891af6':
-  friendly_name: corridor_light
+  friendly_name: Corridor Light
+  description: A relay for toggling a ceiling light in the Corridor
 '0x8cf681fffeb0dbd5':
-  friendly_name: bedroom_heater
+  friendly_name: Bedroom Heater
+  description: Smart Heater TRV in Bedroom
 '0x8cf681fffeab0589':
-  friendly_name: living_room_heater
+  friendly_name: Living Room Heater
+  description: Smart Heater TRV in Living Room
 '0x54ef441000312e38':
-  friendly_name: water_heater
+  friendly_name: Water Heater
+  description: A smart plug for water heater
+'0xa4c138a8c73a9d0c':
+  friendly_name: Kitchen Switch
+  description: A 2-gang relay for the lights in the Kitchen
+'0x00158d000421472b':
+  friendly_name: Magic Cube
+  description: Magic Cube for controlling scenes and devices

@@ -1,0 +1,91 @@
+- id: healthcheck
+  alias: Healthcheck Connection
+  description: Send a ping to Healthcheck every minute
+  mode: single
+  trigger:
+    platform: time_pattern
+    minutes: /10
+  action:
+    - service: rest_command.healthcheck
+
+- id: magic_cube_actions
+  alias: Magic Cube Actions
+  trigger:
+    platform: mqtt
+    topic: zigbee2mqtt/Magic Cube/action
+  action:
+    - choose:
+        - conditions: "{{ trigger.payload == 'flip90' }}"
+          sequence:
+            - service: scene.turn_on
+              data:
+                entity_id: scene.night_lights
+                transition: 1
+
+        - conditions: "{{ trigger.payload == 'flip180' }}"
+          sequence:
+            - service: scene.turn_on
+              data:
+                entity_id: scene.evening_lights
+                transition: 1
+
+        - conditions: "{{ trigger.payload == 'rotate_right' }}"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.living_room_main_light
+                transition: 1
+
+        - conditions: "{{ trigger.payload == 'rotate_left' }}"
+          sequence:
+            - service: light.turn_off
+              data:
+                entity_id: light.living_room_main_light
+                transition: 1
+
+        - conditions: "{{ trigger.payload == 'shake' }}"
+          sequence:
+            - service: scene.turn_on
+              data:
+                entity_id: scene.lights_out
+                transition: 1
+
+        - conditions: "{{ trigger.payload == 'tap' }}"
+          sequence:
+            - service: input_boolean.toggle
+              entity_id: input_boolean.do_not_disturb
+            - service: script.announcement
+              data:
+                speak: false
+                title: Не турбувати 💤
+                messages:
+                  - "Режим «Не турбувати» {{ is_state('input_boolean.do_not_disturb', 'on') | iif('увімкнено', 'вимкнено') }}."
+                  - "Режим тиші {{ is_state('input_boolean.do_not_disturb', 'on') | iif('увімкнено', 'вимкнено') }}."
+                  - "{{ is_state('input_boolean.do_not_disturb', 'on') | iif('Увімкнено', 'Вимкнено') }} режим тиші."
+                notify_data:
+                  group: system
+
+- id: turn_off_lights_after_outage
+  alias: Turn Off Lights After Outage
+  trigger:
+    platform: homeassistant
+    event: start
+  condition:
+    - condition: state
+      entity_id: binary_sensor.sleeping_time
+      state: 'on'
+    - condition: state
+      entity_id: group.family
+      state: 'not_home'
+  action:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.lights_out
+        transition: 1
+    - alias: Wait a minute for devices to come online
+      delay:
+        minutes: 1
+    - service: scene.turn_on
+      data:
+        entity_id: scene.lights_out
+        transition: 1

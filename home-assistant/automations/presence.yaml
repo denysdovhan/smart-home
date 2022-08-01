@@ -1,0 +1,173 @@
+- id: everyone_is_arriving
+  alias: Everyone is Arriving
+  description: Turn on things when people are arriving
+  trigger:
+    platform: state
+    entity_id: group.family
+    from: 'not_home'
+    to: 'home'
+  condition:
+    # Avoid false-positives
+    - alias: Do not turn on when the lights are on
+      condition: state
+      entity_id: light.lights
+      state: 'off'
+    - alias: No motion detected home
+      condition: state
+      entity_id: binary_sensor.home_occupancy
+      state: 'off'
+  action:
+    - alias: Switch heaters to Manual during Heating Season
+      choose:
+        - conditions:
+            condition: state
+            entity_id: binary_sensor.heating_season
+            state: 'on'
+          sequence:
+            - alias: Set TRVs to normal
+              service: climate.set_preset_mode
+              data:
+                entity_id:
+                  - climate.living_room_heater
+                  - climate.bedroom_heater
+                preset_mode: manual
+
+    - alias: Wait for someone to come
+      wait_for_trigger:
+        - platform: state
+          entity_id: binary_sensor.front_door_sensor_contact
+          to: 'on'
+        - platform: state
+          entity_id: binary_sensor.home_occupancy
+          to: 'on'
+      timeout:
+        hours: 2
+      continue_on_timeout: false
+
+    - alias: Turn on lights after sunset
+      choose:
+        - conditions:
+            - condition: or
+              conditions:
+                - condition: state
+                  entity_id: sun.sun
+                  state: 'below_horizon'
+                - condition: numeric_state
+                  entity_id: sensor.living_room_movement_sensor_illuminance_lux
+                  below: 30
+                - condition: numeric_state
+                  entity_id: sensor.bedroom_movement_sensor_illuminance_lux
+                  below: 10
+          sequence:
+            - service: scene.turn_on
+              data:
+                entity_id: scene.evening_lights
+                transition: 5
+
+    - alias: Turn on Air Purifier
+      service: fan.turn_on
+      entity_id: fan.air_purifier
+
+    - alias: Turn on Air Humidifier
+      service: humidifier.turn_on
+      entity_id: humidifier.air_humidifier
+
+    - alias: Wait a second for everyone to come in
+      delay:
+        seconds: 5
+
+    - alias: Greet people with a delay
+      service: script.greeting
+
+    - alias: Wait for a phrase to be said
+      delay:
+        minutes: 1
+
+    - alias: Set device to correct state of DND
+      service: script.do_not_disturb_mode
+
+- id: everyone_is_leaving
+  alias: Everyone is Leaving
+  description: Turn off things when people are leaving
+  trigger:
+    platform: state
+    entity_id: group.family
+    from: 'home'
+    to: 'not_home'
+    for:
+      minutes: 10
+  condition:
+    - alias: Do not trigger when movement at home is detected
+      condition: state
+      entity_id: binary_sensor.home_occupancy
+      state: 'off'
+  action:
+    - alias: Turn off Air Pufirier
+      service: fan.turn_off
+      entity_id: fan.air_purifier
+
+    - alias: Turn off Air Humidifier
+      service: humidifier.turn_off
+      entity_id: humidifier.air_humidifier
+
+    - alias: Turn off all the lights
+      service: light.turn_off
+      entity_id: all
+
+    - alias: Turn off ACs and Balcony heater
+      service: climate.turn_off
+      entity_id:
+        - climate.living_room_ac
+        - climate.bedroom_ac
+        - climate.balcony_heater
+
+    - alias: Switch heaters to Eco during Heating Season
+      choose:
+        - conditions:
+            condition: state
+            entity_id: binary_sensor.heating_season
+            state: 'on'
+          sequence:
+            - alias: Set TRVs to normal
+              service: climate.set_preset_mode
+              data:
+                entity_id:
+                  - climate.living_room_heater
+                  - climate.bedroom_heater
+                preset_mode: eco
+
+    - alias: Turn off all Media Players
+      service: media_player.turn_off
+      entity_id: all
+
+    - alias: Ask for cleaning when appropriate
+      choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.time_to_clean
+              state: 'on'
+            - condition: state
+              entity_id: vacuum.roborock
+              state: 'docked'
+          sequence:
+            - service: script.announcement
+              data:
+                speak: false
+                title: 'Пилосос 🧹'
+                messages:
+                  - 'Пора почати регулярне прибирання.'
+                  - 'Час прибирати вдома.'
+                  - 'Бажаєте прибрати вдома?'
+                  - 'Почати прибирання?'
+                  - "{{ state_attr('vacuum.roborock', 'friendly_name') }} пропонує домашнє прибирання."
+                  - "{{ state_attr('vacuum.roborock', 'friendly_name') }} хоче прибирати квартиру."
+                  - "{{ state_attr('vacuum.roborock', 'friendly_name') }} давно не прибирав. Почати?"
+                notify_data:
+                  url: /lovelace/vacuum
+                  group: vacuum
+                  tag: vacuum-cleaning
+                  actions:
+                    - action: VACUUM_START
+                      title: Почати прибирання
+                      activationMode: background
+                      authenticationRequired: true

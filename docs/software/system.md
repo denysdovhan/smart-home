@@ -2,9 +2,9 @@
 
 This page describes my system setup. Here you can find software I rely on for running my smart home system.
 
-## [Raspberry Pi OS Bullseye](https://downloads.raspberrypi.org/raspios_arm64/images/)
+## [Ubuntu Server 20.04 LTS](https://ubuntu.com/download/server)
 
-I use Raspberry Pi OS as a primary OS for my Raspberry Pi. It's besically Debian 11, so it's officially supported by Home Assistant Supervised.
+I use [Ubuntu](https://ubuntu.com/) as a primary OS for my Raspberry Pi. Ubuntu is a well-maintained Linux distribution with a huge community and large support forums.
 
 It officially [supports Raspberry Pi](https://ubuntu.com/download/raspberry-pi) and can be easily installed via the official Raspberry Pi Imager.
 
@@ -23,16 +23,6 @@ Docker allows to encapsulate everything related to a single service within a con
 [Cockpit](https://cockpit-project.org/) is a web-based graphical interface for servers. Ubuntu is officially supported.
 
 This tool let me easily manage my system from web browser: network, external drives, processes and services, system update, etc.
-
-## [Home Assistant Supervised](https://github.com/home-assistant/supervised-installer)
-
-[Home Assistant](https://www.home-assistant.io) is an open-source home automation platform that puts local control and privacy first. This is the heart of my smart home.
-
-Home Assistant powers my home automation binds my devices together, passes them to Google Home and HomeKit, etc.
-
-Home Assistant Supervised handles home automation services: MQTT, zigbee2mqtt, ESPHome, AirCast. It also handles updates, hardware and backups.
-
-You can read more about it in [Home Assistant section](../../home-assistant/introduction/) of this documentation.
 
 ## [smart-home](https://github.com/denysdovhan/smart-home/blob/master/bin/smart-home)
 
@@ -60,8 +50,6 @@ However, leaving Home Assistant OS means **no more benefits of Supervisor**. I s
 
 I've been developing an alternative solution gradually for a few months, looking for a replacement for every part of the Supervisor's functionality. Then, when I felt confident, I migrated to my new setup.
 
-### Home Assistant Container
+### Home Assistant Supervised
 
-I was running HA Container for a year or so. This worked well for me, though I've been really missing Supervisor benefits.
-
-Eventually, with a migration to a new memory card, I've decided to change my setup to HA Supervised.
+I was running HA Supervies for a year or so. This worked well for me, though I've decied to move back to Container since it gives much more freedom and control over my system.
