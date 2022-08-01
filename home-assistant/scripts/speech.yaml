@@ -36,7 +36,7 @@ announcement:
   sequence:
     - choose:
         - conditions:
-            - condition: '{{ speak is true }}'
+            - '{{ speak is true }}'
             - condition: state
               entity_id: group.family
               state: 'home'
@@ -49,8 +49,8 @@ announcement:
                 entity_id: media_player.all_speakers
                 message: '{{ message }}'
         - conditions:
-            - condition: '{{ speak is true }}'
-            - condition: '{{ force_speak is true }}'
+            - '{{ speak is true }}'
+            - '{{ force_speak is true }}'
           sequence:
             - service: tts.google_say
               data:
@@ -58,7 +58,7 @@ announcement:
                 message: '{{ message }}'
     - choose:
         - conditions:
-            - condition: '{{ notify is true }}'
+            - '{{ notify is true }}'
           sequence:
             - service: '{{ service }}'
               data:
