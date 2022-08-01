@@ -1,12 +1,4 @@
 panel_iframe:
-  # adguard:
-  #   title: AdGuard Home
-  #   icon: mdi:shield-check
-  #   url: !secret service_adguard
-  torrents:
-    title: Торенти
-    icon: mdi:download-circle
-    url: !secret service_torrents
   nginx:
     title: Nginx
     icon: mdi:arrow-decision
