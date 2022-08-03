@@ -44,6 +44,7 @@ services:
       - ./home-assistant:/config
       - ${MEDIA_VOLUME}:/media
       - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
     env_file:
       - .env
     restart: unless-stopped
