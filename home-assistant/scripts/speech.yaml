@@ -70,8 +70,6 @@ greeting:
   alias: Greet people upon their arrival
   variables:
     greeting:
-      - 'Доброго дня!'
-      - 'Добридень!'
       - 'Привіт!'
       - 'Вітаю!'
       - 'Вітаю вдома!'

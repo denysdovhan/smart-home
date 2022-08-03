@@ -152,7 +152,7 @@
       data:
         title: 'Системний пік 🔥'
         greetings: '{{ greetings }}'
-        messages: '{{ greetings }}'
+        messages: '{{ messages }}'
         notify_data:
           url: /lovelace/system
           group: system

@@ -2,21 +2,40 @@
   alias: Air siren in Kyiv
   description: ''
   trigger:
-  - platform: state
-    entity_id: binary_sensor.alerts_kyiv_air
-    to: 'on'
+    - platform: state
+      entity_id: binary_sensor.alerts_kyiv_air
+      to: 'on'
+      from: 'off'
+      variables:
+        title: Повітряна тривога ⚠️
+        messages:
+          - Увага! Повітряна тривога!
+          - Увага! У Києві повітряна тривога!
+          - Повітряна тривога у Києві!
+          - Увага! Перейдіть в укриття!
+          - Тривога! Сховайтесь у ванній!
+    - platform: state
+      entity_id: binary_sensor.alerts_kyiv_air
+      to: 'off'
+      from: 'on'
+      variables:
+        title: "Відбій тривоги \U0001F44C"
+        messages:
+          - Відбій повітряної тривоги!
+          - Відбій! Можна виходити з укриття!
+          - Відбій тривоги! Небезпека минула!
+          - Небезпека минула! Виходьте з укриття!
   action:
-  - service: script.announcement
-    data:
-      service: notify.denys
-      title: Повітряна тривога ⚠️
-      speak: false
-      messages:
-      - Повітряна тривога у Києві!
-      notify_data:
-        push:
-          sound:
-            name: default
-            critical: 1
-            volume: 1
+    - service: script.announcement
+      data:
+        title: '{{ title }}'
+        messages: '{{ messages }}'
+        force_speak: true
+        notify_data:
+          group: air-alerts
+          push:
+            sound:
+              name: default
+              critical: 1
+              volume: 1
   mode: single
