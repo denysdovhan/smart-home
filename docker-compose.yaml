@@ -243,6 +243,7 @@ services:
     environment:
       USER: ${TRANSMISSION_USER}
       PASS: ${TRANSMISSION_PASSWORD}
+      TRANSMISSION_WEB_HOME: /transmissionic/
     ports:
       - 9091:9091
       - 51413:51413
