@@ -69,6 +69,9 @@ markdown_extensions:
       alternate_style: true
 
 extra:
+  analytics:
+    provider: google
+    property: G-L5TXN2J2M8
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/denysdovhan/smart-home

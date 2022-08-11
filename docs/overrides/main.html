@@ -42,6 +42,21 @@
 </a>
 {% endblock %}
 
+<!-- Self-hosted Analytics -->
+<!-- prettier-ignore -->
+{% block analytics %}
+{{ super() }}
+<script
+  async
+  defer
+  data-website-id="2f68c247-b08c-4496-a333-bfc8817d56bc"
+  src="https://analytics.denysdovhan.com/umami.js"
+  {{
+  super()
+  }}
+></script>
+{% endblock %}
+
 <!-- Comments system -->
 {% block disqus %}
 <script
