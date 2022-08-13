@@ -17,7 +17,6 @@ Here's a table of services and ports exposed via `docker-compose`:
 | Pi-hole             | 53, 67, 5300                                                     |
 | Plex                | 32400, 3005, 5353, 1900, 8324, 32469, 32410, 32412, 32413, 32414 |
 | Transmission        | 9091, 51413                                                      |
-| Umami               | 8333                                                             |
 
 <!-- prettier-ignore -->
 !!! info

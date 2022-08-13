@@ -52,7 +52,7 @@ I use Duplicati as a replacement for [Supervisor's Snapshots](https://www.home-a
 
 [MariaDB](https://mariadb.com) is a high-performing open-source relational database, forked from MySQL.
 
-Long story short, it's a fast, light, and backward compatible with MySQL database solution. I use it as a SQL database for my smart home. This is used by [Nginx Proxy Manager](#nginx-proxy-manager) and [Umami](#umami).
+Long story short, it's a fast, light, and backward compatible with MySQL database solution. I use it as a SQL database for my smart home. This is used by [Nginx Proxy Manager](#nginx-proxy-manager).
 
 ## Adminer
 
@@ -109,16 +109,6 @@ Media is downloaded via [Transmission](#transmission).
 [Transmission](https://transmissionbt.com/) is a popular BitTorrent client. It can be hosted as a Docker container — that's exactly what I did.
 
 I use it for downloading media to [my hard drive](../../hardware#media-volume).
-
-## Umami
-
-![Umami](https://user-images.githubusercontent.com/3459374/115125705-9f549080-9fd2-11eb-9d68-5b6443f4bff8.png)
-
-[Umami](https://umami.is/) is self-hosted analytics for my websites. Simple although completely fits my needs.
-
-<!-- prettier-ignore -->
-!!! note
-    Official images [does not support ARM architectures](https://github.com/mikecao/umami/issues/593). I've made my own Dockerfile that builds an image right on my Raspberry Pi.
 
 ## Bitwarden
 
