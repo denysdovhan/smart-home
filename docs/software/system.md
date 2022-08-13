@@ -2,7 +2,7 @@
 
 This page describes my system setup. Here you can find software I rely on for running my smart home system.
 
-## [Ubuntu Server 20.04 LTS](https://ubuntu.com/download/server)
+## [Ubuntu Server 22.04 LTS](https://ubuntu.com/download/server)
 
 I use [Ubuntu](https://ubuntu.com/) as a primary OS for my Raspberry Pi. Ubuntu is a well-maintained Linux distribution with a huge community and large support forums.
 
