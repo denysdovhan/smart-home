@@ -111,7 +111,7 @@ services:
       - .env
     volumes:
       - .docker/duplicati/config:/config #Config Files
-      - .backups:/backups
+      - ${BACKUPS_VOLUME}:/backups
       - .:/source
     ports:
       - 8200:8200
