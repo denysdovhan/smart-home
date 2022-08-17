@@ -46,12 +46,12 @@
   trigger:
     - platform: numeric_state
       entity_id: proximity.home
-      above: 25
+      above: 20
       variables:
         service: input_boolean.turn_on
     - platform: numeric_state
       entity_id: proximity.home
-      below: 25
+      below: 20
       variables:
         service: input_boolean.turn_off
   action:
