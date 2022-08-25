@@ -1,14 +1,14 @@
 {
     "measure_description": "Measured with utils/measure script",
-    "measure_device": "Shelly Plug",
+    "measure_device": "Zooz Z-Wave Plus Power Switch ZEN15",
     "measure_method": "script",
     "measure_settings": {
         "SAMPLE_COUNT": 2,
         "SLEEP_TIME": 3,
-        "VERSION": "master"
+        "VERSION": "v0.24.7:docker"
     },
-    "name": "Ikea Slagsida",
-    "standby_power": 0.62,
+    "name": "Elgato Key Light",
+    "standby_power": 0.86,
     "supported_modes": [
         "lut"
     ]
