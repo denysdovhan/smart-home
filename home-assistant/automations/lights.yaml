@@ -163,3 +163,19 @@
           continue_on_timeout: false
         - service: light.turn_off
           entity_id: light.corridor_light
+
+- id: toggle_desk_lamp_with_external_display
+  alias: Toggle Desk Lamp with Working Display
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.working_display_connected
+      not_from:
+        - 'unknown'
+        - 'unavailable'
+      to:
+        - 'on'
+        - 'off'
+  action:
+    - alias: Toggle Desk Lamp
+      service: light.turn_{{ trigger.to_state.state }}
+      entity_id: light.desk_lamp
