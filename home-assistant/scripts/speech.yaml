@@ -34,7 +34,8 @@ announcement:
         Немає тексту для озвучення.
       {% endif %}
   sequence:
-    - choose:
+    - alias: Make an announcement on speakers
+      choose:
         - conditions:
             - '{{ speak is true }}'
             - condition: state
@@ -43,6 +44,15 @@ announcement:
             - condition: state
               entity_id: input_boolean.do_not_disturb
               state: 'off'
+            - alias: Don't speak when speakers are playing
+              condition: state
+              entity_id:
+                - media_player.all_speakers
+                - media_player.living_room_speaker
+                - media_player.bedroom_speaker
+              state:
+                - 'off'
+                - 'idle'
           sequence:
             - service: tts.google_say
               data:
@@ -51,12 +61,16 @@ announcement:
         - conditions:
             - '{{ speak is true }}'
             - '{{ force_speak is true }}'
+            - condition: state
+              entity_id: group.family
+              state: 'home'
           sequence:
             - service: tts.google_say
               data:
                 entity_id: media_player.all_speakers
                 message: '{{ message }}'
-    - choose:
+    - alias: Send a notification
+      choose:
         - conditions:
             - '{{ notify is true }}'
           sequence:
@@ -115,7 +129,7 @@ greeting:
         entity_id:
           - media_player.living_room_speaker
           - media_player.bedroom_speaker
-        volume_level: 0.6
+        volume_level: 0.8
     - choose:
         - conditions:
             - condition: state

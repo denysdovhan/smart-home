@@ -211,8 +211,8 @@
     - service: light.turn_off
       entity_id: light.desk_lamp
 
-- id: work_on_balcony
-  alias: Work on Balcony
+- id: preheat_balcony
+  alias: Preheat Balcony for a Workday
   trigger:
     - platform: state
       entity_id: binary_sensor.denyss_iphone_focus
@@ -231,7 +231,7 @@
       after: '08:00'
       before: '15:00'
   action:
-    - alias: Prepare a action variables
+    - alias: Prepare an action variables
       variables:
         heat_action: "{{ 'HEAT_' ~ context.id }}"
         delay_minutes: '{{ range(1, 30) | random }}'
