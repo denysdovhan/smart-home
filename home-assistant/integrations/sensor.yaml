@@ -123,8 +123,8 @@ sensor:
             {% set is_apple_tv_paused = is_state('media_player.apple_tv', 'paused') %}
             {% set is_apple_tv_idle = is_state('media_player.apple_tv', 'idle') %}
 
-            {% set is_ps4_playing = is_state('media_player.playstation_4', 'playing') %}
-            {% set is_ps4_paused = is_state('media_player.playstation_4', 'paused') %}
+            {% set is_ps4_playing = is_state('media_player.playstation_5', 'playing') %}
+            {% set is_ps4_paused = is_state('media_player.playstation_5', 'idle') %}
 
             {% if is_tv_on and (is_apple_tv_playing or is_ps4_playing) -%}
               170
@@ -134,12 +134,12 @@ sensor:
               53
             {%- endif %}
         standby_power: 0.5
-      - entity_id: media_player.playstation_4
+      - entity_id: media_player.playstation_5
         fixed:
           states_power:
             playing: 158.2
-            paused: 56.9
-            idle: 6.4
+            idle: 56.9
+            none: 6.4
       - entity_id: media_player.apple_tv
         fixed:
           states_power:

@@ -271,3 +271,21 @@ services:
       - 3812:3012
     volumes:
       - .docker/bitwarden:/data
+
+  # PS5
+  ps5mqtt:
+    container_name: ps5mqtt
+    image: ghcr.io/funkeyflo/ps5-mqtt/aarch64:1.0.1
+    entrypoint: /config/run.sh
+    volumes:
+      - ./ps5:/config
+    network_mode: host
+    environment:
+      MQTT_HOST: 192.168.50.113
+      MQTT_PORT: 1888
+      MQTT_USERNAME: ${MQTT_USER}
+      MQTT_PASSWORD: ${MQTT_PASSWORD}
+      FRONTEND_PORT: 8645
+      DEBUG: '@ha:ps5:*'
+      PSN_ACCOUNTS: '[]'
+      CREDENTIAL_STORAGE_PATH: /config/credentials.json

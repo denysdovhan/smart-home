@@ -41,10 +41,11 @@ google_assistant:
         - vacuum
         - vacuum cleaner
     # Media Players
-    media_player.playstation_4:
+    media_player.playstation_5:
       expose: true
       aliases:
-        - ps4
+        - ps5
+        - playstation
         - console
     media_player.samsung_tv:
       expose: true

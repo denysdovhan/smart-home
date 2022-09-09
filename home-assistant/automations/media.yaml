@@ -2,8 +2,8 @@
   alias: Turn off Samsung TV when PlayStation turns off
   trigger:
     - platform: state
-      entity_id: media_player.playstation_4
-      to: 'standby'
+      entity_id: sensor.playstation_5_activity
+      to: 'none'
       for:
         seconds: 5
   action:

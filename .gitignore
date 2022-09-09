@@ -36,6 +36,9 @@ token-*.txt
 /zigbee2mqtt/log
 /zigbee2mqtt/coordinator_backup.json
 
+# PlayStation to MQTT
+/ps5/credentials.json
+
 # IDE
 .vscode
 .Trash*
