@@ -11,3 +11,15 @@ camera.kyiv_sofiyska:
 # Vacuum Map
 camera.roborock_live_map:
   friendly_name: Robin Live Map
+
+# LUN Misto AQI
+sensor.outdoor_aqi:
+  icon: mdi:cloud
+
+# Car
+device_tracker.toyota_location:
+  entity_picture: /local/images/toyota.png
+
+# PlayStation 5
+media_player.playstation_5:
+  icon: mdi:sony-playstation
