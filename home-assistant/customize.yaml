@@ -1,12 +1,15 @@
 # Cameras
-camera.chernivtsi_landscape:
-  friendly_name: Chernivtsi Landscape
-camera.chernivtsi_filarmonia:
-  friendly_name: Chernivtsi Philharmonia
-camera.kyiv_mykhailivska:
-  friendly_name: Mykhailivska Square
-camera.kyiv_sofiyska:
-  friendly_name: Sofiyska square
+#
+# IMPORTANT
+# Public cameras are disabled because of a Russian rocket strikes
+# camera.chernivtsi_landscape:
+#   friendly_name: Chernivtsi Landscape
+# camera.chernivtsi_filarmonia:
+#   friendly_name: Chernivtsi Philharmonia
+# camera.kyiv_mykhailivska:
+#   friendly_name: Mykhailivska Square
+# camera.kyiv_sofiyska:
+#   friendly_name: Sofiyska square
 
 # Vacuum Map
 camera.roborock_live_map:
@@ -17,8 +20,10 @@ sensor.outdoor_aqi:
   icon: mdi:cloud
 
 # Car
-device_tracker.toyota_location:
-  entity_picture: /local/images/toyota.png
+#
+# Toyota Integration is disabled
+# device_tracker.toyota_location:
+#  entity_picture: /local/images/toyota.png
 
 # PlayStation 5
 media_player.playstation_5:

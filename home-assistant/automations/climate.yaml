@@ -176,7 +176,7 @@
   alias: Turn off Balcony Heater
   trigger:
     - platform: state
-      entity_id: light.desk_lampk
+      entity_id: light.desk_lamp
       to: 'off'
       for:
         minutes: 30

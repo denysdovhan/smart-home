@@ -47,9 +47,9 @@ sensor:
         {{ (aqilow + (conc - conclow) * (aqihigh - aqilow) / (conchigh - conclow)) | round }}
       {%- endmacro %}
       {# #}
-      {% for sensor in value_json %}
-        {% if sensor.station.name == station %}
-          {% set conc = sensor.particles[2].pm25 %}
+      {% for data in value_json %}
+        {% if data.station.name == station %}
+          {% set conc = data.particles[2].pm25 %}
           {% if conc >= 0 and conc < 12 %}
               {{ aqi(50, 0, 12, 0, conc) }}
           {% elif conc >= 12 and conc < 35.5 %}

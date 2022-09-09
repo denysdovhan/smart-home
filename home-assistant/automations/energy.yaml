@@ -62,7 +62,7 @@
               entity_id: sensor.energy_monthly_total
               above: 250
           sequence:
-            - service: select.select_tariff
+            - service: select.select_option
               data:
                 entity_id: select.energy_monthly
                 option: offpeak_overlimit

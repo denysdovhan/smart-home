@@ -18,7 +18,7 @@ template:
       - name: Do Not Disturb Denys
         state: >-
           {% set camera_on = is_state('binary_sensor.wix_macbook_pro_camera_in_use', 'on') %}
-          {% set mic_on = is_state('binary_sensor.wix_macbook_pro_microphone_in_use', 'on') %}
+          {% set mic_on = is_state('binary_sensor.wix_macbook_pro_audio_input_in_use', 'on') %}
           {% set focus_on = is_state('binary_sensor.denyss_iphone_focus', 'on') %}
           {% set sleep_on = is_state('binary_sensor.sleeping_time', 'on') %}
           {% set at_home = is_state('person.denys', 'home') %}
@@ -29,7 +29,7 @@ template:
       - name: Do Not Disturb Marry
         state: >-
           {% set camera_on = is_state('binary_sensor.marry_macbook_pro_camera_in_use', 'on') %}
-          {% set mic_on = is_state('binary_sensor.marry_macbook_pro_microphone_in_use', 'on') %}
+          {% set mic_on = is_state('binary_sensor.marry_macbook_pro_audio_input_in_use', 'on') %}
           {% set focus_on = is_state('binary_sensor.iphone_maria_focus', 'on') %}
           {% set sleep_on = is_state('binary_sensor.sleeping_time', 'on') %}
           {% set at_home = is_state('person.marry', 'home') %}
@@ -172,7 +172,7 @@ template:
         device_class: energy
         unit_of_measurement: kWh
         state: >-
-          {% set water_heater = states('sensor.sensor.water_heater_energy') | float(0) %}
+          {% set water_heater = states('sensor.water_heater_energy') | float(0) %}
           {{ water_heater }}
 
       - name: Total energy

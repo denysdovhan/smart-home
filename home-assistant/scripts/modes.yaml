@@ -82,10 +82,6 @@ away_mode:
             - alias: Turn on Presence Simulation
               service: presence_simulation.start
 
-            - alias: Turn on Presence Simulation toggling at night
-              service: automation.turn_on
-              entity_id: automation.away_presence_simulation
-
             - alias: Turn off Water Heater
               service: switch.turn_off
               entity_id: switch.water_heater
@@ -157,10 +153,6 @@ away_mode:
 
         - alias: Turn off Presence Simulation
           service: presence_simulation.stop
-
-        - alias: Turn off Presence Simulation toggling at night
-          service: automation.turn_off
-          entity_id: automation.away_presence_simulation
 
         - alias: Turn on Water Heater
           service: switch.turn_on

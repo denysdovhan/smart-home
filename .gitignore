@@ -28,6 +28,7 @@ image
 /home-assistant/.ps4-games*.json
 /home-assistant/GA_SERVICE_ACCOUNT.json
 /home-assistant/www/community
+watchman_report.txt
 token-*.txt
 
 # Zigbee2MQTT
