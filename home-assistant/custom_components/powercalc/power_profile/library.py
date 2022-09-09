@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import json
-import os
 import logging
+import os
 from typing import NamedTuple
 
 from homeassistant.core import HomeAssistant
@@ -14,6 +14,7 @@ from .power_profile import PowerProfile
 CUSTOM_DATA_DIRECTORY = "powercalc-custom-models"
 
 _LOGGER = logging.getLogger(__name__)
+
 
 class ProfileLibrary:
     def __init__(self, hass: HomeAssistant):
@@ -113,10 +114,7 @@ class ProfileLibrary:
             manufacturer_dir = os.path.join(data_dir, manufacturer)
             if not os.path.exists(manufacturer_dir):
                 continue
-            for model in os.listdir(manufacturer_dir):
-                if model.startswith(".") or not model:
-                    continue
-
+            for model in next(os.walk(manufacturer_dir))[1]:
                 power_profile = await self._create_power_profile(
                     ModelInfo(manufacturer, model),
                     os.path.join(manufacturer_dir, model),

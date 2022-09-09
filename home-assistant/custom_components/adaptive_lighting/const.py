@@ -1,8 +1,9 @@
 """Constants for the Adaptive Lighting integration."""
-import voluptuous as vol
 
 from homeassistant.components.light import VALID_TRANSITION
+from homeassistant.helpers import selector
 import homeassistant.helpers.config_validation as cv
+import voluptuous as vol
 
 ICON = "mdi:theme-light-dark"
 
@@ -31,6 +32,11 @@ CONF_SEPARATE_TURN_ON_COMMANDS, DEFAULT_SEPARATE_TURN_ON_COMMANDS = (
 )
 CONF_SLEEP_BRIGHTNESS, DEFAULT_SLEEP_BRIGHTNESS = "sleep_brightness", 1
 CONF_SLEEP_COLOR_TEMP, DEFAULT_SLEEP_COLOR_TEMP = "sleep_color_temp", 1000
+CONF_SLEEP_RGB_COLOR, DEFAULT_SLEEP_RGB_COLOR = "sleep_rgb_color", [255, 56, 0]
+CONF_SLEEP_RGB_OR_COLOR_TEMP, DEFAULT_SLEEP_RGB_OR_COLOR_TEMP = (
+    "sleep_rgb_or_color_temp",
+    "color_temp",
+)
 CONF_SUNRISE_OFFSET, DEFAULT_SUNRISE_OFFSET = "sunrise_offset", 0
 CONF_SUNRISE_TIME = "sunrise_time"
 CONF_SUNSET_OFFSET, DEFAULT_SUNSET_OFFSET = "sunset_offset", 0
@@ -52,6 +58,7 @@ CONF_MANUAL_CONTROL = "manual_control"
 SERVICE_APPLY = "apply"
 CONF_TURN_ON_LIGHTS = "turn_on_lights"
 
+CONF_ADAPT_DELAY, DEFAULT_ADAPT_DELAY = "adapt_delay", 0
 TURNING_OFF_DELAY = 5
 
 
@@ -72,7 +79,23 @@ VALIDATION_TUPLES = [
     (CONF_MIN_COLOR_TEMP, DEFAULT_MIN_COLOR_TEMP, int_between(1000, 10000)),
     (CONF_MAX_COLOR_TEMP, DEFAULT_MAX_COLOR_TEMP, int_between(1000, 10000)),
     (CONF_SLEEP_BRIGHTNESS, DEFAULT_SLEEP_BRIGHTNESS, int_between(1, 100)),
+    (
+        CONF_SLEEP_RGB_OR_COLOR_TEMP,
+        DEFAULT_SLEEP_RGB_OR_COLOR_TEMP,
+        selector.SelectSelector(
+            selector.SelectSelectorConfig(
+                options=["color_temp", "rgb_color"],
+                multiple=False,
+                mode=selector.SelectSelectorMode.DROPDOWN,
+            ),
+        ),
+    ),
     (CONF_SLEEP_COLOR_TEMP, DEFAULT_SLEEP_COLOR_TEMP, int_between(1000, 10000)),
+    (
+        CONF_SLEEP_RGB_COLOR,
+        DEFAULT_SLEEP_RGB_COLOR,
+        selector.ColorRGBSelector(selector.ColorRGBSelectorConfig()),
+    ),
     (CONF_SUNRISE_TIME, NONE_STR, str),
     (CONF_SUNRISE_OFFSET, DEFAULT_SUNRISE_OFFSET, int),
     (CONF_SUNSET_TIME, NONE_STR, str),
@@ -81,6 +104,7 @@ VALIDATION_TUPLES = [
     (CONF_TAKE_OVER_CONTROL, DEFAULT_TAKE_OVER_CONTROL, bool),
     (CONF_DETECT_NON_HA_CHANGES, DEFAULT_DETECT_NON_HA_CHANGES, bool),
     (CONF_SEPARATE_TURN_ON_COMMANDS, DEFAULT_SEPARATE_TURN_ON_COMMANDS, bool),
+    (CONF_ADAPT_DELAY, DEFAULT_ADAPT_DELAY, int_between(0, 10000)),
 ]
 
 
