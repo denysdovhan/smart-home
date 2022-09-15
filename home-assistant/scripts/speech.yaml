@@ -1,22 +1,67 @@
 announcement:
   alias: Announcement
+  icon: mdi:bell-badge
   fields:
     title:
+      name: Title
       description: A title for a push-notification
-    greetings:
-      description: One of these greetings will be randomly picked for announcement
+      selector:
+        text:
     messages:
+      name: Messages
       description: One of these messages will be randomly picked for announcement
+      selector:
+        object:
+    openings:
+      name: Opening messages
+      description: One of these greetings will be randomly picked for announcement
+      advanced: true
+      selector:
+        object:
     service:
+      name: A notify service
       description: Optially specify who should be notified (all by default)
+      advanced: true
+      default: notify.all
+      selector:
+        select:
+          custom_value: true
+          options:
+            - label: All
+              value: notify.all
+            - label: Denys
+              value: notify.denys
+            - label: Maria
+              value: notify.marry
     speak:
+      name: Speak or not
       description: Optionally specify to make the announcement silently (true by default)
+      default: true
+      advanced: true
+      selector:
+        boolean:
     notify:
+      name: Send notification or not
       description: Optionally specify to make voice-only announcement (true by default)
+      default: true
+      advanced: true
+      selector:
+        boolean:
     force_speak:
+      name: Force announcement to speak
       description: Force speaking even in DND (false by default)
+      default: false
+      advanced: true
+      selector:
+        boolean:
     notify_data:
+      name: Notification data
       description: Optionally pass additional data for a notification
+      advanced: true
+      default:
+        url: /localave/home
+      selector:
+        object:
   variables:
     service: notify.all
     speak: true
@@ -24,15 +69,17 @@ announcement:
     force_speak: false
     notify_data:
       url: /lovelace/home
-    greetings: []
+    openings: []
     message: >-
-      {% if greetings and messages %}
-        {{ (greetings | random) ~ ' ' ~ (messages | random) }}
+      {% if openings and messages %}
+        {{ (openings | random) ~ ' ' ~ (messages | random) }}
       {% elif messages %}
         {{ (messages | random) }}
       {% else %}
         Немає тексту для озвучення.
       {% endif %}
+    multiline: >-
+      {{ test_data }}
   sequence:
     - alias: Make an announcement on speakers
       choose:
@@ -82,6 +129,7 @@ announcement:
 
 greeting:
   alias: Greet people upon their arrival
+  icon: mdi:hand-wave
   variables:
     greeting:
       - 'Привіт!'
@@ -140,7 +188,7 @@ greeting:
               data:
                 notify: false
                 force_speak: true
-                greetings: '{{ greeting }}'
+                openings: '{{ greeting }}'
                 messages: '{{ day_phrases }}'
         - conditions:
             - condition: state
@@ -151,7 +199,7 @@ greeting:
               data:
                 notify: false
                 force_speak: true
-                greetings: '{{ greeting }}'
+                openings: '{{ greeting }}'
                 messages: '{{ night_phrases }}'
       default:
         - service: script.announcement
