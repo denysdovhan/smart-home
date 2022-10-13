@@ -1,6 +1,8 @@
 .deleted
 .docker
 
+home-assistant/automations.yaml
+home-assistant/scripts.yaml
 home-assistant/blueprints
 home-assistant/custom_components
 home-assistant/www
