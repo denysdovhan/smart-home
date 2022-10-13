@@ -76,7 +76,7 @@ from .power_profile.model_discovery import (
     get_power_profile,
     has_manufacturer_and_model_information,
 )
-from .sensors.group import create_group_sensors, update_associated_group_entry
+from .sensors.group import update_associated_group_entry
 from .strategy.factory import PowerCalculatorStrategyFactory
 
 PLATFORMS = [Platform.SENSOR]
@@ -271,7 +271,7 @@ async def autodiscover_entities(config: dict, domain_config: dict, hass: HomeAss
             )
             continue
 
-        has_user_config = is_user_configured(config, entity_entry.entity_id)
+        has_user_config = is_user_configured(hass, config, entity_entry.entity_id)
 
         if power_profile.is_additional_configuration_required and not has_user_config:
             _LOGGER.warning(
@@ -304,25 +304,33 @@ async def autodiscover_entities(config: dict, domain_config: dict, hass: HomeAss
     _LOGGER.debug("Done auto discovering entities")
 
 
-def is_user_configured(config: dict, entity_id: str) -> dict | None:
-    if SENSOR_DOMAIN not in config:
-        return None
-    sensor_config = config.get(SENSOR_DOMAIN)
-    for item in sensor_config:
-        if (
-            isinstance(item, dict)
-            and item.get(CONF_PLATFORM) == DOMAIN
-            and item.get(CONF_ENTITY_ID) == entity_id
-        ):
-            return item
-    return None
+def is_user_configured(hass: HomeAssistant, config: dict, entity_id: str) -> bool:
+    """
+    Check if user have setup powercalc sensors for a given entity_id.
+    Either with the YAML or GUI method.
+    """
+    if SENSOR_DOMAIN in config:
+        sensor_config = config.get(SENSOR_DOMAIN)
+        for item in sensor_config:
+            if (
+                isinstance(item, dict)
+                and item.get(CONF_PLATFORM) == DOMAIN
+                and item.get(CONF_ENTITY_ID) == entity_id
+            ):
+                return True
+
+    for config_entry in hass.config_entries.async_entries(DOMAIN):
+        if config_entry.data.get(CONF_ENTITY_ID) == entity_id:
+            return True
+
+    return False
 
 
 async def create_domain_groups(
     hass: HomeAssistant, global_config: dict, domains: list[str]
 ):
     """Create group sensors aggregating all power sensors from given domains"""
-    _LOGGER.debug(f"Setting up domain based group sensors..")
+    _LOGGER.debug("Setting up domain based group sensors..")
     for domain in domains:
         if domain not in hass.data[DOMAIN].get(DATA_DOMAIN_ENTITIES):
             _LOGGER.error(f"Cannot setup group for domain {domain}, no entities found")
