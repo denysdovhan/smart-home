@@ -19,66 +19,18 @@ google_assistant:
     - climate
     - humidifier
   entity_config:
-    # Input Booleans
-    input_boolean.do_not_disturb:
-      aliases:
-        - silence
-        - silence mode
-        - silent mode
-        - quite mode
-        - do not disturb mode
-    # Vacuum
-    vacuum.roborock:
-      name: Robin
-      aliases:
-        - roborock
-        - robot
-        - vacuum
-        - vacuum cleaner
-    # Media Players
     media_player.playstation_5:
       expose: true
       aliases:
         - ps5
         - playstation
-        - console
     media_player.samsung_tv:
       expose: true
-      aliases:
-        - tv
-        - tevelevision
-        - samsung tv
-    # Switch
-    switch.adaptive_lighting_home:
-      name: Flux
-      aliases:
-        - circadian lighting
-        - circadian flux
-        - circadian lights
-        - flux
-        - flux lights
-        - adaptive ligths
-        - adaptive lightning
-    climate.living_room_heater:
-      aliases:
-        - Living Room TRV
-        - Living Room Valve
-    climate.bedroom_heater:
-      aliases:
-        - Bedroom TRV
-        - Bedroom Valve
 
     # ----------------------------------
     # Prevent exposing specific entities
     # ----------------------------------
 
-    # Scripts
-    script.greeting:
-      expose: false
-    script.announcement:
-      expose: false
-    script.vacuum_regular_cleaning:
-      expose: false
     # Transmission
     switch.transmission_turtle_mode:
       expose: false
