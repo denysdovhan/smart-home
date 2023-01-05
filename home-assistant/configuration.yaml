@@ -15,3 +15,15 @@ homeassistant:
   customize: !include customize.yaml
   # Load packages
   packages: !include_dir_named integrations
+
+shell_command:
+  docker_restart: >
+    ssh
+    -i /config/.ssh/id_rsa
+    -o 'StrictHostKeyChecking=no'
+    ubuntu@192.168.50.113 '~/smart-home/scripts/docker-restart.sh'
+  docker_update: >
+    ssh
+    -i /config/.ssh/id_rsa
+    -o 'StrictHostKeyChecking=no'
+    ubuntu@192.168.50.113 '~/smart-home/scripts/docker-update.sh'

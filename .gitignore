@@ -12,7 +12,7 @@ __pycache__
 # Ignore folders
 .docker
 .deleted
-.router-ssh
+.ssh
 .storage
 .cloud
 .google.token
