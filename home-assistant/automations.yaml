@@ -1285,7 +1285,7 @@
   - alias: Wait for some time
     delay:
       hours: 0
-      minutes: 2
+      minutes: 5
       seconds: 0
       milliseconds: 0
   - alias: Turn off Corridor Light
@@ -2022,3 +2022,61 @@
       notify_data:
         url: /localave/bathroom
   mode: restart
+- id: '1668428030391'
+  alias: 'System: Power Outage Recovery'
+  description: ''
+  trigger:
+  - platform: homeassistant
+    event: start
+  condition: []
+  action:
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - if:
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: group.family
+        state: not_home
+      - condition: state
+        entity_id: binary_sensor.sleeping_time
+        state: 'on'
+    then:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.lights_out
+      metadata: {}
+    else: []
+    alias: Recover lights
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  - if:
+    - condition: state
+      entity_id: binary_sensor.uptime_home_assistant
+      state: unavailable
+    - condition: state
+      entity_id: binary_sensor.uptime_home_router
+      state: unavailable
+    - condition: state
+      entity_id: weather.nyvky
+      state: unavailable
+    - condition: template
+      value_template: '{% set last_recovery = as_timestamp(state_attr(''automation.hacs_releases_alert'',
+        ''last_triggered''), 0) %}
+
+        {% set current_recovery = as_timestamp(now(), 0) %}
+
+        {{ current_recovery - last_recovery > 60 * 10 }}'
+      alias: Ensure at least 10 min between restarts
+    then:
+    - service: shell_command.docker_restart
+      data: {}
+      alias: Perform Docker Restart via SSH
+    alias: Perform full restart when server still has not Internet connection
+  mode: single
