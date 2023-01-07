@@ -90,7 +90,7 @@ I have a [public Notion board][notion-board] with ideas and tasks for my smart h
 
 [notion-board]: https://www.notion.so/denysdovhan/f09ea06da5db4cfa84d3ca50417b93b2?v=5fccab53c2fd4ac188ee0b92c2ca1cb9
 [github-url]: https://github.com/denysdovhan/smart-home
-[github-img]: https://img.shields.io/github/workflow/status/denysdovhan/smart-home/CI/master?style=flat-square
+[github-img]: https://img.shields.io/github/actions/workflow/status/denysdovhan/smart-home/homeassistant.yml?style=flat-square
 [last-commit-img]: https://img.shields.io/github/last-commit/denysdovhan/smart-home?style=flat-square
 [commit-activity-img]: https://img.shields.io/github/commit-activity/m/denysdovhan/smart-home?style=flat-square
 [license-url]: https://github.com/denysdovhan/smart-home/blob/master/LICENSE

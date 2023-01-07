@@ -24,7 +24,7 @@ I also have a [public Notion board](https://www.notion.so/denysdovhan/f09ea06da5
 <!-- References -->
 
 [github-url]: https://github.com/denysdovhan/smart-home
-[github-img]: https://img.shields.io/github/workflow/status/denysdovhan/smart-home/CI/master?style=flat-square
+[github-img]: https://img.shields.io/github/actions/workflow/status/denysdovhan/smart-home/homeassistant.yml?style=flat-square
 [last-commit-img]: https://img.shields.io/github/last-commit/denysdovhan/smart-home?style=flat-square
 [commit-activity-img]: https://img.shields.io/github/commit-activity/m/denysdovhan/smart-home?style=flat-square
 [license-url]: https://github.com/denysdovhan/smart-home/blob/master/LICENSE
