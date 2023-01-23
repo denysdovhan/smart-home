@@ -16,3 +16,4 @@ advanced:
   channel: 15
   last_seen: ISO_8601_local
   log_level: info
+availability: true
