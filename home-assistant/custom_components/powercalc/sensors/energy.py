@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import logging
-from typing import Any, MutableMapping, Optional
+from typing import Any, Mapping, Optional
 
 import homeassistant.helpers.entity_registry as er
 import homeassistant.util.dt as dt_util
@@ -11,11 +11,13 @@ from homeassistant.components.sensor import SensorDeviceClass
 from homeassistant.const import CONF_NAME, ENERGY_KILO_WATT_HOUR, TIME_HOURS
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity import EntityCategory
+from homeassistant.helpers.typing import ConfigType
 
 from ..common import SourceEntity
 from ..const import (
     ATTR_SOURCE_DOMAIN,
     ATTR_SOURCE_ENTITY,
+    CONF_DISABLE_EXTENDED_ATTRIBUTES,
     CONF_ENERGY_INTEGRATION_METHOD,
     CONF_ENERGY_SENSOR_CATEGORY,
     CONF_ENERGY_SENSOR_ID,
@@ -25,6 +27,7 @@ from ..const import (
     DEFAULT_ENERGY_INTEGRATION_METHOD,
     UnitPrefix,
 )
+from ..errors import SensorConfigurationError
 from .abstract import (
     BaseEntity,
     generate_energy_sensor_entity_id,
@@ -40,7 +43,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def create_energy_sensor(
     hass: HomeAssistant,
-    sensor_config: dict,
+    sensor_config: ConfigType,
     power_sensor: PowerSensor,
     source_entity: SourceEntity,
 ) -> EnergySensor:
@@ -49,7 +52,12 @@ async def create_energy_sensor(
     # User specified an existing energy sensor with "energy_sensor_id" option. Just return that one
     if CONF_ENERGY_SENSOR_ID in sensor_config:
         ent_reg = er.async_get(hass)
-        entity_entry = ent_reg.async_get(sensor_config[CONF_ENERGY_SENSOR_ID])
+        energy_sensor_id = sensor_config[CONF_ENERGY_SENSOR_ID]
+        entity_entry = ent_reg.async_get(energy_sensor_id)
+        if entity_entry is None:
+            raise SensorConfigurationError(
+                f"No energy sensor with id {energy_sensor_id} found in your HA instance. Double check `energy_sensor_id` setting"
+            )
         return RealEnergySensor(entity_entry)
 
     # User specified an existing power sensor with "power_sensor_id" option. Try to find a corresponding energy sensor
@@ -98,6 +106,7 @@ async def create_energy_sensor(
         or DEFAULT_ENERGY_INTEGRATION_METHOD,
         powercalc_source_entity=source_entity.entity_id,
         powercalc_source_domain=source_entity.domain,
+        sensor_config=sensor_config,
     )
 
 
@@ -125,13 +134,11 @@ def find_related_real_energy_sensor(
     return RealEnergySensor(energy_sensors[0])
 
 
-class EnergySensor:
+class EnergySensor(BaseEntity):
     """Class which all energy sensors should extend from"""
 
-    pass
 
-
-class VirtualEnergySensor(IntegrationSensor, EnergySensor, BaseEntity):
+class VirtualEnergySensor(IntegrationSensor, EnergySensor):
     """Virtual energy sensor, totalling kWh"""
 
     def __init__(
@@ -147,6 +154,7 @@ class VirtualEnergySensor(IntegrationSensor, EnergySensor, BaseEntity):
         integration_method,
         powercalc_source_entity: str,
         powercalc_source_domain: str,
+        sensor_config: ConfigType,
     ):
         super().__init__(
             source_entity=source_entity,
@@ -160,13 +168,17 @@ class VirtualEnergySensor(IntegrationSensor, EnergySensor, BaseEntity):
 
         self._powercalc_source_entity = powercalc_source_entity
         self._powercalc_source_domain = powercalc_source_domain
+        self._sensor_config = sensor_config
         self.entity_id = entity_id
         if entity_category:
             self._attr_entity_category = EntityCategory(entity_category)
 
     @property
-    def extra_state_attributes(self) -> MutableMapping[str, Any]:
+    def extra_state_attributes(self) -> Mapping[str, Any]:
         """Return the state attributes of the energy sensor."""
+        if self._sensor_config.get(CONF_DISABLE_EXTENDED_ATTRIBUTES):
+            return super().extra_state_attributes
+
         attrs = {
             ATTR_SOURCE_ENTITY: self._powercalc_source_entity,
             ATTR_SOURCE_DOMAIN: self._powercalc_source_domain,
@@ -198,7 +210,7 @@ class RealEnergySensor(EnergySensor):
         return self._entity_entry.entity_id
 
     @property
-    def name(self) -> str:
+    def name(self) -> str | None:
         """Return the name of the sensor."""
         return self._entity_entry.name or self._entity_entry.original_name
 

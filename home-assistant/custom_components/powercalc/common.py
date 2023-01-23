@@ -55,7 +55,9 @@ async def create_source_entity(entity_id: str, hass: HomeAssistant) -> SourceEnt
     unique_id = None
     supported_color_modes = []
     if entity_entry:
-        source_entity_name = entity_entry.name or entity_entry.original_name
+        source_entity_name = (
+            entity_entry.name or entity_entry.original_name or source_object_id
+        )
         source_entity_domain = entity_entry.domain
         unique_id = entity_entry.unique_id
         if entity_entry.capabilities:
@@ -109,7 +111,10 @@ def get_merged_sensor_configuration(*configs: dict, validate: bool = True) -> di
             CONF_CREATE_ENERGY_SENSORS
         )
 
-    if CONF_DAILY_FIXED_ENERGY in merged_config and CONF_ENTITY_ID not in merged_config:
+    if (
+        CONF_DAILY_FIXED_ENERGY in merged_config
+        or CONF_POWER_SENSOR_ID in merged_config
+    ) and CONF_ENTITY_ID not in merged_config:
         merged_config[CONF_ENTITY_ID] = DUMMY_ENTITY_ID
 
     if (

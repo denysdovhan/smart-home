@@ -5,6 +5,7 @@ from decimal import Decimal
 from typing import Optional
 
 import voluptuous as vol
+from homeassistant.components.sensor import SensorDeviceClass
 from homeassistant.core import HomeAssistant, State
 from homeassistant.helpers import entity_registry
 from homeassistant.helpers.event import TrackTemplate
@@ -40,7 +41,7 @@ class WledStrategy(PowerCalculationStrategyInterface):
         self._standby_power = standby_power
         self._estimated_current_entity: str | None = None
 
-    async def calculate(self, entity_state: State) -> Optional[Decimal]:
+    async def calculate(self, entity_state: State) -> Decimal | None:
         if entity_state.entity_id == self._light_entity.entity_id:
             light_state = entity_state
         else:
@@ -71,7 +72,8 @@ class WledStrategy(PowerCalculationStrategyInterface):
             for entity_entry in entity_registry.async_entries_for_device(
                 entity_reg, device_id
             )
-            if "estimated_current" in entity_entry.entity_id
+            if (entity_entry.device_class or entity_entry.original_device_class)
+            == SensorDeviceClass.CURRENT
         ]
         if estimated_current_entities:
             return estimated_current_entities[0]
@@ -84,5 +86,5 @@ class WledStrategy(PowerCalculationStrategyInterface):
     def can_calculate_standby(self) -> bool:
         return True
 
-    async def validate_config(self):
+    async def validate_config(self) -> None:
         self._estimated_current_entity = await self.find_estimated_current_entity()

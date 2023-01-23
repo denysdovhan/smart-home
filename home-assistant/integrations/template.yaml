@@ -155,48 +155,6 @@ template:
 
   # Energy Sensors
   - sensor:
-      # Living Room Smart + Dumb Devices
-      - name: Living Room Total energy
-        state_class: total_increasing
-        device_class: energy
-        unit_of_measurement: kWh
-        state: >-
-          {% set devices = states('sensor.living_room_devices_energy') | float(0) %}
-          {% set fridge = states('sensor.fridge_energy') | float(0) %}
-          {% set rbpi = states('sensor.raspberry_pi_energy') | float(0) %}
-          {% set router = states('sensor.router_energy') | float(0) %}
-          {{ devices + fridge + rbpi + router }}
-
-      - name: Bathroom Total energy
-        state_class: total_increasing
-        device_class: energy
-        unit_of_measurement: kWh
-        state: >-
-          {% set water_heater = states('sensor.water_heater_energy') | float(0) %}
-          {{ water_heater }}
-
-      - name: Total energy
-        state_class: total_increasing
-        device_class: energy
-        unit_of_measurement: kWh
-        state: >-
-          {% set living_room = states('sensor.living_room_total_energy') | float(0) %}
-          {% set bedroom = states('sensor.bedroom_total_energy') | float(0) %}
-          {% set balcony = states('sensor.balcony_total_energy') | float(0) %}
-          {% set bathroom = states('sensor.bathroom_total_energy') | float(0) %}
-          {{ living_room + bedroom + balcony + bathroom }}
-
-      - name: Total power
-        state_class: measurement
-        device_class: power
-        unit_of_measurement: W
-        state: >-
-          {% set living_room = states('sensor.living_room_devices_power') | float(0) %}
-          {% set bedroom = states('sensor.bedroom_total_power') | float(0) %}
-          {% set balcony = states('sensor.balcony_total_power') | float(0) %}
-          {% set bathroom = states('sensor.bathroom_total_power') | float(0) %}
-          {{ living_room + bedroom + balcony + bathroom }}
-
       - name: Energy Price
         device_class: monetary
         unit_of_measurement: UAH/kWh
@@ -204,13 +162,13 @@ template:
           {% set below_limit_price = 1.44 %}
           {% set above_limit_price = 1.68 %}
 
-          {% if is_state('utility_meter.energy_monthly', 'peak') %}
+          {% if is_state('select.energy_monthly', 'peak') %}
             {{ below_limit_price }}
-          {% elif is_state('utility_meter.energy_monthly', 'offpeak') %}
+          {% elif is_state('select.energy_monthly', 'offpeak') %}
             {{ below_limit_price * 0.5 }}
-          {% elif is_state('utility_meter.energy_monthly', 'peak_overlimit') %}
+          {% elif is_state('select.energy_monthly', 'peak_overlimit') %}
             {{ above_limit_price }}
-          {% elif is_state('utility_meter.energy_monthly', 'offpeak_overlimit') %}
+          {% elif is_state('select.energy_monthly', 'offpeak_overlimit') %}
             {{ above_limit_price * 0.5 }}
           {% else %}
             None
