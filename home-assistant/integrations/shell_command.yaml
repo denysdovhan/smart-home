@@ -1,0 +1,17 @@
+#
+# Shell Command
+#
+# https://www.home-assistant.io/integrations/shell_command/
+#
+
+shell_command:
+  docker_restart: >
+    ssh
+    -i /config/.ssh/id_rsa
+    -o 'StrictHostKeyChecking=no'
+    ubuntu@192.168.50.113 '~/smart-home/scripts/docker-restart.sh'
+  docker_update: >
+    ssh
+    -i /config/.ssh/id_rsa
+    -o 'StrictHostKeyChecking=no'
+    ubuntu@192.168.50.113 '~/smart-home/scripts/docker-update.sh'
