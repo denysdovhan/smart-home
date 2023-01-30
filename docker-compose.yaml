@@ -23,6 +23,7 @@ services:
       - .env
     environment:
       WATCHTOWER_CLEANUP: 'true'
+      WATCHTOWER_WARN_ON_HEAD_FAILURE: 'never'
       WATCHTOWER_NO_STARTUP_MESSAGE: 'true'
       WATCHTOWER_SCHEDULE: '0 0 5 * * 6'
       WATCHTOWER_NOTIFICATIONS: email
@@ -275,7 +276,7 @@ services:
   # PS5
   ps5mqtt:
     container_name: ps5mqtt
-    image: ghcr.io/funkeyflo/ps5-mqtt/aarch64:1.0.1
+    image: ghcr.io/funkeyflo/ps5-mqtt/aarch64:latest
     entrypoint: /config/run.sh
     volumes:
       - ./ps5:/config
