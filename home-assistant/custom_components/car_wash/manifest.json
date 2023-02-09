@@ -1,16 +1,16 @@
 {
-  "domain": "car_wash",
-  "name": "Car Wash",
-  "version": "1.5.2",
-  "documentation": "https://github.com/Limych/ha-car_wash",
-  "issue_tracker": "https://github.com/Limych/ha-car_wash/issues",
-  "dependencies": [
-    "weather"
-  ],
-  "config_flow": false,
-  "codeowners": [
-    "@Limych"
-  ],
-  "requirements": [],
-  "iot_class": "calculated"
+    "domain": "car_wash",
+    "name": "Car Wash",
+    "version": "1.5.5",
+    "documentation": "https://github.com/Limych/ha-car_wash",
+    "issue_tracker": "https://github.com/Limych/ha-car_wash/issues",
+    "dependencies": [
+        "weather"
+    ],
+    "config_flow": false,
+    "codeowners": [
+        "@Limych"
+    ],
+    "requirements": [],
+    "iot_class": "calculated"
 }

@@ -1,18 +1,19 @@
 #  Copyright (c) 2019-2021, Andrey "Limych" Khrolenok <andrey@khrolenok.ru>
 #  Creative Commons BY-NC-SA 4.0 International Public License
 #  (see LICENSE.md or https://creativecommons.org/licenses/by-nc-sa/4.0/)
-"""
-The Car Wash binary sensor.
+"""The Car Wash binary sensor.
 
 For more details about this platform, please refer to the documentation at
 https://github.com/Limych/ha-car_wash/
 """
 
-import logging
+from collections.abc import Callable
 from datetime import datetime
-from typing import Callable, Optional
+import logging
+from typing import Optional
 
 import voluptuous as vol
+
 from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.components.weather import (
     ATTR_FORECAST,
@@ -27,7 +28,7 @@ from homeassistant.const import (
     CONF_NAME,
     CONF_UNIQUE_ID,
     EVENT_HOMEASSISTANT_START,
-    TEMP_CELSIUS,
+    UnitOfTemperature,
 )
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.exceptions import HomeAssistantError
@@ -35,7 +36,7 @@ from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.event import async_track_state_change
 from homeassistant.helpers.typing import ConfigType
 from homeassistant.util import dt as dt_util
-from homeassistant.util.temperature import convert as convert_temperature
+from homeassistant.util.unit_conversion import TemperatureConverter
 
 from .const import (
     BAD_CONDITIONS,
@@ -139,11 +140,8 @@ class CarWashBinarySensor(BinarySensorEntity):
     @staticmethod
     def _temp2c(temperature: Optional[float], temperature_unit: str) -> Optional[float]:
         """Convert weather temperature to Celsius degree."""
-        if temperature is not None and temperature_unit != TEMP_CELSIUS:
-            temperature = convert_temperature(
-                temperature, temperature_unit, TEMP_CELSIUS
-            )
-
+        if temperature is not None and temperature_unit != UnitOfTemperature.CELSIUS:
+            temperature = TemperatureConverter.convert(temperature, temperature_unit, UnitOfTemperature.CELSIUS)
         return temperature
 
     # pylint: disable=too-many-branches,too-many-statements
