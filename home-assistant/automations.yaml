@@ -1494,20 +1494,6 @@
     entity_id: binary_sensor.home_occupancy
     state: 'off'
   action:
-  - alias: Switch heaters to Manual during Heating Season
-    choose:
-    - conditions:
-      - condition: state
-        entity_id: binary_sensor.heating_season
-        state: 'on'
-      sequence:
-      - alias: Set TRVs to normal
-        service: climate.set_preset_mode
-        data:
-          entity_id:
-          - climate.living_room_heater
-          - climate.bedroom_heater
-          preset_mode: manual
   - alias: Wait for someone to come
     wait_for_trigger:
     - platform: state
@@ -1597,20 +1583,6 @@
     - climate.living_room_ac
     - climate.bedroom_ac
     - climate.balcony_heater
-  - alias: Switch heaters to Eco during Heating Season
-    choose:
-    - conditions:
-      - condition: state
-        entity_id: binary_sensor.heating_season
-        state: 'on'
-      sequence:
-      - alias: Set TRVs to normal
-        service: climate.set_preset_mode
-        data:
-          entity_id:
-          - climate.living_room_heater
-          - climate.bedroom_heater
-          preset_mode: eco
   - alias: Turn off all Media Players
     service: media_player.turn_off
     entity_id: all
