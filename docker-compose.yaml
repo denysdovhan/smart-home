@@ -107,7 +107,7 @@ services:
   # Simple and flexible UI for backing up stuff
   duplicati:
     container_name: duplicati
-    image: linuxserver/duplicati
+    image: lscr.io/linuxserver/duplicati:latest
     env_file:
       - .env
     volumes:
@@ -224,7 +224,7 @@ services:
   # Plex
   # Personal media server with movies and tv-series
   plex:
-    image: linuxserver/plex
+    image: lscr.io/linuxserver/plex:latest
     container_name: plex
     network_mode: host
     env_file:
@@ -241,7 +241,7 @@ services:
   # A torrent client for downloading media
   transmission:
     container_name: transmission
-    image: linuxserver/transmission
+    image: lscr.io/linuxserver/transmission:latest
     restart: unless-stopped
     env_file:
       - .env
