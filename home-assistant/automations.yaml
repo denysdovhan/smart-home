@@ -501,41 +501,6 @@
         url: /torrents
         group: system
     alias: Notify about completed torrent
-- id: unavailable_devices_notifications
-  alias: 'Alert: Unavailable Devices'
-  description: Find all unavailable lights, climates, etc and notify about them
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.unavailable_devices
-    above: 0
-    for:
-      minutes: 1
-  condition:
-  - condition: state
-    entity_id: group.family
-    state: home
-  action:
-  - variables:
-      unavailable_entities: '{{ trigger.to_state.attributes.entities_names | join('',
-        '') }}'
-  - service: script.announcement
-    data:
-      speak: false
-      title: "Недоступні пристрої \U0001F50C"
-      openings:
-      - У {{ unavailable_entities }} немає з’язку з розумним домом!
-      - Немає зв’язку з {{ unavailable_entities }}!
-      - Зник зв’язок з {{ unavailable_entities }}!
-      - Втрата підключення до {{ unavailable_entities }}!
-      messages:
-      - Перезапуск може допомогти.
-      - Спробуйте перезапустити.
-      - Перевірте підключення або перезапустіть.
-      - Перепідключіть або перезапустіть.
-      - Спробуйте перевірити з’єднання та перезапустити.
-      notify_data:
-        group: system
-    alias: Announce unavailable devices
 - id: humidifier_no_water
   alias: 'Alert: Humidifier No Water'
   description: Notify when humidifier's water tank is empty
@@ -921,64 +886,6 @@
         - action: '{{ heat_action }}'
           title: Нагріти балкон
         url: /lovelace/balcony
-- id: valve_maintenance
-  alias: 'Climate: Valve Maintenance'
-  description: Fully opens and closes valves in order to keep them functional
-  trigger:
-  - platform: time
-    at: '12:00'
-  condition:
-  - alias: First day of the month
-    condition: template
-    value_template: '{{ now().day == 1 }}'
-  - alias: Middle of the month
-    condition: template
-    value_template: '{{ now().day == 15 }}'
-  action:
-  - alias: Fully open valves
-    service: select.select_option
-    data:
-      entity_id:
-      - select.living_room_heater_force
-      - select.bedroom_heater_force
-      option: open
-  - alias: Wait for valves to open
-    wait_for_trigger:
-    - platform: numeric_state
-      entity_id:
-      - sensor.living_room_heater_position
-      - sensor.bedroom_heater_position
-      above: 99
-      for:
-        seconds: 30
-    timeout:
-      minutes: 2
-  - alias: Fully close valves
-    service: select.select_option
-    data:
-      entity_id:
-      - select.living_room_heater_force
-      - select.bedroom_heater_force
-      option: close
-  - alias: Wait for valves to close
-    wait_for_trigger:
-    - platform: numeric_state
-      entity_id:
-      - sensor.living_room_heater_position
-      - sensor.bedroom_heater_position
-      below: 1
-      for:
-        seconds: 30
-    timeout:
-      minutes: 2
-  - alias: Switch valves back to normal
-    service: select.select_option
-    data:
-      option: normal
-    target:
-      entity_id:
-      - select.bedroom_heater_force
-      - select.living_room_heater_force
 - id: turn_on_balcony_heater
   alias: 'Climate: Turn on Balcony Heater'
   description: Turn on Balcony Heater when it's cold and Desk Lamp or Working Display
