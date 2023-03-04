@@ -19,7 +19,7 @@ template:
         state: >-
           {% set camera_on = is_state('binary_sensor.wix_macbook_pro_camera_in_use', 'on') %}
           {% set mic_on = is_state('binary_sensor.wix_macbook_pro_audio_input_in_use', 'on') %}
-          {% set focus_on = is_state('binary_sensor.denyss_iphone_focus', 'on') %}
+          {% set focus_on = is_state('binary_sensor.denys_iphone_focus', 'on') %}
           {% set sleep_on = is_state('binary_sensor.sleeping_time', 'on') %}
           {% set at_home = is_state('person.denys', 'home') %}
           {{ at_home and (camera_on or mic_on or focus_on or sleep_on) }}
@@ -109,25 +109,6 @@ template:
         unit_of_measurement: '%'
         state: >-
           {{ state_attr('sensor.misto_lun', 'tomtom_jams').jams | int(0) }}
-
-  # Availability Monitor
-  - sensor:
-      - name: Unavailable Devices
-        state: >-
-          {% set domains = [states.light, states.media_player, states.fan, states.humidifier] %}
-          {% set states = ['unavailable', 'unknown', 'none'] %}
-          {{ expand(domains) | selectattr('state', 'in', states) | list | length }}
-        icon: >-
-          {{ iif(states('sensor.unavailable_devices') | int(0) > 0, 'mdi:lan-connect', 'mdi:lan-disconnect') }}
-        attributes:
-          entities: >-
-            {% set domains = [states.light, states.media_player, states.fan, states.humidifier] %}
-            {% set states = ['unavailable', 'unknown', 'none'] %}
-            {{ expand(domains) | selectattr('state', 'in', states) | map(attribute='entity_id') | list }}
-          entities_names: >-
-            {% set domains = [states.light, states.media_player, states.fan, states.humidifier] %}
-            {% set states = ['unavailable', 'unknown', 'none'] %}
-            {{ expand(domains) | selectattr('state', 'in', states) | map(attribute='name') | list }}
 
   # Time To New Home
   - sensor:
