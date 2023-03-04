@@ -320,7 +320,7 @@
     entity_id: sensor.processor_use
     above: 90
     for:
-      seconds: 30
+      minutes: 5
     variables:
       openings:
       - Процесор навантажений на {{ trigger.to_state.state }}%.
@@ -339,13 +339,12 @@
       - Температура процесора {{ trigger.to_state.state }}°С.
       - Процесор нагрівся до {{ trigger.to_state.state }}°С.
       messages:
-      - Аномально велике навантаження на процесор.
       - Охолодження процесора не справляється з навантаженням.
   - platform: numeric_state
     entity_id: sensor.memory_use_percent
     above: 90
     for:
-      seconds: 30
+      minutes: 1
     variables:
       openings:
       - Оперативна пам’ять заповнена на {{ trigger.to_state.state }}%.
@@ -383,8 +382,9 @@
   - service: script.announcement
     data:
       title: "Системний пік \U0001F525"
-      openings: '{{ greetings }}'
+      openings: '{{ openings }}'
       messages: '{{ messages }}'
+      speak: false
       notify_data:
         url: /lovelace/system
         group: system
@@ -469,7 +469,7 @@
   - service: script.announcement
     data:
       title: '{{ title }}'
-      openings: '{{ greetings }}'
+      openings: '{{ openings }}'
       messages: '{{ messages }}'
       notify_data:
         url: /lovelace/city
@@ -568,7 +568,7 @@
     data:
       speak: false
       title: '{{ title }}'
-      openings: '{{ greetings }}'
+      openings: '{{ openings }}'
       messages: '{{ messages }}'
       notify_data:
         url: /lovelace/car
@@ -727,7 +727,7 @@
       title: Електрика ⚡️
       speak: false
       service: notify.denys
-      openings: '{{ greetings }}'
+      openings: '{{ openings }}'
       messages: '{{ messages }}'
       notify_data:
         url: /energy
@@ -939,6 +939,7 @@
       hours: 0
       minutes: 10
       seconds: 0
+    from: 'on'
   - platform: state
     entity_id:
     - binary_sensor.working_display_connected
@@ -947,6 +948,7 @@
       hours: 0
       minutes: 10
       seconds: 0
+    from: 'on'
   - platform: state
     entity_id:
     - binary_sensor.balcony_comfort_temperature
@@ -962,17 +964,20 @@
   - condition: state
     entity_id: binary_sensor.balcony_comfort_temperature
     state: 'on'
+    enabled: false
   - condition: state
     entity_id: binary_sensor.working_display_connected
     state: 'off'
   action:
   - service: climate.turn_off
     entity_id: climate.balcony_heater
-  - condition: state
-    entity_id: light.desk_lamp
-    state: 'on'
-  - service: light.turn_off
-    entity_id: light.desk_lamp
+  - if:
+    - condition: state
+      entity_id: light.desk_lamp
+      state: 'on'
+    then:
+    - service: light.turn_off
+      entity_id: light.desk_lamp
 - id: preheat_balcony
   alias: 'Climate: Preheat Balcony for a Workday'
   description: When Denys wakes up, ask if he is going to work on balcony, start heating
@@ -980,7 +985,7 @@
   trigger:
   - platform: state
     entity_id:
-    - binary_sensor.denyss_iphone_focus
+    - binary_sensor.denys_iphone_focus
     to: 'off'
   condition:
   - condition: state
@@ -1086,6 +1091,11 @@
     entity_id: light.bedroom_lights
     state: 'off'
   action:
+  - service: scene.turn_on
+    data:
+      transition: 5
+    target:
+      entity_id: scene.night_lights
   - service: script.announcement
     data:
       notify: false
@@ -1105,12 +1115,12 @@
       - Час увімкнути світло.
       - Вмикаю для вас світло.
       - Вмикаю вечірнє світло.
+      service: notify.all
+      speak: true
+      force_speak: false
+      notify_data:
+        url: /localave/home
     alias: Announce lights
-  - service: scene.turn_on
-    data:
-      transition: 5
-    target:
-      entity_id: scene.night_lights
 - id: turn_on_lights_on_low_illuminance
   alias: 'Light: Turn on lights on low illuminance'
   description: Turn on lights on low illuminance
@@ -1139,6 +1149,11 @@
     before: '22:00:00'
     alias: Activate only after noon till night
   action:
+  - service: scene.turn_on
+    data:
+      transition: 5
+    target:
+      entity_id: scene.night_lights
   - service: script.announcement
     data:
       notify: false
@@ -1158,12 +1173,12 @@
       - Вмикаємо світло.
       - Вмикаю світло.
       - Час увімкнути світло.
+      service: notify.all
+      speak: true
+      force_speak: false
+      notify_data:
+        url: /localave/home
     alias: Announce low illuminance on speakers
-  - service: scene.turn_on
-    data:
-      transition: 5
-    target:
-      entity_id: scene.night_lights
 - id: turn_on_corridor_light_when_door_is_open
   alias: 'Light: Turn on Corridor Light when Door is open'
   description: Turn on Corridor Light when Front Door opens and then turn it off after
@@ -1763,7 +1778,7 @@
   - service: script.announcement
     data:
       title: "Пилосос \U0001F9F9"
-      openings: '{{ greetings }}'
+      openings: '{{ openings }}'
       messages: '{{ messages }}'
       notify_data:
         url: /lovelace/vacuum
