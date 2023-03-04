@@ -90,18 +90,6 @@
         group: alarm
         entity_id: camera.home_camera
     alias: Announce Alarm is triggered
-- id: healthcheck
-  alias: 'System: Healthcheck Connection'
-  description: Send a ping to Healthcheck every minute
-  trigger:
-  - platform: time_pattern
-    minutes: /10
-    alias: Every 10 minutes
-  action:
-  - service: rest_command.healthcheck
-    data: {}
-    alias: Send a ping to healthchecks.io
-  mode: single
 - id: turn_off_tv_with_playstation
   alias: 'Media: Turn off Samsung TV when PlayStation turns off'
   description: Turn off Samsung TV when PS5 goes to sleep mode
