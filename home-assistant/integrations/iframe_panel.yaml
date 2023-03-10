@@ -1,14 +1,4 @@
 panel_iframe:
-  nginx:
-    title: Nginx
-    icon: mdi:arrow-decision
-    url: !secret service_nginx
-    require_admin: true
-  portainer:
-    title: Portainer
-    icon: mdi:docker
-    url: !secret service_portainer
-    require_admin: true
   esphome:
     title: ESPHome
     icon: mdi:chip

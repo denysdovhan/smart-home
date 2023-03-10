@@ -1,0 +1,103 @@
+subtitle: 'this is another dashboard page'
+
+# This overwrites message config.
+message:
+  title: Локальні адреси для сервісів
+  icon: fa fa-network-wired
+  content: >
+    Нижче доступні посилання на домашні сервіси за локальними адресами.
+    Такі посиалання працюють лише при підключенні до домашньої мережі.
+
+# Header links
+links:
+  - name: Home
+    icon: fas fa-home
+    url: /
+  - name: Smart Home Docs
+    icon: fas fa-book
+    url: 'https://denysdovhan.com/smart-home'
+
+# Services
+services:
+  - name: Smart Home
+    icon: fas fa-cloud
+    items:
+      - name: Home Assistant
+        subtitle: Інтерфейс для розумного дому
+        logo: https://raw.githubusercontent.com/home-assistant/assets/master/logo/logo-pretty.svg
+        url: http://smart-home.local:8123
+        target: _blank
+      - name: Zigbee2MQTT
+        subtitle: Сервіс для Zigbee-пристроїв
+        logo: https://www.zigbee2mqtt.io/logo.png
+        url: http://smart-home.local:8099
+        target: _blank
+      - name: ESPHome
+        subtitle: Сервіс для ESP-пристроїв
+        logo: https://esphome.io/_images/logo.svg
+        url: http://smart-home.local:6052
+        target: _blank
+      - name: Vaultwarden
+        subtitle: Менеджер паролів (Bitwarden)
+        logo: https://raw.githubusercontent.com/dani-garcia/vaultwarden/master/resources/vaultwarden-icon.svg
+        url: http://smart-home.local:3880
+        target: _blank
+  - name: Media
+    icon: fas fa-tv
+    items:
+      - name: Plex
+        subtitle: Медіа сервер з фільмами та серіалами
+        logo: https://www.vectorlogo.zone/logos/plextv/plextv-tile.svg
+        url: http://smart-home.local:32400/
+        target: _blank
+        tag: external
+      - name: Transmission
+        subtitle: Торрент-клієнт на сервері
+        logo: https://transmissionbt.com/assets/images/Transmission_icon.png
+        url: http://smart-home.local:9091
+        target: _blank
+      - name: Sonarr
+        subtitle: Сервіс для моніторингу серіалів
+        logo: https://avatars.githubusercontent.com/u/1082903
+        url: http://smart-home.local:8989
+        target: _blank
+      # TODO: Radarr
+      - name: Jackett
+        subtitle: Проксі-API для торрент трекерів
+        logo: https://avatars.githubusercontent.com/u/15383019
+        url: http://smart-home.local:9117
+        target: _blank
+      - name: PS5MQTT
+        subtitle: Проксі для інтеграції PS5 у Home Assistant
+        logo: https://github.com/FunkeyFlo/ps5-mqtt/raw/main/add-ons/ps5-mqtt/logo.png
+        url: http://smart-home.local:8645
+        target: _blank
+        tag: local
+  - name: Система
+    icon: fas fa-server
+    items:
+      - name: Portainer
+        subtitle: Керування сервісами
+        logo: https://cdn.worldvectorlogo.com/logos/portainer.svg
+        url: http://smart-home.local:9000
+        target: _blank
+      - name: Nginx Proxy Manager
+        subtitle: Керування зовнішнім доступом
+        logo: https://nginxproxymanager.com/icon.png
+        url: http://smart-home.local:8081
+        target: _blank
+      - name: Ubuntu Cockpit
+        subtitle: UI для керування системою сервера
+        logo: https://cdn.svgporn.com/logos/ubuntu.svg
+        url: http://smart-home.local:9090
+        target: _blank
+      - name: Duplicati
+        subtitle: Керування бекапами
+        logo: https://www.duplicati.com/images/duplicati-fb-share-v1.png
+        url: http://smart-home.local:8200
+        target: _blank
+      - name: Adminer
+        subtitle: Інтерфейс для бази даних
+        icon: fas fa-database
+        url: http://smart-home.local:8080
+        target: _blank

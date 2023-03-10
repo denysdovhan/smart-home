@@ -115,3 +115,9 @@ I use it for downloading media to [my hard drive](../../hardware#media-volume).
 ![Bitwarden](https://user-images.githubusercontent.com/3459374/116572155-642c5880-a914-11eb-964c-1db0c962a5ef.png)
 
 [Bitwarden](https://bitwarden.com/) is an open-source password manager that can be self-hosted. I'm using [Vaultwarden](https://github.com/dani-garcia/vaultwarden), which is an unofficial Bitwarden client written in Rust. Vaultwarden is especially useful for low powerful machines, like Raspberry Pi.
+
+## Homer
+
+![Homer](https://user-images.githubusercontent.com/3459374/224329657-75f90a3d-3eb6-496e-8617-ac0a101d5319.png)
+
+[Homer](https://github.com/bastienwirtz/homer) is a smart home dashboard. I use it for having a quick access to the links of my smart-home services in a single place.

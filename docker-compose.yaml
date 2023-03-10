@@ -291,3 +291,14 @@ services:
       DEBUG: '@ha:ps5:*'
       PSN_ACCOUNTS: '[]'
       CREDENTIAL_STORAGE_PATH: /config/credentials.json
+
+  homer:
+    container_name: homer
+    image: b4bz/homer
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./homer:/www/assets
+    ports:
+      - 8888:8080
