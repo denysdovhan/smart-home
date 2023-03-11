@@ -110,6 +110,12 @@ Media is downloaded via [Transmission](#transmission).
 
 I use it for downloading media to [my hard drive](../../hardware#media-volume).
 
+## Sonarr, Radarr, Prowlar
+
+![Radarr](https://user-images.githubusercontent.com/3459374/224509674-9486bf8d-73f2-438e-90dd-de1914fee56c.png)
+
+_Servarr_ stack containers provide media managing platform. [Prowlarr](https://github.com/Prowlarr/Prowlarr) provides proxy-API for popular torrent trackers. [Sonarr](https://sonarr.tv) monitors TV Series, downloads and organize them. [Radarr](https://radarr.video) does the same as Sonarr, but for movies.
+
 ## Bitwarden
 
 ![Bitwarden](https://user-images.githubusercontent.com/3459374/116572155-642c5880-a914-11eb-964c-1db0c962a5ef.png)

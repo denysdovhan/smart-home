@@ -19,7 +19,8 @@ Here's a table of services and ports exposed via `docker-compose`:
 | Transmission        | 9091, 51413                                                      |
 | Vaultwarden         | 3880                                                             |
 | Sonarr              | 8989                                                             |
-| Jackett             | 9117                                                             |
+| Radarr              | 7878                                                             |
+| Prowlarr            | 9696                                                             |
 | PS5MQTT             | 8645                                                             |
 
 <!-- prettier-ignore -->

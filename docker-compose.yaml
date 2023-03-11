@@ -256,7 +256,48 @@ services:
     volumes:
       - .docker/transmission/config:/config
       - .docker/transmission/web:/web
-      - ${MEDIA_VOLUME}:/downloads
+      - ${MEDIA_VOLUME}/downloads:/downloads
+
+  # Sonarr
+  # A TV series manager for grabing, sorting and organizing new series
+  sonarr:
+    container_name: sonarr
+    image: lscr.io/linuxserver/sonarr:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - .docker/sonarr:/config
+      - ${MEDIA_VOLUME}:/media # TODO: Add link to docs
+    ports:
+      - 8989:8989
+
+  # Radarr
+  # A movie collection manager for grabing and downloading movies
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - .docker/radarr:/config
+      - ${MEDIA_VOLUME}:/media # TODO: Add link https://wiki.servarr.com/docker-guide#consistent-and-well-planned-paths
+    ports:
+      - 7878:7878
+
+  # Prowlarr
+  # TODO:
+  prowlarr:
+    container_name: prowlarr
+    image: lscr.io/linuxserver/prowlarr:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - .docker/prowlarr:/config
+    ports:
+      - 9696:9696
 
   # Bitwarden
   # Vaultwarden is a Rust implementation of Bitwarden API for less powerful devices
