@@ -18,14 +18,22 @@ do_not_disturb_mode:
       target:
         entity_id: switch.air_humidifier_led
       alias: Turn off Humidifier LED
-    - service: media_player.volume_set
-      data:
-        volume_level: 0.2
-      target:
-        entity_id:
-        - media_player.bedroom_speaker
-        - media_player.living_room_speaker
-      alias: Make Speakers to low volume
+    - if:
+      - condition: not
+        conditions:
+        - condition: state
+          entity_id: media_player.all_speakers
+          state: playing
+      then:
+      - service: media_player.volume_set
+        data:
+          volume_level: 0.2
+        target:
+          entity_id:
+          - media_player.bedroom_speaker
+          - media_player.living_room_speaker
+        alias: Make Speakers to low volume
+      alias: Make Speakers quite if they are not playing
     else:
     - service: fan.set_preset_mode
       target:
@@ -38,13 +46,22 @@ do_not_disturb_mode:
       target:
         entity_id: switch.air_humidifier_led
       alias: Turn on Humidifier LED
-    - alias: Set Speakers to normal volume
-      service: media_player.volume_set
-      data:
-        entity_id:
-        - media_player.living_room_speaker
-        - media_player.bedroom_speaker
-        volume_level: 0.6
+    - if:
+      - condition: not
+        conditions:
+        - condition: state
+          entity_id: media_player.all_speakers
+          state: playing
+      then:
+      - service: media_player.volume_set
+        data:
+          volume_level: 0.6
+        target:
+          entity_id:
+          - media_player.bedroom_speaker
+          - media_player.living_room_speaker
+        alias: Make Speakers to low volume
+      alias: Make Speakers louder if they are not playing
   mode: single
   icon: mdi:bell-circle
 away_mode:
