@@ -249,7 +249,7 @@ services:
   # A TV series manager for grabing, sorting and organizing new series
   sonarr:
     container_name: sonarr
-    image: lscr.io/linuxserver/sonarr:latest
+    image: lscr.io/linuxserver/sonarr:develop # v4
     restart: unless-stopped
     env_file:
       - .env
