@@ -57,15 +57,19 @@ services:
         url: http://smart-home.local:9091
         target: _blank
       - name: Sonarr
-        subtitle: Сервіс для моніторингу серіалів
+        subtitle: Моніторинг серіалів
         logo: https://avatars.githubusercontent.com/u/1082903
-        url: http://smart-home.local:8989
+        url: https://smart-home.local:8989
         target: _blank
-      # TODO: Radarr
-      - name: Jackett
-        subtitle: Проксі-API для торрент трекерів
-        logo: https://avatars.githubusercontent.com/u/15383019
-        url: http://smart-home.local:9117
+      - name: Radarr
+        subtitle: Моніторинг фільмів
+        logo: https://avatars.githubusercontent.com/u/25025331
+        url: https://smart-home.local:7878
+        target: _blank
+      - name: Prowlarr
+        subtitle: Проксі-АРІ для торрентів
+        logo: https://avatars.githubusercontent.com/u/73049443
+        url: https://smart-home.local:9696
         target: _blank
       - name: PS5MQTT
         subtitle: Проксі для інтеграції PS5 у Home Assistant
@@ -81,11 +85,12 @@ services:
         logo: https://cdn.worldvectorlogo.com/logos/portainer.svg
         url: http://smart-home.local:9000
         target: _blank
-      - name: Nginx Proxy Manager
+      - name: Cloudflare
         subtitle: Керування зовнішнім доступом
-        logo: https://nginxproxymanager.com/icon.png
-        url: http://smart-home.local:8081
+        logo: https://cdn.svgporn.com/logos/cloudflare.svg
+        url: https://dash.cloudflare.com
         target: _blank
+        tag: external
       - name: Ubuntu Cockpit
         subtitle: UI для керування системою сервера
         logo: https://cdn.svgporn.com/logos/ubuntu.svg
@@ -95,9 +100,4 @@ services:
         subtitle: Керування бекапами
         logo: https://www.duplicati.com/images/duplicati-fb-share-v1.png
         url: http://smart-home.local:8200
-        target: _blank
-      - name: Adminer
-        subtitle: Інтерфейс для бази даних
-        icon: fas fa-database
-        url: http://smart-home.local:8080
         target: _blank
