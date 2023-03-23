@@ -13,6 +13,29 @@ services:
     ports:
       - 8888:8080
 
+  # Cloudflare Tunnel
+  # Secured and easier option for exposing my smart home services to Internet
+  cloudflared:
+    container_name: cloudflared
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    env_file:
+      - .env
+    command: tunnel run
+
+  # Nginx
+  # A proxy-server for some services (joins Bitwarden's WS and HTTP together)
+  nginx:
+    container_name: nginx
+    image: nginx
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./nginx:/etc/nginx/templates
+    ports:
+      - 8080:80
+
   # Portainer CE
   # Managing containers via nice web UI
   portainer-ce:
@@ -130,54 +153,6 @@ services:
     ports:
       - 8200:8200
     restart: unless-stopped
-
-  # MariaDB
-  # A database for Home Assistant, Nginx Proxy Manager
-  db:
-    container_name: db
-    image: mariadb
-    restart: unless-stopped
-    volumes:
-      - .docker/mariadb/db:/var/lib/mysql
-      - /etc/localtime:/etc/localtime:ro
-      - ./db:/docker-entrypoint-initdb.d
-    env_file:
-      - .env
-
-  # Adminer
-  # A dead-simple database manager
-  adminer:
-    container_name: adminer
-    image: adminer
-    restart: unless-stopped
-    environment:
-      ADMINER_PLUGINS: frames
-    ports:
-      - 8080:8080
-    depends_on:
-      - db
-
-  # Nginx Proxy Manager
-  # Nice and simple Nginx UI for managing reverce proxy
-  nginx:
-    container_name: nginx
-    image: jc21/nginx-proxy-manager:latest
-    restart: unless-stopped
-    ports:
-      - 80:80 # HTTP port
-      - 443:443 # HTTPS port
-      - 8081:81 # Admin Paner port
-    environment:
-      DB_MYSQL_HOST: ${MYSQL_HOST}
-      DB_MYSQL_PORT: ${MYSQL_PORT}
-      DB_MYSQL_USER: ${MYSQL_USER}
-      DB_MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      DB_MYSQL_NAME: 'nginxproxymanager'
-    volumes:
-      - .docker/nginx-proxy-manager/data:/data
-      - .docker/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
-    depends_on:
-      - db
 
   # AirConnect
   # Make AirPlay available for Chromecast devices
