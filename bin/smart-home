@@ -26,7 +26,7 @@ function smart-home:exists() {
 
 function smart-home::load_vars() {
   # shellcheck disable=SC2046
-  export $(grep -v '^#' "$1" | xargs);
+  export "$(grep -v '^#' "$1" | xargs -0)";
 }
 
 #
