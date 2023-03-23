@@ -607,7 +607,7 @@
       - service: script.announcement
         data:
           speak: false
-          title: "Зимові шини \U0001F698❄️"
+          title: "Зимові шини \U0001F6DE❄️"
           openings:
           - Найближчими днями погіршення погоди.
           - Скоро настане зима.
@@ -632,7 +632,7 @@
       - service: script.announcement
         data:
           speak: false
-          title: "Літні шини \U0001F698\U0001F324"
+          title: "Літні шини \U0001F6DE\U0001F324"
           openings:
           - Найближчими днями стрімке покращення погоди.
           - Літо на носі!
@@ -1195,7 +1195,7 @@
   - alias: Wait for some time
     delay:
       hours: 0
-      minutes: 5
+      minutes: 7
       seconds: 0
       milliseconds: 0
   - alias: Turn off Corridor Light
@@ -1218,7 +1218,10 @@
       from: 'on'
       to: 'off'
     timeout:
-      minutes: 15
+      hours: 0
+      minutes: 20
+      seconds: 0
+      milliseconds: 0
   - choose:
     - conditions:
       - condition: template
