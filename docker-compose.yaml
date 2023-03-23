@@ -92,8 +92,8 @@ services:
 
   # MQTT
   # A Mosquitto broker for my devices communicating via MQTT
-  mqtt:
-    container_name: mqtt
+  mosquitto:
+    container_name: mosquitto
     image: eclipse-mosquitto:latest
     restart: unless-stopped
     ports:
@@ -197,7 +197,6 @@ services:
   #   env_file:
   #     - .env
   #   environment:
-  #     TZ: ${TZ}
   #     WEBPASSWORD: ${PIHOLE_WEBPASSWORD}
   #     VIRTUAL_HOST: ${PIHOLE_VIRTUAL_HOST}
   #   volumes:
@@ -307,6 +306,7 @@ services:
   ps5mqtt:
     container_name: ps5mqtt
     image: ghcr.io/funkeyflo/ps5-mqtt/aarch64:latest
+    restart: unless-stopped
     entrypoint: /config/run.sh
     volumes:
       - ./ps5:/config
