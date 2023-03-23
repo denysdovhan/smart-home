@@ -26,7 +26,7 @@ This tool let me easily manage my system from web browser: network, external dri
 
 ## [smart-home](https://github.com/denysdovhan/smart-home/blob/master/bin/smart-home)
 
-Thi is just a bash script I wrote for personal need. You can [find it here](https://github.com/denysdovhan/smart-home/blob/master/bin/smart-home).
+This is just a bash script I wrote for personal need. You can [find it here](https://github.com/denysdovhan/smart-home/blob/master/bin/smart-home).
 
 This performs typical tasks I do in my smart home, like bootstraping, controlling server, updating, etc.
 
