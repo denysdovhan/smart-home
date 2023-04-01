@@ -852,35 +852,36 @@
     - alias: Turn off Heating
       service: climate.set_hvac_mode
       data:
+        hvac_mode: 'off'
+      target:
         entity_id:
         - climate.living_room_heater
         - climate.bedroom_heater
-        hvac_mode: false
   - alias: Notify about the action
     service: script.announcement
     data:
       title: "Опалення \U0001F525"
       speak: false
       openings:
-      - Прогнозується {{ iif(is_state('binary_sensor.heating_season'), 'похолодання',
+      - Прогнозується {{ iif(is_state('binary_sensor.heating_season', 'on'), 'похолодання',
         'потепління') }}.
-      - Наближається {{ iif(is_state('binary_sensor.heating_season'), 'холодна', 'тепла')
-        }} погода.
-      - Найближчі 3 дні очікується температура {{ iif(is_state('binary_sensor.heating_season'),
-        'нижче', 'вище') }} 8°C.
-      - Температура {{ iif(is_state('binary_sensor.heating_season'), 'опуститься нижче',
-        'підніметься вище') }} 8°C.
+      - Наближається {{ iif(is_state('binary_sensor.heating_season', 'on'), 'холодна',
+        'тепла') }} погода.
+      - Найближчі 3 дні очікується температура {{ iif(is_state('binary_sensor.heating_season',
+        'on'), 'нижче', 'вище') }} 8°C.
+      - Температура {{ iif(is_state('binary_sensor.heating_season', 'on'), 'опуститься
+        нижче', 'підніметься вище') }} 8°C.
       messages:
-      - '{{ iif(is_state(''binary_sensor.heating_season''), ''Починаємо'', ''Закінчуємо'')
-        }} опалювальний період.'
-      - '{{ iif(is_state(''binary_sensor.heating_season''), ''Початок'', ''Кінець'')
+      - '{{ iif(is_state(''binary_sensor.heating_season'', ''on''), ''Починаємо'',
+        ''Закінчуємо'') }} опалювальний період.'
+      - '{{ iif(is_state(''binary_sensor.heating_season'', ''on''), ''Початок'', ''Кінець'')
         }} опалювального сезону.'
-      - '{{ iif(is_state(''binary_sensor.heating_season''), ''Розпочинаємо'', ''Закінчуємо'')
-        }} опалювальний сезон.'
-      - '{{ iif(is_state(''binary_sensor.heating_season''), ''Вмикаємо'', ''Вимикаємо'')
-        }} опалювання вдома.'
-      - '{{ iif(is_state(''binary_sensor.heating_season''), ''Увімкнено'', ''Вимкнено'')
-        }} опалення.'
+      - '{{ iif(is_state(''binary_sensor.heating_season'', ''on''), ''Розпочинаємо'',
+        ''Закінчуємо'') }} опалювальний сезон.'
+      - '{{ iif(is_state(''binary_sensor.heating_season'', ''on''), ''Вмикаємо'',
+        ''Вимикаємо'') }} опалювання вдома.'
+      - '{{ iif(is_state(''binary_sensor.heating_season'', ''on''), ''Увімкнено'',
+        ''Вимкнено'') }} опалення.'
       notify_data:
         actions:
         - action: '{{ heat_action }}'
