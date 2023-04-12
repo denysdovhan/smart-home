@@ -335,3 +335,12 @@ services:
       DEBUG: '@ha:ps5:*'
       PSN_ACCOUNTS: '[]'
       CREDENTIAL_STORAGE_PATH: /config/credentials.json
+
+  fan:
+    container_name: fan
+    restart: always
+    build:
+      context: fan
+      dockerfile: Dockerfile
+    devices:
+      - /dev/gpiomem
