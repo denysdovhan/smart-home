@@ -12,12 +12,15 @@ On this page, I'm trying to collect useful resources I used to improve my home:
 - [MacBury Smart House](https://macbury.github.io/SmartHouse) very cool and complex setup. I was inspired a lot by this.
 - [Frenck's Home Assistant Configuration](https://github.com/frenck/home-assistant-config) unusual folder structure.
 
-## Articles
+## Articles and Guides
 
 - [How I set up room-cleaning automation with Google Home, Home-Assistant and Xiaomi vacuum cleaner](https://hackernoon.com/how-i-set-up-room-cleaning-automation-with-google-home-home-assistant-and-xiaomi-vacuum-cleaner-9149e0267e6d)
 - [Actionable Notifications](https://companion.home-assistant.io/docs/notifications/actionable-notifications/) for
   Home Assistant
 - [Docker Compose MariaDB Multiple Database](https://onexlab-io.medium.com/docker-compose-mariadb-multiple-database-c24f75f4c3c8) about provisioning MariaDB databases.
+- [Consistent and well planned paths](https://wiki.servarr.com/docker-guide#consistent-and-well-planned-paths) in Sonarr and Radarr
+- [TRaSH-Guides](https://trash-guides.info/) for properly configuring Sonarr, Radarr, Plex, etc
+- [Hardlinks and Instant Moves (Atomic-Moves)](https://trash-guides.info/Hardlinks/Hardlinks-and-Instant-Moves/) by TRaSH Guides
 
 ## YouTube Channels
 
