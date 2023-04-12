@@ -112,6 +112,8 @@ services:
     container_name: zigbee2mqtt
     image: koenkk/zigbee2mqtt
     restart: unless-stopped
+    depends_on:
+      - mosquitto
     env_file:
       - .env
     volumes:
@@ -251,11 +253,16 @@ services:
     container_name: sonarr
     image: lscr.io/linuxserver/sonarr:develop # v4
     restart: unless-stopped
+    depends_on:
+      - prowlarr
+      - transmission
     env_file:
       - .env
     volumes:
       - .docker/sonarr:/config
-      - ${MEDIA_VOLUME}:/media # TODO: Add link to docs
+      # Media volumes are organized using this guide:
+      # https://wiki.servarr.com/docker-guide#consistent-and-well-planned-paths
+      - ${MEDIA_VOLUME}:/media
     ports:
       - 8989:8989
 
@@ -265,20 +272,27 @@ services:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     restart: unless-stopped
+    depends_on:
+      - prowlarr
+      - transmission
     env_file:
       - .env
     volumes:
       - .docker/radarr:/config
-      - ${MEDIA_VOLUME}:/media # TODO: Add link https://wiki.servarr.com/docker-guide#consistent-and-well-planned-paths
+      # Media volumes are organized using this guide:
+      # https://wiki.servarr.com/docker-guide#consistent-and-well-planned-paths
+      - ${MEDIA_VOLUME}:/media
     ports:
       - 7878:7878
 
   # Prowlarr
-  # TODO:
+  # Indexer manager/proxy for torrent trackers
   prowlarr:
     container_name: prowlarr
     image: lscr.io/linuxserver/prowlarr:latest
     restart: unless-stopped
+    depends_on:
+      - transmission
     env_file:
       - .env
     volumes:
@@ -303,6 +317,7 @@ services:
       - .docker/bitwarden:/data
 
   # PS5
+  # And MQTT API for PlayStation 5 for integrating it into Home Assistant
   ps5mqtt:
     container_name: ps5mqtt
     image: ghcr.io/funkeyflo/ps5-mqtt/aarch64:latest
