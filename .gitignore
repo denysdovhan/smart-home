@@ -2,6 +2,7 @@
 *.log*
 *.conf
 *.db
+*.db.corrupt.*
 *.db-shm
 *.db-wal
 *.pyc
