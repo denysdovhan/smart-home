@@ -11,9 +11,8 @@
       messages:
       - Увага! Повітряна тривога!
       - Увага! У Києві повітряна тривога!
-      - Повітряна тривога у Києві!
       - Увага! Перейдіть в укриття!
-      - Тривога! Сховайтесь у ванній!
+      - У Києві оголошено повітряну тривогу!
     alias: Початок тривоги у Києві
   - platform: state
     entity_id: binary_sensor.alerts_kyiv_air
@@ -23,9 +22,9 @@
       title: "Відбій тривоги \U0001F44C"
       messages:
       - Відбій повітряної тривоги!
-      - Відбій! Можна виходити з укриття!
       - Відбій тривоги! Небезпека минула!
-      - Небезпека минула! Виходьте з укриття!
+      - Відбій! Небезпека минула!
+      - Кінець повітряної тривоги!
     alias: Відбій тривоги у Києві
   condition:
   - condition: numeric_state
@@ -1664,11 +1663,11 @@
       - Увага! Проблема з пилососом!
       - Халепа! Робот зіткнувся з помилкою!
       - Виникла непередбачувана ситуація з роботом:
-      messages:
-      - state_attr('vacuum.roborock', 'error') }}
       notify_data:
         group: vacuum
         url: /lovelace/vacuum
+      messages:
+      - '{{ state_attr(''vacuum.roborock'', ''error'') }}'
 - id: vacuum_ask_maintenance
   alias: 'Vacuum: Ask Maintenance'
   description: Send vacuum near trash bin and ask for maintenance
