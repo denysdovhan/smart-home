@@ -91,6 +91,10 @@ services:
         url: https://dash.cloudflare.com
         target: _blank
         tag: external
+      - name: Pi-hole
+        logo: https://upload.wikimedia.org/wikipedia/commons/0/00/Pi-hole_Logo.png
+        subtitle: Блокувальник реклами
+        url: https://smart-home.local:5300/admin
       - name: Ubuntu Cockpit
         subtitle: UI для керування системою сервера
         logo: https://cdn.svgporn.com/logos/ubuntu.svg
