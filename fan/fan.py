@@ -11,7 +11,7 @@ MAX_TEMP = float(os.getenv('MAX_TEMP', 65))
 MIN_TEMP = float(os.getenv('MIN_TEMP', 45))
 
 FAN_GPIO = int(os.getenv('FAN_GPIO', 18))
-FAN_MIN = int(os.getenv('FAN_MIN', 0))
+FAN_MIN = int(os.getenv('FAN_MIN', 20))
 FAN_MAX = int(os.getenv('FAN_MAX', 100))
 FAN_FREQ = int(os.getenv('FAN_FREQ', 17))
 
