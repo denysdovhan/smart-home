@@ -22,6 +22,8 @@ services:
     env_file:
       - .env
     command: tunnel run
+    labels:
+      com.centurylinklabs.watchtower.monitor-only: true
 
   # Nginx
   # A proxy-server for some services (joins Bitwarden's WS and HTTP together)
