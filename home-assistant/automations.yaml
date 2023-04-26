@@ -646,51 +646,6 @@
             group: car
         alias: Announce summer tires
     alias: Announce winter or summer tires
-- id: fayna_progress
-  alias: 'Alert: Fayna Town Progress'
-  description: Announce how much time is left before Fayna Town is ready
-  trigger:
-  - platform: template
-    value_template: '{{ (states(''sensor.fayna_progress'') | float(1)) % 1 == 0 }}'
-    variables:
-      openings:
-      - Готовність будівництва {{ states('sensor.fayna_progress') | int(0) }}%.
-      - Готовність {{ states('sensor.fayna_progress') | int(0) }}%.
-      - Будинок готовий на {{ states('sensor.fayna_progress') | int(0) }}%.
-      - Будівництво просунулось на {{ states('sensor.fayna_progress') | int(0) }}%.
-      messages:
-      - Залишилось чекати {{ states('sensor.fayna_days_left') }}, а пройшло вже {{
-        states('sensor.fayna_days_past') }} днів.
-      - Залишилось {{ states('sensor.fayna_days_left') }} днів. Пройшло {{ states('sensor.fayna_days_past')
-        }}.
-      - Пройшло вже {{ states('sensor.fayna_days_past') }} днів. Залишилось {{ states('sensor.fayna_days_left')
-        }}.
-      - '{{ states(''sensor.fayna_days_past'') }} днів пройшло. {{ states(''sensor.fayna_days_left'')
-        }} залишилось.'
-    alias: Every 1% of progress
-  - platform: template
-    value_template: '{{ (states(''sensor.fayna_days_past'') | float(1)) % 50 == 0
-      }}'
-    variables:
-      openings:
-      - Пройшло вже {{ states('sensor.fayna_days_past') }} днів з дня купівлі квартири.
-      - Пройшло {{ states('sensor.fayna_days_past') }} днів від дня купівлі квартири.
-      - Пройшло {{ states('sensor.fayna_days_past') }} днів.
-      messages:
-      - Залишилось чекати {{ states('sensor.fayna_days_left') }}.
-      - Залишилось {{ states('sensor.fayna_days_left') }} днів.
-      - Залишилось {{ states('sensor.fayna_days_left') }}.
-      - '{{ states(''sensor.fayna_days_left'') }} залишилось.'
-    alias: Every 50 days past
-  action:
-  - service: script.announcement
-    data:
-      title: "Файна Таун \U0001F3D9"
-      openings: '{{ openings }}'
-      messages: '{{ messages }}'
-      notify_data:
-        url: /lovelace/observation
-    alias: Announce the progress
 - id: monthly_energy_alert
   alias: 'Alert: Monthly Energy Usage'
   description: Switch energy tariff and notify about the consumption
@@ -825,6 +780,13 @@
   - platform: state
     entity_id:
     - binary_sensor.heating_season
+    not_from:
+    - unknown
+    - unavailable
+    for:
+      hours: 24
+      minutes: 0
+      seconds: 0
   action:
   - alias: Choose what to do with the heaters
     choose:
