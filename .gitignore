@@ -29,6 +29,8 @@ image
 /home-assistant/.ps4-games*.json
 /home-assistant/GA_SERVICE_ACCOUNT.json
 /home-assistant/www/community
+/home-assistant/custom_components/**
+!/home-assistant/custom_components/README.md
 watchman_report.txt
 token-*.txt
 
