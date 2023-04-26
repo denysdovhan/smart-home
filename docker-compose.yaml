@@ -189,28 +189,28 @@ services:
         -u ${SAMBA_USER};${SAMBA_PASSWORD}
     restart: unless-stopped
 
-  # pihole:
-  #   container_name: pihole
-  #   image: pihole/pihole:latest
-  #   hostname: smart-home.local
-  #   ports:
-  #     - '53:53/tcp' # DNS
-  #     - '53:53/udp' # DNS
-  #     - '67:67/udp' # DHCP
-  #     - '5300:80/tcp' # WEB UI
-  #   env_file:
-  #     - .env
-  #   environment:
-  #     WEBPASSWORD: ${PIHOLE_WEBPASSWORD}
-  #     VIRTUAL_HOST: ${PIHOLE_VIRTUAL_HOST}
-  #   volumes:
-  #     - .docker/pihole/etc-pihole:/etc/pihole
-  #     - .docker/pihole/etc-dnsmasq.d:/etc/dnsmasq.d
-  #   cap_add:
-  #     - NET_ADMIN
-  #   restart: unless-stopped
-  #   labels:
-  #     com.centurylinklabs.watchtower.monitor-only: true
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    hostname: smart-home.local
+    ports:
+      - '53:53/tcp' # DNS
+      - '53:53/udp' # DNS
+      - '67:67/udp' # DHCP
+      - '5300:80/tcp' # WEB UI
+    env_file:
+      - .env
+    environment:
+      WEBPASSWORD: ${PIHOLE_WEBPASSWORD}
+      VIRTUAL_HOST: ${PIHOLE_VIRTUAL_HOST}
+    volumes:
+      - .docker/pihole/etc-pihole:/etc/pihole
+      - .docker/pihole/etc-dnsmasq.d:/etc/dnsmasq.d
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+    labels:
+      com.centurylinklabs.watchtower.monitor-only: true
 
   # Plex
   # Personal media server with movies and tv-series
@@ -338,6 +338,8 @@ services:
       PSN_ACCOUNTS: '[]'
       CREDENTIAL_STORAGE_PATH: /config/credentials.json
 
+  # Fan
+  # A simple service for controlling Raspberry Pi's fan
   fan:
     container_name: fan
     restart: always
