@@ -5,9 +5,6 @@
 #
 
 binary_sensor:
-  # Workday
-  - platform: workday
-    country: UA
   # Car Wash
   - platform: car_wash
     weather: weather.nyvky
