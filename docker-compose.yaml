@@ -13,30 +13,21 @@ services:
     ports:
       - 8888:8080
 
-  # Cloudflare Tunnel
-  # Secured and easier option for exposing my smart home services to Internet
-  cloudflared:
-    container_name: cloudflared
-    image: cloudflare/cloudflared
+  # Nginx Proxy Manager
+  # A proxy managerment for services. Basically a Web UI for Nginx.
+  nginx-proxy-manager:
+    container_name: nginx-proxy-manager
+    image: jc21/nginx-proxy-manager:latest
     restart: unless-stopped
-    env_file:
-      - .env
-    command: tunnel run
+    ports:
+      - 80:80 # Public HTTP Port
+      - 443:443 # Public HTTPS Port
+      - 8081:81 # Admin Web Port
+    volumes:
+      - .docker/nginx-proxy-manager/data:/data
+      - .docker/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
     labels:
       com.centurylinklabs.watchtower.monitor-only: true
-
-  # Nginx
-  # A proxy-server for some services (joins Bitwarden's WS and HTTP together)
-  nginx:
-    container_name: nginx
-    image: nginx
-    restart: unless-stopped
-    env_file:
-      - .env
-    volumes:
-      - ./nginx:/etc/nginx/templates
-    ports:
-      - 8080:80
 
   # Portainer CE
   # Managing containers via nice web UI
@@ -78,7 +69,7 @@ services:
   # The core of my smart-home automations
   home-assistant:
     container_name: home-assistant
-    image: ghcr.io/home-assistant/home-assistant:stable
+    image: ghcr.io/home-assistant/home-assistant:latest
     volumes:
       - ./home-assistant:/config
       - ${MEDIA_VOLUME}:/media
@@ -132,7 +123,7 @@ services:
   # A system to control ESP8266/ESP32 devices
   esphome:
     container_name: esphome
-    image: esphome/esphome
+    image: ghcr.io/esphome/esphome
     restart: unless-stopped
     env_file:
       - .env
