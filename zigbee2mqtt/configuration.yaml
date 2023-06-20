@@ -11,7 +11,6 @@ serial:
   port: /dev/ttyUSB0
 frontend:
   port: 8099
-  auth_token: '!secret.yaml auth_token'
 advanced:
   channel: 15
   last_seen: ISO_8601_local

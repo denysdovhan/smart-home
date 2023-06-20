@@ -127,8 +127,6 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-    command: >
-      dashboard --username ${ESPHOME_USERNAME} --password ${ESPHOME_PASSWORD} /config
     volumes:
       - ./esphome:/config:rw
       - /etc/localtime:/etc/localtime:ro
@@ -193,7 +191,6 @@ services:
       - .env
     environment:
       WEBPASSWORD: ${PIHOLE_WEBPASSWORD}
-      VIRTUAL_HOST: ${PIHOLE_VIRTUAL_HOST}
     volumes:
       - .docker/pihole/etc-pihole:/etc/pihole
       - .docker/pihole/etc-dnsmasq.d:/etc/dnsmasq.d
@@ -228,8 +225,6 @@ services:
     env_file:
       - .env
     environment:
-      USER: ${TRANSMISSION_USER}
-      PASS: ${TRANSMISSION_PASSWORD}
       TRANSMISSION_WEB_HOME: /web
     ports:
       - 9091:9091
