@@ -50,6 +50,3 @@ token-*.txt
 # Specific keeps
 !.gitkeep
 !mosquitto/mosquitto.conf
-
-# Homer
-/homer/config.yml
