@@ -13,11 +13,6 @@ do_not_disturb_mode:
       data:
         preset_mode: Silent
       alias: Set Purifier to Silent
-    - service: switch.turn_off
-      data: {}
-      target:
-        entity_id: switch.air_humidifier_led
-      alias: Turn off Humidifier LED
     - if:
       - condition: not
         conditions:
@@ -41,11 +36,6 @@ do_not_disturb_mode:
       data:
         preset_mode: Auto
       alias: Set Purifier to Auto
-    - service: switch.turn_on
-      data: {}
-      target:
-        entity_id: switch.air_humidifier_led
-      alias: Turn on Humidifier LED
     - if:
       - condition: not
         conditions:

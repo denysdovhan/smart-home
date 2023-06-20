@@ -43,7 +43,7 @@
           sound:
             name: default
             critical: 1
-            volume: 1
+            volume: 0.25
     alias: Оголосити початок або відбій тривоги
   mode: single
 - id: alarm_triggering
@@ -1057,7 +1057,7 @@
     data:
       transition: 5
     target:
-      entity_id: scene.night_lights
+      entity_id: scene.evening_lights
   - service: script.announcement
     data:
       notify: false
@@ -1115,7 +1115,8 @@
     data:
       transition: 5
     target:
-      entity_id: scene.night_lights
+      entity_id:
+      - scene.evening_lights
   - service: script.announcement
     data:
       notify: false
@@ -1405,14 +1406,20 @@
     data: {}
     target:
       entity_id: fan.air_purifier
-  - alias: Turn on Air Humidifier
-    service: humidifier.turn_on
-    entity_id: humidifier.air_humidifier
+  - if:
+    - condition: state
+      entity_id: binary_sensor.sleeping_time
+      state: 'on'
+    then:
+    - alias: Turn on Air Humidifier
+      service: humidifier.turn_on
+      entity_id: humidifier.air_humidifier
+    alias: Turn on Humidifier at night
   - alias: Wait a second for everyone to come in
     delay:
       hours: 0
       minutes: 0
-      seconds: 10
+      seconds: 15
       milliseconds: 0
   - alias: Greet people with a delay
     service: script.greeting
@@ -1926,4 +1933,86 @@
       data: {}
       alias: Perform Docker Restart via SSH
     alias: Perform full restart when server still has not Internet connection
+  mode: single
+- id: '1686063093337'
+  alias: 'Climate: Turn on Humidifier only during sleep time'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.sleeping_time
+  condition: []
+  action:
+  - if:
+    - condition: state
+      entity_id: binary_sensor.sleeping_time
+      state: 'on'
+    then:
+    - alias: Turn on Air Humidifier
+      service: humidifier.turn_on
+      data: {}
+      target:
+        device_id: 0166e2ff4273cd202346ea34f12cb10c
+    - service: switch.turn_off
+      data: {}
+      target:
+        entity_id:
+        - switch.air_humidifier_buzzer
+        - switch.air_humidifier_led
+    else:
+    - service: humidifier.turn_off
+      data: {}
+      target:
+        device_id: 0166e2ff4273cd202346ea34f12cb10c
+  mode: single
+- id: '1686063577499'
+  alias: 'Media: Radarr notifications'
+  description: ''
+  trigger:
+  - platform: webhook
+    allowed_methods:
+    - POST
+    local_only: true
+    webhook_id: aIz4WtNa0WowMSomlxCP_WE9
+    alias: When Radarr sens a webhook
+  condition: []
+  action:
+  - service: script.announcement
+    data:
+      service: notify.denys
+      speak: false
+      notify: true
+      force_speak: false
+      notify_data:
+        url: /localave/home
+      title: Radarr
+      openings:
+      - '{{ trigger.json.eventType }}: {{ trigger.json.movie.title }}'
+      messages:
+      - '{{ trigger.json.release | string }}'
+  mode: single
+- id: '1686064511903'
+  alias: 'Media: Sonarr notifications'
+  description: ''
+  trigger:
+  - platform: webhook
+    allowed_methods:
+    - POST
+    - PUT
+    local_only: true
+    webhook_id: nsih9VYgYrCLb8fz5JzmeM0e
+    alias: When Sonarr send a webhook
+  condition: []
+  action:
+  - service: script.announcement
+    data:
+      service: notify.denys
+      speak: false
+      notify: true
+      force_speak: false
+      notify_data:
+        url: /localave/home
+      title: Sonarr
+      messages:
+      - '{{ trigger.json.eventType }}: {{ trigger.json }}'
   mode: single
