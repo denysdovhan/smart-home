@@ -39,10 +39,17 @@ template:
 
       - name: Working Display Connected
         state: >-
-          {% set at_home = is_state('device_tracker.wix_macbook_pro', 'home') %}
-          {% set display_connected = is_state('sensor.wix_macbook_pro_primary_display_name', 'LG HDR 4K') %}
-          {% set active = is_state('binary_sensor.wix_macbook_pro_active', 'on') %}
-          {{ at_home and display_connected and active }}
+          {% set denys_at_home = is_state('device_tracker.wix_macbook_pro', 'home') %}
+          {% set denys_connected = is_state('sensor.wix_macbook_pro_displays', 2 | string) %}
+          {% set denys_active = is_state('binary_sensor.wix_macbook_pro_active', 'on') %}
+
+          {% set marry_at_home = is_state('device_tracker.marry_macbook_pro', 'home') %}
+          {% set marry_connected = is_state('sensor.marry_macbook_pro_displays', 2 | string) %}
+          {% set marry_active = is_state('binary_sensor.marry_macbook_pro_active', 'on') %}
+
+          {% set denys_mac_connected = denys_at_home and denys_connected and denys_active %}
+          {% set marry_mac_connected = marry_at_home and marry_connected and marry_active %}
+          {{ denys_mac_connected or marry_mac_connected }}
         icon: >-
           {{ iif(is_state('binary_sensor.working_display_connected', 'on'), 'mdi:monitor-dashboard', 'mdi:monitor-off') }}
 
@@ -74,14 +81,14 @@ template:
           {{ iif(is_state('binary_sensor.bike_day', 'on'), 'mdi:bike-fast', 'mdi:bike') }}
         attributes:
           wont_rain: >-
-            {% set hours = 9 %}
+            {% set hours = 8 %}
             {% set target_probability = 30 %}
             {{ states('sensor.nyvky_forecast_precipitation_probability') | float(0) < target_probability }}
           no_precipitation: >-
-            {% set hours = 9 %}
+            {% set hours = 8 %}
             {{ state_attr('weather.kyiv_hourly', 'forecast')[:hours] | selectattr('precipitation', 'le', 0.1) | list | count == hours }}
           warm: >-
-            {% set hours = 9 %}
+            {% set hours = 8 %}
             {% set target_temp = 10 %}
             {{ state_attr('weather.kyiv_hourly', 'forecast')[:hours] | selectattr('temperature', 'ge', target_temp) | list | count == hours }}
           no_storm: >-
