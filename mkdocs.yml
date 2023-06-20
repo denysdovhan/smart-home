@@ -44,6 +44,7 @@ nav:
       - System Overview: software/system.md
       - Getting Started: software/getting-started.md
       - Docker Containers: software/docker.md
+      - Media Management: software/media.md
       - External Access: software/external-access.md
       - Ad-Blocking: software/ad-blocking.md
       - Ports: software/ports.md
@@ -78,3 +79,6 @@ extra:
       link: https://twitter.com/denysdovhan
     - icon: fontawesome/solid/globe
       link: https://denysdovhan.com
+
+extra_javascript:
+  - https://platform.twitter.com/widgets.js
