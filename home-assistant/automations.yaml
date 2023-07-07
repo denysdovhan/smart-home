@@ -1941,6 +1941,11 @@
   - platform: state
     entity_id:
     - binary_sensor.sleeping_time
+  - platform: state
+    entity_id:
+    - binary_sensor.air_humidifier_water_tank
+    from: 'off'
+    to: 'on'
   condition: []
   action:
   - if:
