@@ -77,7 +77,7 @@ I chose [ASUS RT-AC1750U](https://www.asus.com/Networking-IoT-Servers/WiFi-Route
 
 I'm happy with my decision so far. This router gives the constant 600-900 Mbit/s speed, which is enough to download a 10GB file in less than 2 minutes.
 
-Previously, I've also tried Xiaomi Router and wasn't happy about it. Xiaomi Router has UI in Chines and worked unreliably overall.
+Previously, I've also tried Xiaomi Router and wasn't happy about it. Xiaomi Router has UI in Chinese and worked unreliably overall.
 
 Here are my current ASUS and former Xiaomi routers:
 
