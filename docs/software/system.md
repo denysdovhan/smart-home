@@ -12,7 +12,7 @@ It officially [supports Raspberry Pi](https://ubuntu.com/download/raspberry-pi) 
 
 I use [Docker](https://www.docker.com/) for managing all containers in my smart home.
 
-Docker allows to encapsulate everything related to a single service within a container. This approach helps to maintain host system clean and manage (start, stop, update and delete) every container separatly.
+Docker allows to encapsulate everything related to a single service within a container. This approach helps to maintain host system clean and manage (start, stop, update and delete) every container separately.
 
 [`docker-compose`](https://docs.docker.com/compose/`) helps to describe my whole setup in a single file and manage it with a few commands.
 
