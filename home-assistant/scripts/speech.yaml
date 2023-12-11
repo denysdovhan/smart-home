@@ -93,17 +93,14 @@ announcement:
               state: 'off'
             - alias: Don't speak when speakers are playing
               condition: state
-              entity_id:
-                - media_player.all_speakers
-                - media_player.living_room_speaker
-                - media_player.bedroom_speaker
+              entity_id: media_player.all_speakers
               state:
                 - 'off'
                 - 'idle'
           sequence:
             - service: tts.google_say
               data:
-                entity_id: media_player.all_speakers
+                entity_id: media_player.living_room_homepod
                 message: '{{ message }}'
         - conditions:
             - '{{ speak is true }}'
@@ -114,7 +111,7 @@ announcement:
           sequence:
             - service: tts.google_say
               data:
-                entity_id: media_player.all_speakers
+                entity_id: media_player.living_room_homepod
                 message: '{{ message }}'
     - alias: Send a notification
       choose:
@@ -175,8 +172,8 @@ greeting:
     - service: media_player.volume_set
       data:
         entity_id:
-          - media_player.living_room_speaker
-          - media_player.bedroom_speaker
+          - media_player.living_room_homepod
+          - media_player.bedroom_homepod
         volume_level: 0.8
     - choose:
         - conditions:

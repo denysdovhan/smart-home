@@ -13,22 +13,20 @@ do_not_disturb_mode:
       data:
         preset_mode: Silent
       alias: Set Purifier to Silent
-    - if:
-      - condition: not
-        conditions:
-        - condition: state
-          entity_id: media_player.all_speakers
-          state: playing
-      then:
-      - service: media_player.volume_set
-        data:
-          volume_level: 0.2
-        target:
-          entity_id:
-          - media_player.bedroom_speaker
-          - media_player.living_room_speaker
-        alias: Make Speakers to low volume
-      alias: Make Speakers quite if they are not playing
+    - device_id: 184d3eb0ce6565e4dbecc4403f4b9adf
+      domain: select
+      entity_id: 406c298e910de0e503c7713710e9df20
+      type: select_option
+      option: dim
+    - alias: Make Speakers to low volume
+      service: media_player.volume_set
+      data:
+        volume_level: 0.2
+      target:
+        entity_id:
+        - media_player.living_room_homepod
+        - media_player.bedroom_homepod
+        - media_player.all_speakers
     else:
     - service: fan.set_preset_mode
       target:
@@ -36,22 +34,20 @@ do_not_disturb_mode:
       data:
         preset_mode: Auto
       alias: Set Purifier to Auto
-    - if:
-      - condition: not
-        conditions:
-        - condition: state
-          entity_id: media_player.all_speakers
-          state: playing
-      then:
-      - service: media_player.volume_set
-        data:
-          volume_level: 0.6
-        target:
-          entity_id:
-          - media_player.bedroom_speaker
-          - media_player.living_room_speaker
-        alias: Make Speakers to low volume
-      alias: Make Speakers louder if they are not playing
+    - alias: Make Speakers to low volume
+      service: media_player.volume_set
+      data:
+        volume_level: 0.6
+      target:
+        entity_id:
+        - media_player.living_room_homepod
+        - media_player.bedroom_homepod
+        - media_player.all_speakers
+    - device_id: 184d3eb0ce6565e4dbecc4403f4b9adf
+      domain: select
+      entity_id: 406c298e910de0e503c7713710e9df20
+      type: select_option
+      option: bright
   mode: single
   icon: mdi:bell-circle
 away_mode:
@@ -170,6 +166,15 @@ away_mode:
           - climate.living_room_heater
           - climate.bedroom_heater
           preset_mode: boost
+      else:
+      - service: climate.set_preset_mode
+        data:
+          preset_mode: manual
+        target:
+          entity_id:
+          - climate.bedroom_heater
+          - climate.living_room_heater
+        alias: Set TRV to manual
     - alias: Cool down Home during Summer
       if:
       - condition: state
