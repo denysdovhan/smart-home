@@ -46,8 +46,6 @@ function smart-home:command:help() {
   smart-home update                     stop, update and restart all services
   smart-home prune                      delete obsolete containers
   smart-home password                   generate a password
-  smart-home add-mosquitto-user         add mosquitto user
-  smart-home adguard-resolved           fix AdGuard and systemd-resolved conflict
   smart-home setup-network              setup network settings
 "
 }
@@ -139,40 +137,6 @@ function smart-home:command:password() {
 function smart-home:command:docs() {
   local ip="$(hostname -I | awk '{print $1}')"
   mkdocs serve --livereload --dev-addr "$ip:7000"
-}
-
-function smart-home:command:add-mosquitto-user() {
-  local user password userdb
-
-  user="${COMMAND_ARGS[0]}"
-  password="$(smart-home:command:password 16)";
-  userdb="$SMART_HOME_DIR/.docker/mosquitto/data/users.db"
-
-  if [ -z "$user" ]; then
-    echo "Please provide a username."
-    return 1;
-  fi
-
-  mkdir -p "$(dirname $userdb)"
-  touch "$userdb"
-  mosquitto_passwd -b "$userdb" "$user" "$password";
-
-  if [ $? -eq 0 ]; then
-    echo "Username: $user";
-    echo "Password: $password";
-    return 0
-  fi
-
-  return 1
-}
-
-function smart-home:command:fix-systemd-resolved() {
-  sudo cp /etc/resolv.conf /etc/resolv.conf.backup
-
-  sudo sed -r -i.orig 's/#?DNSStubListener=yes/DNSStubListener=no/g' /etc/systemd/resolved.conf
-  sudo sh -c 'rm /etc/resolv.conf && ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf'
-  
-  systemctl restart systemd-resolved
 }
 
 function smart-home:command:setup-network() {
