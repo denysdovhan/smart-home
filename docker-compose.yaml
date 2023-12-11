@@ -323,14 +323,3 @@ services:
       DEBUG: '@ha:ps5:*'
       PSN_ACCOUNTS: '[]'
       CREDENTIAL_STORAGE_PATH: /config/credentials.json
-
-  # Fan
-  # A simple service for controlling Raspberry Pi's fan
-  fan:
-    container_name: fan
-    restart: always
-    build:
-      context: fan
-      dockerfile: Dockerfile
-    devices:
-      - /dev/gpiomem
