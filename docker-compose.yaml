@@ -213,7 +213,7 @@ services:
     volumes:
       - .docker/plex/config:/config
       - ${PLEX_LIBRARY}:/config/Library
-      - ${MEDIA_VOLUME}:/media
+      - ${MEDIA_VOLUME}/data:/media
     restart: unless-stopped
 
   # Transmission
@@ -232,7 +232,7 @@ services:
       - 51413:51413/udp
     volumes:
       - .docker/transmission/config:/config
-      - .docker/transmission/web:/web
+      - .docker/transmission/web:/web # Transmissinic UI
       - ${MEDIA_VOLUME}/downloads:/downloads
 
   # Sonarr
