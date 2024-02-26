@@ -1,8 +1,0 @@
-'1':
-  friendly_name: Living Room Main Light
-  optimistic: true
-  devices:
-    - 0x00158d0002d3c856/1
-    - 0x00158d000450cca4/1
-    - 0x00158d00045ec07b/1
-    - 0x00158d0002d71dab/1
