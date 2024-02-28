@@ -35,16 +35,19 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
-  # Homer
-  # Dashboard for smart-home services
-  homer:
-    container_name: homer
-    image: b4bz/homer
+  # Homarr
+  # Fancy dashboard for displaying home services
+  homarr:
+    container_name: homarr
+    image: ghcr.io/ajnart/homarr:latest
     restart: unless-stopped
     volumes:
-      - ./homer:/www/assets
+      - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
+      - ${DOCKER}/homarr/configs:/app/data/configs
+      - ${DOCKER}/homarr/icons:/app/public/icons
+      - ${DOCKER}/homarr/data:/data
     ports:
-      - 8888:8080
+      - 7575:7575
 
   # Bitwarden
   # Vaultwarden is a Rust implementation of Bitwarden API for less powerful devices
