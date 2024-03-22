@@ -1,0 +1,104 @@
+version: '3.8'
+name: media
+services:
+  # Plex
+  # Personal media server with movies and tv-series
+  plex:
+    container_name: plex
+    image: lscr.io/linuxserver/plex:latest
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      VERSION: docker
+    volumes:
+      - ${PLEX_LIBRARY}/config:/config
+      - ${MEDIA_VOLUME}/data:/media
+    devices:
+      - /dev/dri:/dev/dri
+
+  # Transmission
+  # A torrent client for downloading media
+  transmission:
+    container_name: transmission
+    image: lscr.io/linuxserver/transmission:latest
+    restart: unless-stopped
+    environment:
+      TRANSMISSION_WEB_HOME: /web
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    volumes:
+      - ${DOCKER}/transmission/config:/config
+      - ${DOCKER}/transmission/web:/web # Transmissinic UI
+      - ${MEDIA_VOLUME}/downloads:/downloads
+
+  # Sonarr
+  # A TV series manager for grabing, sorting and organizing new series
+  sonarr:
+    container_name: sonarr
+    image: lscr.io/linuxserver/sonarr:latest
+    restart: unless-stopped
+    depends_on:
+      - prowlarr
+      - transmission
+    volumes:
+      - ${DOCKER}/sonarr:/config
+      # Media volumes are organized using this guide:
+      # https://wiki.servarr.com/docker-guide#consistent-and-well-planned-paths
+      - ${MEDIA_VOLUME}:/media
+    ports:
+      - 8989:8989
+
+  # Radarr
+  # A movie collection manager for grabing and downloading movies
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: unless-stopped
+    depends_on:
+      - prowlarr
+      - transmission
+    volumes:
+      - ${DOCKER}/radarr:/config
+      # Media volumes are organized using this guide:
+      # https://wiki.servarr.com/docker-guide#consistent-and-well-planned-paths
+      - ${MEDIA_VOLUME}:/media
+    ports:
+      - 7878:7878
+
+  # Prowlarr
+  # Indexer manager/proxy for torrent trackers
+  prowlarr:
+    container_name: prowlarr
+    image: lscr.io/linuxserver/prowlarr:latest
+    restart: unless-stopped
+    depends_on:
+      - transmission
+    volumes:
+      - ${DOCKER}/prowlarr:/config
+    ports:
+      - 9696:9696
+
+  # Samba
+  # Remote access to the file system
+  samba:
+    container_name: samba
+    image: dperson/samba
+    restart: unless-stopped
+    volumes:
+      - ..:/mnt/smart-home
+      - ${MEDIA_VOLUME}:/mnt/media
+    environment:
+      USERID: ${PUID}
+      GROUPID: ${PGID}
+    ports:
+      - 139:139
+      - 445:445
+      - 137:137/udp
+      - 138:138/udp
+    command: >
+      samba.sh
+        -s "media;/mnt/media;yes;no;no;all"
+        -s "smart-home;/mnt/smart-home;yes;no;no;all"
+        -u "${SAMBA_USER};${SAMBA_PASSWORD}"

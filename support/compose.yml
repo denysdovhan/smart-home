@@ -1,0 +1,64 @@
+version: '3.8'
+name: support
+services:
+  # Portainer CE
+  # Managing containers via nice web UI
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce
+    restart: unless-stopped
+    ports:
+      - 8000:8000 # Agent
+      - 9000:9000 # Web UI
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DOCKER}/portainer/data:/data
+
+  # Watchtower
+  # A solution for automating Docker container base image updates
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    restart: unless-stopped
+    environment:
+      WATCHTOWER_CLEANUP: 'true'
+      WATCHTOWER_WARN_ON_HEAD_FAILURE: 'never'
+      WATCHTOWER_NO_STARTUP_MESSAGE: 'true'
+      WATCHTOWER_SCHEDULE: '0 0 5 * * 6'
+      WATCHTOWER_NOTIFICATIONS: email
+      WATCHTOWER_NOTIFICATION_EMAIL_FROM: ${EMAIL_SERVER_ADDRESS}
+      WATCHTOWER_NOTIFICATION_EMAIL_TO: ${EMAIL_SERVER_ADDRESS}
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER: ${EMAIL_SERVER}
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT: ${EMAIL_SERVER_PORT}
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER: ${EMAIL_SERVER_USER}
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD: ${EMAIL_SERVER_PASSWORD}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  # Homarr
+  # Fancy dashboard for displaying home services
+  homarr:
+    container_name: homarr
+    image: ghcr.io/ajnart/homarr:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
+      - ${DOCKER}/homarr/configs:/app/data/configs
+      - ${DOCKER}/homarr/icons:/app/public/icons
+      - ${DOCKER}/homarr/data:/data
+    ports:
+      - 7575:7575
+
+  # Bitwarden
+  # Vaultwarden is a Rust implementation of Bitwarden API for less powerful devices
+  bitwarden:
+    container_name: bitwarden
+    image: vaultwarden/server
+    restart: unless-stopped
+    environment:
+      WEBSOCKET_ENABLED: 'true'
+    ports:
+      - 3838:80
+      - 3812:3012
+    volumes:
+      - ${DOCKER}/bitwarden:/data

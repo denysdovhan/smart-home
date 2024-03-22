@@ -1,7 +1,18 @@
 #!/usr/bin/env bash
 
-COMMAND="$1"
-shift 1
+#
+# ARGUMENTS
+#
+
+if [ "$#" -eq 2 ]; then
+  STACK="$1"
+  STACK_DIR="$SMART_HOME_DIR/$STACK"
+  COMMAND="$2"
+  shift 2
+else
+  COMMAND="$1"
+  shift 1
+fi
 COMMAND_ARGS=("${@}")
 
 #
@@ -11,22 +22,63 @@ COMMAND_ARGS=("${@}")
 function smart-home:utils:validate() {
   if [ "$(type -t smart-home:command:"$COMMAND")" = function ]; then
     return 0
+  elif [ -d "$STACK_DIR/compose.yml" ] \
+    && [ "$(type -t smart-home:docker:"$COMMAND")" = function ]; then
+    return
   elif [ -z "$COMMAND" ]; then
     smart-home:command:help
-    return 1
+    return 0
   else
-    echo "Unknown command: $COMMAND";
+    echo "Unknown command: $COMMAND"
     return 1
   fi
+}
+
+function smart-home:utils:jump() {
+  pushd "$1" > /dev/null || exit 1
+}
+
+function smart-home:utils:back() {
+  popd > /dev/null || exit 1 
+}
+
+function smart-home:utils:list_stacks() {
+  find . -maxdepth 2 -type f -name 'compose.yml' -printf '%h\n'
 }
 
 function smart-home:exists() {
   command -v "$1" > /dev/null 2>&1
 }
 
-function smart-home::load_vars() {
-  # shellcheck disable=SC2046
-  export "$(grep -v '^#' "$1" | xargs -0)";
+#
+# DOCKER
+#
+
+function smart-home:docker:up() {
+  docker compose up -d $*
+}
+
+function smart-home:docker:stop() {
+  docker compose stop $*
+}
+
+function smart-home:docker:down() {
+  docker compose down --remove-orphans $*
+}
+
+function smart-home:docker:restart() {
+  docker compose restart $* 
+}
+
+function smart-home:docker:update() {
+  echo "Pulling latest images..."
+  docker compose pull $*
+  echo "Building images..."
+  docker compose build $*
+  echo "Starting containers..."
+  docker compose up -d $*
+  echo "Prune to free up space..."
+  docker system prune --volumes -f
 }
 
 #
@@ -67,13 +119,8 @@ function smart-home:command:init() {
     sudo apt install -y docker-compose
   fi
 
-  if ! smart-home:exists mosquitto_passwd; then
-    echo "Installing mosquitto..."
-    sudo apt-get install -y mosquitto
-  fi
-
   echo "Installing additional packages..."
-  sudo apt-get install -y git cockpit avahi-daemon network-manager python3-pip nodejs
+  sudo apt-get install -y git python3-pip nodejs
 
   echo "Installing python dependencies..."
   pip3 install -r "$SMART_HOME_DIR/requirements.txt"
@@ -81,48 +128,61 @@ function smart-home:command:init() {
   echo "Addint pre-commit hooks..."
   pre-commit install
 
-  if [ ! -f "$SMART_HOME_DIR/.env" ]; then
-    echo "Creating .env file..."
-    cp "$SMART_HOME_DIR/.env.example" "$SMART_HOME_DIR/.env"
-  fi
-
   echo "Done!"
   echo "Please, reboot!"
 }
 
-function smart-home:command:start() {
-  echo "Starting containers..."
-  docker-compose up -d
+function smart-home:command:up() {
+  echo "Starting up all stacks..."
+  for stack in $(smart-home:utils:list_stacks); do
+    echo "Starting up $(basename $stack)..."
+    smart-home:utils:jump "$stack"
+    smart-home:docker:up "$@"
+    smart-home:utils:back
+  done
 }
 
 function smart-home:command:stop() {
-  echo "Stopping containers..."
-  docker-compose stop
+  echo "Stopping all stacks..."
+  for stack in $(smart-home:utils:list_stacks); do
+    echo "Stopping $(basename $stack)..."
+    smart-home:utils:jump "$stack"
+    smart-home:docker:stop "$@"
+    smart-home:utils:back
+  done
 }
 
 function smart-home:command:down() {
-  echo "Stopping and removing containers..."
-  docker-compose down --remove-orphans
-}
-
-function smart-home:command:restart() {
-  echo "Restarting containers..."
-  docker-compose restart
+  echo "Taking down all stacks..."
+  for stack in $(smart-home:utils:list_stacks); do
+    echo "Taking down $(basename $stack)..."
+    smart-home:utils:jump "$stack"
+    smart-home:docker:down "$@"
+    smart-home:utils:back
+  done
 }
 
 function smart-home:command:update() {
-  echo "Pulling latest images..."
-  docker-compose pull
-  echo "Building images..."
-  docker-compose build
-  echo "Starting containers..."
-  docker-compose up -d
-  echo "Prune to free up space..."
-  docker system prune --volumes -f
+  echo "Updating all stacks..."
+  for stack in $(smart-home:utils:list_stacks); do
+    echo "Updating $(basename $stack)..."
+    smart-home:utils:jump "$stack"
+    smart-home:docker:update "$@"
+    smart-home:utils:back
+  done
+}
+
+function smart-home:command:restart() {
+  echo "Restarting all stacks..."
+  for stack in $(smart-home:utils:list_stacks); do
+    echo "Restarting $(basename $stack)..."
+    smart-home:utils:jump "$stack"
+    smart-home:docker:restart "$@"
+    smart-home:utils:back
+  done
 }
 
 function smart-home:command:prune() {
-  echo "Deletting all images not associated with a container..."
   docker system prune --volumes
 }
 
@@ -139,44 +199,6 @@ function smart-home:command:docs() {
   mkdocs serve --livereload --dev-addr "$ip:7000"
 }
 
-function smart-home:command:setup-network() {
-  # Based on:
-  # https://gist.github.com/dbkinghorn/ed923bbcb7ec3f53bd2da5fe5e9b49b2
-  
-  echo "Changing netplan to network manager on all interfaces"
-  
-  # backup existing yaml file
-  cd /etc/netplan || exit
-  sudo cp 50-cloud-init.yaml 50-cloud-init.yaml.bak
-
-  sudo tee /etc/netplan/01-network-manager-all.yaml > /dev/null << EOF
-# This file describes the network interfaces available on your system
-# For more information, see netplan(5).
-network:
-  version: 2
-  renderer: NetworkManager
-  ethernets:
-    eth0:
-      dhcp4: no
-      addresses: [192.168.50.113/24]
-      routes:
-        - to: default
-          via: 192.168.50.1
-      nameservers:
-        addresses: [1.1.1.1, 1.0.0.1]
-EOF
-
-  # setup netplan for network manager
-  sudo netplan generate
-  sudo netplan apply
-  
-  # make sure network manager is running
-  systemctl enable NetworkManager.service
-  systemctl restart NetworkManager.service
-
-  echo "Done!"
-}
-
 #
 # MAIN
 #
@@ -187,15 +209,23 @@ function main() {
     return 1;
   fi;
 
-  cd "$SMART_HOME_DIR" || exit 1
-
   if ! smart-home:utils:validate; then
+    smart-home:command:help
     return 1
   fi
 
-  smart-home::load_vars "$SMART_HOME_DIR/.env"
+  smart-home:utils:jump "$SMART_HOME_DIR"
+
+  # Run command in the $STACK context
+  if [ -n "$STACK" ]; then
+    smart-home:utils:jump "$STACK_DIR"
+    smart-home:docker:"$COMMAND" "${COMMAND_ARGS[*]}"
+    smart-home:utils:back
+    return $?
+  fi
 
   smart-home:command:"$COMMAND" "${COMMAND_ARGS[*]}"
+  smart-home:utils:back
 
   return $?
 }

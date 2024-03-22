@@ -1,16 +1,6 @@
 .deleted
 .docker
 
-home-assistant/automations.yaml
-home-assistant/scripts.yaml
-home-assistant/blueprints
-home-assistant/custom_components
-home-assistant/www
-home-assistant/.cloud
-home-assistant/.ssh
-home-assistant/.storage
-home-assistant/deps
-
 *.db*
 *.conf
 *.log

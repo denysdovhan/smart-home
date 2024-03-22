@@ -1,9 +1,0 @@
-#
-# RESTful Command
-#
-# https://www.home-assistant.io/integrations/fan/
-#
-
-rest_command:
-  healthcheck:
-    url: !secret healthcheck_ping

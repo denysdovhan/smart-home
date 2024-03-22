@@ -9,39 +9,11 @@
 ._*
 __pycache__
 .env
+.DS_Store
 
 # Ignore folders
 .docker
 .deleted
-.ssh
-.storage
-.cloud
-.google.token
-deps
-tts
-image
-
-# Home Assistant
-/home-assistant/secrets.yaml
-/home-assistant/ip_bans.yaml
-/home-assistant/known_devices.yaml
-/home-assistant/.homekit.state
-/home-assistant/.ps4-games*.json
-/home-assistant/GA_SERVICE_ACCOUNT.json
-/home-assistant/www/community
-/home-assistant/custom_components/**
-!/home-assistant/custom_components/README.md
-watchman_report.txt
-token-*.txt
-
-# Zigbee2MQTT
-/zigbee2mqtt/secret.yaml
-/zigbee2mqtt/state.json
-/zigbee2mqtt/log
-/zigbee2mqtt/coordinator_backup.json
-
-# PlayStation to MQTT
-/ps5/credentials.json
 
 # IDE
 .vscode
@@ -49,4 +21,3 @@ token-*.txt
 
 # Specific keeps
 !.gitkeep
-!mosquitto/mosquitto.conf
