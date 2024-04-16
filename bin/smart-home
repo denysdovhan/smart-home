@@ -89,16 +89,16 @@ function smart-home:command:help() {
   echo "
   🏡 Denys Dovhan Smart Home
 
+  smart-home [stack] start              start all services
+  smart-home [stack] stop               stop all services
+  smart-home [stack] down               stop and remove all containers
+  smart-home [stack] restart            restart all services
+  smart-home [stack] update             stop, update and restart all services
   smart-home help                       print this help message
   smart-home init                       install dependencies
-  smart-home start                      start all services
-  smart-home stop                       stop all services
-  smart-home down                       stop and remove all containers
-  smart-home restart                    restart all services
-  smart-home update                     stop, update and restart all services
   smart-home prune                      delete obsolete containers
   smart-home password                   generate a password
-  smart-home setup-network              setup network settings
+  smart-home docs                       server docs website locally
 "
 }
 
