@@ -80,6 +80,18 @@ services:
     ports:
       - 9696:9696
 
+  # Bazarr
+  # Companion that manages and downloads subtitles based on your requirements
+  bazarr:
+    container_name: bazarr
+    image: lscr.io/linuxserver/bazarr:latest
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER}/bazarr:/config
+      - ${MEDIA_VOLUME}:/media
+    ports:
+      - 6767:6767
+
   # Samba
   # Remote access to the file system
   samba:
@@ -102,3 +114,16 @@ services:
         -s "media;/mnt/media;yes;no;no;all"
         -s "smart-home;/mnt/smart-home;yes;no;no;all"
         -u "${SAMBA_USER};${SAMBA_PASSWORD}"
+
+  # Audiobookshelf
+  # Self-hosted audiobook and podcast server
+  audiobookshelf:
+    container_name: audiobookshelf
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER}/audiobookshelf/config:/config
+      - ${DOCKER}/audiobookshelf/metadata:/metadata
+      - ${MEDIA_VOLUME}:/media
+    ports:
+      - 13378:80
