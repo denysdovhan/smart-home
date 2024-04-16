@@ -3,7 +3,7 @@ site_author: Denys Dovhan
 site_url: https://denysdovhan.com/smart-home
 site_description: 🏡 My smart home setup built on top of Home Assistant
 
-copyright: 'Copyright &copy; 2021 Denys Dovhan'
+copyright: 'Copyright &copy; 2024 Denys Dovhan'
 
 repo_url: https://github.com/denysdovhan/smart-home
 repo_name: denysdovhan/smart-home
@@ -15,6 +15,11 @@ theme:
     logo: material/home-assistant
     repo: fontawesome/brands/github
   palette:
+    # Palette toggle for automatic mode
+    - media: '(prefers-color-scheme)'
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
     # Light mode
     - media: '(prefers-color-scheme: light)'
       scheme: default
@@ -49,12 +54,13 @@ nav:
       - Ad-Blocking: software/ad-blocking.md
       - Ports: software/ports.md
   - Home Assistant:
-      - Introduction: home-assistant/introduction.md
-      - Dashboards: home-assistant/dashboards.md
-      - Custom Extensions: home-assistant/custom-extensions.md
-      - Vacuum Setup: home-assistant/vacuum-setup.md
-      - Speech: home-assistant/speech.md
-      - Health Checks: home-assistant/health-checks.md
+      https://github.com/denysdovhan/home-assistant-config
+      # - Introduction: home-assistant/introduction.md
+      # - Dashboards: home-assistant/dashboards.md
+      # - Custom Extensions: home-assistant/custom-extensions.md
+      # - Vacuum Setup: home-assistant/vacuum-setup.md
+      # - Speech: home-assistant/speech.md
+      # - Health Checks: home-assistant/health-checks.md
   - Resources: resources.md
 
 markdown_extensions:
