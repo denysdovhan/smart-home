@@ -1,7 +1,6 @@
 # https://pre-commit.com/
 
 fail_fast: true
-exclude: custom_components
 repos:
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: 'v2.3.0'
@@ -12,3 +11,6 @@ repos:
     hooks:
       - id: check-json
       - id: check-merge-conflict
+      - id: check-added-large-files
+      - id: check-symlinks
+      - id: detect-private-key
