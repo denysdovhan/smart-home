@@ -4,7 +4,7 @@
 # ARGUMENTS
 #
 
-if [ "$#" -eq 2 ]; then
+if [ "$#" -gt 1 ]; then
   STACK="$1"
   STACK_DIR="$SMART_HOME_DIR/$STACK"
   COMMAND="$2"
@@ -24,7 +24,7 @@ function smart-home:utils:validate() {
     return 0
   elif [ -d "$STACK_DIR/compose.yml" ] \
     && [ "$(type -t smart-home:docker:"$COMMAND")" = function ]; then
-    return
+    return 0
   elif [ -z "$COMMAND" ]; then
     smart-home:command:help
     return 0
