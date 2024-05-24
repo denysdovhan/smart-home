@@ -30,39 +30,3 @@
 <meta name="twitter:description" content="{{ config.site_description }}" />
 <meta name="twitter:image" content="{{ image }}" />
 {% endblock %}
-
-<!-- Announcement bar -->
-{% block announce %}
-<a href="https://twitter.com/denysdovhan">
-  For updates follow <strong>@denysdovhan</strong> on
-  <span class="twemoji twitter">
-    {% include ".icons/fontawesome/brands/twitter.svg" %}
-  </span>
-  <strong>Twitter</strong>
-</a>
-{% endblock %}
-
-<!-- Self-hosted Analytics -->
-<!-- prettier-ignore -->
-{% block analytics %}
-{{ super() }}
-<script
-  async
-  defer
-  data-website-id="d3d8ca3f-6cca-48ac-8536-8980c60ad379"
-  src="https://analytics.denysdovhan.com/umami.js">
-</script>
-{% endblock %}
-
-<!-- Comments system -->
-{% block disqus %}
-<script
-  src="https://utteranc.es/client.js"
-  repo="denysdovhan/smart-home"
-  issue-term="pathname"
-  label="comments"
-  theme="preferred-color-scheme"
-  crossorigin="anonymous"
-  async
-></script>
-{% endblock %}

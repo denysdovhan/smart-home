@@ -1,12 +1,13 @@
 site_name: Denys Dovhan Smart Home
 site_author: Denys Dovhan
 site_url: https://denysdovhan.com/smart-home
-site_description: 🏡 My smart home setup built on top of Home Assistant
+site_description: ⚙️ My homelab and smart-home server built with Proxmox, Ubuntu, Docker
 
 copyright: 'Copyright &copy; 2024 Denys Dovhan'
 
 repo_url: https://github.com/denysdovhan/smart-home
 repo_name: denysdovhan/smart-home
+edit_uri: edit/main/docs/
 
 theme:
   name: material
@@ -23,51 +24,52 @@ theme:
     # Light mode
     - media: '(prefers-color-scheme: light)'
       scheme: default
-      primary: blue
-      accent: blue
+      primary: deep orange
+      accent: deep orange
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
     # Dark mode
     - media: '(prefers-color-scheme: dark)'
       scheme: slate
-      primary: blue
-      accent: blue
+      primary: deep orange
+      accent: deep orange
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
   features:
+    - toc.integrate
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.top
     - navigation.instant
+    - navigation.instant.progress
+    - navigation.footer
+    - content.action.edit
+    - content.action.view
 
 nav:
   - Home: index.md
   - Hardware: hardware.md
   - Software:
-      - System Overview: software/system.md
-      - Getting Started: software/getting-started.md
-      - Docker Containers: software/docker.md
-      - Media Management: software/media.md
-      - External Access: software/external-access.md
-      - Ad-Blocking: software/ad-blocking.md
-      - Ports: software/ports.md
-  - Home Assistant:
-      https://github.com/denysdovhan/home-assistant-config
-      # - Introduction: home-assistant/introduction.md
-      # - Dashboards: home-assistant/dashboards.md
-      # - Custom Extensions: home-assistant/custom-extensions.md
-      # - Vacuum Setup: home-assistant/vacuum-setup.md
-      # - Speech: home-assistant/speech.md
-      # - Health Checks: home-assistant/health-checks.md
-  - Resources: resources.md
+      - software/system.md
+      - software/getting-started.md
+      - software/docker.md
+      - software/media.md
+      - software/external-access.md
+      - software/ad-blocking.md
+      - software/ports.md
+  - Inspiration: resources.md
+  # Link to my smart-home setup
+  # Ref: https://github.com/denysdovhan/home-assistant-config
+  - Home Assistant: https://denysdovhan.com/home-assistant-config
 
 markdown_extensions:
   - meta
   - toc:
       permalink: true
   - attr_list
+  - md_in_html
   - admonition
   - pymdownx.details
   - pymdownx.superfences
