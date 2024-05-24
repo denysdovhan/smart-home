@@ -1,6 +1,6 @@
 # Welcome to my Smart Home!
 
-![Screenshot 2024-05-24 at 18 48 01](https://github.com/denysdovhan/smart-home/assets/3459374/3eb9c007-4443-4e8d-98bf-cce0e85d631e)
+![Smart Home dashboard overview](https://github.com/denysdovhan/smart-home/assets/3459374/3eb9c007-4443-4e8d-98bf-cce0e85d631e)
 
 [![GitHub Workflow Status][github-img]][github-url]
 [![Last Commit][last-commit-img]][github-url]

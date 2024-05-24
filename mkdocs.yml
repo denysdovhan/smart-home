@@ -52,13 +52,12 @@ nav:
   - Home: index.md
   - Hardware: hardware.md
   - Software:
-      - software/system.md
+      - software/index.md
       - software/getting-started.md
       - software/docker.md
       - software/media.md
       - software/external-access.md
       - software/ad-blocking.md
-      - software/ports.md
   - Inspiration: resources.md
   # Link to my smart-home setup
   # Ref: https://github.com/denysdovhan/home-assistant-config

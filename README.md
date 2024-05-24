@@ -2,7 +2,7 @@
 
 # Denys Dovhan Smart Home
 
-![Home](https://user-images.githubusercontent.com/3459374/152371766-1d2a1e17-34d3-4fe6-9e6d-aded02f14de1.png)
+![Smart Home dashboard overview](https://github.com/denysdovhan/smart-home/assets/3459374/3eb9c007-4443-4e8d-98bf-cce0e85d631e)
 
 [![GitHub Workflow Status][github-img]][github-url]
 [![Last Commit][last-commit-img]][github-url]
@@ -11,7 +11,7 @@
 [![GitHub Stars][stars-img]][github-url]
 [![Twitter Followers][twitter-img]][twitter-url]
 
-This is my personal Home Assistant configuration, awakening my home with automations. I hope this will help you inspire on the way to built your own smart home.
+This is my personal smart-home configuration, awakening my home with services and tools. I hope this will help you inspire on the way to built your own smart home.
 
 [**Read the documentation**](https://denysdovhan.com/smart-home)
 
@@ -24,7 +24,7 @@ I also have a [public Notion board](https://www.notion.so/denysdovhan/f09ea06da5
 <!-- References -->
 
 [github-url]: https://github.com/denysdovhan/smart-home
-[github-img]: https://img.shields.io/github/actions/workflow/status/denysdovhan/smart-home/homeassistant.yml?style=flat-square
+[github-img]: https://img.shields.io/github/actions/workflow/status/denysdovhan/smart-home/docs.yml?style=flat-square
 [last-commit-img]: https://img.shields.io/github/last-commit/denysdovhan/smart-home?style=flat-square
 [commit-activity-img]: https://img.shields.io/github/commit-activity/m/denysdovhan/smart-home?style=flat-square
 [license-url]: https://github.com/denysdovhan/smart-home/blob/master/LICENSE
