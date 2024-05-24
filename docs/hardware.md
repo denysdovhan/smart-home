@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # Hardware
 
 This is the list of the hardware that is present in my smart home.

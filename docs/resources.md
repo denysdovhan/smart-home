@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # Resources
 
 On this page, I'm trying to collect useful resources I used to improve my home:
