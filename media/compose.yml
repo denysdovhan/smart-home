@@ -8,6 +8,7 @@ services:
     image: lscr.io/linuxserver/plex:latest
     restart: unless-stopped
     network_mode: host
+    env_file: .env
     environment:
       VERSION: docker
     volumes:
@@ -22,6 +23,7 @@ services:
     container_name: transmission
     image: lscr.io/linuxserver/transmission:latest
     restart: unless-stopped
+    env_file: .env
     environment:
       TRANSMISSION_WEB_HOME: /web
     ports:
@@ -39,6 +41,7 @@ services:
     container_name: sonarr
     image: lscr.io/linuxserver/sonarr:latest
     restart: unless-stopped
+    env_file: .env
     depends_on:
       - prowlarr
       - transmission
@@ -56,6 +59,7 @@ services:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     restart: unless-stopped
+    env_file: .env
     depends_on:
       - prowlarr
       - transmission
@@ -86,6 +90,7 @@ services:
     container_name: bazarr
     image: lscr.io/linuxserver/bazarr:latest
     restart: unless-stopped
+    env_file: .env
     volumes:
       - ${DOCKER}/bazarr:/config
       - ${MEDIA_VOLUME}:/media
@@ -98,12 +103,13 @@ services:
     container_name: samba
     image: dperson/samba
     restart: unless-stopped
-    volumes:
-      - ..:/mnt/smart-home
-      - ${MEDIA_VOLUME}:/mnt/media
+    env_file: .env
     environment:
       USERID: ${PUID}
       GROUPID: ${PGID}
+    volumes:
+      - ..:/mnt/smart-home
+      - ${MEDIA_VOLUME}:/mnt/media
     ports:
       - 139:139
       - 445:445
@@ -121,6 +127,7 @@ services:
     container_name: audiobookshelf
     image: ghcr.io/advplyr/audiobookshelf:latest
     restart: unless-stopped
+    env_file: .env
     volumes:
       - ${DOCKER}/audiobookshelf/config:/config
       - ${DOCKER}/audiobookshelf/metadata:/metadata
