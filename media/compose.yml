@@ -120,6 +120,18 @@ services:
     ports:
       - 5055:5055
 
+  # Tautulli
+  # A monitoring and tracking tool for Plex Media Server
+  tautulli:
+    container_name: tautulli
+    image: ghcr.io/tautulli/tautulli
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ${DOCKER}/tautulli:/config
+    ports:
+      - 8181:8181
+
   # Samba
   # Remote access to the file system
   samba:
