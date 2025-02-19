@@ -89,7 +89,7 @@ function smart-home:command:help() {
   echo "
   🏡 Denys Dovhan Smart Home
 
-  smart-home [stack] start              start all services
+  smart-home [stack] up                 start all services
   smart-home [stack] stop               stop all services
   smart-home [stack] down               stop and remove all containers
   smart-home [stack] restart            restart all services
