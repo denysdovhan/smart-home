@@ -62,3 +62,17 @@ services:
       - 3812:3012
     volumes:
       - ${DOCKER}/bitwarden:/data
+
+  # Wallos
+  # Subscriptions management application
+  wallos:
+    container_name: wallos
+    image: bellamy/wallos
+    restart: unless-stopped
+    ports:
+      - 8282:80/tcp
+    environment:
+      TZ: 'Europe/Kyiv'
+    volumes:
+      - ${DOCKER}/wallos/db:/var/www/html/db
+      - ${DOCKER}/wallos/logos:/var/www/html/images/uploads/logos
