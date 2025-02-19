@@ -120,6 +120,21 @@ services:
     ports:
       - 5055:5055
 
+  # Trailarr
+  # A tool download and manage trailers for Radarr and Sonarr libraries
+  trailarr:
+    container_name: trailarr
+    image: nandyalu/trailarr:nightly
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - WEBUI_DISABLE_AUTH=True
+    volumes:
+      - ${DOCKER}/trailarr:/config
+      - ${MEDIA_VOLUME}:/media
+    ports:
+      - 7889:7889
+
   # Maintainerr
   # Cleaning up (un)watched media
   maintainerr:
