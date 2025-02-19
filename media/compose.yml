@@ -109,6 +109,17 @@ services:
     ports:
       - 7676:8080
 
+  # Overseerr
+  # Nice app for requesting new content
+  overseerr:
+    container_name: overseerr
+    image: sctx/overseerr:develop
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER}/overseerr:/app/config
+    ports:
+      - 5055:5055
+
   # Samba
   # Remote access to the file system
   samba:
