@@ -97,6 +97,18 @@ services:
     ports:
       - 6767:6767
 
+  # Lingarr
+  # Service fot machine translations for  movies and tv-series subtitles
+  lingarr:
+    container_name: lingarr
+    image: lingarr/lingarr:latest
+    restart: unless-stopped
+    volumes:
+      - ${MEDIA_VOLUME}:/media
+      - ${DOCKER}/lingarr:/app/config
+    ports:
+      - 7676:8080
+
   # Samba
   # Remote access to the file system
   samba:
