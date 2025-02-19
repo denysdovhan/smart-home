@@ -120,6 +120,18 @@ services:
     ports:
       - 5055:5055
 
+  # Maintainerr
+  # Cleaning up (un)watched media
+  maintainerr:
+    container_name: maintainerr
+    image: ghcr.io/jorenn92/maintainerr:latest
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ${DOCKER}/maintainerr:/opt/data
+    ports:
+      - 6246:6246
+
   # Tautulli
   # A monitoring and tracking tool for Plex Media Server
   tautulli:
