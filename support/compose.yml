@@ -39,13 +39,13 @@ services:
   # Fancy dashboard for displaying home services
   homarr:
     container_name: homarr
-    image: ghcr.io/ajnart/homarr:latest
+    image: ghcr.io/homarr-labs/homarr:latest
     restart: unless-stopped
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
-      - ${DOCKER}/homarr/configs:/app/data/configs
-      - ${DOCKER}/homarr/icons:/app/public/icons
-      - ${DOCKER}/homarr/data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DOCKER}/homarr:/appdata
+    environment:
+      SECRET_ENCRYPTION_KEY: ${HOMARR_SECRET_ENCRYPTION_KEY}
     ports:
       - 7575:7575
 
