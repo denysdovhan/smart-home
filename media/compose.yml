@@ -35,6 +35,22 @@ services:
       - ${DOCKER}/transmission/web:/web # Transmissinic UI
       - ${MEDIA_VOLUME}/downloads:/downloads
 
+  # qbittorrent:
+  #   container_name: qbittorrent
+  #   image: lscr.io/linuxserver/qbittorrent:latest
+  #   restart: unless-stopped
+  #   env_file: .env
+  #   # environment:
+  #   # - WEBUI_PORT=8080
+  #   # - TORRENTING_PORT=6881
+  #   volumes:
+  #     - ${DOCKER}/qbittorrent:/config
+  #     - ${MEDIA_VOLUME}/downloads:/downloads
+  #   ports:
+  #     - 8080:8080
+  #     - 6881:6881
+  #     - 6881:6881/udp
+
   # Sonarr
   # A TV series manager for grabing, sorting and organizing new series
   sonarr:
@@ -113,7 +129,7 @@ services:
   # Nice app for requesting new content
   overseerr:
     container_name: overseerr
-    image: sctx/overseerr:develop
+    image: sctx/overseerr:latest
     restart: unless-stopped
     volumes:
       - ${DOCKER}/overseerr:/app/config
