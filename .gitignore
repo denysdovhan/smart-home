@@ -8,7 +8,7 @@
 *.pyc
 ._*
 __pycache__
-.env
+.env*
 .DS_Store
 
 # Ignore folders
