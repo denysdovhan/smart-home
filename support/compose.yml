@@ -35,16 +35,16 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
-  # Homarr
-  # Fancy dashboard for displaying home services
-  homarr:
-    container_name: homarr
-    image: ghcr.io/homarr-labs/homarr:latest
+  # Glance
+  # A self-hosted dashboard that puts all feeds in one place
+  glance:
+    container_name: glance
+    image: glanceapp/glance
     restart: unless-stopped
+    env_file: .env
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${DOCKER}/homarr:/appdata
-    environment:
-      SECRET_ENCRYPTION_KEY: ${HOMARR_SECRET_ENCRYPTION_KEY}
+      - ./glance:/app/config
+      - /mnt:/mnt:ro
     ports:
-      - 7575:7575
+      - 8888:8080

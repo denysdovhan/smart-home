@@ -1,0 +1,140 @@
+- name: Homelab
+  center-vertically: true
+  columns:
+    - size: full
+      widgets:
+        # - type: search
+        #   search-engine: google
+        #   new-tab: true
+        #   bangs:
+        #     - title: YouTube
+        #       shortcut: yt
+        #       url: https://www.youtube.com/results?search_query=%s
+
+        - type: monitor
+          cache: 1m
+          title: Applications
+          sites:
+            - title: Home Assistant
+              url: https://${HA_DOMAIN}
+              icon: sh:home-assistant
+            - title: Mealie
+              url: https://mealie.${PUBLIC_DOMAIN}
+              icon: sh:mealie
+            - title: Bitwarden
+              url: https://bitwarden.${PUBLIC_DOMAIN}
+              icon: sh:vaultwarden
+            - title: Karakeep
+              url: https://karakeep.${PUBLIC_DOMAIN}
+              icon: sh:karakeep
+            - title: Wallos
+              url: https://wallos.${PRIVATE_DOMAIN}
+              icon: sh:wallos
+
+        - type: monitor
+          cache: 1m
+          title: Media
+          sites:
+            - title: Plex
+              url: https://app.plex.tv
+              icon: sh:plex
+            - title: Transmission
+              url: https://transmission.${PRIVATE_DOMAIN}
+              icon: sh:transmission
+            - title: Overseerr
+              url: https://overseerr.${PRIVATE_DOMAIN}
+              icon: di:overseerr
+            - title: Radarr
+              url: https://radarr.${PRIVATE_DOMAIN}
+              icon: sh:radarr
+            - title: Sonarr
+              url: https://sonarr.${PRIVATE_DOMAIN}
+              icon: sh:sonarr
+            - title: Prowlarr
+              url: https://prowlarr.${PRIVATE_DOMAIN}
+              icon: sh:prowlarr
+            - title: Bazarr
+              url: https://bazarr.${PRIVATE_DOMAIN}
+              icon: sh:bazarr.png
+            - title: Lingarr
+              url: https://lingarr.${PRIVATE_DOMAIN}
+              icon: sh:lingarr
+            - title: Trailarr
+              url: https://trailarr.${PRIVATE_DOMAIN}
+              icon: sh:trailarr
+            - title: Maintainerr
+              url: https://maintainerr.${PRIVATE_DOMAIN}
+              icon: sh:maintainerr
+            - title: Huntarr
+              url: https://huntarr.${PRIVATE_DOMAIN}
+              icon: sh:huntarr.png
+            - title: Cleanuparr
+              url: https://cleanuparr.${PRIVATE_DOMAIN}
+              icon: sh:cleanuparr.png
+            - title: Tautulli
+              url: https://tautulli.${PRIVATE_DOMAIN}
+              icon: sh:tautulli
+            - title: Audiobookshelf
+              url: https://audiobookshelf.${PUBLIC_DOMAIN}
+              icon: sh:audiobookshelf
+
+        - type: split-column
+          max-columns: 3
+          widgets:
+            - type: monitor
+              cache: 1m
+              title: Network
+              sites:
+                - title: Nginx Proxy Manager
+                  url: https://nginx.${PRIVATE_DOMAIN}
+                  icon: sh:nginx-proxy-manager
+                - title: Pi-hole
+                  url: https://pihole.${PRIVATE_DOMAIN}/admin
+                  icon: sh:pi-hole
+                - title: Wireguard
+                  url: https://wireguard.${PRIVATE_DOMAIN}
+                  icon: sh:wireguard
+                - title: Cloudflare
+                  url: https://dash.cloudflare.com
+                  icon: sh:cloudflare
+                  alt-status-codes:
+                    - 403
+
+            - type: monitor
+              cache: 1m
+              title: Support
+              sites:
+                - title: Proxmox
+                  url: https://proxmox.${PRIVATE_DOMAIN}
+                  icon: sh:proxmox
+                - title: Portainer
+                  url: https://portainer.${PRIVATE_DOMAIN}
+                  icon: sh:portainer
+
+    - size: small
+      widgets:
+        # - type: clock
+        #   hour-format: 24h
+        #   timezone: Kyiv/Ukraine
+
+        - type: weather
+          location: Kyiv, Ukraine
+
+        - type: server-stats
+          servers:
+            - type: local
+              name: Homelab
+              hide-mountpoints-by-default: true
+              mountpoints:
+                '/':
+                  name: System
+                  hide: false
+                '/mnt/storage':
+                  name: Storage
+                  hide: false
+
+        - type: dns-stats
+          service: pihole-v6
+          url: https://pihole.${PRIVATE_DOMAIN}
+          password: ${PIHOLE_APP_PASSWORD}
+          hour-format: 24h

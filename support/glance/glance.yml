@@ -1,0 +1,6 @@
+branding:
+  logo-text: home
+  app-name: Smart Home
+pages:
+  - $include: homelab.yml
+  - $include: dashboard.yml
