@@ -51,6 +51,17 @@ services:
   #     - 6881:6881
   #     - 6881:6881/udp
 
+  # Overseerr
+  # Nice app for requesting new content
+  overseerr:
+    container_name: overseerr
+    image: sctx/overseerr:latest
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER}/overseerr:/app/config
+    ports:
+      - 5055:5055
+
   # Sonarr
   # A TV series manager for grabing, sorting and organizing new series
   sonarr:
@@ -68,24 +79,6 @@ services:
       - ${MEDIA_VOLUME}:/media
     ports:
       - 8989:8989
-
-  # Radarr
-  # A movie collection manager for grabing and downloading movies
-  radarr:
-    image: lscr.io/linuxserver/radarr:latest
-    container_name: radarr
-    restart: unless-stopped
-    env_file: .env
-    depends_on:
-      - prowlarr
-      - transmission
-    volumes:
-      - ${DOCKER}/radarr:/config
-      # Media volumes are organized using this guide:
-      # https://wiki.servarr.com/docker-guide#consistent-and-well-planned-paths
-      - ${MEDIA_VOLUME}:/media
-    ports:
-      - 7878:7878
 
   # Prowlarr
   # Indexer manager/proxy for torrent trackers
@@ -125,17 +118,6 @@ services:
     ports:
       - 7676:8080
 
-  # Overseerr
-  # Nice app for requesting new content
-  overseerr:
-    container_name: overseerr
-    image: sctx/overseerr:latest
-    restart: unless-stopped
-    volumes:
-      - ${DOCKER}/overseerr:/app/config
-    ports:
-      - 5055:5055
-
   # Trailarr
   # A tool download and manage trailers for Radarr and Sonarr libraries
   trailarr:
@@ -162,6 +144,31 @@ services:
       - ${DOCKER}/maintainerr:/opt/data
     ports:
       - 6246:6246
+
+  # Huntarr
+  # Continually searches media libraries for missing content and quality upgrades.
+  huntarr:
+    container_name: huntarr
+    image: huntarr/huntarr:latest
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ${DOCKER}/huntarr:/config
+    ports:
+      - 9705:9705
+
+  # Cleanuparr
+  # Automatically clean up unwanted, stalled, and malicious downloads from *arr applications.
+  cleanuparr:
+    image: ghcr.io/cleanuparr/cleanuparr:latest
+    container_name: cleanuparr
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ${DOCKER}/cleanuparr:/config
+      - ${MEDIA_VOLUME}/downloads:/downloads # for monitoring orphaned downloads
+    ports:
+      - 11011:11011
 
   # Tautulli
   # A monitoring and tracking tool for Plex Media Server
