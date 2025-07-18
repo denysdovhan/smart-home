@@ -1,0 +1,44 @@
+version: '3.8'
+name: karakeep
+services:
+  # Karakeep (ex Hoarder)
+  # Karakeep is a web application for managing and organizing your bookmarks
+  karakeep:
+    container_name: karakeep
+    image: ghcr.io/karakeep-app/karakeep:release
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER}/karakeep:/data
+    ports:
+      - 3333:3000
+    env_file: .env
+    environment:
+      DATA_DIR: /data
+      MEILI_ADDR: http://karakeep-meili:7700
+      BROWSER_WEB_URL: http://karakeep-chrome:9222
+
+  # Alpine Chrome (for Karakeep)
+  # Alpine Chrome is a lightweight version of Chrome for running in Docker
+  chrome:
+    container_name: karakeep-chrome
+    image: gcr.io/zenika-hub/alpine-chrome:123
+    restart: unless-stopped
+    command:
+      - --no-sandbox
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --remote-debugging-address=0.0.0.0
+      - --remote-debugging-port=9222
+      - --hide-scrollbars
+
+  # MeiliSearch (for Karakeep)
+  # MeiliSearch is a powerful search engine that can be used with Karakeep
+  meili:
+    container_name: karakeep-meili
+    image: getmeili/meilisearch:v1.13.3
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      MEILI_NO_ANALYTICS: 'true'
+    volumes:
+      - ${DOCKER}/karakeep-meili:/meili_data

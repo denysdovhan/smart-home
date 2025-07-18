@@ -27,9 +27,9 @@
             - title: Karakeep
               url: https://karakeep.${PUBLIC_DOMAIN}
               icon: sh:karakeep
-            - title: Wallos
-              url: https://wallos.${PRIVATE_DOMAIN}
-              icon: sh:wallos
+            - title: Wapy.dev
+              url: https://wapydev.${PUBLIC_DOMAIN}
+              icon: sh:wapy-dev
 
         - type: monitor
           cache: 1m
