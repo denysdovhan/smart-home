@@ -2,6 +2,8 @@
 
 My smart home can be quickly deployed using this guide:
 
+TODO: Update the guideline
+
 - Backup everything before performing any action.
   - Backup `smart-home` folder `tar czvf smart-home.tar.gz smart-home`
   - Backup Plex libary `tar czvf plex.tar.gz ~/Plex`

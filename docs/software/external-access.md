@@ -39,6 +39,8 @@ To avoid issues with DDNS, I have enabled [Cloudflare integration for Home Assis
 
 ## Accessing SSH and Samba via OpenVPN
 
+TODO: Update about Wireguard
+
 Using Cloudflare makes it impossible to access my home via SSH using a domain name. Additionally, I don't want to expose any other ports on my router except `80` and `443`.
 
 My router has a built-in [OpenVPN](https://openvpn.net/) server. When I want to SSH into my home server or open a volume over SSH, I just connect to my home VPN. Once I am connected, I can do everything, like I'm connected to my home WiFi.
