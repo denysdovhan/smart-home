@@ -35,6 +35,31 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
+
+  # Samba
+  # Remote access to the file system
+  samba:
+    container_name: samba
+    image: dperson/samba
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      USERID: ${PUID}
+      GROUPID: ${PGID}
+    volumes:
+      - ..:/mnt/smart-home
+      - ${STORAGE}/media:/mnt/media
+    ports:
+      - 139:139
+      - 445:445
+      - 137:137/udp
+      - 138:138/udp
+    command: >
+      samba.sh
+        -s "media;/mnt/media;yes;no;no;all"
+        -s "smart-home;/mnt/smart-home;yes;no;no;all"
+        -u "${SAMBA_USER};${SAMBA_PASSWORD}"
+
   # Glance
   # A self-hosted dashboard that puts all feeds in one place
   glance:

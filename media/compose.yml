@@ -62,6 +62,24 @@ services:
     ports:
       - 5055:5055
 
+  # Radarr
+  # A movie collection manager for grabing and downloading movies
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      - prowlarr
+      - transmission
+    volumes:
+      - ${DOCKER}/radarr:/config
+      # Media volumes are organized using this guide:
+      # https://wiki.servarr.com/docker-guide#consistent-and-well-planned-paths
+      - ${MEDIA_VOLUME}:/media
+    ports:
+      - 7878:7878
+
   # Sonarr
   # A TV series manager for grabing, sorting and organizing new series
   sonarr:
@@ -181,30 +199,6 @@ services:
       - ${DOCKER}/tautulli:/config
     ports:
       - 8181:8181
-
-  # Samba
-  # Remote access to the file system
-  samba:
-    container_name: samba
-    image: dperson/samba
-    restart: unless-stopped
-    env_file: .env
-    environment:
-      USERID: ${PUID}
-      GROUPID: ${PGID}
-    volumes:
-      - ..:/mnt/smart-home
-      - ${MEDIA_VOLUME}:/mnt/media
-    ports:
-      - 139:139
-      - 445:445
-      - 137:137/udp
-      - 138:138/udp
-    command: >
-      samba.sh
-        -s "media;/mnt/media;yes;no;no;all"
-        -s "smart-home;/mnt/smart-home;yes;no;no;all"
-        -u "${SAMBA_USER};${SAMBA_PASSWORD}"
 
   # Audiobookshelf
   # Self-hosted audiobook and podcast server
