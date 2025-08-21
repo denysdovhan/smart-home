@@ -54,29 +54,33 @@ function smart-home:exists() {
 # DOCKER
 #
 
+function smart-home:docker:compose() {
+  docker compose --env-file .env --env-file "$SMART_HOME_DIR/common.env" $*
+}
+
 function smart-home:docker:up() {
-  docker compose up -d $*
+  smart-home:docker:compose up -d $*
 }
 
 function smart-home:docker:stop() {
-  docker compose stop $*
+  smart-home:docker:compose stop $*
 }
 
 function smart-home:docker:down() {
-  docker compose down --remove-orphans $*
+  smart-home:docker:compose down --remove-orphans $*
 }
 
 function smart-home:docker:restart() {
-  docker compose restart $* 
+  smart-home:docker:compose restart $* 
 }
 
 function smart-home:docker:update() {
   echo "Pulling latest images..."
-  docker compose pull $*
+  smart-home:docker:compose pull $*
   echo "Building images..."
-  docker compose build $*
+  smart-home:docker:compose build $*
   echo "Starting containers..."
-  docker compose up -d $*
+  smart-home:docker:compose up -d $*
   echo "Prune to free up space..."
   docker system prune --volumes -f
 }
