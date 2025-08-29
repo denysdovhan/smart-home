@@ -1,0 +1,42 @@
+version: '3.8'
+name: nvr
+services:
+  # Scrypted
+  # A video surveillance platform for managing cameras and devices
+  # Mainly used for proxying cameras to Homekit Secure Video
+  scrypted:
+    container_name: scrypted
+    image: ghcr.io/koush/scrypted:intel
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER}/scrypted:/server/volume
+    devices:
+      - /dev/dri:/dev/dri
+    network_mode: host
+
+  # Frigate
+  # An NVR solution for recording, detecting, and streaming from IP cameras
+  # frigate:
+  #   container_name: frigate
+  #   image: ghcr.io/blakeblackshear/frigate:stable
+  #   restart: unless-stopped
+  #   stop_grace_period: 30s # allow enough time to shut down the various services
+  #   volumes:
+  #     - /etc/localtime:/etc/localtime:ro
+  #     - ${DOCKER}/frigate:/config
+  #     - ${MEDIA_VOLUME}/nvr:/media/frigate
+  #     - type: tmpfs # Optional: 1GB of memory, reduces SSD/SD Card wear
+  #       target: /tmp/cache
+  #       tmpfs:
+  #         size: 1000000000
+  #   devices:
+  #     - /dev/dri:/dev/dri
+  #     # - /dev/bus/usb:/dev/bus/usb # for Coral USB devices
+  #   ports:
+  #     - 8971:8971
+  #     # - 5000:5000 # Internal unauthenticated access. Expose carefully.
+  #     - 8554:8554 # RTSP feeds
+  #     - 8555:8555/tcp # WebRTC over tcp
+  #     - 8555:8555/udp # WebRTC over udp
+  #   environment:
+  #     FRIGATE_RTSP_PASSWORD: 'password' # FIXME: set a strong password
