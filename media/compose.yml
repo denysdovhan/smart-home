@@ -69,9 +69,6 @@ services:
     container_name: radarr
     restart: unless-stopped
     env_file: .env
-    depends_on:
-      - prowlarr
-      - transmission
     volumes:
       - ${DOCKER}/radarr:/config
       # Media volumes are organized using this guide:
@@ -87,9 +84,6 @@ services:
     image: lscr.io/linuxserver/sonarr:latest
     restart: unless-stopped
     env_file: .env
-    depends_on:
-      - prowlarr
-      - transmission
     volumes:
       - ${DOCKER}/sonarr:/config
       # Media volumes are organized using this guide:
@@ -104,8 +98,6 @@ services:
     container_name: prowlarr
     image: lscr.io/linuxserver/prowlarr:latest
     restart: unless-stopped
-    depends_on:
-      - transmission
     volumes:
       - ${DOCKER}/prowlarr:/config
     ports:
@@ -140,7 +132,7 @@ services:
   # A tool download and manage trailers for Radarr and Sonarr libraries
   trailarr:
     container_name: trailarr
-    image: nandyalu/trailarr:nightly
+    image: nandyalu/trailarr:latest
     restart: unless-stopped
     env_file: .env
     environment:
