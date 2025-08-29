@@ -5,7 +5,7 @@ services:
   # A proxy managerment for services. Basically a Web UI for Nginx.
   nginx-proxy-manager:
     container_name: nginx-proxy-manager
-    image: jc21/nginx-proxy-manager:2.12.3
+    image: jc21/nginx-proxy-manager:latest
     restart: unless-stopped
     ports:
       - 80:80 # Public HTTP Port
@@ -24,10 +24,10 @@ services:
     image: pihole/pihole:latest
     restart: unless-stopped
     ports:
-      - '53:53/tcp' # DNS
-      - '53:53/udp' # DNS
-      - '67:67/udp' # DHCP
-      - '5300:80/tcp' # WEB UI
+      - 53:53/tcp # DNS
+      - 53:53/udp # DNS
+      - 67:67/udp # DHCP
+      - 5300:80/tcp # WEB UI
     environment:
       WEBPASSWORD: ${PIHOLE_WEBPASSWORD}
     volumes:
