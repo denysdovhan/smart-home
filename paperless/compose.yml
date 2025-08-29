@@ -1,0 +1,74 @@
+version: '3.8'
+name: paperless
+services:
+  broker:
+    container_name: paperless-broker
+    image: docker.io/library/redis:8
+    restart: unless-stopped
+    volumes:
+      - redisdata:/data
+
+  paperless:
+    container_name: paperless-ngx
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    restart: unless-stopped
+    depends_on:
+      - broker
+    ports:
+      - 4444:8000
+    volumes:
+      - ${DOCKER}/paperless:/usr/src/paperless/data
+      - ${STORAGE}/media/paperless:/usr/src/paperless/media
+      - ./export:/usr/src/paperless/export
+      - ./consume:/usr/src/paperless/consume
+    env_file: .env
+    environment:
+      PAPERLESS_TIME_ZONE: ${TZ}
+      PAPERLESS_URL: https://paperless.${PUBLIC_DOMAIN}
+      PAPERLESS_OCR_LANGUAGE: ukr+eng
+      PAPERLESS_OCR_LANGUAGES: ukr eng
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_TIKA_ENABLED: 1
+      PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
+      PAPERLESS_TIKA_ENDPOINT: http://tika:9998
+      PAPERLESS_FILENAME_FORMAT: '{{ created }}-{{ title }}'
+      PAPERLESS_FILENAME_FORMAT_REMOVE_NONE: true
+      PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
+      PAPERLESS_DISABLE_REGULAR_LOGIN: false
+      PAPERLESS_SOCIALACCOUNT_PROVIDERS: >
+        {
+          "openid_connect": {
+            "SCOPE": ["openid","profile","email"],
+            "OAUTH_PKCE_ENABLED": true,
+            "APPS": [
+              {
+                "provider_id": "pocket-id",
+                "name": "Pocket ID",
+                "client_id": "${PAPERLESS_OIDC_CLIENT_ID}",
+                "secret": "${PAPERLESS_OIDC_CLIENT_SECRET}",
+                "settings": {
+                  "server_url": "https://id.${PUBLIC_DOMAIN}"
+                }
+              }
+            ]
+          }
+        }
+
+  gotenberg:
+    container_name: paperless-gotenberg
+    image: docker.io/gotenberg/gotenberg:8.20
+    restart: unless-stopped
+    # The gotenberg chromium route is used to convert .eml files. We do not
+    # want to allow external content like tracking pixels or even javascript.
+    command:
+      - gotenberg
+      - --chromium-disable-javascript=true
+      - --chromium-allow-list=file:///tmp/.*
+
+  tika:
+    container_name: paperless-tika
+    image: docker.io/apache/tika:latest
+    restart: unless-stopped
+
+volumes:
+  redisdata:
