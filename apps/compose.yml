@@ -7,9 +7,6 @@ services:
     container_name: bitwarden
     image: vaultwarden/server
     restart: unless-stopped
-    env_file: .env
-    environment:
-      WEBSOCKET_ENABLED: 'true'
     ports:
       - 3838:80
       - 3812:3012
@@ -26,13 +23,41 @@ services:
       - 9925:9000
     volumes:
       - ${DOCKER}/mealie:/app/data
+    env_file: .env
+    environment:
+      ALLOW_SIGNUP: false
+      ALLOW_PASSWORD_LOGIN: false
+      BASE_URL: https://mealie.${PUBLIC_DOMAIN}
+      # Emails
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_USER: ${SMTP_LOGIN}
+      SMTP_PASSWORD: ${SMTP_TOKEN}
+      SMTP_FROM_EMAIL: mealie@${PUBLIC_DOMAIN}
+      # Open AI
+      OPENAI_API_KEY: ${MEALIE_OPENAI_API_KEY}
+      # OIDC
+      OIDC_AUTH_ENABLED: true
+      OIDC_SIGNUP_ENABLED: true
+      OIDC_REMEMBER_ME: true
+      OIDC_PROVIDER_NAME: Pocket ID
+      OIDC_CONFIGURATION_URL: ${MEALIE_OIDC_CONFIGURATION_URL}
+      OIDC_CLIENT_ID: ${MEALIE_OIDC_CLIENT_ID}
+      OIDC_CLIENT_SECRET: ${MEALIE_OIDC_CLIENT_SECRET}
     deploy:
       resources:
         limits:
           memory: 1000M
-    env_file: .env
+
+  # Wallos
+  # Wallos is a self-hosted wallboard application for displaying information on screens
+  wallos:
+    container_name: wallos
+    image: bellamy/wallos:latest
+    ports:
+      - 8282:80/tcp
     environment:
-      ALLOW_SIGNUP: false
-      BASE_URL: https://mealie.${PUBLIC_DOMAIN}
-      OPENAI_API_KEY: ${MEALIE_OPENAI_API_KEY}
-      OPENAI_MODEL: gpt-4o-mini
+      TZ: ${TZ}
+    volumes:
+      - ${DOCKER}/wallos/db:/var/www/html/db
+      - ${DOCKER}/wallos/logos:/var/www/html/images/uploads/logos
+    restart: unless-stopped
