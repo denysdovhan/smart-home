@@ -21,20 +21,42 @@ services:
     image: containrrr/watchtower
     restart: unless-stopped
     environment:
-      WATCHTOWER_CLEANUP: 'true'
+      TZ: ${TZ}
+      WATCHTOWER_CLEANUP: true
       WATCHTOWER_WARN_ON_HEAD_FAILURE: 'never'
-      WATCHTOWER_NO_STARTUP_MESSAGE: 'true'
+      WATCHTOWER_NO_STARTUP_MESSAGE: true
       WATCHTOWER_SCHEDULE: '0 0 5 * * 6'
       WATCHTOWER_NOTIFICATIONS: email
-      WATCHTOWER_NOTIFICATION_EMAIL_FROM: ${EMAIL_SERVER_ADDRESS}
-      WATCHTOWER_NOTIFICATION_EMAIL_TO: ${EMAIL_SERVER_ADDRESS}
-      WATCHTOWER_NOTIFICATION_EMAIL_SERVER: ${EMAIL_SERVER}
-      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT: ${EMAIL_SERVER_PORT}
-      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER: ${EMAIL_SERVER_USER}
-      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD: ${EMAIL_SERVER_PASSWORD}
+      WATCHTOWER_NOTIFICATION_EMAIL_FROM: watchtower@${PUBLIC_DOMAIN}
+      WATCHTOWER_NOTIFICATION_EMAIL_TO: ${EMAIL_TO}
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER: ${SMTP_HOST}
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT: ${SMTP_PORT}
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER: ${SMTP_LOGIN}
+      WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD: ${SMTP_TOKEN}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
+  # Pocket ID
+  # A self-hosted identity provider with focus on Passkeys
+  pocket-id:
+    image: ghcr.io/pocket-id/pocket-id:v1
+    container_name: pocket-id
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      APP_URL: https://id.${PUBLIC_DOMAIN}
+      TRUST_PROXY: true
+      MAXMIND_LICENSE_KEY: ${POCKETID_MAXMIND_LICENSE_KEY}
+    ports:
+      - 1411:1411
+    volumes:
+      - ${DOCKER}/pocket-id:/app/data
+    healthcheck:
+      test: ['CMD', '/app/pocket-id', 'healthcheck']
+      interval: 1m30s
+      timeout: 5s
+      retries: 2
+      start_period: 10s
 
   # Samba
   # Remote access to the file system
@@ -66,10 +88,47 @@ services:
     container_name: glance
     image: glanceapp/glance
     restart: unless-stopped
-    env_file: .env
+    env_file:
+      - ../common.env
+      - .env
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./glance:/app/config
       - /mnt:/mnt:ro
     ports:
       - 8888:8080
+
+  # Uptime Kuma
+  # A monitoring tool for tracking the uptime of home services
+  uptime-kuma:
+    container_name: uptime-kuma
+    image: louislam/uptime-kuma:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DOCKER}/uptime-kuma:/app/data
+    ports:
+      - 3001:3001
+
+  # Backrest
+  # Web UI and orchestrator for restic backup
+  backrest:
+    image: garethgeorge/backrest
+    container_name: backrest
+    restart: unless-stopped
+    hostname: backrest
+    volumes:
+      - ${DOCKER}/backrest/data:/data
+      - ${DOCKER}/backrest/config:/config
+      - ${DOCKER}/backrest/cache:/cache
+      - ..:/mnt/smart-home # Backup itself
+      - ${PVE_BACKUPS}:/mnt/pve-backups # Proxmox Backups
+      - ${STORAGE}/media/paperless:/mnt/paperless # Paperless Media
+    env_file: .env
+    environment:
+      TZ: ${TZ}
+      BACKREST_DATA: /data
+      BACKREST_CONFIG: /config/config.json
+      XDG_CACHE_HOME: /cache
+    ports:
+      - 9898:9898

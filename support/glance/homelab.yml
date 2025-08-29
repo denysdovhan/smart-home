@@ -27,9 +27,17 @@
             - title: Karakeep
               url: https://karakeep.${PUBLIC_DOMAIN}
               icon: sh:karakeep
-            - title: Wapy.dev
-              url: https://wapydev.${PUBLIC_DOMAIN}
-              icon: sh:wapy-dev
+            - title: Paperless-ngx
+              url: https://paperless.${PUBLIC_DOMAIN}
+              icon: sh:paperless-ngx
+            - title: Scrypted
+              url: https://scrypted.${PRIVATE_DOMAIN}
+              icon: sh:scrypted.png
+            - title: Wallos
+              url: https://wallos.${PUBLIC_DOMAIN}
+              icon: sh:wallos
+              # Check Wallos API, because it gets into an infinite redirect loop on main URL
+              check-url: https://wallos.${PUBLIC_DOMAIN}/api/subscriptions/get_subscriptions.php
 
         - type: monitor
           cache: 1m
@@ -110,6 +118,15 @@
                 - title: Portainer
                   url: https://portainer.${PRIVATE_DOMAIN}
                   icon: sh:portainer
+                - title: Uptime Kuma
+                  url: https://uptime.${PUBLIC_DOMAIN}
+                  icon: sh:uptime-kuma
+                - title: Pocket ID
+                  url: https://id.${PUBLIC_DOMAIN}
+                  icon: sh:pocket-id
+                - title: Backrest
+                  url: https://backrest.${PRIVATE_DOMAIN}
+                  icon: sh:backrest
 
     - size: small
       widgets:
