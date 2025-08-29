@@ -22,3 +22,8 @@ __pycache__
 
 # Specific keeps
 !.gitkeep
+
+# Paperless (FIXME)
+paperless/consume
+paperless/export
+paperless/media
