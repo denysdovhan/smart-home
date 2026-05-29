@@ -74,9 +74,6 @@
             - title: Maintainerr
               url: https://maintainerr.${PRIVATE_DOMAIN}
               icon: sh:maintainerr
-            - title: Huntarr
-              url: https://huntarr.${PRIVATE_DOMAIN}
-              icon: sh:huntarr.png
             - title: Cleanuparr
               url: https://cleanuparr.${PRIVATE_DOMAIN}
               icon: sh:cleanuparr.png
