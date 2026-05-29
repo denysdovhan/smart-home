@@ -1,4 +1,3 @@
-version: '3.8'
 name: nvr
 services:
   # Scrypted
@@ -16,27 +15,70 @@ services:
 
   # Frigate
   # An NVR solution for recording, detecting, and streaming from IP cameras
-  # frigate:
-  #   container_name: frigate
-  #   image: ghcr.io/blakeblackshear/frigate:stable
-  #   restart: unless-stopped
-  #   stop_grace_period: 30s # allow enough time to shut down the various services
-  #   volumes:
-  #     - /etc/localtime:/etc/localtime:ro
-  #     - ${DOCKER}/frigate:/config
-  #     - ${MEDIA_VOLUME}/nvr:/media/frigate
-  #     - type: tmpfs # Optional: 1GB of memory, reduces SSD/SD Card wear
-  #       target: /tmp/cache
-  #       tmpfs:
-  #         size: 1000000000
-  #   devices:
-  #     - /dev/dri:/dev/dri
-  #     # - /dev/bus/usb:/dev/bus/usb # for Coral USB devices
-  #   ports:
-  #     - 8971:8971
-  #     # - 5000:5000 # Internal unauthenticated access. Expose carefully.
-  #     - 8554:8554 # RTSP feeds
-  #     - 8555:8555/tcp # WebRTC over tcp
-  #     - 8555:8555/udp # WebRTC over udp
-  #   environment:
-  #     FRIGATE_RTSP_PASSWORD: 'password' # FIXME: set a strong password
+  frigate:
+    container_name: frigate
+    privileged: true
+    image: ghcr.io/blakeblackshear/frigate:stable
+    restart: unless-stopped
+    stop_grace_period: 30s # allow enough time to shut down the various services
+    shm_size: 512mb
+    cap_add:
+      - CAP_PERFMON
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/OpenCL/vendors:/etc/OpenCL/vendors:ro
+      - ${DOCKER}/frigate:/config
+      - ${STORAGE}/media/cameras:/media/frigate
+      - type: tmpfs # Optional: 1GB of memory, reduces SSD/SD Card wear
+        target: /tmp/cache
+        tmpfs:
+          size: 1G
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128 # GPU
+      - /dev/bus/usb:/dev/bus/usb # for Coral USB
+    ports:
+      - 8971:8971
+      - 5000:5000 # Internal unauthenticated access. Don't expose.
+      - 8554:8554 # RTSP feeds
+      - 8555:8555/tcp # WebRTC over tcp
+      - 8555:8555/udp # WebRTC over udp
+    environment:
+      FRIGATE_RTSP_PASSWORD: ${FRIGATE_RTSP_PASSWORD}
+
+  frigate-auth:
+    container_name: frigate-auth
+    image: quay.io/oauth2-proxy/oauth2-proxy:latest
+    restart: unless-stopped
+    ports:
+      - 4180:4180
+    environment:
+      # --- Provider Configuration (Pocket ID) ---
+      OAUTH2_PROXY_PROVIDER: oidc
+      OAUTH2_PROXY_CLIENT_ID: ${OAUTH2_PROXY_CLIENT_ID}
+      OAUTH2_PROXY_CLIENT_SECRET: ${OAUTH2_PROXY_CLIENT_SECRET}
+      OAUTH2_PROXY_OIDC_ISSUER_URL: ${OAUTH2_PROXY_OIDC_ISSUER_URL}
+      OAUTH2_PROXY_SCOPE: ${OAUTH2_PROXY_SCOPE}
+      # OAUTH2_PROXY_INSECURE_OIDC_ALLOW_UNVERIFIED_EMAIL: true
+
+      # --- Upstream Configuration (Frigate) ---
+      OAUTH2_PROXY_HTTP_ADDRESS: 0.0.0.0:4180
+      # Route ONLY to Frigate's authenticated UI/API (8971) using Docker DNS within this stack network
+      # Use HTTPS because Frigate appears to have TLS enabled on 8971
+      OAUTH2_PROXY_UPSTREAMS: http://frigate:8971
+      # OAUTH2_PROXY_REDIRECT_URL: https://frigate.dovhan.app/oauth2/callback
+
+      # --- Application Configuration ---
+      OAUTH2_PROXY_COOKIE_SECRET: ${OAUTH2_PROXY_COOKIE_SECRET}
+      OAUTH2_PROXY_COOKIE_SECURE: true
+      OAUTH2_PROXY_COOKIE_SAMESITE: lax
+      OAUTH2_PROXY_COOKIE_NAME: ${OAUTH2_PROXY_COOKIE_NAME}
+      OAUTH2_PROXY_CODE_CHALLENGE_METHOD: S256
+      OAUTH2_PROXY_EMAIL_DOMAINS: ${OAUTH2_PROXY_EMAIL_DOMAINS}
+      OAUTH2_PROXY_REVERSE_PROXY: true
+      OAUTH2_PROXY_REAL_CLIENT_IP_HEADER: ${OAUTH2_PROXY_REAL_CLIENT_IP_HEADER}
+      OAUTH2_PROXY_SET_XAUTHREQUEST: true
+      OAUTH2_PROXY_PASS_ACCESS_TOKEN: true
+      OAUTH2_PROXY_PASS_HOST_HEADER: true
+      OAUTH2_PROXY_PASS_USER_HEADERS: true
+      OAUTH2_PROXY_SKIP_PROVIDER_BUTTON: true
+      OAUTH2_PROXY_WHITELIST_DOMAINS: frigate.${PRIVATE_DOMAIN}

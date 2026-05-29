@@ -38,6 +38,10 @@
               icon: sh:wallos
               # Check Wallos API, because it gets into an infinite redirect loop on main URL
               check-url: https://wallos.${PUBLIC_DOMAIN}/api/subscriptions/get_subscriptions.php
+            - title: Frigate
+              url: https://frigate.${PRIVATE_DOMAIN}
+              icon: sh:frigate
+              check-url: https://frigate.${PRIVATE_DOMAIN}
 
         - type: monitor
           cache: 1m
@@ -46,11 +50,11 @@
             - title: Plex
               url: https://app.plex.tv
               icon: sh:plex
-            - title: Transmission
-              url: https://transmission.${PRIVATE_DOMAIN}
-              icon: sh:transmission
-            - title: Overseerr
-              url: https://overseerr.${PRIVATE_DOMAIN}
+            - title: qBittorrent
+              url: https://qbittorrent.${PRIVATE_DOMAIN}
+              icon: sh:qbittorrent
+            - title: Seerr
+              url: https://seerr.${PUBLIC_DOMAIN}
               icon: di:overseerr
             - title: Radarr
               url: https://radarr.${PRIVATE_DOMAIN}
@@ -64,9 +68,6 @@
             - title: Bazarr
               url: https://bazarr.${PRIVATE_DOMAIN}
               icon: sh:bazarr.png
-            - title: Lingarr
-              url: https://lingarr.${PRIVATE_DOMAIN}
-              icon: sh:lingarr
             - title: Trailarr
               url: https://trailarr.${PRIVATE_DOMAIN}
               icon: sh:trailarr
