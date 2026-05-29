@@ -1,4 +1,3 @@
-version: '3.8'
 name: apps
 services:
   # Bitwarden
@@ -54,7 +53,7 @@ services:
     container_name: wallos
     image: bellamy/wallos:latest
     ports:
-      - 8282:80/tcp
+      - 8383:80/tcp
     environment:
       TZ: ${TZ}
     volumes:
