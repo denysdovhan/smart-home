@@ -192,7 +192,21 @@ function smart-home:command:restart() {
 }
 
 function smart-home:command:prune() {
-  docker system prune --volumes
+  echo "Cleaning up apt packages..."
+  sudo apt-get clean
+  sudo apt-get autoremove --purge
+  
+  echo "Clearing system logs..."
+  sudo truncate -s 0 /var/log/*.log
+  sudo journalctl --disk-usage
+  sudo journalctl --vacuum-size=500M
+
+  echo "Clearing tmp files..."
+  sudo rm -rf /tmp/*
+  sudo rm -rf /var/tmp/*
+
+  echo "Pruning unused docker objects..."
+  docker system prune -af --volumes
 }
 
 function smart-home:command:password() {
