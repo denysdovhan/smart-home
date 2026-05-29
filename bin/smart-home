@@ -124,13 +124,18 @@ function smart-home:command:init() {
   fi
 
   echo "Installing additional packages..."
-  sudo apt-get install -y git python3-pip nodejs
+  sudo apt-get install -y curl git nodejs
 
-  echo "Installing python dependencies..."
-  pip3 install -r "$SMART_HOME_DIR/requirements.txt"
+  if ! smart-home:exists uv; then
+    echo "Installing uv..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+  fi
+
+  echo "Installing Python dependencies..."
+  uv sync
   
-  echo "Addint pre-commit hooks..."
-  pre-commit install
+  echo "Adding pre-commit hooks..."
+  uv run pre-commit install
 
   echo "Done!"
   echo "Please, reboot!"
@@ -200,7 +205,7 @@ function smart-home:command:password() {
 
 function smart-home:command:docs() {
   local ip="$(hostname -I | awk '{print $1}')"
-  mkdocs serve --livereload --dev-addr "$ip:7000"
+  uv run mkdocs serve --livereload --dev-addr "$ip:7000"
 }
 
 #
