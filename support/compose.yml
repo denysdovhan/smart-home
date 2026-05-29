@@ -38,13 +38,14 @@ services:
   # Pocket ID
   # A self-hosted identity provider with focus on Passkeys
   pocket-id:
-    image: ghcr.io/pocket-id/pocket-id:v1
+    image: ghcr.io/pocket-id/pocket-id:v2
     container_name: pocket-id
     restart: unless-stopped
     env_file: .env
     environment:
       APP_URL: https://id.${PUBLIC_DOMAIN}
       TRUST_PROXY: true
+      ENCRYPTION_KEY: ${POCKETID_ENCRYPTION_KEY}
       MAXMIND_LICENSE_KEY: ${POCKETID_MAXMIND_LICENSE_KEY}
     ports:
       - 1411:1411
