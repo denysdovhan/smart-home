@@ -65,8 +65,6 @@ services:
       # Route ONLY to Frigate's authenticated UI/API (8971) using Docker DNS within this stack network
       # Use HTTPS because Frigate appears to have TLS enabled on 8971
       OAUTH2_PROXY_UPSTREAMS: http://frigate:8971
-      # OAUTH2_PROXY_REDIRECT_URL: https://frigate.dovhan.app/oauth2/callback
-
       # --- Application Configuration ---
       OAUTH2_PROXY_COOKIE_SECRET: ${OAUTH2_PROXY_COOKIE_SECRET}
       OAUTH2_PROXY_COOKIE_SECURE: true
