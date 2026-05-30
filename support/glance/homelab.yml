@@ -24,6 +24,9 @@
             - title: Bitwarden
               url: https://bitwarden.${PUBLIC_DOMAIN}
               icon: sh:vaultwarden
+            - title: Homebox
+              url: https://homebox.${PUBLIC_DOMAIN}
+              icon: sh:homebox
             - title: Karakeep
               url: https://karakeep.${PUBLIC_DOMAIN}
               icon: sh:karakeep
