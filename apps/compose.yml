@@ -12,6 +12,37 @@ services:
     volumes:
       - ${DOCKER}/bitwarden:/data
 
+  # Homebox
+  # A home inventory and organization system
+  homebox:
+    container_name: homebox
+    image: ghcr.io/sysadminsmedia/homebox:latest
+    restart: unless-stopped
+    ports:
+      - 3100:7745
+    env_file: .env
+    environment:
+      TZ: ${TZ}
+      HBOX_OPTIONS_HOSTNAME: homebox.${PUBLIC_DOMAIN}
+      HBOX_OPTIONS_TRUST_PROXY: true
+      HBOX_OPTIONS_ALLOW_LOCAL_LOGIN: false
+      HBOX_OPTIONS_ALLOW_REGISTRATION: false
+      # Email
+      HBOX_MAILER_HOST: ${SMTP_HOST}
+      HBOX_MAILER_PORT: ${SMTP_PORT}
+      HBOX_MAILER_USERNAME: ${SMTP_LOGIN}
+      HBOX_MAILER_PASSWORD: ${SMTP_TOKEN}
+      HBOX_MAILER_FROM: homebox@${PUBLIC_DOMAIN}
+      # OIDC
+      HBOX_OIDC_ENABLED: true
+      HBOX_OIDC_CLIENT_ID: ${HOMEBOX_OIDC_CLIENT_ID}
+      HBOX_OIDC_CLIENT_SECRET: ${HOMEBOX_OIDC_CLIENT_SECRET}
+      HBOX_OIDC_ISSUER_URL: ${HOMEBOX_OIDC_ISSUER_URL}
+      HBOX_OIDC_BUTTON_TEXT: Pocket ID
+      HBOX_OIDC_SCOPE: openid profile email
+    volumes:
+      - ${DOCKER}/homebox:/data
+
   # Mealie
   # Mealie is a self-hosted recipe manager and meal planner
   mealie:
