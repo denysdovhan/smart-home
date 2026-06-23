@@ -1,0 +1,24 @@
+# Homelab Roadmap
+
+Services changes and fixes:
+  ☐ Remove Karakeep (migrate to Linkwardenk)
+  ☐ Move back to stable Bazarr when it's fixed
+  ☐ Bring back Agregarr to main repo
+
+Infrastructure:
+  ☐ Better automated updates to docker images
+  ☐ Move services to stacks folder
+    ☐ Media stack
+    ☐ NVR stack
+    ☐ Support stack
+    ☐ Paperless stack
+    ☐ Split apps stack
+  ☐ More validations for YAML, docker compose files, etc
+
+Try new services:
+  ☐ Linkwarden
+  ☐ Immich 
+  ☐ Actualbudget (or something for finances)
+  ☐ Zerobyte (for backups)
+
+
