@@ -116,7 +116,9 @@ services:
   # Companion that manages and downloads subtitles based on your requirements
   bazarr:
     container_name: bazarr
-    image: lscr.io/linuxserver/bazarr:latest
+    # FIXME: Move back to latest once v1.5.7 is released
+    # image: lscr.io/linuxserver/bazarr:latest
+    image: ghcr.io/linuxserver/bazarr:development
     restart: unless-stopped
     env_file:
       - ../common.env
