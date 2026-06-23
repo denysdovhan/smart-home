@@ -148,7 +148,7 @@ services:
   # Cleaning up (un)watched media
   maintainerr:
     container_name: maintainerr
-    image: ghcr.io/jorenn92/maintainerr:latest
+    image: ghcr.io/maintainerr/maintainerr:latest
     restart: unless-stopped
     env_file:
       - ../common.env
@@ -159,10 +159,10 @@ services:
       - 6246:6246
 
   # Agregarr
-  # Goup and organize media in collections, add poster overlays and more
+  # Group and organize media in collections, add poster overlays and more
   agregarr:
     container_name: agregarr
-    image: agregarr/agregarr:latest
+    image: bitr8/agregarr:develop
     restart: unless-stopped
     env_file:
       - ../common.env
